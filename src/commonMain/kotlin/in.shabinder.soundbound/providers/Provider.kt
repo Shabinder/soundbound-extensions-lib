@@ -54,6 +54,7 @@ interface Provider {
 
     @ThreadLocal
     companion object {
-        lateinit var context: Context
+        private var context: Context? = null
+        val appContext: Context get() = requireNotNull(context)
     }
 }
