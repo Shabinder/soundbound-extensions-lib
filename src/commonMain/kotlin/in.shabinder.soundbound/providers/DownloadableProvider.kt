@@ -4,7 +4,7 @@ import `in`.shabinder.soundbound.models.QueryParams
 import `in`.shabinder.soundbound.models.TrackDetails
 import `in`.shabinder.soundbound.models.makeQueryParams
 
-interface DownloadableProvider<TrackEntity> : QueryableProvider<TrackEntity> {
+abstract class DownloadableProvider<TrackEntity>(dependencies: Dependencies) : QueryableProvider<TrackEntity>(dependencies) {
 
     /*
     * The Provider Guarantees that TrackEntity has a method to return a download Link,
@@ -12,12 +12,12 @@ interface DownloadableProvider<TrackEntity> : QueryableProvider<TrackEntity> {
     *
     * Can Throw DownloadLinkFetchFailed.
     * */
-    suspend fun TrackEntity.getDownloadLink(): TrackDetails.DownloadQueryResult
+    abstract suspend fun TrackEntity.getDownloadLink(): TrackDetails.DownloadQueryResult
 
     /*
     * Search and find the closest match for provided QueryParams
     * */
-    suspend fun findBestMatchURL(
+    open suspend fun findBestMatchURL(
         queryParams: QueryParams
     ): TrackDetails.DownloadQueryResult = sortByBestMatch(
         search(queryParams),

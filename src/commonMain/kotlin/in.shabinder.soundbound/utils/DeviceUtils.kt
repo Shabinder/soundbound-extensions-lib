@@ -1,6 +1,14 @@
 package `in`.shabinder.soundbound.utils
 
-interface FileUtils {
+import `in`.shabinder.soundbound.models.AudioFormat
+import `in`.shabinder.soundbound.models.AudioQuality
+
+interface DeviceUtils {
+
+    val preferredAudioQuality: AudioQuality
+
+    val preferredAudioFormat: AudioFormat
+
     /*
     * Returns TRUE if file at absolutePath is present else false
     * */
@@ -8,14 +16,14 @@ interface FileUtils {
 
     /*
     * Core App will handle creating output path from:
-    *  - itemName
-    *  - itemID <optional>
     *  - source
+    *  - itemName
+    *  - itemIdentifiers <optional> , usually will be a single ID from Source
     * */
     fun finalOutputDir(
         source: String,
         itemName: String,
-        itemID: String? = null,
+        vararg itemID: String? = emptyArray(),
     ): String
 
     /*

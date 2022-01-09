@@ -22,6 +22,7 @@ import kotlinx.serialization.Serializable
 data class PlatformQueryResult(
     var title: String,
     var coverUrl: String,
+    var queryLink: String,
     var trackList: List<TrackDetails>,
     var source: String
 )

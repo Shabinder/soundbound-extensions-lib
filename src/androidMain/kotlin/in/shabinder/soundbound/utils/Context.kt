@@ -1,5 +1,7 @@
 package `in`.shabinder.soundbound.utils
 
-import android.content.ContextWrapper
+import android.content.Context
 
-actual typealias Context = ContextWrapper
+actual typealias Context = AppContextProvider
+
+open class AppContextProvider(val appContext: Context)

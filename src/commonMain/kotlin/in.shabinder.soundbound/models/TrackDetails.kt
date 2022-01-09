@@ -41,7 +41,7 @@ data class TrackDetails(
     var audioQuality: AudioQuality = AudioQuality.KBPS192,
     var audioFormat: AudioFormat = AudioFormat.MP4,
     var outputFilePath: String,
-    var videoID: String? = null, // will be used for purposes like Downloadable Link || VideoID etc. based on Provider
+    var videoID: String? = null,
 ) {
 
     @Serializable

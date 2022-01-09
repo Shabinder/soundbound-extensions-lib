@@ -1,14 +1,9 @@
 package `in`.shabinder.soundbound.providers
 
-import `in`.shabinder.soundbound.utils.FileUtils
-import io.ktor.client.*
+abstract class ProviderFactory(open val dependencies: Dependencies) {
 
-interface ProviderFactory {
     /*
-    * This function will create all Providers and Init them with parameters accepted by this function
+    * This function will create all Providers
     * */
-    fun createProviders(
-        fileUtils: FileUtils,
-        httpClient: HttpClient
-    ): List<Provider>
+    abstract suspend fun createProviders(): List<Provider>
 }

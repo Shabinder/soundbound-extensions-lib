@@ -9,7 +9,7 @@ data class QueryParams(
     val trackDurationSec: Int,
     val genre: List<String> = emptyList(),
     val year: Int? = null,
-    val albumName: String? = null
+    val albumName: String? = null,
 )
 
 fun TrackDetails.makeQueryParams(): QueryParams {
@@ -19,6 +19,6 @@ fun TrackDetails.makeQueryParams(): QueryParams {
         trackDurationSec = durationSec,
         genre = genre,
         year = year,
-        albumName = albumName
+        albumName = albumName,
     )
 }
