@@ -1,7 +1,7 @@
 package `in`.shabinder.soundbound.providers
 
 import `in`.shabinder.soundbound.models.QueryParams
-import `in`.shabinder.soundbound.models.TrackDetails
+import `in`.shabinder.soundbound.models.SongModel
 
 abstract class QueryableProvider<TrackEntity>(dependencies: Dependencies) : Provider(dependencies) {
 
@@ -23,5 +23,5 @@ abstract class QueryableProvider<TrackEntity>(dependencies: Dependencies) : Prov
     /*
     * Function to map TrackEntity -> TrackDetails.
     * */
-    abstract fun TrackEntity.toTrackDetails(): TrackDetails
+    abstract fun TrackEntity.toTrackDetails(): SongModel
 }

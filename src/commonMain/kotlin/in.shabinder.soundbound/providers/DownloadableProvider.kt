@@ -1,7 +1,8 @@
 package `in`.shabinder.soundbound.providers
 
+import `in`.shabinder.soundbound.models.DownloadQueryResult
 import `in`.shabinder.soundbound.models.QueryParams
-import `in`.shabinder.soundbound.models.TrackDetails
+import `in`.shabinder.soundbound.models.SongModel
 import `in`.shabinder.soundbound.models.makeQueryParams
 
 abstract class DownloadableProvider<TrackEntity>(dependencies: Dependencies) : QueryableProvider<TrackEntity>(dependencies) {
@@ -12,14 +13,14 @@ abstract class DownloadableProvider<TrackEntity>(dependencies: Dependencies) : Q
     *
     * Can Throw DownloadLinkFetchFailed.
     * */
-    abstract suspend fun TrackEntity.getDownloadLink(): TrackDetails.DownloadQueryResult
+    abstract suspend fun TrackEntity.getDownloadLink(): DownloadQueryResult
 
     /*
     * Search and find the closest match for provided QueryParams
     * */
     open suspend fun findBestMatchURL(
         queryParams: QueryParams
-    ): TrackDetails.DownloadQueryResult = sortByBestMatch(
+    ): DownloadQueryResult = sortByBestMatch(
         search(queryParams),
         queryParams
     ).getDownloadLink()
@@ -27,5 +28,5 @@ abstract class DownloadableProvider<TrackEntity>(dependencies: Dependencies) : Q
     /*
     * Search and find the closest match for provided TrackDetails
     * */
-    suspend fun findBestMatchURL(trackDetails: TrackDetails) = findBestMatchURL(trackDetails.makeQueryParams())
+    suspend fun findBestMatchURL(songModel: SongModel) = findBestMatchURL(songModel.makeQueryParams())
 }

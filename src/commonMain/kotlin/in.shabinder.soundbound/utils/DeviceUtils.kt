@@ -2,6 +2,7 @@ package `in`.shabinder.soundbound.utils
 
 import `in`.shabinder.soundbound.models.AudioFormat
 import `in`.shabinder.soundbound.models.AudioQuality
+import `in`.shabinder.soundbound.models.SourceModel
 
 interface DeviceUtils {
 
@@ -21,7 +22,7 @@ interface DeviceUtils {
     *  - itemIdentifiers <optional> , usually will be a single ID from Source
     * */
     fun finalOutputDir(
-        source: String,
+        source: SourceModel,
         itemName: String,
         vararg itemID: String? = emptyArray(),
     ): String

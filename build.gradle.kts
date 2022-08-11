@@ -13,12 +13,15 @@ repositories {
     mavenCentral()
 }
 
+@Suppress("UnstableApiUsage")
 android {
-    compileSdkVersion(29)
+    compileSdk = 33
+
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(29)
+        minSdk = 21
+        targetSdk = 33
     }
+
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -26,7 +29,7 @@ android {
     }
     buildTypes {
         getByName("release") {
-            minifyEnabled(false)
+            isMinifyEnabled = false
         }
     }
 }
@@ -82,13 +85,13 @@ kotlin {
     linuxX64()
 
     sourceSets {
-        val ktorVersion = "1.6.4"
+        val ktorVersion = "2.0.3"
 
         val commonMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
             }
         }
         val commonTest by getting {

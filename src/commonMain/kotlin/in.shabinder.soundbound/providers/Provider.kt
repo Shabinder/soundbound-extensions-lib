@@ -1,6 +1,7 @@
 package `in`.shabinder.soundbound.providers
 
 import `in`.shabinder.soundbound.models.PlatformQueryResult
+import `in`.shabinder.soundbound.models.SourceModel
 import io.ktor.client.HttpClient
 
 abstract class Provider(dependencies: Dependencies) : Dependencies by dependencies {
@@ -18,7 +19,7 @@ abstract class Provider(dependencies: Dependencies) : Dependencies by dependenci
     * Source Name
     * ex: GAANA, JIOSAAVN, SOUNDCLOUD, etc
     * */
-    abstract val source: String
+    abstract val source: SourceModel
 
     /*
     * For a Particular URL, will return if this Extension Supports it

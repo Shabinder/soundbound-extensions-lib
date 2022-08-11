@@ -23,6 +23,6 @@ data class PlatformQueryResult(
     var title: String,
     var coverUrl: String,
     var queryLink: String,
-    var trackList: List<TrackDetails>,
-    var source: String
+    var trackList: List<SongModel>,
+    var source: SourceModel
 )

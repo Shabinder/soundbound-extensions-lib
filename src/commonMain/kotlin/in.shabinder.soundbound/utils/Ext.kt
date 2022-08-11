@@ -13,6 +13,6 @@ suspend inline fun HttpClient.getFinalUrl(
     crossinline block: HttpRequestBuilder.() -> Unit = {}
 ): String {
     return runCatching {
-        get<HttpResponse>(url, block).call.request.url.toString()
+        get(url, block).call.request.url.toString()
     }.getOrNull() ?: url
 }
