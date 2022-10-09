@@ -3,7 +3,6 @@ package `in`.shabinder.soundbound.providers
 import `in`.shabinder.soundbound.models.DownloadQueryResult
 import `in`.shabinder.soundbound.models.QueryParams
 import `in`.shabinder.soundbound.models.SongModel
-import `in`.shabinder.soundbound.models.makeQueryParams
 
 abstract class DownloadableProvider<TrackEntity>(dependencies: Dependencies) : QueryableProvider<TrackEntity>(dependencies) {
 

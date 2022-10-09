@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "in.shabinder"
-version = "0.1"
+version = "0.2"
 
 repositories {
     google()

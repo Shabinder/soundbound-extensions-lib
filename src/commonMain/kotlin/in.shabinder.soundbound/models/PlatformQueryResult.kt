@@ -17,12 +17,30 @@
 package `in`.shabinder.soundbound.models
 
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmOverloads
 
 @Serializable
-data class PlatformQueryResult(
-    var title: String,
-    var coverUrl: String,
-    var queryLink: String,
-    var trackList: List<SongModel>,
-    var source: SourceModel
-)
+open class PlatformQueryResult(
+    open val title: String,
+    open val coverUrl: String,
+    open val queryLink: String,
+    open val trackList: List<SongModel>,
+    open val source: SourceModel
+) {
+    @JvmOverloads
+    fun copy(
+        title: String = this.title,
+        coverUrl: String = this.coverUrl,
+        queryLink: String = this.queryLink,
+        trackList: List<SongModel> = this.trackList,
+        source: SourceModel = this.source
+    ): PlatformQueryResult {
+        return PlatformQueryResult(
+            title = title,
+            coverUrl = coverUrl,
+            queryLink = queryLink,
+            trackList = trackList,
+            source = source
+        )
+    }
+}

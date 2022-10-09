@@ -23,5 +23,5 @@ abstract class QueryableProvider<TrackEntity>(dependencies: Dependencies) : Prov
     /*
     * Function to map TrackEntity -> TrackDetails.
     * */
-    abstract fun TrackEntity.toTrackDetails(): SongModel
+    abstract fun TrackEntity.toSongModel(): SongModel
 }
