@@ -66,5 +66,5 @@ internal interface ConfigHandler<Config : ProviderConfiguration> : Dependencies 
             if (value != null) devicePreferences.saveConfig(value, configurationMetadata)
         }
 
-    open val configurationMetadata: ProviderConfigurationMetadata<Config>
+    val configurationMetadata: ProviderConfigurationMetadata<Config>
 }
