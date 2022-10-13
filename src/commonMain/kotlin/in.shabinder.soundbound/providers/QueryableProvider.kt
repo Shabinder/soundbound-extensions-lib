@@ -3,7 +3,9 @@ package `in`.shabinder.soundbound.providers
 import `in`.shabinder.soundbound.models.QueryParams
 import `in`.shabinder.soundbound.models.SongModel
 
-abstract class QueryableProvider<TrackEntity>(dependencies: Dependencies) : Provider(dependencies) {
+abstract class QueryableProvider<TrackEntity, Config : ProviderConfiguration>(
+    dependencies: Dependencies
+) : Provider<Config>(dependencies) {
 
     /*
     * Search this SOURCE for matches based on QueryParams and return found matches.

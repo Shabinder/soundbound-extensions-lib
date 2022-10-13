@@ -4,7 +4,9 @@ import `in`.shabinder.soundbound.models.DownloadQueryResult
 import `in`.shabinder.soundbound.models.QueryParams
 import `in`.shabinder.soundbound.models.SongModel
 
-abstract class DownloadableProvider<TrackEntity>(dependencies: Dependencies) : QueryableProvider<TrackEntity>(dependencies) {
+abstract class DownloadableProvider<TrackEntity, Config: ProviderConfiguration>(
+    dependencies: Dependencies
+) : QueryableProvider<TrackEntity, Config>(dependencies) {
 
     /*
     * The Provider Guarantees that TrackEntity has a method to return a download Link,

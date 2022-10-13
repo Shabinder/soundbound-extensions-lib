@@ -2,11 +2,11 @@ package `in`.shabinder.soundbound.providers
 
 import `in`.shabinder.soundbound.models.PlatformQueryResult
 import `in`.shabinder.soundbound.models.SourceModel
-import io.ktor.client.HttpClient
 
-abstract class Provider(dependencies: Dependencies) : Dependencies by dependencies {
+abstract class Provider<Config : ProviderConfiguration>(
+    dependencies: Dependencies
+) : ConfigHandler<Config>, Dependencies by dependencies {
 
-    open val httpClient: HttpClient = HttpClient {}
 
     /*
     * Preference priority
@@ -26,6 +26,6 @@ abstract class Provider(dependencies: Dependencies) : Dependencies by dependenci
     * */
     abstract fun isLinkSupported(URL: String): Boolean
 
-
     abstract suspend fun fetchPlatformQueryResult(URL: String): PlatformQueryResult
+
 }
