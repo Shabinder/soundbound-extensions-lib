@@ -2,11 +2,13 @@ package `in`.shabinder.soundbound.providers
 
 import `in`.shabinder.soundbound.models.PlatformQueryResult
 import `in`.shabinder.soundbound.models.SourceModel
+import `in`.shabinder.soundbound.providers.catalog.Catalogue
 
 abstract class Provider<Config : ProviderConfiguration>(
     dependencies: Dependencies
 ) : ConfigHandler<Config>, Dependencies by dependencies {
 
+    open val catalogue: Catalogue = Catalogue.CatalogueNotAvailable()
 
     /*
     * Preference priority
@@ -28,4 +30,6 @@ abstract class Provider<Config : ProviderConfiguration>(
 
     abstract suspend fun fetchPlatformQueryResult(URL: String): PlatformQueryResult
 
+    open val isCatalogueAvailable: Boolean
+        get() = catalogue !is Catalogue.CatalogueNotAvailable
 }
