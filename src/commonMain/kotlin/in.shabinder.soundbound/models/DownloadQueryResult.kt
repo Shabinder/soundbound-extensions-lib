@@ -21,4 +21,7 @@ open class DownloadQueryResult(
             audioQuality = audioQuality
         )
     }
+
+    override fun toString(): String =
+        "DownloadQueryResult(downloadURL=$downloadURL, audioFormat=$audioFormat, audioQuality=$audioQuality)"
 }

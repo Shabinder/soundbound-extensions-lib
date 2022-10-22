@@ -43,4 +43,8 @@ open class PlatformQueryResult(
             source = source
         )
     }
+
+    override fun toString(): String {
+        return "PlatformQueryResult(title=$title, coverUrl=$coverUrl, queryLink=$queryLink, trackList=$trackList, source=$source)"
+    }
 }

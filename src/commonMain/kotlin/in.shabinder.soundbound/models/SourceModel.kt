@@ -18,4 +18,8 @@ open class SourceModel(
             isActive = isActive
         )
     }
+
+    override fun toString(): String {
+        return "SourceModel(sourceName=$sourceName, sourceURL=$sourceURL, isActive=$isActive)"
+    }
 }

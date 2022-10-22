@@ -32,4 +32,8 @@ open class QueryParams(
             albumArtists = albumArtists,
         )
     }
+
+    override fun toString(): String {
+        return "QueryParams(trackName=$trackName, trackArtists=$trackArtists, trackDurationSec=$trackDurationSec, genre=$genre, year=$year, albumName=$albumName, albumArtists=$albumArtists)"
+    }
 }
