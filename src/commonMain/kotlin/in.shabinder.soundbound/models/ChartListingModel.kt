@@ -40,7 +40,7 @@ data class ChartListingContainer(
     val name: String,
     val comment: String? = "",
     val thumbnail: String? = "",
-    val chartListingModelFetcher: suspend () -> List<ChartListingModel>
+    val chartListingModelFetcher: List<suspend () -> ChartListingModel> // on-req fetch
 )
 
 @Serializable

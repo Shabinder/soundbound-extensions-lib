@@ -2,9 +2,6 @@ package `in`.shabinder.soundbound.providers.catalog
 
 import `in`.shabinder.soundbound.models.ChartListingContainer
 import `in`.shabinder.soundbound.models.ChartListingModel
-import `in`.shabinder.soundbound.providers.Dependencies
-import io.ktor.client.HttpClient
-import kotlinx.coroutines.launch
 
 abstract class Catalogue {
     abstract suspend fun getCharts(): List<ChartListingModel>
