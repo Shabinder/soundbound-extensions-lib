@@ -1,6 +1,10 @@
 package `in`.shabinder.soundbound.models
 
-@kotlinx.serialization.Serializable
+import dev.icerock.moko.parcelize.Parcelize
+import kotlinx.serialization.Serializable
+
+@Parcelize
+@Serializable
 open class SourceModel(
     open val sourceName: String,
     open val sourceURL: String,

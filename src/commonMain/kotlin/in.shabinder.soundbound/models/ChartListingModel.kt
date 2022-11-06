@@ -1,10 +1,11 @@
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelize
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 import kotlin.time.Duration.Companion.days
-
+@Parcelize
 @Serializable
 data class ChartListingModel(
     val uri: String,
@@ -35,6 +36,7 @@ data class ChartListingModel(
         get() = Clock.System.now() - date > 1.days
 }
 
+@Parcelize
 @Serializable
 data class ChartListingContainer(
     val name: String,
@@ -43,6 +45,7 @@ data class ChartListingContainer(
     val chartListingModelFetcher: List<suspend () -> ChartListingModel> // on-req fetch
 )
 
+@Parcelize
 @Serializable
 data class ChartEntity(
     val songGuid: String,

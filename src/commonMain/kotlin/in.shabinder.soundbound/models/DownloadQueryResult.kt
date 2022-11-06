@@ -1,8 +1,10 @@
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
 
+@Parcelize
 @Serializable
 open class DownloadQueryResult(
     open val downloadURL: String,

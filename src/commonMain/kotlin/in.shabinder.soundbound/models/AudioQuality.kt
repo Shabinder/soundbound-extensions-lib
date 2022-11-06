@@ -1,5 +1,10 @@
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelize
+import kotlinx.serialization.Serializable
+
+@Parcelize
+@Serializable
 enum class AudioQuality(val kbps: String) {
     KBPS128("128"),
     KBPS160("160"),

@@ -16,16 +16,20 @@
 
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
 
 @Serializable
+@Parcelize
 open class PlatformQueryResult(
     open val title: String,
     open val coverUrl: String,
     open val queryLink: String,
     open val trackList: List<SongModel>,
-    open val source: SourceModel
+    open val source: SourceModel,
+    open val description: String = "",
+    open val creators: List<String> = emptyList(),
 ) {
     @JvmOverloads
     fun copy(
@@ -33,18 +37,22 @@ open class PlatformQueryResult(
         coverUrl: String = this.coverUrl,
         queryLink: String = this.queryLink,
         trackList: List<SongModel> = this.trackList,
-        source: SourceModel = this.source
+        source: SourceModel = this.source,
+        description: String = this.description,
+        creators: List<String> = this.creators,
     ): PlatformQueryResult {
         return PlatformQueryResult(
             title = title,
             coverUrl = coverUrl,
             queryLink = queryLink,
             trackList = trackList,
-            source = source
+            source = source,
+            description = description,
+            creators = creators,
         )
     }
 
     override fun toString(): String {
-        return "PlatformQueryResult(title=$title, coverUrl=$coverUrl, queryLink=$queryLink, trackList=$trackList, source=$source)"
+        return "PlatformQueryResult(title='$title', coverUrl='$coverUrl', queryLink='$queryLink', trackList=$trackList, source=$source, description='$description', creators=$creators)"
     }
 }

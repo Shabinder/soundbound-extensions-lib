@@ -1,5 +1,10 @@
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelize
+import kotlinx.serialization.Serializable
+
+@Parcelize
+@Serializable
 enum class AudioFormat {
     MP3, MP4, FLAC, OGG, WAV, UNKNOWN;
 

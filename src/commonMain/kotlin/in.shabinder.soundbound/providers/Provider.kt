@@ -9,7 +9,6 @@ abstract class Provider<Config : ProviderConfiguration>(
 ) : ConfigHandler<Config>, Dependencies by dependencies {
 
 
-
     open val catalogue: Catalogue = Catalogue.CatalogueNotAvailable()
 
     /*

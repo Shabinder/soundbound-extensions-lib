@@ -1,7 +1,9 @@
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
+@Parcelize
 @Serializable
 open class QueryParams(
     open val trackName: String,

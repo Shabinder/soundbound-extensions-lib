@@ -16,10 +16,12 @@
 
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelize
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
 
+@Parcelize
 @Serializable
 open class SongModel(
     open val id: Long,
