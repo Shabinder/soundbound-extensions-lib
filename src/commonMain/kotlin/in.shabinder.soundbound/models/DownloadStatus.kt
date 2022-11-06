@@ -1,12 +1,13 @@
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Parcelize
 @Serializable
-sealed class DownloadStatus {
+sealed class DownloadStatus: Parcelable {
 
     @Parcelize
     @Serializable

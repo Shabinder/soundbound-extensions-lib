@@ -1,17 +1,15 @@
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 @Parcelize
 @Serializable
-sealed class ProviderExceptions(override val message: String?) : Exception(message) {
-
+sealed class ProviderExceptions(
+    override val message: String?,
     var extraErrorTrace: String? = null
-
-    constructor(message: String?, extraErrorTrace: String?) : this(message) {
-        this.extraErrorTrace = extraErrorTrace
-    }
+) : Exception(message), Parcelable {
 
     @Parcelize
     @Serializable

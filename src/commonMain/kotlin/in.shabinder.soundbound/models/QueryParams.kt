@@ -1,5 +1,6 @@
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
@@ -13,7 +14,7 @@ open class QueryParams(
     open val year: Int? = null,
     open val albumName: String? = null,
     open val albumArtists: List<String> = emptyList(),
-) {
+): Parcelable {
     @kotlin.jvm.JvmOverloads
     open fun copy(
         trackName: String = this.trackName,

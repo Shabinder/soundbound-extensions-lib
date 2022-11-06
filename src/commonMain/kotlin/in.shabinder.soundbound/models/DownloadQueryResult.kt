@@ -1,5 +1,6 @@
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
@@ -10,7 +11,7 @@ open class DownloadQueryResult(
     open val downloadURL: String,
     open val audioFormat: AudioFormat,
     open val audioQuality: AudioQuality
-) {
+): Parcelable {
     @JvmOverloads
     fun copy(
         downloadURL: String = this.downloadURL,

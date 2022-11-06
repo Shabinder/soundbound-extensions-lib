@@ -1,5 +1,6 @@
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -13,15 +14,15 @@ data class ChartListingModel(
     val comment: String? = "",
     val thumbnail: String? = "",
     val list: List<ChartEntity>,
-    val date: Instant
-) {
+    val epochMs: Long,
+): Parcelable {
     constructor(
         uri: String,
         name: String,
         comment: String? = "",
         thumbnail: String? = "",
         list: List<ChartEntity>
-    ) : this(uri, name, comment, thumbnail, list, Clock.System.now())
+    ) : this(uri, name, comment, thumbnail, list, Clock.System.now().toEpochMilliseconds())
 
     constructor(
         uri: String,
@@ -30,10 +31,22 @@ data class ChartListingModel(
         thumbnail: String? = "",
         list: List<ChartEntity>,
         date: String
-    ) : this(uri, name, comment, thumbnail, list, Instant.parse(date))
+    ) : this(uri, name, comment, thumbnail, list, Instant.parse(date).toEpochMilliseconds())
+
+    constructor(
+        uri: String,
+        name: String,
+        comment: String? = "",
+        thumbnail: String? = "",
+        list: List<ChartEntity>,
+        date: Instant
+    ) : this(uri, name, comment, thumbnail, list, date.toEpochMilliseconds())
 
     val hasADayPassed: Boolean
         get() = Clock.System.now() - date > 1.days
+
+    val date: Instant
+        get() = Instant.fromEpochMilliseconds(epochMs)
 }
 
 @Parcelize
@@ -43,7 +56,7 @@ data class ChartListingContainer(
     val comment: String? = "",
     val thumbnail: String? = "",
     val chartListingModelFetcher: List<suspend () -> ChartListingModel> // on-req fetch
-)
+): Parcelable
 
 @Parcelize
 @Serializable
@@ -52,4 +65,4 @@ data class ChartEntity(
     val title: String,
     val links: List<String>,
     val thumbnailURL: String?,
-)
+): Parcelable

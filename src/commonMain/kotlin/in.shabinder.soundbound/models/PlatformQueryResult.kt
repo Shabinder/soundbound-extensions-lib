@@ -16,6 +16,7 @@
 
 package `in`.shabinder.soundbound.models
 
+import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
@@ -30,7 +31,7 @@ open class PlatformQueryResult(
     open val source: SourceModel,
     open val description: String = "",
     open val creators: List<String> = emptyList(),
-) {
+): Parcelable {
     @JvmOverloads
     fun copy(
         title: String = this.title,
