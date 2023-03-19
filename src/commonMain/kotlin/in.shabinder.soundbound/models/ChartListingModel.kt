@@ -65,4 +65,12 @@ data class ChartEntity(
     val title: String,
     val links: List<String>,
     val thumbnailURL: String?,
-): Parcelable
+    val sourceModel: SourceModel,
+    val type: Type
+): Parcelable {
+    @Parcelize
+    @Serializable
+    enum class Type: Parcelable {
+        SONG, PLAYLIST
+    }
+}
