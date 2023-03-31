@@ -16,3 +16,7 @@ suspend inline fun HttpClient.getFinalUrl(
         get(url, block).call.request.url.toString()
     }.getOrNull() ?: url
 }
+
+fun List<String>.sanitized(): List<String> {
+    return this.filter { it.isNotBlank() && it != "null" }
+}

@@ -25,6 +25,22 @@ open class DownloadQueryResult(
         )
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is DownloadQueryResult) return false
+        if (downloadURL != other.downloadURL) return false
+        if (audioFormat != other.audioFormat) return false
+        if (audioQuality != other.audioQuality) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = downloadURL.hashCode()
+        result = 31 * result + audioFormat.hashCode()
+        result = 31 * result + audioQuality.hashCode()
+        return result
+    }
+
     override fun toString(): String =
         "DownloadQueryResult(downloadURL=$downloadURL, audioFormat=$audioFormat, audioQuality=$audioQuality)"
 }

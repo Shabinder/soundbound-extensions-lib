@@ -2,6 +2,7 @@ package `in`.shabinder.soundbound.models
 
 import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
+import `in`.shabinder.soundbound.utils.sanitized
 import kotlinx.serialization.Serializable
 
 @Parcelize
@@ -34,6 +35,30 @@ open class QueryParams(
             albumName = albumName,
             albumArtists = albumArtists,
         )
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is QueryParams) return false
+        if (trackName != other.trackName) return false
+        if (trackDurationSec != other.trackDurationSec) return false
+        if (year != other.year) return false
+        if (albumName != other.albumName) return false
+        if (genre.sanitized() != other.genre.sanitized()) return false
+        if (trackArtists.sanitized() != other.trackArtists.sanitized()) return false
+        if (albumArtists.sanitized() != other.albumArtists.sanitized()) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = trackName.hashCode()
+        result = 31 * result + trackArtists.hashCode()
+        result = 31 * result + trackDurationSec.hashCode()
+        result = 31 * result + genre.hashCode()
+        result = 31 * result + (year ?: 0)
+        result = 31 * result + (albumName?.hashCode() ?: 0)
+        result = 31 * result + albumArtists.hashCode()
+        return result
     }
 
     override fun toString(): String {

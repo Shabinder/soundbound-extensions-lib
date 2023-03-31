@@ -18,6 +18,7 @@ package `in`.shabinder.soundbound.models
 
 import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
+import `in`.shabinder.soundbound.utils.sanitized
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
@@ -102,6 +103,54 @@ open class SongModel(
             albumName = albumName,
             albumArtists = albumArtists
         )
+    }
+
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is SongModel) return false
+        if (id != other.id) return false
+        if (title != other.title) return false
+        if (durationSec != other.durationSec) return false
+        if (year != other.year) return false
+        if (source != other.source) return false
+        if (videoID != other.videoID) return false
+        if (albumName != other.albumName) return false
+        if (trackNumber != other.trackNumber) return false
+        if (comment != other.comment) return false
+        if (trackURL != other.trackURL) return false
+        if (albumArtURL != other.albumArtURL) return false
+        if (downloadLink != other.downloadLink) return false
+        if (audioQuality != other.audioQuality) return false
+        if (audioFormat != other.audioFormat) return false
+        if (downloaded != other.downloaded) return false
+        if (isFavourite != other.isFavourite) return false
+        if (artists.sanitized() != other.artists.sanitized()) return false
+        if (albumArtists.sanitized() != other.albumArtists.sanitized()) return false
+        if (genre.sanitized() != other.genre.sanitized()) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + title.hashCode()
+        result = 31 * result + durationSec.hashCode()
+        result = 31 * result + year
+        result = 31 * result + artists.hashCode()
+        result = 31 * result + source.hashCode()
+        result = 31 * result + (videoID?.hashCode() ?: 0)
+        result = 31 * result + (albumName?.hashCode() ?: 0)
+        result = 31 * result + albumArtists.hashCode()
+        result = 31 * result + (trackNumber?.hashCode() ?: 0)
+        result = 31 * result + (comment?.hashCode() ?: 0)
+        result = 31 * result + trackURL.hashCode()
+        result = 31 * result + (albumArtURL?.hashCode() ?: 0)
+        result = 31 * result + (downloadLink?.hashCode() ?: 0)
+        result = 31 * result + audioQuality.hashCode()
+        result = 31 * result + audioFormat.hashCode()
+        result = 31 * result + downloaded.hashCode()
+        result = 31 * result + isFavourite.hashCode()
+        return result
     }
 
     override fun toString(): String {

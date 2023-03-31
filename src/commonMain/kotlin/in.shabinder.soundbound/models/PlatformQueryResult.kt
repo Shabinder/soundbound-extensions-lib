@@ -18,6 +18,7 @@ package `in`.shabinder.soundbound.models
 
 import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
+import `in`.shabinder.soundbound.utils.sanitized
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
 
@@ -51,6 +52,30 @@ open class PlatformQueryResult(
             description = description,
             creators = creators,
         )
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is PlatformQueryResult) return false
+        if (title != other.title) return false
+        if (coverUrl != other.coverUrl) return false
+        if (queryLink != other.queryLink) return false
+        if (trackList != other.trackList) return false
+        if (source != other.source) return false
+        if (description != other.description) return false
+        if (creators.sanitized() != other.creators.sanitized()) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = title.hashCode()
+        result = 31 * result + coverUrl.hashCode()
+        result = 31 * result + queryLink.hashCode()
+        result = 31 * result + trackList.hashCode()
+        result = 31 * result + source.hashCode()
+        result = 31 * result + description.hashCode()
+        result = 31 * result + creators.sanitized().hashCode()
+        return result
     }
 
     override fun toString(): String {
