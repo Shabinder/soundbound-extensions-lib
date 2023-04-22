@@ -1,6 +1,7 @@
 package `in`.shabinder.soundbound.providers
 
 import `in`.shabinder.soundbound.models.QueryParams
+import `in`.shabinder.soundbound.models.SearchItem
 import `in`.shabinder.soundbound.models.SongModel
 
 abstract class QueryableProvider<TrackEntity, Config : ProviderConfiguration>(
@@ -12,6 +13,12 @@ abstract class QueryableProvider<TrackEntity, Config : ProviderConfiguration>(
     *  - will return empty list if no matches found
     * */
     abstract suspend fun search(queryParams: QueryParams): List<TrackEntity>
+
+    open suspend fun searchSongModels(queryParams: QueryParams): List<SongModel> {
+        return search(queryParams).map { it.toSongModel() }
+    }
+
+    abstract suspend fun searchItems(queryParams: QueryParams): List<SearchItem>
 
     /*
     * Return The Best Match from Provided TrackEntity

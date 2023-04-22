@@ -18,8 +18,8 @@ package `in`.shabinder.soundbound.models
 
 import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
+import `in`.shabinder.soundbound.models.SourceModel.Companion.LocalSource
 import `in`.shabinder.soundbound.utils.sanitized
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
 
@@ -40,10 +40,10 @@ open class SongModel(
     open val comment: String?,
     open val trackURL: String,
     open val albumArtURL: String?,
-    open val downloadLink: String?,
+    open val downloadLink: Request?,
     open val audioQuality: AudioQuality = AudioQuality.KBPS192,
     open val audioFormat: AudioFormat = AudioFormat.MP4,
-    @Contextual open val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
+    open val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
     open val isFavourite: Boolean = false,
 ): Parcelable {
 
@@ -63,7 +63,7 @@ open class SongModel(
         comment: String? = this.comment,
         trackURL: String = this.trackURL,
         albumArtURL: String? = this.albumArtURL,
-        downloadLink: String? = this.downloadLink,
+        downloadLink: Request? = this.downloadLink,
         audioQuality: AudioQuality = this.audioQuality,
         audioFormat: AudioFormat = this.audioFormat,
         downloaded: DownloadStatus = this.downloaded,
@@ -118,7 +118,7 @@ open class SongModel(
         if (albumName != other.albumName) return false
         if (trackNumber != other.trackNumber) return false
         if (comment != other.comment) return false
-        if (trackURL != other.trackURL) return false
+        if (trackURL.removeSuffix(LocalSource.sourceURL) != other.trackURL.removeSuffix(LocalSource.sourceURL)) return false
         if (albumArtURL != other.albumArtURL) return false
         if (downloadLink != other.downloadLink) return false
         if (audioQuality != other.audioQuality) return false
@@ -143,7 +143,7 @@ open class SongModel(
         result = 31 * result + albumArtists.hashCode()
         result = 31 * result + (trackNumber?.hashCode() ?: 0)
         result = 31 * result + (comment?.hashCode() ?: 0)
-        result = 31 * result + trackURL.hashCode()
+        result = 31 * result + trackURL.removeSuffix(LocalSource.sourceURL).hashCode()
         result = 31 * result + (albumArtURL?.hashCode() ?: 0)
         result = 31 * result + (downloadLink?.hashCode() ?: 0)
         result = 31 * result + audioQuality.hashCode()

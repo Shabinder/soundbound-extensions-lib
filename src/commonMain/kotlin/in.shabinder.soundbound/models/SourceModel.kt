@@ -43,4 +43,13 @@ open class SourceModel(
         result = 31 * result + isActive.hashCode()
         return result
     }
+
+    companion object {
+        @Suppress("FunctionName") // Factory method
+        val LocalSource: SourceModel = SourceModel(
+            sourceName = "Local",
+            sourceURL = "::Local",
+            isActive = true
+        )
+    }
 }
