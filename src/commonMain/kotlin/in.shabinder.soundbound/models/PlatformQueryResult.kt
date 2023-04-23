@@ -18,7 +18,7 @@ package `in`.shabinder.soundbound.models
 
 import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
-import `in`.shabinder.soundbound.utils.sanitized
+import `in`.shabinder.soundbound.utils.cleaned
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
 
@@ -63,7 +63,7 @@ open class PlatformQueryResult(
         if (trackList != other.trackList) return false
         if (source != other.source) return false
         if (description != other.description) return false
-        if (creators.sanitized() != other.creators.sanitized()) return false
+        if (creators.cleaned() != other.creators.cleaned()) return false
         return true
     }
 
@@ -74,7 +74,7 @@ open class PlatformQueryResult(
         result = 31 * result + trackList.hashCode()
         result = 31 * result + source.hashCode()
         result = 31 * result + description.hashCode()
-        result = 31 * result + creators.sanitized().hashCode()
+        result = 31 * result + creators.cleaned().hashCode()
         return result
     }
 

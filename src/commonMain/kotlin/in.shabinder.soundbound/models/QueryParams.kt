@@ -2,7 +2,7 @@ package `in`.shabinder.soundbound.models
 
 import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
-import `in`.shabinder.soundbound.utils.sanitized
+import `in`.shabinder.soundbound.utils.cleaned
 import kotlinx.serialization.Serializable
 
 @Parcelize
@@ -44,9 +44,9 @@ open class QueryParams(
         if (trackDurationSec != other.trackDurationSec) return false
         if (year != other.year) return false
         if (albumName != other.albumName) return false
-        if (genre.sanitized() != other.genre.sanitized()) return false
-        if (trackArtists.sanitized() != other.trackArtists.sanitized()) return false
-        if (albumArtists.sanitized() != other.albumArtists.sanitized()) return false
+        if (genre.cleaned() != other.genre.cleaned()) return false
+        if (trackArtists.cleaned() != other.trackArtists.cleaned()) return false
+        if (albumArtists.cleaned() != other.albumArtists.cleaned()) return false
         return true
     }
 

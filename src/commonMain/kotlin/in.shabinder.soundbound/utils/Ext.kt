@@ -2,7 +2,6 @@ package `in`.shabinder.soundbound.utils
 
 import io.ktor.client.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 
 /*
 * Return URL after Redirections
@@ -17,6 +16,6 @@ suspend inline fun HttpClient.getFinalUrl(
     }.getOrNull() ?: url
 }
 
-fun List<String>.sanitized(): List<String> {
+internal fun List<String>.cleaned(): List<String> {
     return this.filter { it.isNotBlank() && it != "null" }
 }

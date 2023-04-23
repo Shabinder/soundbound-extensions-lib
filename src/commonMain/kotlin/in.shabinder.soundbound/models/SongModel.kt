@@ -19,7 +19,7 @@ package `in`.shabinder.soundbound.models
 import dev.icerock.moko.parcelize.Parcelable
 import dev.icerock.moko.parcelize.Parcelize
 import `in`.shabinder.soundbound.models.SourceModel.Companion.LocalSource
-import `in`.shabinder.soundbound.utils.sanitized
+import `in`.shabinder.soundbound.utils.cleaned
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
 
@@ -125,9 +125,9 @@ open class SongModel(
         if (audioFormat != other.audioFormat) return false
         if (downloaded != other.downloaded) return false
         if (isFavourite != other.isFavourite) return false
-        if (artists.sanitized() != other.artists.sanitized()) return false
-        if (albumArtists.sanitized() != other.albumArtists.sanitized()) return false
-        if (genre.sanitized() != other.genre.sanitized()) return false
+        if (artists.cleaned() != other.artists.cleaned()) return false
+        if (albumArtists.cleaned() != other.albumArtists.cleaned()) return false
+        if (genre.cleaned() != other.genre.cleaned()) return false
         return true
     }
 

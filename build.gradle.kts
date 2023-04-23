@@ -86,16 +86,16 @@ kotlin {
     linuxX64()
 
     sourceSets {
-        val ktorVersion = "2.0.3"
+        val ktorVersion = "2.2.4"
 
         val commonMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-                implementation("dev.icerock.moko:parcelize:0.8.0")
+                implementation("dev.icerock.moko:parcelize:0.9.0")
             }
         }
         val commonTest by getting {
