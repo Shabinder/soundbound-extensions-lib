@@ -16,8 +16,7 @@
 
 package `in`.shabinder.soundbound.models
 
-import dev.icerock.moko.parcelize.Parcelable
-import dev.icerock.moko.parcelize.Parcelize
+import com.arkivanov.essenty.parcelable.Parcelize
 import `in`.shabinder.soundbound.models.SourceModel.Companion.LocalSource
 import `in`.shabinder.soundbound.utils.cleaned
 import kotlinx.serialization.Serializable
@@ -43,9 +42,9 @@ open class SongModel(
     open val downloadLink: Request?,
     open val audioQuality: AudioQuality = AudioQuality.KBPS192,
     open val audioFormat: AudioFormat = AudioFormat.MP4,
-    open val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
+    override val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
     open val isFavourite: Boolean = false,
-): Parcelable {
+) : BaseDownloadableModel() {
 
     @JvmOverloads
     open fun copy(

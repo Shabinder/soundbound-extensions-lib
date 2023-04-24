@@ -16,6 +16,6 @@ suspend inline fun HttpClient.getFinalUrl(
     }.getOrNull() ?: url
 }
 
-internal fun List<String>.cleaned(): List<String> {
+internal inline fun List<String>.cleaned(): List<String> {
     return this.filter { it.isNotBlank() && it != "null" }
 }

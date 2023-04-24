@@ -1,7 +1,7 @@
 package `in`.shabinder.soundbound.models
 
-import dev.icerock.moko.parcelize.Parcelable
-import dev.icerock.moko.parcelize.Parcelize
+import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.parcelable.Parcelize
 import `in`.shabinder.soundbound.utils.cleaned
 import kotlinx.serialization.Serializable
 

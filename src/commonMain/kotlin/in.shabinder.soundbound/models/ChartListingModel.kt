@@ -1,7 +1,7 @@
 package `in`.shabinder.soundbound.models
 
-import dev.icerock.moko.parcelize.Parcelable
-import dev.icerock.moko.parcelize.Parcelize
+import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.parcelable.Parcelize
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
@@ -66,8 +66,9 @@ data class ChartEntity(
     val links: List<String>,
     val thumbnailURL: String?,
     val sourceModel: SourceModel,
-    val type: Type
-): Parcelable {
+    val type: Type,
+    override val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
+): BaseDownloadableModel() {
     @Parcelize
     @Serializable
     enum class Type: Parcelable {
