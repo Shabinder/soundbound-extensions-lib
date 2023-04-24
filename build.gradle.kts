@@ -23,6 +23,7 @@ android {
     }
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
@@ -35,18 +36,9 @@ android {
         }
     }
 }
-dependencies {
-    coreLibraryDesugaring(deps.androidx.desugar)
-}
+
 kotlin {
-    afterEvaluate {
-        project.extensions.findByType<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension>()
-            ?.let { kmpExt ->
-                kmpExt.sourceSets.run {
-                    removeAll { it.name == "androidAndroidTestRelease" }
-                }
-            }
-    }
+    ios()
     android {
         publishLibraryVariants("release", "debug")
     }
@@ -57,26 +49,14 @@ kotlin {
     }
     js(IR) {
         browser {
-            testTask {
-                useMocha {
-                    timeout = "30000"
-                }
-            }
+            testTask { useMocha { timeout = "30000" } }
         }
         nodejs {
-            testTask {
-                useMocha {
-                    timeout = "30000"
-                }
-            }
+            testTask { useMocha { timeout = "30000" } }
         }
     }
 
-    ios()
-
     sourceSets {
-        val ktorVersion = "2.2.4"
-
         val commonMain by getting {
             dependencies {
                 with(deps) {
@@ -122,6 +102,10 @@ kotlin {
                 implementation(deps.ktor.client.ios)
             }
         }
-        val iosTest by getting {}
+        val iosTest by getting
+    }
+
+    dependencies {
+        coreLibraryDesugaring(deps.androidx.desugar)
     }
 }
