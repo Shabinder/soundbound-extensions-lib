@@ -19,11 +19,18 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
  */
 
 plugins {
+    id("version-catalog")
     id("maven-publish")
     id("signing")
 }
 
 afterEvaluate {
+    catalog {
+        // declare the aliases, bundles and versions in this block
+        versionCatalog {
+            from(files("gradle/deps.versions.toml"))
+        }
+    }
     publishing {
         repositories {
             maven {
@@ -56,8 +63,12 @@ afterEvaluate {
         }
 
         publications {
-            withType<MavenPublication> {
+            create<MavenPublication>("maven") {
+                from(components["versionCatalog"])
+                artifactId = "soundbound-extensions-catalog"
+            }
 
+            withType<MavenPublication> {
                 artifact(javadocJar)
 
                 pom {

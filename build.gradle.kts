@@ -14,8 +14,8 @@ repositories {
     mavenCentral()
 }
 
-@Suppress("UnstableApiUsage")
 android {
+    namespace = "in.shabinder.soundbound.extensions"
     compileSdk = 33
 
     defaultConfig {
@@ -24,16 +24,20 @@ android {
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
         }
     }
 }
-
+dependencies {
+    coreLibraryDesugaring(deps.androidx.desugar)
+}
 kotlin {
     afterEvaluate {
         project.extensions.findByType<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension>()
@@ -45,16 +49,8 @@ kotlin {
     }
     android {
         publishLibraryVariants("release", "debug")
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
     }
     jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
-        }
         testRuns["test"].executionTask.configure {
             useJUnit()
         }
@@ -83,13 +79,11 @@ kotlin {
 
         val commonMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-
-                implementation("com.arkivanov.essenty:parcelable:1.1.0")
+                with(deps) {
+                    implementation(essenty.parcelable)
+                    implementation(ktor.client.core)
+                    implementation(bundles.kotlinx)
+                }
             }
         }
         val commonTest by getting {
@@ -100,12 +94,12 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
+                implementation(deps.ktor.client.android)
             }
         }
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-cio:$ktorVersion")
+                implementation(deps.ktor.client.cio)
             }
         }
         val jvmTest by getting {
@@ -115,7 +109,7 @@ kotlin {
         }
         val jsMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-js:$ktorVersion")
+                implementation(deps.ktor.client.js)
             }
         }
         val jsTest by getting {
@@ -125,7 +119,7 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-ios:$ktorVersion")
+                implementation(deps.ktor.client.ios)
             }
         }
         val iosTest by getting {}
