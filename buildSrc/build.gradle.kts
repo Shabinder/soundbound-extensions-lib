@@ -13,9 +13,14 @@ object Plugins {
 }
 
 dependencies {
-    implementation(deps.kotlin.kotlinGradlePlugin)
-    implementation(deps.androidx.gradle.plugin)
-    implementation(deps.kotlin.serialization)
+    with(deps) {
+        implementation(androidx.gradle.plugin)
+        with(kotlin) {
+            implementation(kotlinGradlePlugin)
+            implementation(compose.gradle)
+            implementation(serialization)
+        }
+    }
 }
 
 kotlin.sourceSets.all {

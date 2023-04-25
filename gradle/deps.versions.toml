@@ -40,6 +40,7 @@ kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutin
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version = "0.20.2" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.4.0" }
+kotlinx-immutableLists = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version = "0.3.5" }
 
 kotlin-compose-gradle = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "jbCompose" }
 mosaic-gradle =  { group = "com.jakewharton.mosaic", name = "mosaic-gradle-plugin", version.ref = "mosaic" }
@@ -166,7 +167,7 @@ androidx-media3 = ["androidx-media3-session","androidx-media3-exoplayer","androi
 kotlin-test = ["kotlin-kotlinTestCommon","kotlin-kotlinTestAnnotationsCommon"]
 sqldelight = ["sqldelight-runtime","sqldelight-coroutines-extension","sqldelight-driver","sqldelight-paging"]
 mviKotlin = ["mviKotlin-dep","mviKotlin-main","mviKotlin-coroutines","mviKotlin-rx","mviKotlin-logging","mviKotlin-timetravel"]
-kotlinx = ["kotlinx-coroutines", "kotlinx-serialization-json", "kotlinx-atomicfu", "kotlinx-datetime"]
+kotlinx = ["kotlinx-coroutines", "kotlinx-serialization-json", "kotlinx-atomicfu", "kotlinx-datetime", "kotlinx-immutableLists"]
 essenty = ["essenty-lifecycle","essenty-instanceKeeper","essenty-backHandler","essenty-parcelable"]
 decompose = ["decompose-dep","decompose-extensions-compose"]
 koin-android = ["koin-androidx-compose","koin-android"]

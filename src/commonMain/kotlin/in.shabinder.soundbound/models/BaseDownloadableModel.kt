@@ -1,9 +1,11 @@
 package `in`.shabinder.soundbound.models
 
+import androidx.compose.runtime.Immutable
 import com.arkivanov.essenty.parcelable.Parcelable
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Immutable
 abstract class BaseDownloadableModel(): Parcelable {
     abstract val downloaded: DownloadStatus
 

@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("multiplatform")
     kotlin("plugin.serialization")
+    id("org.jetbrains.compose")
     id("kotlin-parcelize")
     id("publish")
 }
@@ -60,9 +61,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 with(deps) {
-                    implementation(essenty.parcelable)
+                    api(bundles.kotlinx)
+                    api(essenty.parcelable)
+                    api(compose.runtime) // for @Stable, @Immutable, etc annotations
                     implementation(ktor.client.core)
-                    implementation(bundles.kotlinx)
                 }
             }
         }

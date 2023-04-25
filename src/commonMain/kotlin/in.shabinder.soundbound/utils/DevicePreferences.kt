@@ -1,10 +1,13 @@
 package `in`.shabinder.soundbound.utils
 
+import androidx.compose.runtime.Immutable
 import `in`.shabinder.soundbound.models.AudioFormat
 import `in`.shabinder.soundbound.models.AudioQuality
 import `in`.shabinder.soundbound.providers.ProviderConfiguration
 import `in`.shabinder.soundbound.providers.ProviderConfigurationMetadata
 
+
+@Immutable
 interface DevicePreferences {
     val preferredAudioQuality: AudioQuality
 

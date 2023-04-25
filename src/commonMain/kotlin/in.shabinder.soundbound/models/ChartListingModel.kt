@@ -1,5 +1,6 @@
 package `in`.shabinder.soundbound.models
 
+import androidx.compose.runtime.Immutable
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import kotlinx.datetime.Clock
@@ -7,6 +8,7 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 import kotlin.time.Duration.Companion.days
 @Parcelize
+@Immutable
 @Serializable
 data class ChartListingModel(
     val uri: String,
@@ -50,6 +52,7 @@ data class ChartListingModel(
 }
 
 @Parcelize
+@Immutable
 @Serializable
 data class ChartListingContainer(
     val name: String,
@@ -59,6 +62,7 @@ data class ChartListingContainer(
 ): Parcelable
 
 @Parcelize
+@Immutable
 @Serializable
 data class ChartEntity(
     val songGuid: String,
@@ -70,6 +74,7 @@ data class ChartEntity(
     override val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
 ): BaseDownloadableModel() {
     @Parcelize
+    @Immutable
     @Serializable
     enum class Type: Parcelable {
         SONG, PLAYLIST

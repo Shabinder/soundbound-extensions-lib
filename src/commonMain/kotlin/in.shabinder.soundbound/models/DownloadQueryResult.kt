@@ -1,5 +1,6 @@
 package `in`.shabinder.soundbound.models
 
+import androidx.compose.runtime.Immutable
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import kotlinx.serialization.Serializable
@@ -7,6 +8,7 @@ import kotlin.jvm.JvmOverloads
 
 @Parcelize
 @Serializable
+@Immutable
 open class DownloadQueryResult(
     open val downloadRequest: DownloadRequest,
     open val audioFormat: AudioFormat,

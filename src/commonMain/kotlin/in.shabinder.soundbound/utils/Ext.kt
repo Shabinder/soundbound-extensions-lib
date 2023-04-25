@@ -2,6 +2,8 @@ package `in`.shabinder.soundbound.utils
 
 import io.ktor.client.*
 import io.ktor.client.request.*
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 /*
 * Return URL after Redirections
@@ -16,6 +18,6 @@ suspend inline fun HttpClient.getFinalUrl(
     }.getOrNull() ?: url
 }
 
-internal inline fun List<String>.cleaned(): List<String> {
-    return this.filter { it.isNotBlank() && it != "null" }
+internal inline fun List<String>.cleaned(): ImmutableList<String> {
+    return this.filter { it.isNotBlank() && it != "null" }.toImmutableList()
 }

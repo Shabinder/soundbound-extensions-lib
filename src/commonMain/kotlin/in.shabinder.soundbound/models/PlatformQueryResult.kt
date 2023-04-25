@@ -16,14 +16,16 @@
 
 package `in`.shabinder.soundbound.models
 
+import androidx.compose.runtime.Immutable
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import `in`.shabinder.soundbound.utils.cleaned
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
 
-@Serializable
 @Parcelize
+@Immutable
+@Serializable
 open class PlatformQueryResult(
     open val title: String,
     open val coverUrl: String,

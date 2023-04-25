@@ -2,6 +2,7 @@
 
 package `in`.shabinder.soundbound.providers
 
+import androidx.compose.runtime.Immutable
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.KSerializer
@@ -13,6 +14,7 @@ import kotlin.reflect.KClass
 
 
 @Serializable
+@Immutable
 data class ProviderConfigurationMetadata<Config : ProviderConfiguration>(
     val defaultObject: Config,
     val clazz: KClass<Config>
@@ -29,17 +31,20 @@ data class ProviderConfigurationMetadata<Config : ProviderConfiguration>(
 /**
  * Configuration for a [Provider]
  */
+@Immutable
 @Serializable
 sealed class ProviderConfiguration {
 
     // key to identify this configuration in soundbound
     abstract val key: String
 
+    @Immutable
     @Serializable
     object EmptyConfiguration : ProviderConfiguration() {
         override val key: String = "in.shabinder.soundbound.extensions.EMPTY-CONFIG"
     }
 
+    @Immutable
     @Serializable
     abstract class Configuration : ProviderConfiguration() {
         // if userConfigurable = true, then user can change this value,

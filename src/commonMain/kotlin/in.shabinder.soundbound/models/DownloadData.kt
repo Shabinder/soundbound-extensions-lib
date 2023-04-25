@@ -1,5 +1,6 @@
 package `in`.shabinder.soundbound.models
 
+import androidx.compose.runtime.Immutable
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import io.ktor.client.HttpClient
@@ -15,6 +16,7 @@ import kotlinx.serialization.Serializable
 typealias DownloadRequest = Request
 
 @Parcelize
+@Immutable
 @Serializable
 class Request(
     val url: String,
