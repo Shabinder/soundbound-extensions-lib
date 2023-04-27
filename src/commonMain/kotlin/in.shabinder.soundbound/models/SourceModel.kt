@@ -11,8 +11,18 @@ import kotlinx.serialization.Serializable
 open class SourceModel(
     open val sourceName: String,
     open val sourceURL: String,
-    open val isActive: Boolean = true
+    open val isActive: Boolean
 ): Parcelable {
+
+    constructor(
+        sourceName: String,
+        sourceURL: String
+    ): this(
+        sourceName = sourceName,
+        sourceURL = sourceURL,
+        isActive = true
+    )
+
     @kotlin.jvm.JvmOverloads
     open fun copy(
         sourceName: String = this.sourceName,
