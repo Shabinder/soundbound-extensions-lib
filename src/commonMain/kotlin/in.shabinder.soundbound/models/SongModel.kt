@@ -102,7 +102,8 @@ open class SongModel(
             genre = genre,
             year = year,
             albumName = albumName,
-            albumArtists = albumArtists
+            albumArtists = albumArtists,
+            trackLink = trackURL,
         )
     }
 

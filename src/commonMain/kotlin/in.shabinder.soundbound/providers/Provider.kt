@@ -25,7 +25,7 @@ abstract class Provider<Config : ProviderConfiguration>(
     abstract val source: SourceModel
 
     /*
-    * For a Particular URL, will return if this Extension Supports it
+    * For a Particular URL, will return if this Extension Supports it for metadata fetching
     * */
     abstract fun isLinkSupported(URL: String): Boolean
 

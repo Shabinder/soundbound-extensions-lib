@@ -17,6 +17,7 @@ open class QueryParams(
     open val year: Int? = null,
     open val albumName: String? = null,
     open val albumArtists: List<String> = emptyList(),
+    open val trackLink: String? = null,
 ): Parcelable {
     @kotlin.jvm.JvmOverloads
     open fun copy(
@@ -27,6 +28,7 @@ open class QueryParams(
         year: Int? = this.year,
         albumName: String? = this.albumName,
         albumArtists: List<String> = this.albumArtists,
+        trackLink: String? = this.trackLink,
     ): QueryParams {
         return QueryParams(
             trackName = trackName,
@@ -36,6 +38,7 @@ open class QueryParams(
             year = year,
             albumName = albumName,
             albumArtists = albumArtists,
+            trackLink = trackLink,
         )
     }
 
@@ -49,6 +52,7 @@ open class QueryParams(
         if (genre.cleaned() != other.genre.cleaned()) return false
         if (trackArtists.cleaned() != other.trackArtists.cleaned()) return false
         if (albumArtists.cleaned() != other.albumArtists.cleaned()) return false
+        if (trackLink != other.trackLink) return false
         return true
     }
 
@@ -60,10 +64,11 @@ open class QueryParams(
         result = 31 * result + (year ?: 0)
         result = 31 * result + (albumName?.hashCode() ?: 0)
         result = 31 * result + albumArtists.hashCode()
+        result = 31 * result + (trackLink?.hashCode() ?: 0)
         return result
     }
 
     override fun toString(): String {
-        return "QueryParams(trackName=$trackName, trackArtists=$trackArtists, trackDurationSec=$trackDurationSec, genre=$genre, year=$year, albumName=$albumName, albumArtists=$albumArtists)"
+        return "QueryParams(trackName=$trackName, trackArtists=$trackArtists, trackDurationSec=$trackDurationSec, genre=$genre, year=$year, albumName=$albumName, albumArtists=$albumArtists, trackLink=$trackLink)"
     }
 }
