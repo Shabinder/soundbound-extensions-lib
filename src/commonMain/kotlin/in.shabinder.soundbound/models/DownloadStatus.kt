@@ -3,13 +3,14 @@ package `in`.shabinder.soundbound.models
 import androidx.compose.runtime.Immutable
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
+import `in`.shabinder.soundbound.providers.Provider
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Parcelize
 @Immutable
 @Serializable
-sealed class DownloadStatus: Parcelable {
+sealed class DownloadStatus : Parcelable {
 
     @Parcelize
     @Immutable
@@ -39,5 +40,25 @@ sealed class DownloadStatus: Parcelable {
     @Parcelize
     @Immutable
     @Serializable
-    data class Failed(@Contextual val error: Throwable) : DownloadStatus()
+    sealed class Failed : DownloadStatus() {
+
+        @Serializable
+        @Parcelize
+        @Immutable
+        data class Error(val errors: List<@Contextual Throwable>) : Failed() {
+            constructor(error: Throwable) : this(listOf(error))
+        }
+
+
+        @Serializable
+        @Parcelize
+        @Immutable
+        data class ProviderErrors(val errors: Map<SourceModel, Error>) : Failed()
+
+        val allErrors: List<Throwable>
+            get() = when (this) {
+                is Error -> errors
+                is ProviderErrors -> errors.values.map { it.errors }.flatten()
+            }
+    }
 }
