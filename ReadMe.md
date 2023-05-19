@@ -1,5 +1,13 @@
 # Soundbound Extension Lib for sources.
 
+---
+#### **Sources Repo for Personal Experimentation and Educational Learning Experience.** [disclaimer](https://github.com/Shabinder/soundbound-extensions-lib/edit/master/ReadMe.md#-disclaimer):
+ - `copy and add to Soundbound App, in Settings -> Add Repo.`
+ 
+https://raw.githubusercontent.com/Shabinder/soundbound-extensions-lib/master/assets/private-sources.json
+
+---
+
 ## 📃 Disclaimer
 All downloading and use of the software and its accompaniments are deemed to have carefully read and fully agreed to the following terms:
 * The software is only for personal learning and communication, and it is strictly prohibited for any foul and illegal purposes.
