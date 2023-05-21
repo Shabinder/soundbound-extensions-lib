@@ -4,7 +4,7 @@
 #### **Sources Repo for Personal Experimentation and Educational Learning Experience.** [disclaimer](https://github.com/Shabinder/soundbound-extensions-lib/edit/master/ReadMe.md#-disclaimer):
  - `copy and add to Soundbound App, in Settings -> Add Repo.`
  
-https://raw.githubusercontent.com/Shabinder/soundbound-extensions-lib/master/assets/private-sources.json
+https://gitlab.com/shabinder/soundbound/-/raw/main/Experimental-Sources/sources.json
 
 ---
 
