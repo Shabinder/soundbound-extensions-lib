@@ -57,4 +57,23 @@ sealed class ProviderExceptions(
     data class NoInternetException(
         val extraInfo: String? = null,
     ) : ProviderExceptions("Check your Internet Connectivity.", extraInfo)
+
+    @Parcelize
+    @Immutable
+    @Serializable
+    data class DownloadLinksNotSupported(
+        val extraInfo: String? = null,
+    ) : ProviderExceptions(
+        "Download Links are not supported for this Provider, try getting stream directly from provider.",
+        extraInfo
+    )
+    @Parcelize
+    @Immutable
+    @Serializable
+    data class ProviderNotInitialized(
+        val extraInfo: String? = null,
+    ) : ProviderExceptions(
+        "Provider is not initialized",
+        extraInfo
+    )
 }

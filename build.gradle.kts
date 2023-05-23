@@ -63,6 +63,7 @@ kotlin {
                 with(deps) {
                     api(bundles.kotlinx)
                     api(essenty.parcelable)
+                    api(okioCommon)
                     api(compose.runtime) // for @Stable, @Immutable, etc annotations
                     implementation(ktor.client.core)
                 }

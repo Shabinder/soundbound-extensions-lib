@@ -61,14 +61,12 @@ internal interface ConfigHandler<Config : ProviderConfiguration> : Dependencies 
     /*
     * Optional Configuration which a provider might opt in to use and even make this user-configurable
     * */
-    open var configuration: Config?
+    open var configuration: Config
         get() = devicePreferences.getSavedConfigOrNull(
             configurationMetadata
-        ) ?: runCatching {
-            configurationMetadata.defaultObject
-        }.getOrNull()
+        ) ?: configurationMetadata.defaultObject
         set(value) {
-            if (value != null) devicePreferences.saveConfig(value, configurationMetadata)
+            devicePreferences.saveConfig(value, configurationMetadata)
         }
 
     val configurationMetadata: ProviderConfigurationMetadata<Config>

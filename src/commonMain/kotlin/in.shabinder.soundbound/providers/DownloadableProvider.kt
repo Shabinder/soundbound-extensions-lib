@@ -3,10 +3,29 @@ package `in`.shabinder.soundbound.providers
 import `in`.shabinder.soundbound.models.DownloadQueryResult
 import `in`.shabinder.soundbound.models.QueryParams
 import `in`.shabinder.soundbound.models.SongModel
+import `in`.shabinder.soundbound.providers.stream.SeekableInputStream
+import kotlinx.coroutines.Deferred
 
-abstract class DownloadableProvider<TrackEntity, Config: ProviderConfiguration>(
+abstract class DownloadableProvider<TrackEntity, Config : ProviderConfiguration>(
     dependencies: Dependencies
 ) : QueryableProvider<TrackEntity, Config>(dependencies) {
+
+    // override if you want to limit concurrent downloads, done in Soundbound App.
+    open val concurrentDownloadLimit = Int.MAX_VALUE
+
+    /* *
+    *  if true, the provider will handle the download itself, you need to call `download` method,
+    *  if false, the provider will return a download link, Soundbound will handle the download.
+    * */
+    open val handleDownloadSelf: Boolean get() = false
+
+    // App will call this method if handleDownloadSelf is true && isLinkSupported is true.
+    open suspend fun download(
+        songModel: SongModel
+    ): SeekableInputStream {
+        // Provider `must` override this method if handleDownloadSelf is true, explicitly.
+        throw NotImplementedError()
+    }
 
     /*
     * The Provider Guarantees that TrackEntity has a method to return a download Link,
@@ -29,5 +48,6 @@ abstract class DownloadableProvider<TrackEntity, Config: ProviderConfiguration>(
     /*
     * Search and find the closest match for provided TrackDetails
     * */
-    suspend fun findBestMatchURL(songModel: SongModel) = findBestMatchURL(songModel.makeQueryParams())
+    open suspend fun findBestMatchURL(songModel: SongModel) =
+        findBestMatchURL(songModel.makeQueryParams())
 }
