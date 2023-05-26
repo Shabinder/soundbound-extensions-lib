@@ -11,14 +11,17 @@ import kotlinx.serialization.Serializable
 @Serializable
 open class QueryParams(
     open val trackName: String,
-    open val trackArtists: List<String>,
+    open val trackArtists: List<String> = emptyList(),
     open val trackDurationSec: Long,
     open val genre: List<String> = emptyList(),
     open val year: Int? = null,
     open val albumName: String? = null,
     open val albumArtists: List<String> = emptyList(),
     open val trackLink: String? = null,
-): Parcelable {
+    open val interestedEntityType: SearchItem.Type = SearchItem.Type.All,
+    open val isrc: String? = null,
+) : Parcelable {
+
     @kotlin.jvm.JvmOverloads
     open fun copy(
         trackName: String = this.trackName,
@@ -29,6 +32,8 @@ open class QueryParams(
         albumName: String? = this.albumName,
         albumArtists: List<String> = this.albumArtists,
         trackLink: String? = this.trackLink,
+        interestedEntityType: SearchItem.Type = this.interestedEntityType,
+        isrc: String? = this.isrc,
     ): QueryParams {
         return QueryParams(
             trackName = trackName,
@@ -39,6 +44,7 @@ open class QueryParams(
             albumName = albumName,
             albumArtists = albumArtists,
             trackLink = trackLink,
+            interestedEntityType = interestedEntityType,
         )
     }
 
@@ -53,6 +59,8 @@ open class QueryParams(
         if (trackArtists.cleaned() != other.trackArtists.cleaned()) return false
         if (albumArtists.cleaned() != other.albumArtists.cleaned()) return false
         if (trackLink != other.trackLink) return false
+        if (interestedEntityType != other.interestedEntityType) return false
+        if (isrc != other.isrc) return false
         return true
     }
 
@@ -65,10 +73,12 @@ open class QueryParams(
         result = 31 * result + (albumName?.hashCode() ?: 0)
         result = 31 * result + albumArtists.hashCode()
         result = 31 * result + (trackLink?.hashCode() ?: 0)
+        result = 31 * result + interestedEntityType.hashCode()
+        result = 31 * result + (isrc?.hashCode() ?: 0)
         return result
     }
 
     override fun toString(): String {
-        return "QueryParams(trackName=$trackName, trackArtists=$trackArtists, trackDurationSec=$trackDurationSec, genre=$genre, year=$year, albumName=$albumName, albumArtists=$albumArtists, trackLink=$trackLink)"
+        return "QueryParams(trackName=$trackName, trackArtists=$trackArtists, trackDurationSec=$trackDurationSec, genre=$genre, year=$year, albumName=$albumName, albumArtists=$albumArtists, trackLink=$trackLink, interestedEntityType=$interestedEntityType, ISRC=$isrc)"
     }
 }

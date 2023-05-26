@@ -46,6 +46,7 @@ open class SongModel(
     open val audioFormat: AudioFormat = AudioFormat.MP4,
     override val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
     open val isFavourite: Boolean = false,
+    open val isrc: String? = null,
 ) : BaseDownloadableModel() {
 
     @JvmOverloads

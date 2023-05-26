@@ -18,7 +18,7 @@ open class SearchItem(
     @Immutable
     @Serializable
     enum class Type: Parcelable {
-        Song, Album, Playlist, Artist, AutoComplete
+        Song, Album, Playlist, Artist, AutoComplete, All // All doesn't include autocomplete
     }
 
     override fun equals(other: Any?): Boolean {

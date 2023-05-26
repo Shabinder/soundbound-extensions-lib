@@ -14,11 +14,17 @@ abstract class QueryableProvider<TrackEntity, Config : ProviderConfiguration>(
     * */
     abstract suspend fun search(queryParams: QueryParams): List<TrackEntity>
 
+    open val isISRCSupported: Boolean = false
+
     open suspend fun searchSongModels(queryParams: QueryParams): List<SongModel> {
         return search(queryParams).map { it.toSongModel() }
     }
 
+    // this is without auto-completions
     abstract suspend fun searchItems(queryParams: QueryParams): List<SearchItem>
+
+    // only auto-completions
+    open suspend fun searchSuggestionItems(queryParams: QueryParams): List<SearchItem> = emptyList()
 
     /*
     * Return The Best Match from Provided TrackEntity

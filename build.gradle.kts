@@ -31,9 +31,19 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = "17"
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+        }
+    }
+
+    kotlin {
+        jvmToolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
         }
     }
 }
@@ -65,6 +75,8 @@ kotlin {
                     api(essenty.parcelable)
                     api(compose.runtime) // for @Stable, @Immutable, etc annotations
                     implementation(ktor.client.core)
+                    api(paging.common)
+                    api(fuzzy.wuzzy)
                 }
             }
         }
