@@ -17,14 +17,16 @@ data class ChartListingModel(
     val thumbnail: String? = "",
     val list: List<ChartEntity>,
     val epochMs: Long,
+    val subtitle: String? = null,
 ): Parcelable {
     constructor(
         uri: String,
         name: String,
         comment: String? = "",
         thumbnail: String? = "",
-        list: List<ChartEntity>
-    ) : this(uri, name, comment, thumbnail, list, Clock.System.now().toEpochMilliseconds())
+        list: List<ChartEntity>,
+        subtitle: String? = null,
+    ) : this(uri, name, comment, thumbnail, list, Clock.System.now().toEpochMilliseconds(), subtitle)
 
     constructor(
         uri: String,
@@ -32,8 +34,9 @@ data class ChartListingModel(
         comment: String? = "",
         thumbnail: String? = "",
         list: List<ChartEntity>,
-        date: String
-    ) : this(uri, name, comment, thumbnail, list, Instant.parse(date).toEpochMilliseconds())
+        date: String,
+        subtitle: String? = null,
+    ) : this(uri, name, comment, thumbnail, list, Instant.parse(date).toEpochMilliseconds(), subtitle)
 
     constructor(
         uri: String,
@@ -41,8 +44,9 @@ data class ChartListingModel(
         comment: String? = "",
         thumbnail: String? = "",
         list: List<ChartEntity>,
-        date: Instant
-    ) : this(uri, name, comment, thumbnail, list, date.toEpochMilliseconds())
+        date: Instant,
+        subtitle: String? = null,
+    ) : this(uri, name, comment, thumbnail, list, date.toEpochMilliseconds(), subtitle)
 
     val hasADayPassed: Boolean
         get() = Clock.System.now() - date > 1.days
@@ -67,6 +71,7 @@ data class ChartListingContainer(
 data class ChartEntity(
     val songGuid: String,
     val title: String,
+    val subtitle: String,
     val links: List<String>,
     val thumbnailURL: String?,
     val sourceModel: SourceModel,
