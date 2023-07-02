@@ -8,7 +8,9 @@ plugins {
 }
 
 group = "in.shabinder"
-version = "0.2"
+version = (deps.soundbound.extensions.lib.get().version as String).also {
+    println("Building with lib version: $it")
+}
 
 repositories {
     google()
