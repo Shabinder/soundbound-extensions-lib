@@ -1,7 +1,16 @@
 # Soundbound Extension Lib for sources.
 
 ---
-#### **Sources Repo for Personal Experimentation and Educational Learning Experience.** [disclaimer](https://github.com/Shabinder/soundbound-extensions-lib/edit/master/ReadMe.md#-disclaimer):
+#### **Sources Repo for Personal Experimentation and Educational Learning Experience.** [disclaimer](https://github.com/Shabinder/soundbound-extensions-lib/edit/master/ReadMe.md#-disclaimer).
+---
+Click on this button   :   <a href="soundbound://gitlab.com/shabinder/soundbound/-/raw/main/Experimental-Sources/sources.json"><img src="https://img.shields.io/badge/install-black.svg?style=for-the-badge&logo=addthis&logoColor=white"/></a>
+<br/>
+<br/>
+-----
+*OR*
+
+Manually:
+
  - `copy and add to Soundbound App, in Settings -> Add Repo.`
  
 https://gitlab.com/shabinder/soundbound/-/raw/main/Experimental-Sources/sources.json
