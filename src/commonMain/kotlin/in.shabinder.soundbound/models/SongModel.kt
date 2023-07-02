@@ -18,7 +18,6 @@ package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
 import com.arkivanov.essenty.parcelable.Parcelize
-import `in`.shabinder.soundbound.models.SourceModel.Companion.LocalSource
 import `in`.shabinder.soundbound.utils.cleaned
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
@@ -47,6 +46,7 @@ open class SongModel(
     override val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
     open val isFavourite: Boolean = false,
     open val isrc: String? = null,
+    open val extraProps: Map<String, String> = emptyMap()
 ) : BaseDownloadableModel() {
 
     @JvmOverloads
@@ -69,7 +69,9 @@ open class SongModel(
         audioQuality: AudioQuality = this.audioQuality,
         audioFormat: AudioFormat = this.audioFormat,
         downloaded: DownloadStatus = this.downloaded,
-        isFavourite: Boolean = this.isFavourite
+        isFavourite: Boolean = this.isFavourite,
+        isrc: String? = this.isrc,
+        extraProps: Map<String, String> = this.extraProps
     ): SongModel {
         return SongModel(
             id = id,
@@ -90,7 +92,9 @@ open class SongModel(
             audioQuality = audioQuality,
             audioFormat = audioFormat,
             downloaded = downloaded,
-            isFavourite = isFavourite
+            isFavourite = isFavourite,
+            isrc = isrc,
+            extraProps = extraProps
         )
     }
 
@@ -121,7 +125,7 @@ open class SongModel(
         if (albumName != other.albumName) return false
         if (trackNumber != other.trackNumber) return false
         if (comment != other.comment) return false
-        if (trackURL.removeSuffix(LocalSource.sourceURL) != other.trackURL.removeSuffix(LocalSource.sourceURL)) return false
+        if (trackURL != other.trackURL) return false
         if (albumArtURL != other.albumArtURL) return false
         if (downloadLink != other.downloadLink) return false
         if (audioQuality != other.audioQuality) return false
@@ -131,6 +135,8 @@ open class SongModel(
         if (artists.cleaned() != other.artists.cleaned()) return false
         if (albumArtists.cleaned() != other.albumArtists.cleaned()) return false
         if (genre.cleaned() != other.genre.cleaned()) return false
+        if (isrc != other.isrc) return false
+        if (extraProps != other.extraProps) return false
         return true
     }
 
@@ -146,17 +152,20 @@ open class SongModel(
         result = 31 * result + albumArtists.hashCode()
         result = 31 * result + (trackNumber?.hashCode() ?: 0)
         result = 31 * result + (comment?.hashCode() ?: 0)
-        result = 31 * result + trackURL.removeSuffix(LocalSource.sourceURL).hashCode()
+        result = 31 * result + trackURL.hashCode()
         result = 31 * result + (albumArtURL?.hashCode() ?: 0)
         result = 31 * result + (downloadLink?.hashCode() ?: 0)
         result = 31 * result + audioQuality.hashCode()
         result = 31 * result + audioFormat.hashCode()
         result = 31 * result + downloaded.hashCode()
         result = 31 * result + isFavourite.hashCode()
+        result = 31 * result + genre.hashCode()
+        result = 31 * result + (isrc?.hashCode() ?: 0)
+        result = 31 * result + extraProps.hashCode()
         return result
     }
 
     override fun toString(): String {
-        return "SongModel(id=$id, title=$title, durationSec=$durationSec, year=$year, artists=$artists, genre=$genre, source=$source, videoID=$videoID, albumName=$albumName, albumArtists=$albumArtists, trackNumber=$trackNumber, comment=$comment, trackURL=$trackURL, albumArtURL=$albumArtURL, downloadLink=$downloadLink, audioQuality=$audioQuality, audioFormat=$audioFormat, downloaded=$downloaded, isFavourite=$isFavourite)"
+        return "SongModel(id=$id, title=$title, durationSec=$durationSec, year=$year, artists=$artists, genre=$genre, source=$source, videoID=$videoID, albumName=$albumName, albumArtists=$albumArtists, trackNumber=$trackNumber, comment=$comment, trackURL=$trackURL, albumArtURL=$albumArtURL, downloadLink=$downloadLink, audioQuality=$audioQuality, audioFormat=$audioFormat, downloaded=$downloaded, isFavourite=$isFavourite, isrc=$isrc, extraProps=$extraProps)"
     }
 }
