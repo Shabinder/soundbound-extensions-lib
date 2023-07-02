@@ -3,7 +3,7 @@
 ---
 #### **Sources Repo for Personal Experimentation and Educational Learning Experience.** [disclaimer](https://github.com/Shabinder/soundbound-extensions-lib/edit/master/ReadMe.md#-disclaimer).
 ---
-Click on this button   :   <a href="intent://gitlab.com/shabinder/soundbound/-/raw/main/Experimental-Sources/sources.json/#Intent;scheme=soundbound;package=in.shabinder.soundbound;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Din.shabinder.soundbound;end"><img src="https://img.shields.io/badge/install-black.svg?style=for-the-badge&logo=addthis&logoColor=white"/></a>
+Click on this button   :   <a href="https://shabinder.in/private-repo"><img src="https://img.shields.io/badge/install-black.svg?style=for-the-badge&logo=addthis&logoColor=white"/></a>
 <br/>
 <br/>
 **OR**
