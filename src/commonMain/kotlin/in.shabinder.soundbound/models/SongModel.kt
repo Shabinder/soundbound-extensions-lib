@@ -109,6 +109,7 @@ open class SongModel(
             albumName = albumName,
             albumArtists = albumArtists,
             trackLink = trackURL,
+            isrc = isrc,
         )
     }
 

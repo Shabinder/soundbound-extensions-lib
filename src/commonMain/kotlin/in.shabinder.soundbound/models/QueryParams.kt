@@ -45,6 +45,7 @@ open class QueryParams(
             albumArtists = albumArtists,
             trackLink = trackLink,
             interestedEntityType = interestedEntityType,
+            isrc = isrc,
         )
     }
 
