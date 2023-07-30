@@ -1,15 +1,15 @@
 package `in`.shabinder.soundbound.providers
 
+import app.cash.zipline.Zipline
+import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.models.PlatformQueryResult
 import `in`.shabinder.soundbound.models.SourceModel
 import `in`.shabinder.soundbound.providers.catalog.Catalogue
+import kotlinx.coroutines.Dispatchers
 
-abstract class Provider<Config : ProviderConfiguration>(
-    dependencies: Dependencies
-) : ConfigHandler<Config>, Dependencies by dependencies {
+interface Provider<Config : ProviderConfiguration> : ConfigHandler<Config>, Dependencies, ZiplineService {
 
-
-    open val catalogue: Catalogue = Catalogue.CatalogueNotAvailable()
+    open val catalogue: Catalogue get() = Catalogue.CatalogueNotAvailable()
 
     /*
     * Preference priority

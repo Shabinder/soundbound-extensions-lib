@@ -1,12 +1,13 @@
 package `in`.shabinder.soundbound.providers
 
+import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.models.QueryParams
 import `in`.shabinder.soundbound.models.SearchItem
 import `in`.shabinder.soundbound.models.SongModel
+import kotlinx.serialization.Serializable
 
-abstract class QueryableProvider<TrackEntity, Config : ProviderConfiguration>(
-    dependencies: Dependencies
-) : Provider<Config>(dependencies) {
+interface QueryableProvider<TrackEntity, Config : ProviderConfiguration> : Provider<Config>,
+    ZiplineService {
 
     /*
     * Search this SOURCE for matches based on QueryParams and return found matches.
@@ -14,10 +15,10 @@ abstract class QueryableProvider<TrackEntity, Config : ProviderConfiguration>(
     * */
     abstract suspend fun search(queryParams: QueryParams): List<TrackEntity>
 
-    open val isISRCSupported: Boolean = false
+    open val isISRCSupported: Boolean get() = false
 
     open suspend fun searchSongModels(queryParams: QueryParams): List<SongModel> {
-        return search(queryParams).map { it.toSongModel() }
+        return search(queryParams).map { toSongModel(it) }
     }
 
     // this is without auto-completions
@@ -38,5 +39,5 @@ abstract class QueryableProvider<TrackEntity, Config : ProviderConfiguration>(
     /*
     * Function to map TrackEntity -> TrackDetails.
     * */
-    abstract fun TrackEntity.toSongModel(): SongModel
+    abstract fun toSongModel(entity: TrackEntity): SongModel
 }

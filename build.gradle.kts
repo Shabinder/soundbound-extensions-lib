@@ -1,9 +1,12 @@
+import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
+import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
+
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
     kotlin("plugin.serialization")
-    id("org.jetbrains.compose")
     id("kotlin-parcelize")
+    id("app.cash.zipline")
     id("publish")
 }
 
@@ -51,7 +54,7 @@ android {
 }
 
 kotlin {
-    ios()
+    //ios()
     android {
         publishLibraryVariants("release", "debug")
     }
@@ -73,9 +76,9 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 with(deps) {
+                    implementation(zipline)
                     api(bundles.kotlinx)
                     api(essenty.parcelable)
-                    api(compose.runtime) // for @Stable, @Immutable, etc annotations
                     implementation(ktor.client.core)
                     api(paging.common)
                     api(fuzzy.wuzzy)
@@ -113,15 +116,19 @@ kotlin {
                 implementation(kotlin("test-js"))
             }
         }
-        val iosMain by getting {
+        /*val iosMain by getting {
             dependencies {
                 implementation(deps.ktor.client.ios)
             }
         }
-        val iosTest by getting
+        val iosTest by getting*/
     }
 
     dependencies {
         coreLibraryDesugaring(deps.androidx.desugar)
     }
+}
+
+plugins.withType<YarnPlugin> {
+    the<YarnRootExtension>().yarnLockAutoReplace = true
 }

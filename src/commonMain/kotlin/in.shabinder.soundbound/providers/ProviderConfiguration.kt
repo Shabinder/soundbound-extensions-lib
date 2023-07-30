@@ -57,7 +57,7 @@ sealed class ProviderConfiguration {
  * Impl class must override [defaultConfig] if [Config] is [ProviderConfiguration.Configuration]
  *  as it will provide correct handling with [ProviderConfiguration.key] .
  *  */
-internal interface ConfigHandler<Config : ProviderConfiguration> : Dependencies {
+interface ConfigHandler<Config : ProviderConfiguration> : Dependencies {
     /*
     * Optional Configuration which a provider might opt in to use and even make this user-configurable
     * */
