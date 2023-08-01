@@ -40,24 +40,29 @@ sealed class DownloadStatus : Parcelable {
     @Serializable
     sealed class Failed : DownloadStatus() {
 
+        companion object {
+            fun error(error: Throwable) = Error(error.toThrowableWrapper())
+        }
+
         @Serializable
         @Parcelize
         @Immutable
-        data class Error(val errors: List<ThrowableWrapper>) : Failed() {
-            constructor(error: ThrowableWrapper) : this(listOf(error))
+        data class Error<T: ThrowableWrapper>(val errors: List<T>) : Failed() {
+            constructor(error: T) : this(listOf(error))
 
-            constructor(error: Throwable) : this(ThrowableWrapper(error))
+            @Suppress("UNCHECKED_CAST")
+            constructor(error: Throwable) : this(errors = listOf<T>(error.toThrowableWrapper() as T))
         }
 
 
         @Serializable
         @Parcelize
         @Immutable
-        data class ProviderErrors(val errors: Map<SourceModel, Error>) : Failed()
+        data class ProviderErrors(val errors: Map<SourceModel, Error<*>>) : Failed()
 
         val allErrors: List<ThrowableWrapper>
             get() = when (this) {
-                is Error -> errors
+                is Error<*> -> errors
                 is ProviderErrors -> errors.values.map { it.errors }.flatten()
             }
     }

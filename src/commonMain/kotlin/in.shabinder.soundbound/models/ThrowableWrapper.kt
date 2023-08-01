@@ -1,9 +1,11 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
+import com.arkivanov.essenty.parcelable.IgnoredOnParcel
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 @Serializable
 @Immutable
@@ -11,15 +13,18 @@ import kotlinx.serialization.Serializable
 open class ThrowableWrapper(
     override val message: String,
     val stackTrace: String = "",
-    override val cause: ThrowableWrapper? = null
+    override val cause: ThrowableWrapper? = null,
 ) : Throwable(message, cause), Parcelable {
+
+    @Transient
+    @IgnoredOnParcel
+    var reference: Throwable? = null
+
     constructor(throwable: Throwable) : this(
         message = throwable.message ?: "",
         stackTrace = throwable.stackTraceToString(),
         cause = throwable.cause?.toThrowableWrapper()
     )
-
-    open fun toThrowable() = Throwable(message + "\n" + stackTrace)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -36,8 +41,12 @@ open class ThrowableWrapper(
     }
 
     override fun toString(): String {
-        return message + "-> " + toThrowable().stackTraceToString()
+        return reference?.toString()
+            ?: (message + "\nStacktrace:\n" + stackTrace + "\nCause:\n" + cause?.toString())
     }
 }
 
-fun Throwable.toThrowableWrapper() = if (this is ThrowableWrapper) this else ThrowableWrapper(this)
+fun Throwable.toThrowableWrapper() =
+    if (this is ThrowableWrapper) this else ThrowableWrapper(this).apply {
+        reference = this@toThrowableWrapper
+    }
