@@ -1,16 +1,9 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import com.arkivanov.essenty.parcelable.Parcelable
-import com.arkivanov.essenty.parcelable.Parcelize
-import io.ktor.client.HttpClient
-import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.request.headers
-import io.ktor.client.request.parameter
-import io.ktor.client.request.prepareRequest
-import io.ktor.client.request.setBody
-import io.ktor.client.request.url
-import io.ktor.http.HttpMethod
+import `in`.shabinder.soundbound.parcelize.Parcelable
+import `in`.shabinder.soundbound.parcelize.Parcelize
+import `in`.shabinder.soundbound.zipline.HttpClient
 import kotlinx.serialization.Serializable
 
 typealias DownloadRequest = Request
@@ -22,23 +15,21 @@ class Request(
     val url: String,
     val headers: Map<String, String> = emptyMap(),
     val params: Map<String, String> = emptyMap(),
-    val method: String = HttpMethod.Get.value,
+    val method: String = HttpClient.Method.GET.name,
     val body: String? = null,
 ) : Parcelable {
-    val httpMethod: HttpMethod
-        get() = HttpMethod.parse(method)
+    val httpMethod: HttpClient.Method
+        get() = HttpClient.Method.valueOf(method)
 
     companion object {
         fun from(
             url: String,
             headers: Map<String, String> = emptyMap(),
             params: Map<String, String> = emptyMap(),
-            method: String = HttpMethod.Get.value,
+            method: String = HttpClient.Method.GET.name,
             body: String? = null,
         ) = Request(url, method = method, params = params, headers = headers, body = body)
     }
-
-    suspend fun buildUsing(httpClient: HttpClient, block: HttpRequestBuilder.() -> Unit) = httpClient.buildRequest(this, block)
 
     override fun toString(): String {
         return "DownloadRequest(url='$url', headers=$headers, method='$method', body=$body)"
@@ -79,21 +70,4 @@ class Request(
         result = 31 * result + params.hashCode()
         return result
     }
-}
-
-suspend fun HttpClient.buildRequest(request: Request, block: HttpRequestBuilder.() -> Unit = {}) = prepareRequest() {
-    url(request.url)
-    method = request.httpMethod
-    headers {
-        request.headers.forEach { (key, value) ->
-            append(key, value)
-        }
-    }
-    request.params.forEach { (key, value) ->
-        parameter(key, value)
-    }
-    if (request.body != null)
-        setBody(request.body)
-
-    block()
 }

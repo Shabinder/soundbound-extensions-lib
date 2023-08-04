@@ -1,15 +1,18 @@
 package `in`.shabinder.soundbound.matcher
 
 import `in`.shabinder.soundbound.models.QueryParams
+import `in`.shabinder.soundbound.zipline.FuzzySearch
 
 fun <T : MatchProps> orderResults(
     matchFor: QueryParams,
     allMatches: List<T>,
+    searcher: FuzzySearch
 ): Map<T, Float> {
     val songModelWithMatchProps = allMatches.map { WrapperWithMatcherProps(it, it) }
     return orderResults(
         WrapperWithMatcherProps(matchFor, matchFor.asMatchProps()),
-        songModelWithMatchProps
+        songModelWithMatchProps,
+        searcher
     ).mapKeys { it.key.model }
 }
 

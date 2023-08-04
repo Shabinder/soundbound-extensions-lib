@@ -3,26 +3,21 @@
 package `in`.shabinder.soundbound.providers
 
 import androidx.compose.runtime.Immutable
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.InternalSerializationApi
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.PolymorphicModuleBuilder
-import kotlinx.serialization.serializer
 import kotlin.reflect.KClass
 
 
 @Serializable
 @Immutable
-data class ProviderConfigurationMetadata<Config : ProviderConfiguration>(
-    val defaultObject: Config,
+open class ProviderConfigurationMetadata<Config : ProviderConfiguration>(
+    val defaultObjectBuilder: (List<ProviderConfiguration.Data>) -> Config,
     val clazz: KClass<Config>
 ) {
     companion object {
-        inline fun <reified T : ProviderConfiguration> buildMetadata(builder: () -> T) =
+        inline fun <reified T : ProviderConfiguration> buildMetadata(noinline builder: (List<ProviderConfiguration.Data>) -> T) =
             ProviderConfigurationMetadata(
-                defaultObject = builder(),
+                defaultObjectBuilder = builder,
                 clazz = T::class
             )
     }
@@ -33,23 +28,33 @@ data class ProviderConfigurationMetadata<Config : ProviderConfiguration>(
  */
 @Immutable
 @Serializable
-sealed class ProviderConfiguration {
+sealed interface ProviderConfiguration {
 
     // key to identify this configuration in soundbound
-    abstract val key: String
+    val key: String
+
+    val props: List<Data>
 
     @Immutable
     @Serializable
-    object EmptyConfiguration : ProviderConfiguration() {
+    data class Data(
+        val key: String,
+        val value: String? = null,
+        val isRequired: Boolean = false,
+    )
+
+    @Immutable
+    @Serializable
+    object EmptyConfiguration : ProviderConfiguration {
         override val key: String = "in.shabinder.soundbound.extensions.EMPTY-CONFIG"
+        override val props: List<Data> = emptyList()
     }
 
     @Immutable
-    @Serializable
-    abstract class Configuration : ProviderConfiguration() {
+    interface Configuration : ProviderConfiguration {
         // if userConfigurable = true, then user can change this value,
         // and soundbound will handle its configuration (except key), supported types are String, Int, Long, Boolean
-        open val isUserConfigurable: Boolean = false
+        val isUserConfigurable: Boolean
     }
 }
 
@@ -61,15 +66,16 @@ interface ConfigHandler<Config : ProviderConfiguration> : Dependencies {
     /*
     * Optional Configuration which a provider might opt in to use and even make this user-configurable
     * */
-    open var configuration: Config?
-        get() = devicePreferences.getSavedConfigOrNull(
-            configurationMetadata
-        ) ?: runCatching {
-            configurationMetadata.defaultObject
-        }.getOrNull()
+    open var configuration: Config
+        get() = devicePreferences.getSavedConfigOrNull(configurationMetadata)
+            ?: configurationMetadata.defaultObjectBuilder(emptyList())
         set(value) {
-            if (value != null) devicePreferences.saveConfig(value, configurationMetadata)
+            devicePreferences.saveConfig(value, configurationMetadata)
         }
+
+    fun updateConfiguration(data: List<ProviderConfiguration.Data>) {
+        configuration = configurationMetadata.defaultObjectBuilder(data)
+    }
 
     val configurationMetadata: ProviderConfigurationMetadata<Config>
 }

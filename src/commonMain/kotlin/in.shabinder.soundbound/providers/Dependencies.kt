@@ -2,21 +2,17 @@ package `in`.shabinder.soundbound.providers
 
 import androidx.compose.runtime.Immutable
 import app.cash.zipline.ZiplineService
-import `in`.shabinder.soundbound.utils.Context
 import `in`.shabinder.soundbound.utils.DevicePreferences
-import io.ktor.client.HttpClient
-import io.ktor.client.HttpClientConfig
-import io.ktor.client.engine.HttpClientEngineConfig
-import kotlinx.coroutines.CoroutineScope
+import `in`.shabinder.soundbound.zipline.Crypto
+import `in`.shabinder.soundbound.zipline.FuzzySearch
+import `in`.shabinder.soundbound.zipline.HttpClient
+import `in`.shabinder.soundbound.zipline.LocaleProvider
 
 @Immutable
-interface Dependencies : ZiplineService {
-    val appContext: Context
-    val appScope: CoroutineScope
+interface Dependencies: ZiplineService {
     val devicePreferences: DevicePreferences
-    // val desECBDecrypt: (key: String, input: String) -> String
-    val httpClientBuilder: (
-        usePreConfig: Boolean,
-        block: HttpClientConfig<HttpClientEngineConfig>.() -> Unit
-    ) -> HttpClient
+    val localeProvider: LocaleProvider
+    val httpClientBuilder: (usePreConfig: Boolean, configure: HttpClient.() -> Unit) -> HttpClient
+    val fuzzySearch: FuzzySearch
+    val crypto: Crypto
 }
