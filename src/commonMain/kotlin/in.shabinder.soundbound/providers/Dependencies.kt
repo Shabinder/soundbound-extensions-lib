@@ -5,14 +5,14 @@ import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.utils.DevicePreferences
 import `in`.shabinder.soundbound.zipline.Crypto
 import `in`.shabinder.soundbound.zipline.FuzzySearch
-import `in`.shabinder.soundbound.zipline.HttpClient
+import `in`.shabinder.soundbound.zipline.HttpClientBuilder
 import `in`.shabinder.soundbound.zipline.LocaleProvider
 
 @Immutable
 interface Dependencies: ZiplineService {
     val devicePreferences: DevicePreferences
     val localeProvider: LocaleProvider
-    val httpClientBuilder: (usePreConfig: Boolean, configure: HttpClient.() -> Unit) -> HttpClient
+    val httpClientBuilder: HttpClientBuilder
     val fuzzySearch: FuzzySearch
     val crypto: Crypto
 }

@@ -1,10 +1,13 @@
 package `in`.shabinder.soundbound.zipline
 
-import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.parcelize.Parcelable
 import `in`.shabinder.soundbound.parcelize.Parcelize
 import `in`.shabinder.soundbound.utils.GlobalJson
 import kotlinx.serialization.Serializable
+
+interface HttpClientBuilder {
+    fun build(configure: HttpClient.() -> Unit = {}): HttpClient
+}
 
 interface HttpClient {
 

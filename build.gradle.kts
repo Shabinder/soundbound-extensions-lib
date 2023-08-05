@@ -8,11 +8,30 @@ plugins {
     id("kotlin-parcelize")
     id("app.cash.zipline")
     id("publish")
+    // id("org.jetbrains.kotlin.jvm") version "1.8.20" apply false
 }
 
 group = "in.shabinder"
 version = (deps.soundbound.extensions.lib.get().version as String).also {
     println("Building with lib version: $it")
+}
+
+afterEvaluate {
+    catalog {
+        // declare the aliases, bundles and versions in this block
+        versionCatalog {
+            from(files("gradle/deps.versions.toml"))
+        }
+    }
+
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                from(components["versionCatalog"])
+                artifactId = "soundbound-extensions-catalog"
+            }
+        }
+    }
 }
 
 repositories {
@@ -76,6 +95,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":compose"))
                 with(deps) {
                     api(zipline)
                     api(kotlinx.serialization.json)

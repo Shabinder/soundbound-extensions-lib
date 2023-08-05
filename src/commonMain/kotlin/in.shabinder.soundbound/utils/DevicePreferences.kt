@@ -8,10 +8,10 @@ import `in`.shabinder.soundbound.providers.ProviderConfigurationMetadata
 
 
 @Immutable
-interface DevicePreferences {
-    val preferredAudioQuality: AudioQuality
+abstract class DevicePreferences {
+    abstract val preferredAudioQuality: AudioQuality
 
-    val preferredAudioFormat: AudioFormat
+    abstract val preferredAudioFormat: AudioFormat
 
     fun getSystemTimeMillis(): Long
 

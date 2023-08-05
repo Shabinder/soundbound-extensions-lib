@@ -14,6 +14,7 @@ open class ProviderConfigurationMetadata<Config : ProviderConfiguration>(
     val defaultObjectBuilder: (List<ProviderConfiguration.Data>) -> Config,
     val clazz: KClass<Config>
 ) {
+    @Serializable
     companion object {
         inline fun <reified T : ProviderConfiguration> buildMetadata(noinline builder: (List<ProviderConfiguration.Data>) -> T) =
             ProviderConfigurationMetadata(
