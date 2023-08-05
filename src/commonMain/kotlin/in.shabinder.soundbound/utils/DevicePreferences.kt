@@ -22,20 +22,20 @@ interface DevicePreferences {
     fun <T: ProviderConfiguration> saveConfig(config: T, metadata: ProviderConfigurationMetadata<T>)
 
     fun getStringOrNull(key: String): String?
-    fun saveString(key: String, value: String)
+    fun putString(key: String, value: String)
 
 
     fun getIntOrNull(key: String): Int?
-    fun saveInt(key: String, value: Int)
+    fun putInt(key: String, value: Int)
 
     fun getBooleanOrNull(key: String): Boolean?
-    fun saveBoolean(key: String, value: Boolean)
+    fun putBoolean(key: String, value: Boolean)
 
     fun getLongOrNull(key: String): Long?
-    fun saveLong(key: String, value: Long)
+    fun putLong(key: String, value: Long)
 
     fun getFloatOrNull(key: String): Float?
-    fun saveFloat(key: String, value: Float)
+    fun putFloat(key: String, value: Float)
 
     fun remove(key: String)
 

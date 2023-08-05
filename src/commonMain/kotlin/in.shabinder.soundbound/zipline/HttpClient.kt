@@ -1,6 +1,8 @@
 package `in`.shabinder.soundbound.zipline
 
 import app.cash.zipline.ZiplineService
+import `in`.shabinder.soundbound.parcelize.Parcelable
+import `in`.shabinder.soundbound.parcelize.Parcelize
 import `in`.shabinder.soundbound.utils.GlobalJson
 import kotlinx.serialization.Serializable
 
@@ -61,28 +63,34 @@ interface HttpClient {
     }
 
     @Serializable
-    sealed interface BodyType {
+    @Parcelize
+    sealed interface BodyType : Parcelable {
         @Serializable
+        @Parcelize
         object NONE : BodyType
 
+        @Parcelize
         @Serializable
         data class JSON(
             val json: String,
         ) : BodyType
 
+        @Parcelize
         @Serializable
         data class FORM(
             val form: Map<String, String>,
         ) : BodyType
 
+        @Parcelize
         @Serializable
         data class RAW(
             val raw: String,
         ) : BodyType
     }
 
+    @Parcelize
     @Serializable
-    enum class Method {
+    enum class Method : Parcelable {
         GET, POST, PUT, DELETE
     }
 }

@@ -16,7 +16,7 @@ class Request(
     val headers: Map<String, String> = emptyMap(),
     val params: Map<String, String> = emptyMap(),
     val method: String = HttpClient.Method.GET.name,
-    val body: String? = null,
+    val body: HttpClient.BodyType = HttpClient.BodyType.NONE,
 ) : Parcelable {
     val httpMethod: HttpClient.Method
         get() = HttpClient.Method.valueOf(method)
@@ -27,7 +27,7 @@ class Request(
             headers: Map<String, String> = emptyMap(),
             params: Map<String, String> = emptyMap(),
             method: String = HttpClient.Method.GET.name,
-            body: String? = null,
+            body: HttpClient.BodyType = HttpClient.BodyType.NONE,
         ) = Request(url, method = method, params = params, headers = headers, body = body)
     }
 
@@ -39,7 +39,7 @@ class Request(
         url: String = this.url,
         headers: Map<String, String> = this.headers,
         method: String = this.method,
-        body: String? = this.body,
+        body: HttpClient.BodyType = this.body,
         params: Map<String, String> = this.params,
     ): Request {
         return Request(
