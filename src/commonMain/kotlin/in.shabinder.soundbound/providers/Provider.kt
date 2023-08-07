@@ -14,23 +14,23 @@ interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue {
     * 0 -> 10 ,
     *   0 will make this the best extension when multiple are registered for same `source`
     * */
-    abstract val priority: Int
+    val priority: Int
 
     /*
     * Source Name
     * ex: GAANA, JIOSAAVN, SOUNDCLOUD, etc
     * */
-    abstract val source: SourceModel
+    val source: SourceModel
 
     override val prefKey: String get() = source.sourceName
 
     /*
     * For a Particular URL, will return if this Extension Supports it for metadata fetching
     * */
-    abstract fun isLinkSupported(URL: String): Boolean
+    fun isLinkSupported(URL: String): Boolean
 
-    abstract suspend fun fetchPlatformQueryResult(URL: String): PlatformQueryResult
+    suspend fun fetchPlatformQueryResult(URL: String): PlatformQueryResult
 
-    open val isCatalogueAvailable: Boolean
-        get() = (this as Catalogue) !is Catalogue.CatalogueNotAvailable
+    val isCatalogueAvailable: Boolean
+        get() = (this as? Catalogue) !is Catalogue.CatalogueNotAvailable
 }

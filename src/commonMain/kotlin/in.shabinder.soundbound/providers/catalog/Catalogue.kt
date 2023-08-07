@@ -15,7 +15,7 @@ interface Catalogue {
     suspend fun getChartsScreensForCountry(countryCode: String): List<ChartListingContainer>
 
     @Serializable
-    class CatalogueNotAvailable: Catalogue, ZiplineService {
+    object CatalogueNotAvailable: Catalogue, ZiplineService {
         override suspend fun getCharts(): List<ChartListingModel> = emptyList()
         override suspend fun getChartsForCountry(countryCode: String): List<ChartListingModel> = emptyList()
         override suspend fun getChartsScreens(): List<ChartListingContainer> = emptyList()
