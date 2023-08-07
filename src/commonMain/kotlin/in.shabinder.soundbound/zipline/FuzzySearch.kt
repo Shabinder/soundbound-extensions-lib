@@ -1,6 +1,8 @@
 package `in`.shabinder.soundbound.zipline
 
-interface FuzzySearch {
+import app.cash.zipline.ZiplineService
+
+interface FuzzySearch: ZiplineService {
     fun ratio(
         a: String,
         b: String,

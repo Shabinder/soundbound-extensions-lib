@@ -1,25 +1,20 @@
 package `in`.shabinder.soundbound.utils
 
 import androidx.compose.runtime.Immutable
+import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.models.AudioFormat
 import `in`.shabinder.soundbound.models.AudioQuality
-import `in`.shabinder.soundbound.providers.ProviderConfiguration
-import `in`.shabinder.soundbound.providers.ProviderConfigurationMetadata
 
 
 @Immutable
-abstract class DevicePreferences {
-    abstract val preferredAudioQuality: AudioQuality
+interface DevicePreferences: ZiplineService {
+    val preferredAudioQuality: AudioQuality
 
-    abstract val preferredAudioFormat: AudioFormat
+    val preferredAudioFormat: AudioFormat
 
     fun getSystemTimeMillis(): Long
 
     fun getTimeZoneId(): String
-
-    /* Same Key used in ProviderConfiguration.Configuration*/
-    fun <T: ProviderConfiguration> getSavedConfigOrNull(metadata: ProviderConfigurationMetadata<T>): T?
-    fun <T: ProviderConfiguration> saveConfig(config: T, metadata: ProviderConfigurationMetadata<T>)
 
     fun getStringOrNull(key: String): String?
     fun putString(key: String, value: String)

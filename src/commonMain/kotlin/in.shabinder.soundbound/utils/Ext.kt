@@ -1,11 +1,9 @@
 package `in`.shabinder.soundbound.utils
 
-import `in`.shabinder.soundbound.providers.Provider
-import `in`.shabinder.soundbound.providers.ProviderConfiguration
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlin.math.min
 
-typealias ProviderService = Provider<out ProviderConfiguration>
 
 @Suppress("NOTHING_TO_INLINE")
 internal inline fun List<String>.cleaned(): List<String> {
@@ -34,5 +32,8 @@ val GlobalJson by lazy {
         ignoreUnknownKeys = true
         coerceInputValues = true
         encodeDefaults = true
+
+        @OptIn(ExperimentalSerializationApi::class)
+        explicitNulls = false
     }
 }

@@ -2,7 +2,7 @@ package `in`.shabinder.soundbound.zipline
 
 import app.cash.zipline.ZiplineService
 
-interface Crypto {
+interface Crypto: ZiplineService {
     fun desECBDecrypt(key: String, input: String): String
 
     fun encodeBase64(input: String): String

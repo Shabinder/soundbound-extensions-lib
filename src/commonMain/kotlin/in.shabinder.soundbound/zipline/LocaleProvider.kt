@@ -1,6 +1,8 @@
 package `in`.shabinder.soundbound.zipline
 
-interface LocaleProvider {
+import app.cash.zipline.ZiplineService
+
+interface LocaleProvider: ZiplineService {
     fun getDefaultLocaleCountry(): String
     fun getDefaultLocaleLanguageTag(): String
 }

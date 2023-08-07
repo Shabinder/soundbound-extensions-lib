@@ -3,38 +3,23 @@
 package `in`.shabinder.soundbound.providers
 
 import androidx.compose.runtime.Immutable
+import `in`.shabinder.soundbound.utils.GlobalJson
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.serializer
 import kotlin.reflect.KClass
 
-
-@Serializable
-@Immutable
-open class ProviderConfigurationMetadata<Config : ProviderConfiguration>(
-    val defaultObjectBuilder: (List<ProviderConfiguration.Data>) -> Config,
-    val clazz: KClass<Config>
-) {
-    @Serializable
-    companion object {
-        inline fun <reified T : ProviderConfiguration> buildMetadata(noinline builder: (List<ProviderConfiguration.Data>) -> T) =
-            ProviderConfigurationMetadata(
-                defaultObjectBuilder = builder,
-                clazz = T::class
-            )
-    }
-}
 
 /**
  * Configuration for a [Provider]
  */
 @Immutable
 @Serializable
-sealed interface ProviderConfiguration {
-
-    // key to identify this configuration in soundbound
-    val key: String
-
-    val props: List<Data>
+data class ProviderConfiguration(
+    val props: List<Data>,
+    val isUserConfigurable: Boolean = false,
+) {
 
     @Immutable
     @Serializable
@@ -44,39 +29,37 @@ sealed interface ProviderConfiguration {
         val isRequired: Boolean = false,
     )
 
-    @Immutable
-    @Serializable
-    object EmptyConfiguration : ProviderConfiguration {
-        override val key: String = "in.shabinder.soundbound.extensions.EMPTY-CONFIG"
-        override val props: List<Data> = emptyList()
-    }
-
-    @Immutable
-    interface Configuration : ProviderConfiguration {
-        // if userConfigurable = true, then user can change this value,
-        // and soundbound will handle its configuration (except key), supported types are String, Int, Long, Boolean
-        val isUserConfigurable: Boolean
+    companion object {
+        val EmptyConfiguration = ProviderConfiguration(props = emptyList())
     }
 }
+
 
 /**
  * Impl class must override [defaultConfig] if [Config] is [ProviderConfiguration.Configuration]
  *  as it will provide correct handling with [ProviderConfiguration.key] .
  *  */
-interface ConfigHandler<Config : ProviderConfiguration> : Dependencies {
+interface ConfigHandler : Dependencies {
+
+    val prefKey: String
+
     /*
     * Optional Configuration which a provider might opt in to use and even make this user-configurable
     * */
-    open var configuration: Config
-        get() = devicePreferences.getSavedConfigOrNull(configurationMetadata)
-            ?: configurationMetadata.defaultObjectBuilder(emptyList())
+    open var configuration: ProviderConfiguration
+        get() = with(devicePreferences) {
+            getStringOrNull(prefKey)?.let {
+                GlobalJson.decodeFromString(it)
+            } ?: ProviderConfiguration.EmptyConfiguration
+        }
         set(value) {
-            devicePreferences.saveConfig(value, configurationMetadata)
+            devicePreferences.putString(
+                prefKey,
+                GlobalJson.encodeToString(value)
+            )
         }
 
     fun updateConfiguration(data: List<ProviderConfiguration.Data>) {
-        configuration = configurationMetadata.defaultObjectBuilder(data)
+        configuration = configuration.copy(props = data)
     }
-
-    val configurationMetadata: ProviderConfigurationMetadata<Config>
 }

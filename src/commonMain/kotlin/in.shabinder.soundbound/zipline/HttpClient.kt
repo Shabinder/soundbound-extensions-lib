@@ -1,15 +1,21 @@
 package `in`.shabinder.soundbound.zipline
 
+import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.parcelize.Parcelable
 import `in`.shabinder.soundbound.parcelize.Parcelize
 import `in`.shabinder.soundbound.utils.GlobalJson
 import kotlinx.serialization.Serializable
 
-interface HttpClientBuilder {
-    fun build(configure: HttpClient.() -> Unit = {}): HttpClient
+interface HttpClientBuilder : ZiplineService {
+    fun build(): HttpClient
 }
 
-interface HttpClient {
+fun HttpClientBuilder.build(
+    config: HttpClient.() -> Unit,
+): HttpClient = build().apply(config)
+
+
+interface HttpClient : ZiplineService {
 
     var isCookiesEnabled: Boolean
 
@@ -104,6 +110,10 @@ suspend inline fun <reified T> HttpClient.get(
     headers: Map<String, String> = emptyMap(),
 ): T {
     return getAsString(url, params, headers).let {
+        if (T::class == String::class) {
+            return@let it as T
+        }
+
         GlobalJson.decodeFromString(it)
     }
 }
@@ -115,6 +125,10 @@ suspend inline fun <reified T> HttpClient.post(
     headers: Map<String, String> = emptyMap(),
 ): T {
     return postAsString(url, params, body, headers).let {
+        if (T::class == String::class) {
+            return@let it as T
+        }
+
         GlobalJson.decodeFromString(it)
     }
 }

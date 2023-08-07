@@ -7,9 +7,7 @@ import `in`.shabinder.soundbound.models.SourceModel
 import `in`.shabinder.soundbound.providers.catalog.Catalogue
 import kotlinx.coroutines.Dispatchers
 
-interface Provider<Config : ProviderConfiguration> : ConfigHandler<Config>, Dependencies, ZiplineService {
-
-    open val catalogue: Catalogue get() = Catalogue.CatalogueNotAvailable()
+interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue {
 
     /*
     * Preference priority
@@ -24,6 +22,8 @@ interface Provider<Config : ProviderConfiguration> : ConfigHandler<Config>, Depe
     * */
     abstract val source: SourceModel
 
+    override val prefKey: String get() = source.sourceName
+
     /*
     * For a Particular URL, will return if this Extension Supports it for metadata fetching
     * */
@@ -32,5 +32,5 @@ interface Provider<Config : ProviderConfiguration> : ConfigHandler<Config>, Depe
     abstract suspend fun fetchPlatformQueryResult(URL: String): PlatformQueryResult
 
     open val isCatalogueAvailable: Boolean
-        get() = catalogue !is Catalogue.CatalogueNotAvailable
+        get() = (this as Catalogue) !is Catalogue.CatalogueNotAvailable
 }
