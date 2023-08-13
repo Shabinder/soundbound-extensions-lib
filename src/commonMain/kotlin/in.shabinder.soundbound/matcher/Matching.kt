@@ -2,6 +2,7 @@ package `in`.shabinder.soundbound.matcher
 
 import `in`.shabinder.soundbound.zipline.FuzzySearch
 import kotlin.math.absoluteValue
+import kotlin.math.max
 import kotlin.math.min
 
 interface MatchProps {
@@ -51,7 +52,7 @@ fun <S: MatchProps, T : MatchProps> orderResults(
             continue
         }
 
-        if (artistMatch < 70) {
+        if (artistMatch < 50) {
             // ignoring matches with too low artist match ratio
             continue
         }
@@ -93,7 +94,7 @@ fun getAlbumMatch(matchAlbumName: String?, matchForAlbumName: String?, searcher:
         return 0f
     }
 
-    return searcher.ratio(matchAlbumName.sluggify(), matchForAlbumName.sluggify()).toFloat()
+    return searcher.ratio(matchAlbumName.sluggify(), matchForAlbumName.sluggify())
 }
 
 fun calculateDurationMatch(matchDuration: Long, matchForDuration: Long): Float {
@@ -115,7 +116,7 @@ fun <T : MatchProps> calculateNameMatch(match: T, matchFor: T, searcher: FuzzySe
                 .distinct().sorted()
                 .joinToString("-")
 
-        val filledTitleMatch = searcher.ratio(matchTitleFilled, matchForTitleFilled).toFloat()
+        val filledTitleMatch = searcher.ratio(matchTitleFilled, matchForTitleFilled)
 
         if (filledTitleMatch > nameMatch) {
             nameMatch = filledTitleMatch
@@ -139,14 +140,13 @@ private val FORBIDDEN_WORDS = listOf(
 )
 
 fun getNameMatch(matchTitle: String, matchForTitle: String, searcher: FuzzySearch): Float {
-    var match = searcher.ratio(matchForTitle, matchTitle).toFloat()
+    var match = searcher.ratio(matchForTitle, matchTitle)
 
     val matchTitleWords = matchTitle.sluggify().split("-").sorted()
     val matchForTitleWords = matchForTitle.sluggify().split("-").sorted()
 
     val sluggedSortedMatch =
         searcher.ratio(matchForTitleWords.joinToString("-"), matchTitleWords.joinToString("-"))
-            .toFloat()
 
     if (sluggedSortedMatch > match) {
         match = sluggedSortedMatch
@@ -161,17 +161,25 @@ fun getAllArtistsMatch(matchArtists: List<String>, matchForArtists: List<String>
     if (matchForArtists.size == 1) return artistMatch
 
     var matchArtistsSlugged =
-        matchArtists.filter { it.isNotBlank() }.toSet().sorted().map(String::sluggify)
+        (matchArtists.takeIf { it.size > 1 } ?: matchArtists.first().split(",").map(String::trim))
+            .asSequence()
+            .filter { it.isNotBlank() }.toSet().sorted()
+            .map(String::sluggify).filter { it.isNotBlank() }
+            .toList()
+
     val matchForArtistsSlugged =
-        matchForArtists.filter { it.isNotBlank() }.toSet().sorted().map(String::sluggify)
+        matchForArtists.asSequence()
+            .filter { it.isNotBlank() }.toSet().sorted()
+            .map(String::sluggify).filter { it.isNotBlank() }
+            .toList()
 
     matchArtistsSlugged =
-        matchArtistsSlugged.takeIf { it.size > 1 } ?: matchArtistsSlugged.first().split("-")
+        matchArtistsSlugged.takeIf { it.size > 1 } ?: matchArtistsSlugged.first().split("-").filter { it.isNotBlank() }
 
     var artistMatchNumber = 0f
 
     for ((matchArtist, matchForArtist) in matchArtistsSlugged.zip(matchForArtistsSlugged)) {
-        val match = searcher.partialRatio(matchForArtist, matchArtist).toFloat()
+        val match = searcher.partialRatio(matchForArtist, matchArtist)
         artistMatchNumber += match
     }
 
@@ -181,12 +189,19 @@ fun getAllArtistsMatch(matchArtists: List<String>, matchForArtists: List<String>
 }
 
 fun getMainArtistMatch(matchArtists: List<String>, matchForArtists: List<String>, searcher: FuzzySearch): Float {
-    var mainArtistMatch = 0.0f
+    var mainArtistMatch: Float = 0f
 
     val matchArtistsSlugged =
-        matchArtists.filter { it.isNotBlank() }.toSet().sorted().map(String::sluggify)
+        matchArtists.asSequence()
+            .filter { it.isNotBlank() }.toSet()//.sorted()
+            .map(String::sluggify).filter { it.isNotBlank() }
+            .toList()
+
     val matchForArtistsSlugged =
-        matchForArtists.filter { it.isNotBlank() }.toSet().sorted().map(String::sluggify)
+        matchForArtists.asSequence()
+            .filter { it.isNotBlank() }.toSet()//.sorted()
+            .map(String::sluggify).filter { it.isNotBlank() }
+            .toList()
 
     // Result match has no artists.
     if (matchArtistsSlugged.isEmpty() || matchForArtistsSlugged.isEmpty()) {
@@ -197,29 +212,30 @@ fun getMainArtistMatch(matchArtists: List<String>, matchForArtists: List<String>
 
     // further break down the matchArtistsSlugged, since all artists probably are combined in one string
     if (matchForArtistsSlugged.size > 1 && matchArtistsSlugged.size == 1) {
-        val matchArtistsSluggedSplit = matchArtistsSlugged.first().split("-")
+        val matchArtistsFirstSlugged =
+            matchArtistsSlugged.first().split("-").first { it.isNotBlank() }
+        val mainArtistFirstSlugged = matchForArtistsSlugged.first()
 
-        for (artist in matchForArtistsSlugged.drop(1)) {
-            if (artist in matchArtistsSluggedSplit) {
-                mainArtistMatch += 100f / matchForArtistsSlugged.size
-            }
+        mainArtistMatch = searcher.ratio(matchArtistsFirstSlugged, mainArtistFirstSlugged)
+        if (mainArtistMatch > 70) { // we have a pretty good match for main artist
+            return mainArtistMatch
         }
-
-        return mainArtistMatch
     }
 
-    mainArtistMatch =
-        searcher.partialRatio(matchForArtistsSlugged.first(), matchArtistsSlugged.first()).toFloat()
+    val partialMainMatch = // some garbage is alongside possibly, so match partial
+            searcher.partialRatio(matchForArtistsSlugged.first(), matchArtistsSlugged.first())
+
+    mainArtistMatch = max(partialMainMatch, mainArtistMatch)
 
     // try to use other artists if first artist match is too low
     if (mainArtistMatch < 50f) {
         @Suppress("NAME_SHADOWING")
         val matchArtistsSlugged =
-            matchArtistsSlugged.takeIf { it.size > 1 } ?: matchArtistsSlugged.first().split("-")
+            matchArtistsSlugged.takeIf { it.size > 1 } ?: matchArtistsSlugged.first().split("-").filter { it.isNotBlank() }
 
 
-        for ((matchArtist, matchForArtist) in matchArtistsSlugged.zip(matchForArtistsSlugged)) {
-            val match = searcher.partialRatio(matchForArtist, matchArtist).toFloat()
+        for ((matchArtist, matchForArtist) in matchArtistsSlugged.sorted().zip(matchForArtistsSlugged.sorted())) {
+            val match = searcher.partialRatio(matchForArtist, matchArtist)
             if (match > mainArtistMatch) {
                 mainArtistMatch = match
             }
