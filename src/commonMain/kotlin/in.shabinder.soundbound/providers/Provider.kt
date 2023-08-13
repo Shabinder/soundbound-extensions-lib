@@ -31,6 +31,8 @@ interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue {
 
     suspend fun fetchPlatformQueryResult(URL: String): PlatformQueryResult
 
+    suspend fun init() {}
+
     val isCatalogueAvailable: Boolean
         get() = (this as? Catalogue) !is Catalogue.CatalogueNotAvailable
 }

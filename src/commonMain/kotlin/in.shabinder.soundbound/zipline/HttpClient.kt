@@ -121,7 +121,7 @@ suspend inline fun <reified T> HttpClient.get(
 suspend inline fun <reified T> HttpClient.post(
     url: String,
     params: Map<String, String> = emptyMap(),
-    body: HttpClient.BodyType,
+    body: HttpClient.BodyType = HttpClient.BodyType.NONE,
     headers: Map<String, String> = emptyMap(),
 ): T {
     return postAsString(url, params, body, headers).let {

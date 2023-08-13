@@ -9,10 +9,10 @@ import kotlinx.serialization.Serializable
 @Immutable
 interface Catalogue {
     suspend fun getCharts(): List<ChartListingModel>
-    suspend fun getChartsForCountry(countryCode: String): List<ChartListingModel>
+    suspend fun getChartsForCountry(countryCode: String): List<ChartListingModel> = emptyList()
 
-    suspend fun getChartsScreens(): List<ChartListingContainer>
-    suspend fun getChartsScreensForCountry(countryCode: String): List<ChartListingContainer>
+    suspend fun getChartsScreens(): List<ChartListingContainer> = emptyList()
+    suspend fun getChartsScreensForCountry(countryCode: String): List<ChartListingContainer> = emptyList()
 
     @Serializable
     object CatalogueNotAvailable: Catalogue, ZiplineService {

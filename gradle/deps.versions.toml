@@ -1,8 +1,8 @@
 [versions]
 kotlin = "1.8.22"
 jbCompose = "1.4.3"
-androidGradle = "8.1.0"
-androidCoroutines = "1.7.2"
+androidGradle = "8.0.2"
+androidCoroutines = "1.7.3"
 ktLint = "11.0.0"
 mosaic = "0.1.0"
 koin = "3.4.1"
@@ -38,7 +38,7 @@ kotlin-kotlinTestCommon = { group = "org.jetbrains.kotlin", name = "kotlin-test-
 kotlin-kotlinTestJs = { group = "org.jetbrains.kotlin", name = "kotlin-test-js", version.ref = "kotlin" }
 kotlin-kotlinTestJunit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
 kotlin-kotlinTestAnnotationsCommon = { group = "org.jetbrains.kotlin", name = "kotlin-test-annotations-common", version.ref = "kotlin" }
-kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.6.4" }
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.7.3" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version = "0.21.0" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.4.0" }
@@ -103,6 +103,7 @@ moko-parcelize = { group = "dev.icerock.moko", name = "parcelize", version.ref =
 jaffree = { group = "com.github.kokorin.jaffree", name = "jaffree", version = "2021.08.16" }
 cache4k = { group = "io.github.reactivecircus.cache4k", name = "cache4k", version.ref = "cache4k" }
 multiplatform-settings = { group = "com.russhwolf", name = "multiplatform-settings-no-arg", version.ref = "multiplatformSettings" }
+multiplatform-settings-coroutines = { group = "com.russhwolf", name = "multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
 multiplatform-settings_serialization = { group = "com.russhwolf", name = "multiplatform-settings-serialization", version.ref = "multiplatformSettings" }
 countly-android = { group = "ly.count.android", name = "sdk", version = "21.11.2" }
 countly-desktop = { group = "ly.count.sdk", name = "java", version = "20.11.3" }
@@ -132,8 +133,8 @@ kotlin-js-wrappers-reactDom = { group = "org.jetbrains.kotlin-wrappers", name = 
 kotlin-js-wrappers-styled = { group = "org.jetbrains.kotlin-wrappers", name = "kotlin-styled", version = "5.3.1-pre.250-kotlin-1.5.31" }
 kotlin-js-wrappers-ext = { group = "org.jetbrains.kotlin-wrappers", name = "kotlin-extensions", version = "1.0.1-pre.251-kotlin-1.5.31" }
 
-androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.7.1" }
-androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.10.0" }
+androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.7.2" }
+androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.10.1" }
 androidx-startUp = { group = "androidx.startup", name = "startup-runtime", version = "1.1.1" }
 androidx-palette = { group = "androidx.palette", name = "palette-ktx", version = "1.0.0" }
 androidx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "androidCoroutines" }
@@ -178,4 +179,5 @@ kotlinx = ["kotlinx-coroutines", "kotlinx-serialization-json", "kotlinx-atomicfu
 essenty = ["essenty-lifecycle","essenty-instanceKeeper","essenty-backHandler","essenty-parcelable"]
 decompose = ["decompose-dep","decompose-extensions-compose"]
 koin-android = ["koin-androidx-compose","koin-android"]
+settings = ["multiplatform-settings","multiplatform-settings-coroutines","multiplatform-settings_serialization"]
 kotlin-js-wrappers = ["kotlin-js-wrappers-react","kotlin-js-wrappers-reactDom","kotlin-js-wrappers-styled","kotlin-js-wrappers-ext"]
