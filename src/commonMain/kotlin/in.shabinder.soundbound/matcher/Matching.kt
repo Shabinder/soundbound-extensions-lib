@@ -1,6 +1,6 @@
 package `in`.shabinder.soundbound.matcher
 
-import io.github.shabinder.fuzzywuzzy.diffutils.FuzzySearch
+import `in`.shabinder.soundbound.zipline.FuzzySearch
 import kotlin.math.absoluteValue
 import kotlin.math.min
 
@@ -15,6 +15,7 @@ interface MatchProps {
 fun <S: MatchProps, T : MatchProps> orderResults(
     matchFor: T,
     allMatches: Collection<S>,
+    searcher: FuzzySearch
 ): Map<S, Float> {
     val resultsWithMatchValue = mutableMapOf<S, Float>()
 
@@ -24,15 +25,15 @@ fun <S: MatchProps, T : MatchProps> orderResults(
             continue
         }
 
-        var artistMatch = getMainArtistMatch(match.artists, matchFor.artists)
-        val otherArtistsMatch = getAllArtistsMatch(match.artists, matchFor.artists)
+        var artistMatch = getMainArtistMatch(match.artists, matchFor.artists, searcher)
+        val otherArtistsMatch = getAllArtistsMatch(match.artists, matchFor.artists, searcher)
 
         artistMatch += otherArtistsMatch
         artistMatch /= if (matchFor.artists.size > 1) 2 else 1
 
         // TODO artist match fixes
 
-        val nameMatch = calculateNameMatch(match, matchFor)
+        val nameMatch = calculateNameMatch(match, matchFor, searcher)
 
         // degrade this match if includes one of the forbidden words
         val totalForbiddenOccurrences = FORBIDDEN_WORDS.mapNotNull {
@@ -60,7 +61,7 @@ fun <S: MatchProps, T : MatchProps> orderResults(
         var avgMatch = (artistMatch + nameMatch) / 2
 
         // add album match if certain
-        val albumMatch = getAlbumMatch(match.albumName, matchFor.albumName)
+        val albumMatch = getAlbumMatch(match.albumName, matchFor.albumName, searcher)
         if (!match.isrc.isNullOrBlank() && albumMatch != 0f && albumMatch <= 80f) {
             avgMatch += albumMatch
             avgMatch /= 2
@@ -87,20 +88,20 @@ fun <S: MatchProps, T : MatchProps> orderResults(
     return resultsWithMatchValue
 }
 
-fun getAlbumMatch(matchAlbumName: String?, matchForAlbumName: String?): Float {
+fun getAlbumMatch(matchAlbumName: String?, matchForAlbumName: String?, searcher: FuzzySearch): Float {
     if (matchAlbumName.isNullOrBlank() || matchForAlbumName.isNullOrBlank()) {
         return 0f
     }
 
-    return FuzzySearch.ratio(matchAlbumName.sluggify(), matchForAlbumName.sluggify()).toFloat()
+    return searcher.ratio(matchAlbumName.sluggify(), matchForAlbumName.sluggify()).toFloat()
 }
 
 fun calculateDurationMatch(matchDuration: Long, matchForDuration: Long): Float {
     return 100f - (matchDuration - matchForDuration).absoluteValue
 }
 
-fun <T : MatchProps> calculateNameMatch(match: T, matchFor: T): Float {
-    var nameMatch = getNameMatch(match.title, matchFor.title)
+fun <T : MatchProps> calculateNameMatch(match: T, matchFor: T, searcher: FuzzySearch): Float {
+    var nameMatch = getNameMatch(match.title, matchFor.title, searcher)
 
     // if too low, try with slugged artists
     if (nameMatch <= 75) {
@@ -114,7 +115,7 @@ fun <T : MatchProps> calculateNameMatch(match: T, matchFor: T): Float {
                 .distinct().sorted()
                 .joinToString("-")
 
-        val filledTitleMatch = FuzzySearch.ratio(matchTitleFilled, matchForTitleFilled).toFloat()
+        val filledTitleMatch = searcher.ratio(matchTitleFilled, matchForTitleFilled).toFloat()
 
         if (filledTitleMatch > nameMatch) {
             nameMatch = filledTitleMatch
@@ -124,6 +125,7 @@ fun <T : MatchProps> calculateNameMatch(match: T, matchFor: T): Float {
     return nameMatch
 }
 
+@Suppress("PrivatePropertyName")
 private val FORBIDDEN_WORDS = listOf(
     "bassboosted",
     "remix",
@@ -136,14 +138,14 @@ private val FORBIDDEN_WORDS = listOf(
     "8daudio",
 )
 
-fun getNameMatch(matchTitle: String, matchForTitle: String): Float {
-    var match = FuzzySearch.ratio(matchForTitle, matchTitle).toFloat()
+fun getNameMatch(matchTitle: String, matchForTitle: String, searcher: FuzzySearch): Float {
+    var match = searcher.ratio(matchForTitle, matchTitle).toFloat()
 
     val matchTitleWords = matchTitle.sluggify().split("-").sorted()
     val matchForTitleWords = matchForTitle.sluggify().split("-").sorted()
 
     val sluggedSortedMatch =
-        FuzzySearch.ratio(matchForTitleWords.joinToString("-"), matchTitleWords.joinToString("-"))
+        searcher.ratio(matchForTitleWords.joinToString("-"), matchTitleWords.joinToString("-"))
             .toFloat()
 
     if (sluggedSortedMatch > match) {
@@ -153,7 +155,7 @@ fun getNameMatch(matchTitle: String, matchForTitle: String): Float {
     return match
 }
 
-fun getAllArtistsMatch(matchArtists: List<String>, matchForArtists: List<String>): Float {
+fun getAllArtistsMatch(matchArtists: List<String>, matchForArtists: List<String>, searcher: FuzzySearch): Float {
     var artistMatch = 0.0f
 
     if (matchForArtists.size == 1) return artistMatch
@@ -169,7 +171,7 @@ fun getAllArtistsMatch(matchArtists: List<String>, matchForArtists: List<String>
     var artistMatchNumber = 0f
 
     for ((matchArtist, matchForArtist) in matchArtistsSlugged.zip(matchForArtistsSlugged)) {
-        val match = FuzzySearch.partialRatio(matchForArtist, matchArtist).toFloat()
+        val match = searcher.partialRatio(matchForArtist, matchArtist).toFloat()
         artistMatchNumber += match
     }
 
@@ -178,7 +180,7 @@ fun getAllArtistsMatch(matchArtists: List<String>, matchForArtists: List<String>
     return artistMatch
 }
 
-fun getMainArtistMatch(matchArtists: List<String>, matchForArtists: List<String>): Float {
+fun getMainArtistMatch(matchArtists: List<String>, matchForArtists: List<String>, searcher: FuzzySearch): Float {
     var mainArtistMatch = 0.0f
 
     val matchArtistsSlugged =
@@ -207,7 +209,7 @@ fun getMainArtistMatch(matchArtists: List<String>, matchForArtists: List<String>
     }
 
     mainArtistMatch =
-        FuzzySearch.partialRatio(matchForArtistsSlugged.first(), matchArtistsSlugged.first()).toFloat()
+        searcher.partialRatio(matchForArtistsSlugged.first(), matchArtistsSlugged.first()).toFloat()
 
     // try to use other artists if first artist match is too low
     if (mainArtistMatch < 50f) {
@@ -217,7 +219,7 @@ fun getMainArtistMatch(matchArtists: List<String>, matchForArtists: List<String>
 
 
         for ((matchArtist, matchForArtist) in matchArtistsSlugged.zip(matchForArtistsSlugged)) {
-            val match = FuzzySearch.partialRatio(matchForArtist, matchArtist).toFloat()
+            val match = searcher.partialRatio(matchForArtist, matchArtist).toFloat()
             if (match > mainArtistMatch) {
                 mainArtistMatch = match
             }

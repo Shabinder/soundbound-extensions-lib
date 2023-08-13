@@ -2,6 +2,7 @@ package `in`.shabinder.soundbound.matcher
 
 import androidx.compose.runtime.Immutable
 import `in`.shabinder.soundbound.models.SongModel
+import `in`.shabinder.soundbound.zipline.FuzzySearch
 
 @Immutable
 data class WrapperWithMatcherProps<T>(val model: T, val matchProps: MatchProps) :
@@ -10,11 +11,13 @@ data class WrapperWithMatcherProps<T>(val model: T, val matchProps: MatchProps) 
 fun orderResults(
     matchFor: SongModel,
     allMatches: List<SongModel>,
+    searcher: FuzzySearch
 ): Map<SongModel, Float> {
     val songModelWithMatchProps = allMatches.map { WrapperWithMatcherProps(it, it.asMatchProps()) }
     return orderResults(
         WrapperWithMatcherProps(matchFor, matchFor.asMatchProps()),
-        songModelWithMatchProps
+        songModelWithMatchProps,
+        searcher
     ).mapKeys { it.key.model }
 }
 

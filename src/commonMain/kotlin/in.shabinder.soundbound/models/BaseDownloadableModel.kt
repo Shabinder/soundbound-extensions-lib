@@ -1,7 +1,7 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import com.arkivanov.essenty.parcelable.Parcelable
+import `in`.shabinder.soundbound.parcelize.Parcelable
 import kotlinx.serialization.Serializable
 
 @Serializable

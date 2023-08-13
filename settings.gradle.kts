@@ -6,3 +6,4 @@ dependencyResolutionManagement {
         }
     }
 }
+include(":compose")

@@ -1,23 +1,39 @@
 package `in`.shabinder.soundbound.utils
 
-import io.ktor.client.*
-import io.ktor.client.request.*
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import kotlin.math.min
 
-/*
-* Return URL after Redirections
-*   - If Fails returns Input Url
-* */
-suspend inline fun HttpClient.getFinalUrl(
-    url: String,
-    crossinline block: HttpRequestBuilder.() -> Unit = {}
-): String {
-    return runCatching {
-        get(url, block).call.request.url.toString()
-    }.getOrNull() ?: url
+
+@Suppress("NOTHING_TO_INLINE")
+internal inline fun List<String>.cleaned(): List<String> {
+    return this.filter { it.isNotBlank() && it != "null" }
 }
 
-internal inline fun List<String>.cleaned(): ImmutableList<String> {
-    return this.filter { it.isNotBlank() && it != "null" }.toImmutableList()
+fun <T> T.limitDecimals(maxDecimals: Int): String {
+    val result = toString()
+    val lastIndex = result.length - 1
+    var pos = lastIndex
+    while (pos >= 0 && result[pos] != '.') {
+        pos--
+    }
+    return if (maxDecimals < 1 && pos >= 0) {
+        result.substring(0, min(pos, result.length))
+    } else if (pos >= 0) {
+        result.substring(0, min(pos + 1 + maxDecimals, result.length))
+    } else {
+        return result
+    }
+}
+
+val GlobalJson by lazy {
+    Json {
+        isLenient = true
+        ignoreUnknownKeys = true
+        coerceInputValues = true
+        encodeDefaults = true
+
+        @OptIn(ExperimentalSerializationApi::class)
+        explicitNulls = false
+    }
 }

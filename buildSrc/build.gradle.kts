@@ -9,10 +9,10 @@ repositories {
 
 dependencies {
     with(deps) {
+        implementation(zipline.gradlePlugin)
         implementation(androidx.gradle.plugin)
         with(kotlin) {
             implementation(kotlinGradlePlugin)
-            implementation(compose.gradle)
             implementation(serialization)
         }
     }

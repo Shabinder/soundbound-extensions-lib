@@ -1,12 +1,11 @@
 package `in`.shabinder.soundbound.providers
 
+import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.models.DownloadQueryResult
 import `in`.shabinder.soundbound.models.QueryParams
 import `in`.shabinder.soundbound.models.SongModel
 
-abstract class DownloadableProvider<TrackEntity, Config: ProviderConfiguration>(
-    dependencies: Dependencies
-) : QueryableProvider<TrackEntity, Config>(dependencies) {
+interface DownloadableProvider : QueryableProvider, ZiplineService {
 
     /*
     * The Provider Guarantees that TrackEntity has a method to return a download Link,
@@ -14,20 +13,23 @@ abstract class DownloadableProvider<TrackEntity, Config: ProviderConfiguration>(
     *
     * Can Throw DownloadLinkFetchFailed.
     * */
-    abstract suspend fun TrackEntity.getDownloadLink(): DownloadQueryResult
+    // suspend fun getDownloadLink(entity: TrackEntity): DownloadQueryResult
 
     /*
     * Search and find the closest match for provided QueryParams
     * */
-    open suspend fun findBestMatchURL(
+    suspend fun findBestMatchURL(
         queryParams: QueryParams
-    ): DownloadQueryResult = sortByBestMatch(
+    ): DownloadQueryResult /*= sortByBestMatch(
         search(queryParams),
         queryParams
-    ).getDownloadLink()
+    ).let { bestMatch ->
+        getDownloadLink(bestMatch)
+    }*/
 
     /*
     * Search and find the closest match for provided TrackDetails
     * */
-    suspend fun findBestMatchURL(songModel: SongModel) = findBestMatchURL(songModel.makeQueryParams())
+    suspend fun findBestMatchURL(songModel: SongModel) =
+        findBestMatchURL(songModel.makeQueryParams())
 }

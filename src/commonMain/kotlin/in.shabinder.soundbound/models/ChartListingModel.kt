@@ -1,12 +1,10 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import com.arkivanov.essenty.parcelable.Parcelable
-import com.arkivanov.essenty.parcelable.Parcelize
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import `in`.shabinder.soundbound.parcelize.Parcelable
+import `in`.shabinder.soundbound.parcelize.Parcelize
 import kotlinx.serialization.Serializable
-import kotlin.time.Duration.Companion.days
+
 @Parcelize
 @Immutable
 @Serializable
@@ -19,7 +17,7 @@ data class ChartListingModel(
     val epochMs: Long,
     val subtitle: String? = null,
 ): Parcelable {
-    constructor(
+    /*constructor(
         uri: String,
         name: String,
         comment: String? = "",
@@ -52,7 +50,7 @@ data class ChartListingModel(
         get() = Clock.System.now() - date > 1.days
 
     val date: Instant
-        get() = Instant.fromEpochMilliseconds(epochMs)
+        get() = Instant.fromEpochMilliseconds(epochMs)*/
 }
 
 @Parcelize

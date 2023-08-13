@@ -1,19 +1,19 @@
 package `in`.shabinder.soundbound.providers
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.utils.Context
+import app.cash.zipline.ZiplineScoped
+import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.utils.DevicePreferences
-import io.ktor.client.HttpClient
-import io.ktor.client.HttpClientConfig
-import kotlinx.coroutines.CoroutineScope
+import `in`.shabinder.soundbound.zipline.Crypto
+import `in`.shabinder.soundbound.zipline.FuzzySearch
+import `in`.shabinder.soundbound.zipline.HttpClientBuilder
+import `in`.shabinder.soundbound.zipline.LocaleProvider
 
 @Immutable
 interface Dependencies {
-    val appContext: Context
-    val appScope: CoroutineScope
     val devicePreferences: DevicePreferences
-    val httpClientBuilder: (
-        usePreConfig: Boolean,
-        block: HttpClientConfig<*>.() -> Unit
-    ) -> HttpClient
+    val localeProvider: LocaleProvider
+    val httpClientBuilder: HttpClientBuilder
+    val fuzzySearch: FuzzySearch
+    val crypto: Crypto
 }
