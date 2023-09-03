@@ -40,6 +40,14 @@ open class ThrowableWrapper(
         return result
     }
 
+    open fun copy(
+        message: String = this.message,
+        stackTrace: String = this.stackTrace,
+        cause: ThrowableWrapper? = this.cause,
+    ): ThrowableWrapper {
+        return ThrowableWrapper(message, stackTrace, cause)
+    }
+
     override fun toString(): String {
         return reference?.toString()
             ?: (message + "\nStacktrace:\n" + stackTrace + "\nCause:\n" + cause?.toString())

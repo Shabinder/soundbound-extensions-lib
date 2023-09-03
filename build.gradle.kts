@@ -8,7 +8,6 @@ plugins {
     id("kotlin-parcelize")
     id("app.cash.zipline")
     id("publish")
-    // id("org.jetbrains.kotlin.jvm") version "1.8.20" apply false
 }
 
 group = "in.shabinder"
@@ -96,66 +95,13 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":compose"))
+                implementation(project(":parcelize"))
                 with(deps) {
                     api(zipline)
                     api(kotlinx.serialization.json)
-//                    api(bundles.kotlinx)
-//                    api(essenty.parcelable)
-                    // implementation(ktor.client.core)
-                    // api(paging.common)
-                    // api(fuzzy.wuzzy)
                 }
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
-        val androidMain by getting {
-            dependencies {
-                //implementation(deps.ktor.client.android)
-                implementation(deps.androidx.core)
-            }
-        }
-        val jvmMain by getting {
-            dependencies {
-                //implementation(deps.ktor.client.cio)
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-            }
-        }
-
-        val notParcelableMain by creating {
-            dependsOn(commonMain)
-            dependencies {
-
-            }
-        }
-
-        val jsMain by getting {
-            dependsOn(notParcelableMain)
-            dependencies {
-//                implementation(deps.ktor.client.js)
-            }
-        }
-        val jsTest by getting {
-            dependencies {
-                //implementation(kotlin("test-js"))
-            }
-        }
-
-        /*val iosMain by getting {
-            dependsOn(notParcelableMain)
-            dependencies {
-//                implementation(deps.ktor.client.ios)
-            }
-        }
-        val iosTest by getting*/
     }
 
     dependencies {

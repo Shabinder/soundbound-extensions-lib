@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
+    id("kotlin-parcelize")
     id("publish")
 }
 
@@ -26,6 +27,16 @@ kotlin {
         }
     }
 
+    sourceSets {
+        val commonMain by getting {}
+        val notParcelableMain by creating {
+            dependsOn(commonMain)
+        }
+
+        val jsMain by getting {
+            dependsOn(notParcelableMain)
+        }
+    }
     dependencies {
         coreLibraryDesugaring(deps.androidx.desugar)
     }
@@ -37,7 +48,7 @@ repositories {
 }
 
 android {
-    namespace = "in.shabinder.soundbound.compose"
+    namespace = "in.shabinder.soundbound.parcelize"
     compileSdk = 33
 
     defaultConfig {

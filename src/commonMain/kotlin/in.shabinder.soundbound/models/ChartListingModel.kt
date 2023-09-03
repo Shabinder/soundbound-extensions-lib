@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Immutable
 @Serializable
-data class ChartListingModel(
+open class ChartListingModel(
     val uri: String,
     val name: String,
     val comment: String? = "",
@@ -16,7 +16,47 @@ data class ChartListingModel(
     val list: List<ChartEntity>,
     val epochMs: Long,
     val subtitle: String? = null,
-): Parcelable {
+) : Parcelable {
+    open fun copy(
+        uri: String = this.uri,
+        name: String = this.name,
+        comment: String? = this.comment,
+        thumbnail: String? = this.thumbnail,
+        list: List<ChartEntity> = this.list,
+        epochMs: Long = this.epochMs,
+        subtitle: String? = this.subtitle,
+    ) = ChartListingModel(uri, name, comment, thumbnail, list, epochMs, subtitle)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ChartListingModel) return false
+
+        if (uri != other.uri) return false
+        if (name != other.name) return false
+        if (comment != other.comment) return false
+        if (thumbnail != other.thumbnail) return false
+        if (list != other.list) return false
+        if (epochMs != other.epochMs) return false
+        if (subtitle != other.subtitle) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = uri.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + (comment?.hashCode() ?: 0)
+        result = 31 * result + (thumbnail?.hashCode() ?: 0)
+        result = 31 * result + list.hashCode()
+        result = 31 * result + epochMs.hashCode()
+        result = 31 * result + (subtitle?.hashCode() ?: 0)
+        return result
+    }
+
+    override fun toString(): String {
+        return "ChartListingModel(uri='$uri', name='$name', comment=$comment, thumbnail=$thumbnail, list=$list, epochMs=$epochMs, subtitle=$subtitle)"
+    }
+
     /*constructor(
         uri: String,
         name: String,
@@ -61,7 +101,7 @@ data class ChartListingContainer(
     val comment: String? = "",
     val thumbnail: String? = "",
     val chartListingModelFetcher: List<suspend () -> ChartListingModel> // on-req fetch
-): Parcelable
+) : Parcelable
 
 @Parcelize
 @Immutable
@@ -75,11 +115,11 @@ data class ChartEntity(
     val sourceModel: SourceModel,
     val type: Type,
     override val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
-): BaseDownloadableModel() {
+) : BaseDownloadableModel() {
     @Parcelize
     @Immutable
     @Serializable
-    enum class Type: Parcelable {
+    enum class Type : Parcelable {
         SONG, PLAYLIST
     }
 }

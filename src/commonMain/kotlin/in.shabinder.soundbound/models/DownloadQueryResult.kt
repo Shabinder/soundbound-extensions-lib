@@ -15,7 +15,7 @@ open class DownloadQueryResult(
     open val audioQuality: AudioQuality
 ): Parcelable {
     @JvmOverloads
-    fun copy(
+    open fun copy(
         downloadRequest: Request = this.downloadRequest,
         audioFormat: AudioFormat = this.audioFormat,
         audioQuality: AudioQuality = this.audioQuality

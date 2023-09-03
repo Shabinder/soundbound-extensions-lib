@@ -4,6 +4,8 @@ import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.models.QueryParams
 import `in`.shabinder.soundbound.models.SearchItem
 import `in`.shabinder.soundbound.models.SongModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.serialization.Serializable
 
 interface QueryableProvider : Provider, ZiplineService {
@@ -14,7 +16,9 @@ interface QueryableProvider : Provider, ZiplineService {
 
     // this is without auto-completions
     suspend fun searchItems(queryParams: QueryParams): List<SearchItem>
+    fun loadItems(queryParams: QueryParams): Flow<List<SearchItem>>
 
     // only auto-completions
     suspend fun searchSuggestionItems(queryParams: QueryParams): List<SearchItem> = emptyList()
+    fun loadSuggestionItems(queryParams: QueryParams): Flow<List<SearchItem>> = flowOf(emptyList())
 }

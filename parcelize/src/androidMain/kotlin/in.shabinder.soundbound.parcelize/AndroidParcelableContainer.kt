@@ -5,7 +5,6 @@ package `in`.shabinder.soundbound.parcelize
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Parcel
-import androidx.core.os.bundleOf
 import kotlin.reflect.KClass
 
 internal class AndroidParcelableContainer(
@@ -15,9 +14,10 @@ internal class AndroidParcelableContainer(
     private var value: Parcelable? = null
 
     override fun <T : Parcelable> consume(clazz: KClass<out T>): T? {
-        val consumedValue = value ?: bundle?.apply { classLoader = clazz.java.classLoader }?.getParcelable(
-            KEY
-        )
+        val consumedValue =
+            value ?: bundle?.apply { classLoader = clazz.java.classLoader }?.getParcelable(
+                KEY
+            )
         value = null
         bundle = null
 
@@ -33,7 +33,11 @@ internal class AndroidParcelableContainer(
     override fun describeContents(): Int = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeBundle(value?.let { bundleOf(KEY to it) } ?: bundle)
+        dest.writeBundle(value?.let {
+            Bundle().apply {
+                putParcelable(KEY, it)
+            }
+        } ?: bundle)
     }
 
     companion object CREATOR : android.os.Parcelable.Creator<AndroidParcelableContainer> {

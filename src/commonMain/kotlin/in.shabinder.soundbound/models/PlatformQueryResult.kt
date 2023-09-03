@@ -36,7 +36,7 @@ open class PlatformQueryResult(
     open val creators: List<String> = emptyList(),
 ): Parcelable {
     @JvmOverloads
-    fun copy(
+    open fun copy(
         title: String = this.title,
         coverUrl: String = this.coverUrl,
         queryLink: String = this.queryLink,

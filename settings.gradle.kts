@@ -7,3 +7,4 @@ dependencyResolutionManagement {
     }
 }
 include(":compose")
+include(":parcelize")
