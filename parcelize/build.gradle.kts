@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
+
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
@@ -18,12 +20,15 @@ kotlin {
         }
     }
     js(IR) {
+        val jsTestAction = Action<KotlinJsTest> {
+            useMocha { timeout = "30000" }
+        }
         browser {
-            testTask { useMocha { timeout = "30000" } }
+            testTask(jsTestAction)
         }
         binaries.executable()
         nodejs {
-            testTask { useMocha { timeout = "30000" } }
+            testTask(jsTestAction)
         }
     }
 
@@ -55,7 +60,7 @@ android {
         minSdk = 21
     }
 
-    sourceSets["main"].manifest.srcFile("../src/androidMain/AndroidManifest.xml")
+    // sourceSets["main"].manifest.srcFile("../src/androidMain/AndroidManifest.xml")
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true

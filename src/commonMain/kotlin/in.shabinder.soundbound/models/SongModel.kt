@@ -46,6 +46,7 @@ open class SongModel(
     override val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
     open val isFavourite: Boolean = false,
     open val isrc: String? = null,
+    open val lyrics: String? = null,
     open val extraProps: Map<String, String> = emptyMap()
 ) : BaseDownloadableModel() {
 
@@ -71,6 +72,7 @@ open class SongModel(
         downloaded: DownloadStatus = this.downloaded,
         isFavourite: Boolean = this.isFavourite,
         isrc: String? = this.isrc,
+        lyrics: String? = this.lyrics,
         extraProps: Map<String, String> = this.extraProps
     ): SongModel {
         return SongModel(
@@ -94,6 +96,7 @@ open class SongModel(
             downloaded = downloaded,
             isFavourite = isFavourite,
             isrc = isrc,
+            lyrics = lyrics,
             extraProps = extraProps
         )
     }
@@ -137,6 +140,7 @@ open class SongModel(
         if (albumArtists.cleaned() != other.albumArtists.cleaned()) return false
         if (genre.cleaned() != other.genre.cleaned()) return false
         if (isrc != other.isrc) return false
+        if (lyrics != other.lyrics) return false
         if (extraProps != other.extraProps) return false
         return true
     }
@@ -162,11 +166,12 @@ open class SongModel(
         result = 31 * result + isFavourite.hashCode()
         result = 31 * result + genre.hashCode()
         result = 31 * result + (isrc?.hashCode() ?: 0)
+        result = 31 * result + (lyrics?.hashCode() ?: 0)
         result = 31 * result + extraProps.hashCode()
         return result
     }
 
     override fun toString(): String {
-        return "SongModel(id=$id, title=$title, durationSec=$durationSec, year=$year, artists=$artists, genre=$genre, source=$source, videoID=$videoID, albumName=$albumName, albumArtists=$albumArtists, trackNumber=$trackNumber, comment=$comment, trackURL=$trackURL, albumArtURL=$albumArtURL, downloadLink=$downloadLink, audioQuality=$audioQuality, audioFormat=$audioFormat, downloaded=$downloaded, isFavourite=$isFavourite, isrc=$isrc, extraProps=$extraProps)"
+        return "SongModel(id=$id, title=$title, durationSec=$durationSec, year=$year, artists=$artists, genre=$genre, source=$source, videoID=$videoID, albumName=$albumName, albumArtists=$albumArtists, trackNumber=$trackNumber, comment=$comment, trackURL=$trackURL, albumArtURL=$albumArtURL, downloadLink=$downloadLink, audioQuality=$audioQuality, audioFormat=$audioFormat, downloaded=$downloaded, isFavourite=$isFavourite, isrc=$isrc, extraProps=$extraProps, lyrics=$lyrics)"
     }
 }

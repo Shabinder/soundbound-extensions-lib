@@ -5,9 +5,10 @@ import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.models.PlatformQueryResult
 import `in`.shabinder.soundbound.models.SourceModel
 import `in`.shabinder.soundbound.providers.catalog.Catalogue
+import `in`.shabinder.soundbound.providers.lyrics.LyricsProvider
 import kotlinx.coroutines.Dispatchers
 
-interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue {
+interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, LyricsProvider {
 
     /*
     * Preference priority
@@ -35,4 +36,7 @@ interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue {
 
     val isCatalogueAvailable: Boolean
         get() = (this as? Catalogue) !is Catalogue.CatalogueNotAvailable
+
+    val isLyricsAvailable: Boolean
+        get() = (this as? LyricsProvider) !is LyricsProvider.LyricsNotAvailable
 }

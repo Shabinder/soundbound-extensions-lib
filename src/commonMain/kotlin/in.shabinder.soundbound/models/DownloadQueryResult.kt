@@ -12,18 +12,21 @@ import kotlin.jvm.JvmOverloads
 open class DownloadQueryResult(
     open val downloadRequest: DownloadRequest,
     open val audioFormat: AudioFormat,
-    open val audioQuality: AudioQuality
-): Parcelable {
+    open val audioQuality: AudioQuality,
+    open val lyrics: String? = null // actual lyrics with matching with download audio
+) : Parcelable {
     @JvmOverloads
     open fun copy(
         downloadRequest: Request = this.downloadRequest,
         audioFormat: AudioFormat = this.audioFormat,
-        audioQuality: AudioQuality = this.audioQuality
+        audioQuality: AudioQuality = this.audioQuality,
+        lyrics: String? = this.lyrics,
     ): DownloadQueryResult {
         return DownloadQueryResult(
             downloadRequest = downloadRequest,
             audioFormat = audioFormat,
-            audioQuality = audioQuality
+            audioQuality = audioQuality,
+            lyrics = lyrics
         )
     }
 
@@ -33,6 +36,7 @@ open class DownloadQueryResult(
         if (downloadRequest != other.downloadRequest) return false
         if (audioFormat != other.audioFormat) return false
         if (audioQuality != other.audioQuality) return false
+        if (lyrics != other.lyrics) return false
         return true
     }
 
@@ -40,9 +44,10 @@ open class DownloadQueryResult(
         var result = downloadRequest.hashCode()
         result = 31 * result + audioFormat.hashCode()
         result = 31 * result + audioQuality.hashCode()
+        result = 31 * result + lyrics.hashCode()
         return result
     }
 
     override fun toString(): String =
-        "DownloadQueryResult(downloadRequest=$downloadRequest, audioFormat=$audioFormat, audioQuality=$audioQuality)"
+        "DownloadQueryResult(downloadRequest=$downloadRequest, audioFormat=$audioFormat, audioQuality=$audioQuality, lyrics=$lyrics)"
 }

@@ -44,7 +44,7 @@ android {
         minSdk = 21
     }
 
-    sourceSets["main"].manifest.srcFile("../src/androidMain/AndroidManifest.xml")
+    //sourceSets["main"].manifest.srcFile("../src/androidMain/AndroidManifest.xml")
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true

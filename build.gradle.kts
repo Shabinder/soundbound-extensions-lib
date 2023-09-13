@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
 
@@ -73,7 +74,7 @@ android {
 
 kotlin {
     //ios()
-    android {
+    androidTarget {
         publishLibraryVariants("release", "debug")
     }
     jvm {
@@ -82,20 +83,19 @@ kotlin {
         }
     }
     js(IR) {
-        browser {
-            testTask { useMocha { timeout = "30000" } }
+        val jsTestAction = Action<KotlinJsTest> {
+            useMocha { timeout = "30000" }
         }
+        browser { testTask(jsTestAction) }
         binaries.executable()
-        nodejs {
-            testTask { useMocha { timeout = "30000" } }
-        }
+        nodejs { testTask(jsTestAction) }
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":compose"))
-                implementation(project(":parcelize"))
+                api(project(":compose"))
+                api(project(":parcelize"))
                 with(deps) {
                     api(zipline)
                     api(kotlinx.serialization.json)
