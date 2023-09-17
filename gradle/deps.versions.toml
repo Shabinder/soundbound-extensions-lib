@@ -7,7 +7,7 @@ ktLint = "11.5.1"
 mosaic = "0.8.0"
 koin = "3.4.3"
 kermit = "2.0.0-RC5"
-ktor = "2.3.3"
+ktor = "2.3.4"
 kotlinxSerialization = "1.6.0"
 sqlDelight = "2.0.0"
 sqliteJdbcDriver = "3.42.0.1"
@@ -29,7 +29,7 @@ paging = "3.2.0-alpha05-0.2.3"
 zipline = "1.2.0"
 
 [libraries]
-soundbound-extensions-lib = { group = "in.shabinder", name = "soundbound-extensions-lib", version = "0.7" }
+soundbound-extensions-lib = { group = "in.shabinder", name = "soundbound-extensions-lib", version = "0.8" }
 soundbound-compose = { group = "in.shabinder", name = "compose", version = "1.0.0" }
 soundbound-parcelize = { group = "in.shabinder", name = "parcelize", version = "1.0.0" }
 

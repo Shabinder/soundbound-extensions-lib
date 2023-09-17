@@ -1,12 +1,10 @@
 package `in`.shabinder.soundbound.providers
 
-import app.cash.zipline.Zipline
 import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.models.PlatformQueryResult
 import `in`.shabinder.soundbound.models.SourceModel
 import `in`.shabinder.soundbound.providers.catalog.Catalogue
 import `in`.shabinder.soundbound.providers.lyrics.LyricsProvider
-import kotlinx.coroutines.Dispatchers
 
 interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, LyricsProvider {
 
@@ -35,8 +33,8 @@ interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, Lyr
     suspend fun init() {}
 
     val isCatalogueAvailable: Boolean
-        get() = (this as? Catalogue) !is Catalogue.CatalogueNotAvailable
+        get() = this !is Catalogue.CatalogueNotAvailable
 
     val isLyricsAvailable: Boolean
-        get() = (this as? LyricsProvider) !is LyricsProvider.LyricsNotAvailable
+        get() = this !is LyricsProvider.LyricsNotAvailable
 }
