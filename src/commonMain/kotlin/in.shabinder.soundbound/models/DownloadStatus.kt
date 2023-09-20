@@ -13,7 +13,7 @@ sealed class DownloadStatus : Parcelable {
     @Parcelize
     @Immutable
     @Serializable
-    object Downloaded : DownloadStatus()
+    data object Downloaded : DownloadStatus()
 
     @Parcelize
     @Immutable
@@ -23,17 +23,17 @@ sealed class DownloadStatus : Parcelable {
     @Parcelize
     @Immutable
     @Serializable
-    object Queued : DownloadStatus()
+    data object Queued : DownloadStatus()
 
     @Parcelize
     @Immutable
     @Serializable
-    object NotDownloaded : DownloadStatus()
+    data object NotDownloaded : DownloadStatus()
 
     @Parcelize
     @Immutable
     @Serializable
-    object Converting : DownloadStatus()
+    data object Converting : DownloadStatus()
 
     @Parcelize
     @Immutable

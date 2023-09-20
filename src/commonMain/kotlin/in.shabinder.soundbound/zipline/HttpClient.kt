@@ -57,7 +57,7 @@ interface HttpClient : ZiplineService {
     @Serializable
     sealed interface AuthType {
         @Serializable
-        object NONE : AuthType
+        data object NONE : AuthType
 
         @Serializable
         data class BASIC(
@@ -76,7 +76,7 @@ interface HttpClient : ZiplineService {
     sealed interface BodyType : Parcelable {
         @Serializable
         @Parcelize
-        object NONE : BodyType
+        data object NONE : BodyType
 
         @Parcelize
         @Serializable
@@ -100,7 +100,7 @@ interface HttpClient : ZiplineService {
     @Parcelize
     @Serializable
     enum class Method : Parcelable {
-        GET, POST, PUT, DELETE
+        GET, POST, PUT, DELETE, HEAD
     }
 }
 
