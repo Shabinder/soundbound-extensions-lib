@@ -1,12 +1,12 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.Parcelable
-import `in`.shabinder.soundbound.parcelize.Parcelize
+
+
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
 
-@Parcelize
+
 @Serializable
 @Immutable
 open class DownloadQueryResult(
@@ -14,7 +14,7 @@ open class DownloadQueryResult(
     open val audioFormat: AudioFormat,
     open val audioQuality: AudioQuality,
     open val lyrics: String? = null // actual lyrics with matching with download audio
-) : Parcelable {
+) {
     @JvmOverloads
     open fun copy(
         downloadRequest: Request = this.downloadRequest,

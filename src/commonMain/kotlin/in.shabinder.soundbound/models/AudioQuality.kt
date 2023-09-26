@@ -1,14 +1,14 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.Parcelable
-import `in`.shabinder.soundbound.parcelize.Parcelize
+
+
 import kotlinx.serialization.Serializable
 
-@Parcelize
+
 @Immutable
 @Serializable
-enum class AudioQuality(val kbps: String): Parcelable {
+enum class AudioQuality(val kbps: String) {
     KBPS128("128"),
     KBPS160("160"),
     KBPS192("192"),

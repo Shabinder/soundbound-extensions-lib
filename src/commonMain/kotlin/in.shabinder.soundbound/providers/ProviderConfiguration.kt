@@ -7,8 +7,6 @@ import `in`.shabinder.soundbound.utils.GlobalJson
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.serializer
-import kotlin.reflect.KClass
 
 
 /**
@@ -46,7 +44,7 @@ interface ConfigHandler : Dependencies {
     /*
     * Optional Configuration which a provider might opt in to use and even make this user-configurable
     * */
-    open var configuration: ProviderConfiguration
+    var configuration: ProviderConfiguration
         get() = with(devicePreferences) {
             getStringOrNull(prefKey)?.let {
                 GlobalJson.decodeFromString(it)

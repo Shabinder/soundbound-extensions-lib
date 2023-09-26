@@ -13,7 +13,7 @@ interface MatchProps {
     val isrc: String?
 }
 
-fun <S: MatchProps, T : MatchProps> orderResults(
+fun <S : MatchProps, T : MatchProps> orderResults(
     matchFor: T,
     allMatches: Collection<S>,
     searcher: FuzzySearch
@@ -89,7 +89,11 @@ fun <S: MatchProps, T : MatchProps> orderResults(
     return resultsWithMatchValue
 }
 
-fun getAlbumMatch(matchAlbumName: String?, matchForAlbumName: String?, searcher: FuzzySearch): Float {
+fun getAlbumMatch(
+    matchAlbumName: String?,
+    matchForAlbumName: String?,
+    searcher: FuzzySearch
+): Float {
     if (matchAlbumName.isNullOrBlank() || matchForAlbumName.isNullOrBlank()) {
         return 0f
     }
@@ -155,7 +159,11 @@ fun getNameMatch(matchTitle: String, matchForTitle: String, searcher: FuzzySearc
     return match
 }
 
-fun getAllArtistsMatch(matchArtists: List<String>, matchForArtists: List<String>, searcher: FuzzySearch): Float {
+fun getAllArtistsMatch(
+    matchArtists: List<String>,
+    matchForArtists: List<String>,
+    searcher: FuzzySearch
+): Float {
     var artistMatch = 0.0f
 
     if (matchForArtists.size == 1) return artistMatch
@@ -174,7 +182,8 @@ fun getAllArtistsMatch(matchArtists: List<String>, matchForArtists: List<String>
             .toList()
 
     matchArtistsSlugged =
-        matchArtistsSlugged.takeIf { it.size > 1 } ?: matchArtistsSlugged.first().split("-").filter { it.isNotBlank() }
+        matchArtistsSlugged.takeIf { it.size > 1 } ?: matchArtistsSlugged.first().split("-")
+            .filter { it.isNotBlank() }
 
     var artistMatchNumber = 0f
 
@@ -188,7 +197,11 @@ fun getAllArtistsMatch(matchArtists: List<String>, matchForArtists: List<String>
     return artistMatch
 }
 
-fun getMainArtistMatch(matchArtists: List<String>, matchForArtists: List<String>, searcher: FuzzySearch): Float {
+fun getMainArtistMatch(
+    matchArtists: List<String>,
+    matchForArtists: List<String>,
+    searcher: FuzzySearch
+): Float {
     var mainArtistMatch: Float = 0f
 
     val matchArtistsSlugged =
@@ -223,7 +236,7 @@ fun getMainArtistMatch(matchArtists: List<String>, matchForArtists: List<String>
     }
 
     val partialMainMatch = // some garbage is alongside possibly, so match partial
-            searcher.partialRatio(matchForArtistsSlugged.first(), matchArtistsSlugged.first())
+        searcher.partialRatio(matchForArtistsSlugged.first(), matchArtistsSlugged.first())
 
     mainArtistMatch = max(partialMainMatch, mainArtistMatch)
 
@@ -231,10 +244,12 @@ fun getMainArtistMatch(matchArtists: List<String>, matchForArtists: List<String>
     if (mainArtistMatch < 50f) {
         @Suppress("NAME_SHADOWING")
         val matchArtistsSlugged =
-            matchArtistsSlugged.takeIf { it.size > 1 } ?: matchArtistsSlugged.first().split("-").filter { it.isNotBlank() }
+            matchArtistsSlugged.takeIf { it.size > 1 } ?: matchArtistsSlugged.first().split("-")
+                .filter { it.isNotBlank() }
 
 
-        for ((matchArtist, matchForArtist) in matchArtistsSlugged.sorted().zip(matchForArtistsSlugged.sorted())) {
+        for ((matchArtist, matchForArtist) in matchArtistsSlugged.sorted()
+            .zip(matchForArtistsSlugged.sorted())) {
             val match = searcher.partialRatio(matchForArtist, matchArtist)
             if (match > mainArtistMatch) {
                 mainArtistMatch = match

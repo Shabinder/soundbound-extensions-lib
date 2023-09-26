@@ -14,8 +14,8 @@ sqliteJdbcDriver = "3.42.0.1"
 slf4j = "1.7.36"
 i18n4k = "0.6.0"
 cache4k = "0.11.0"
-decompose = "2.1.0-beta-01"
-essenty = "1.2.0-beta-01"
+decompose = "2.2.0-alpha01"
+essenty = "1.3.0-alpha01"
 multiplatformSettings = "1.0.0"
 mviKotlin = "3.2.1"
 accompanist = "0.32.0"
@@ -31,7 +31,6 @@ zipline = "1.2.0"
 [libraries]
 soundbound-extensions-lib = { group = "in.shabinder", name = "soundbound-extensions-lib", version = "0.8" }
 soundbound-compose = { group = "in.shabinder", name = "compose", version = "1.0.0" }
-soundbound-parcelize = { group = "in.shabinder", name = "parcelize", version = "1.0.0" }
 
 clarity = { group = "com.microsoft.clarity", name = "clarity", version = "1.3.2" }
 kache = { group = "com.mayakapps.kache", name = "kache", version = "2.0.0-rc02" }

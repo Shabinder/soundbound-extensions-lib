@@ -1,14 +1,14 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.Parcelable
-import `in`.shabinder.soundbound.parcelize.Parcelize
+
+
 import kotlinx.serialization.Serializable
 
-@Parcelize
+
 @Immutable
 @Serializable
-enum class AudioFormat: Parcelable {
+enum class AudioFormat {
     MP3, MP4, FLAC, OGG, WAV, UNKNOWN;
 
     companion object {

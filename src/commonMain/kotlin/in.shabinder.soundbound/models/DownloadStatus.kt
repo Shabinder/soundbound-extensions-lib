@@ -1,41 +1,41 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.Parcelable
-import `in`.shabinder.soundbound.parcelize.Parcelize
+
+
 import kotlinx.serialization.Serializable
 
-@Parcelize
+
 @Immutable
 @Serializable
-sealed class DownloadStatus : Parcelable {
+sealed class DownloadStatus {
 
-    @Parcelize
+
     @Immutable
     @Serializable
     data object Downloaded : DownloadStatus()
 
-    @Parcelize
+
     @Immutable
     @Serializable
     data class Downloading(val progress: Int = 2) : DownloadStatus()
 
-    @Parcelize
+
     @Immutable
     @Serializable
     data object Queued : DownloadStatus()
 
-    @Parcelize
+
     @Immutable
     @Serializable
     data object NotDownloaded : DownloadStatus()
 
-    @Parcelize
+
     @Immutable
     @Serializable
     data object Converting : DownloadStatus()
 
-    @Parcelize
+
     @Immutable
     @Serializable
     sealed class Failed : DownloadStatus() {
@@ -45,9 +45,9 @@ sealed class DownloadStatus : Parcelable {
         }
 
         @Serializable
-        @Parcelize
+
         @Immutable
-        data class Error<T: ThrowableWrapper>(val errors: List<T>) : Failed() {
+        data class Error<T : ThrowableWrapper>(val errors: List<T>) : Failed() {
             constructor(error: T) : this(listOf(error))
 
             @Suppress("UNCHECKED_CAST")
@@ -56,7 +56,7 @@ sealed class DownloadStatus : Parcelable {
 
 
         @Serializable
-        @Parcelize
+
         @Immutable
         data class ProviderErrors(val errors: Map<SourceModel, Error<*>>) : Failed()
 

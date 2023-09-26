@@ -1,23 +1,23 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.Parcelable
-import `in`.shabinder.soundbound.parcelize.Parcelize
+
+
 import kotlinx.serialization.Serializable
 
-@Parcelize
+
 @Immutable
 @Serializable
 open class SourceModel(
     open val sourceName: String,
     open val sourceURL: String,
     open val isActive: Boolean
-): Parcelable {
+) {
 
     constructor(
         sourceName: String,
         sourceURL: String
-    ): this(
+    ) : this(
         sourceName = sourceName,
         sourceURL = sourceURL,
         isActive = true

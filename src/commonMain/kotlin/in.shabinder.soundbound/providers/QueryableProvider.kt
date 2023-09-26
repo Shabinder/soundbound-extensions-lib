@@ -6,7 +6,6 @@ import `in`.shabinder.soundbound.models.SearchItem
 import `in`.shabinder.soundbound.models.SongModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.serialization.Serializable
 
 interface QueryableProvider : Provider, ZiplineService {
 

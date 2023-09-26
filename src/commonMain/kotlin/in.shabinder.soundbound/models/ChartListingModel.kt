@@ -1,11 +1,11 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.Parcelable
-import `in`.shabinder.soundbound.parcelize.Parcelize
+
+
 import kotlinx.serialization.Serializable
 
-@Parcelize
+
 @Immutable
 @Serializable
 open class ChartListingModel(
@@ -16,7 +16,7 @@ open class ChartListingModel(
     val list: List<ChartEntity>,
     val epochMs: Long,
     val subtitle: String? = null,
-) : Parcelable {
+) {
     open fun copy(
         uri: String = this.uri,
         name: String = this.name,
@@ -93,7 +93,7 @@ open class ChartListingModel(
         get() = Instant.fromEpochMilliseconds(epochMs)*/
 }
 
-@Parcelize
+
 @Immutable
 @Serializable
 data class ChartListingContainer(
@@ -101,9 +101,9 @@ data class ChartListingContainer(
     val comment: String? = "",
     val thumbnail: String? = "",
     val chartListingModelFetcher: List<suspend () -> ChartListingModel> // on-req fetch
-) : Parcelable
+)
 
-@Parcelize
+
 @Immutable
 @Serializable
 data class ChartEntity(
@@ -116,10 +116,10 @@ data class ChartEntity(
     val type: Type,
     override val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
 ) : BaseDownloadableModel() {
-    @Parcelize
+
     @Immutable
     @Serializable
-    enum class Type : Parcelable {
+    enum class Type {
         SONG, PLAYLIST
     }
 }

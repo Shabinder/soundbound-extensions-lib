@@ -95,7 +95,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":compose"))
-                api(project(":parcelize"))
+                //api(project(":parcelize"))
                 with(deps) {
                     api(zipline)
                     api(kotlinx.serialization.json)

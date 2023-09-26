@@ -17,13 +17,13 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.Parcelable
-import `in`.shabinder.soundbound.parcelize.Parcelize
+
+
 import `in`.shabinder.soundbound.utils.cleaned
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
 
-@Parcelize
+
 @Immutable
 @Serializable
 open class PlatformQueryResult(
@@ -34,7 +34,7 @@ open class PlatformQueryResult(
     open val source: SourceModel,
     open val description: String = "",
     open val creators: List<String> = emptyList(),
-): Parcelable {
+) {
     @JvmOverloads
     open fun copy(
         title: String = this.title,

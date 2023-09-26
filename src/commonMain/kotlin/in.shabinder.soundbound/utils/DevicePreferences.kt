@@ -7,7 +7,7 @@ import `in`.shabinder.soundbound.models.AudioQuality
 
 
 @Immutable
-interface DevicePreferences: ZiplineService {
+interface DevicePreferences : ZiplineService {
     val preferredAudioQuality: AudioQuality
 
     val preferredAudioFormat: AudioFormat

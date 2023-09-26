@@ -1,12 +1,12 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.Parcelable
-import `in`.shabinder.soundbound.parcelize.Parcelize
+
+
 import `in`.shabinder.soundbound.utils.cleaned
 import kotlinx.serialization.Serializable
 
-@Parcelize
+
 @Immutable
 @Serializable
 open class QueryParams(
@@ -20,7 +20,7 @@ open class QueryParams(
     open val trackLink: String? = null,
     open val interestedEntityType: SearchItem.Type = SearchItem.Type.All,
     open val isrc: String? = null,
-) : Parcelable {
+) {
 
     @kotlin.jvm.JvmOverloads
     open fun copy(

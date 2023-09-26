@@ -17,12 +17,11 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.Parcelize
 import `in`.shabinder.soundbound.utils.cleaned
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
 
-@Parcelize
+
 @Immutable
 @Serializable
 open class SongModel(

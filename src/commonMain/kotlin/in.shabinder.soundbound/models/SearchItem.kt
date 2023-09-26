@@ -1,11 +1,11 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.Parcelable
-import `in`.shabinder.soundbound.parcelize.Parcelize
+
+
 import kotlinx.serialization.Serializable
 
-@Parcelize
+
 @Immutable
 @Serializable
 open class SearchItem(
@@ -13,11 +13,11 @@ open class SearchItem(
     val link: String,
     val albumArtURL: String,
     val type: Type = Type.Song
-): Parcelable {
-    @Parcelize
+) {
+
     @Immutable
     @Serializable
-    enum class Type: Parcelable {
+    enum class Type {
         Song, Album, Playlist, Artist, AutoComplete, All // All doesn't include autocomplete
     }
 

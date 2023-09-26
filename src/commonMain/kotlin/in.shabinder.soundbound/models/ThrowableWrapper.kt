@@ -1,23 +1,20 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.IgnoredOnParcel
-import `in`.shabinder.soundbound.parcelize.Parcelable
-import `in`.shabinder.soundbound.parcelize.Parcelize
+
+
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
 @Serializable
 @Immutable
-@Parcelize
 open class ThrowableWrapper(
     override val message: String,
     val stackTrace: String = "",
     override val cause: ThrowableWrapper? = null,
-) : Throwable(message, cause), Parcelable {
+) : Throwable(message, cause) {
 
     @Transient
-    @IgnoredOnParcel
     var reference: Throwable? = null
 
     constructor(throwable: Throwable) : this(

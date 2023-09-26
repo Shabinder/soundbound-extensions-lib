@@ -1,14 +1,14 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.Parcelable
-import `in`.shabinder.soundbound.parcelize.Parcelize
+
+
 import `in`.shabinder.soundbound.zipline.HttpClient
 import kotlinx.serialization.Serializable
 
 typealias DownloadRequest = Request
 
-@Parcelize
+
 @Immutable
 @Serializable
 class Request(
@@ -18,7 +18,7 @@ class Request(
     val method: String = HttpClient.Method.GET.name,
     val body: HttpClient.BodyType = HttpClient.BodyType.NONE,
     val downloadChunkSize: Long? = null
-) : Parcelable {
+) {
     val httpMethod: HttpClient.Method
         get() = HttpClient.Method.valueOf(method)
 

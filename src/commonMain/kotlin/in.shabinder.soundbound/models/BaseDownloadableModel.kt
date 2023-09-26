@@ -1,12 +1,12 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
-import `in`.shabinder.soundbound.parcelize.Parcelable
+
 import kotlinx.serialization.Serializable
 
 @Serializable
 @Immutable
-abstract class BaseDownloadableModel(): Parcelable {
+abstract class BaseDownloadableModel {
     abstract val downloaded: DownloadStatus
 
     override fun toString() = "BaseDownloadableModel(downloadStatus=$downloaded)"
