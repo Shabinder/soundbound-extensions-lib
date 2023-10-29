@@ -39,7 +39,7 @@ open class SongModel(
     open val comment: String?,
     open val trackURL: String,
     open val albumArtURL: String?,
-    open val downloadLink: Request?,
+    open val downloadLinks: List<DownloadQueryResult>?,
     open val audioQuality: AudioQuality = AudioQuality.KBPS192,
     open val audioFormat: AudioFormat = AudioFormat.MP4,
     override val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
@@ -65,7 +65,7 @@ open class SongModel(
         comment: String? = this.comment,
         trackURL: String = this.trackURL,
         albumArtURL: String? = this.albumArtURL,
-        downloadLink: Request? = this.downloadLink,
+        downloadLinks: List<DownloadQueryResult>? = this.downloadLinks,
         audioQuality: AudioQuality = this.audioQuality,
         audioFormat: AudioFormat = this.audioFormat,
         downloaded: DownloadStatus = this.downloaded,
@@ -89,7 +89,7 @@ open class SongModel(
             comment = comment,
             trackURL = trackURL,
             albumArtURL = albumArtURL,
-            downloadLink = downloadLink,
+            downloadLinks = downloadLinks,
             audioQuality = audioQuality,
             audioFormat = audioFormat,
             downloaded = downloaded,
@@ -130,7 +130,7 @@ open class SongModel(
         if (comment != other.comment) return false
         if (trackURL != other.trackURL) return false
         if (albumArtURL != other.albumArtURL) return false
-        if (downloadLink != other.downloadLink) return false
+        if (downloadLinks != other.downloadLinks) return false
         if (audioQuality != other.audioQuality) return false
         if (audioFormat != other.audioFormat) return false
         if (downloaded != other.downloaded) return false
@@ -158,7 +158,7 @@ open class SongModel(
         result = 31 * result + (comment?.hashCode() ?: 0)
         result = 31 * result + trackURL.hashCode()
         result = 31 * result + (albumArtURL?.hashCode() ?: 0)
-        result = 31 * result + (downloadLink?.hashCode() ?: 0)
+        result = 31 * result + (downloadLinks?.hashCode() ?: 0)
         result = 31 * result + audioQuality.hashCode()
         result = 31 * result + audioFormat.hashCode()
         result = 31 * result + downloaded.hashCode()
@@ -171,6 +171,6 @@ open class SongModel(
     }
 
     override fun toString(): String {
-        return "SongModel(id=$id, title=$title, durationSec=$durationSec, year=$year, artists=$artists, genre=$genre, source=$source, videoID=$videoID, albumName=$albumName, albumArtists=$albumArtists, trackNumber=$trackNumber, comment=$comment, trackURL=$trackURL, albumArtURL=$albumArtURL, downloadLink=$downloadLink, audioQuality=$audioQuality, audioFormat=$audioFormat, downloaded=$downloaded, isFavourite=$isFavourite, isrc=$isrc, extraProps=$extraProps, lyrics=$lyrics)"
+        return "SongModel(id=$id, title=$title, durationSec=$durationSec, year=$year, artists=$artists, genre=$genre, source=$source, videoID=$videoID, albumName=$albumName, albumArtists=$albumArtists, trackNumber=$trackNumber, comment=$comment, trackURL=$trackURL, albumArtURL=$albumArtURL, downloadLinks=$downloadLinks, audioQuality=$audioQuality, audioFormat=$audioFormat, downloaded=$downloaded, isFavourite=$isFavourite, isrc=$isrc, extraProps=$extraProps, lyrics=$lyrics)"
     }
 }

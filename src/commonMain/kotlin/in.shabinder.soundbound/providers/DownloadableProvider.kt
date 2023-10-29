@@ -20,7 +20,7 @@ interface DownloadableProvider : QueryableProvider, ZiplineService {
     * */
     suspend fun findBestMatchURL(
         queryParams: QueryParams
-    ): DownloadQueryResult /*= sortByBestMatch(
+    ): List<DownloadQueryResult> /*= sortByBestMatch(
         search(queryParams),
         queryParams
     ).let { bestMatch ->

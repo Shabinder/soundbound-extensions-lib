@@ -1,12 +1,16 @@
 package `in`.shabinder.soundbound.providers
 
+import androidx.compose.runtime.Immutable
 import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.models.PlatformQueryResult
 import `in`.shabinder.soundbound.models.SourceModel
+import `in`.shabinder.soundbound.providers.auth.AuthHandler
 import `in`.shabinder.soundbound.providers.catalog.Catalogue
 import `in`.shabinder.soundbound.providers.lyrics.LyricsProvider
 
-interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, LyricsProvider {
+@Immutable
+interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, LyricsProvider,
+    AuthHandler {
 
     /*
     * Preference priority
@@ -22,6 +26,7 @@ interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, Lyr
     val source: SourceModel
 
     override val prefKey: String get() = source.sourceName
+    override val authDataConfigKey: String get() = source.sourceName
 
     /*
     * For a Particular URL, will return if this Extension Supports it for metadata fetching

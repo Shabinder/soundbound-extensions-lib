@@ -17,6 +17,10 @@ enum class AudioQuality(val kbps: String) {
     UNKNOWN("-1");
 
     companion object {
+        val qualityComparator = Comparator<AudioQuality> { r1, r2 ->
+            r1.kbps.toInt() - r2.kbps.toInt()
+        }
+
         fun getQuality(kbps: String): AudioQuality {
             return when (kbps) {
                 "128" -> KBPS128
