@@ -1,3 +1,3 @@
 package `in`.shabinder.soundbound.utils
 
-actual typealias Context = Any?
+actual typealias Context = Any

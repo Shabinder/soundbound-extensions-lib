@@ -17,6 +17,9 @@ interface QueryableProvider : Provider, ZiplineService {
     suspend fun searchItems(queryParams: QueryParams): List<SearchItem>
     fun loadItems(queryParams: QueryParams): Flow<List<SearchItem>>
 
+    /* Get Related Media Items to following model, mostly used for `endless playback` */
+    suspend fun relatedSongs(queryParams: QueryParams): List<SongModel> = emptyList()
+
     // only auto-completions
     suspend fun searchSuggestionItems(queryParams: QueryParams): List<SearchItem> = emptyList()
     fun loadSuggestionItems(queryParams: QueryParams): Flow<List<SearchItem>> = flowOf(emptyList())

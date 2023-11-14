@@ -33,6 +33,7 @@ kotlin {
 
 repositories {
     google()
+    mavenLocal()
     mavenCentral()
 }
 

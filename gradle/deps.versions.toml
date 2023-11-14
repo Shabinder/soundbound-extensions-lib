@@ -1,36 +1,36 @@
 [versions]
 kotlin = "1.9.10"
-jbCompose = "1.5.3"
+jbCompose = "1.5.10"
 androidGradle = "8.0.2"
 androidCoroutines = "1.7.3"
 ktLint = "11.5.1"
 mosaic = "0.8.0"
 koin = "3.5.0"
 kermit = "2.0.2"
-ktor = "2.3.5"
+ktor = "2.3.6"
 kotlinxSerialization = "1.6.0"
 sqlDelight = "2.0.0"
-sqliteJdbcDriver = "3.43.0.0"
-composeWebView = "1.5.0"
+sqliteJdbcDriver = "3.43.2.2"
+composeWebView = "1.6.0"
 slf4j = "1.7.36"
 i18n4k = "0.6.2"
 cache4k = "0.11.0"
-decompose = "2.2.0-alpha01"
-essenty = "1.3.0-alpha01"
-multiplatformSettings = "1.0.0"
+decompose = "2.2.0-alpha04"
+essenty = "1.3.0-alpha03"
+multiplatformSettings = "1.1.0"
 mviKotlin = "3.2.1"
 accompanist = "0.32.0"
 statelyVersion = "2.0.0-rc1"
 statelyIsoVersion = "2.0.0-rc1"
 androidxLifecycle = "2.6.2"
-androidxMedia3 = "1.2.0-beta01"
+androidxMedia3 = "1.2.0-rc01"
 okio = "3.6.0"
 arrow = "1.2.1"
 paging = "3.3.0-alpha02-0.4.0"
 zipline = "1.2.0"
 
 [libraries]
-soundbound-extensions-lib = { group = "in.shabinder", name = "soundbound-extensions-lib", version = "0.10" }
+soundbound-extensions-lib = { group = "in.shabinder", name = "soundbound-extensions-lib", version = "0.11" }
 soundbound-compose = { group = "in.shabinder", name = "compose", version = "1.0.0" }
 
 clarity = { group = "com.microsoft.clarity", name = "clarity", version = "1.3.3" }
@@ -46,7 +46,7 @@ kotlin-kotlinTestAnnotationsCommon = { group = "org.jetbrains.kotlin", name = "k
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.7.3" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version = "0.22.0" }
-kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.4.0" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.4.1" }
 kotlinx-immutableLists = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version = "0.3.5" }
 
 kotlin-compose-gradle = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "jbCompose" }
@@ -130,9 +130,9 @@ koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin"
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
-androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.7.2" }
+androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.8.0" }
 androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.12.0" }
-androidx-material = { group = "androidx.compose.material", name = "material", version = "1.5.1" }
+androidx-material = { group = "androidx.compose.material", name = "material", version = "1.5.4" }
 androidx-profileInstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version = "1.3.1" }
 androidx-startUp = { group = "androidx.startup", name = "startup-runtime", version = "1.1.1" }
 androidx-palette = { group = "androidx.palette", name = "palette-ktx", version = "1.0.0" }
@@ -146,7 +146,7 @@ androidx-lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-co
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version = "2.2.0" }
 
-androidx-desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.0.3" }
+androidx-desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.0.4" }
 androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "androidxMedia3" }
 androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "androidxMedia3" }
 androidx-media3-session = { group = "androidx.media3", name = "media3-session", version.ref = "androidxMedia3" }

@@ -36,6 +36,7 @@ afterEvaluate {
 
 repositories {
     google()
+    mavenLocal()
     mavenCentral()
 }
 

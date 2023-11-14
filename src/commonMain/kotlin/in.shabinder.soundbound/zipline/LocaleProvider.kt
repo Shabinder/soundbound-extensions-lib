@@ -5,4 +5,5 @@ import app.cash.zipline.ZiplineService
 interface LocaleProvider : ZiplineService {
     fun getDefaultLocaleCountry(): String
     fun getDefaultLocaleLanguageTag(): String
+    fun getDefaultTimeZone(): String
 }

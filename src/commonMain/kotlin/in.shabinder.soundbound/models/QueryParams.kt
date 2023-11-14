@@ -20,6 +20,7 @@ open class QueryParams(
     open val trackLink: String? = null,
     open val interestedEntityType: SearchItem.Type = SearchItem.Type.All,
     open val isrc: String? = null,
+    open val linkLists: List<String> = emptyList() // matched links from which this query was generated
 ) {
 
     @kotlin.jvm.JvmOverloads
@@ -34,6 +35,7 @@ open class QueryParams(
         trackLink: String? = this.trackLink,
         interestedEntityType: SearchItem.Type = this.interestedEntityType,
         isrc: String? = this.isrc,
+        linkLists: List<String> = this.linkLists
     ): QueryParams {
         return QueryParams(
             trackName = trackName,
@@ -46,6 +48,7 @@ open class QueryParams(
             trackLink = trackLink,
             interestedEntityType = interestedEntityType,
             isrc = isrc,
+            linkLists = linkLists
         )
     }
 
@@ -62,6 +65,7 @@ open class QueryParams(
         if (trackLink != other.trackLink) return false
         if (interestedEntityType != other.interestedEntityType) return false
         if (isrc != other.isrc) return false
+        // We don't match linkLists as it can populate along the way, and hence break equals
         return true
     }
 
@@ -76,10 +80,11 @@ open class QueryParams(
         result = 31 * result + (trackLink?.hashCode() ?: 0)
         result = 31 * result + interestedEntityType.hashCode()
         result = 31 * result + (isrc?.hashCode() ?: 0)
+        result = 31 * result + linkLists.hashCode()
         return result
     }
 
     override fun toString(): String {
-        return "QueryParams(trackName=$trackName, trackArtists=$trackArtists, trackDurationSec=$trackDurationSec, genre=$genre, year=$year, albumName=$albumName, albumArtists=$albumArtists, trackLink=$trackLink, interestedEntityType=$interestedEntityType, ISRC=$isrc)"
+        return "QueryParams(trackName=$trackName, trackArtists=$trackArtists, trackDurationSec=$trackDurationSec, genre=$genre, year=$year, albumName=$albumName, albumArtists=$albumArtists, trackLink=$trackLink, interestedEntityType=$interestedEntityType, ISRC=$isrc, linkLists=$linkLists)"
     }
 }
