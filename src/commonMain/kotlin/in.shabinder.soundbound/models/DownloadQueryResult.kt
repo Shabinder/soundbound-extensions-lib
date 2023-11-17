@@ -15,3 +15,9 @@ data class DownloadQueryResult(
     val audioQuality: AudioQuality,
     val lyrics: String? = null // actual lyrics with matching with download audio
 )
+
+@Immutable
+@Serializable
+data class DownloadQueryResults(
+    val results: List<DownloadQueryResult>
+)

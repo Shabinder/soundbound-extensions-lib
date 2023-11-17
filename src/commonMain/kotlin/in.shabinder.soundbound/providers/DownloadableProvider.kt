@@ -2,6 +2,7 @@ package `in`.shabinder.soundbound.providers
 
 import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.models.DownloadQueryResult
+import `in`.shabinder.soundbound.models.DownloadQueryResults
 import `in`.shabinder.soundbound.models.QueryParams
 import `in`.shabinder.soundbound.models.SongModel
 
@@ -20,7 +21,7 @@ interface DownloadableProvider : QueryableProvider, ZiplineService {
     * */
     suspend fun findBestMatchURL(
         queryParams: QueryParams
-    ): DownloadQueryResult /*= sortByBestMatch(
+    ): DownloadQueryResults /*= sortByBestMatch(
         search(queryParams),
         queryParams
     ).let { bestMatch ->
@@ -30,6 +31,6 @@ interface DownloadableProvider : QueryableProvider, ZiplineService {
     /*
     * Search and find the closest match for provided TrackDetails
     * */
-    suspend fun findBestMatchURL(songModel: SongModel) =
+    suspend fun findBestMatchURL(songModel: SongModel): DownloadQueryResults =
         findBestMatchURL(songModel.makeQueryParams())
 }
