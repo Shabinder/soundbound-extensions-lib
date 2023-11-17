@@ -51,3 +51,9 @@ open class DownloadQueryResult(
     override fun toString(): String =
         "DownloadQueryResult(downloadRequest=$downloadRequest, audioFormat=$audioFormat, audioQuality=$audioQuality, lyrics=$lyrics)"
 }
+
+@Immutable
+@Serializable
+data class DownloadQueryResults(
+    val results: List<DownloadQueryResult>
+)
