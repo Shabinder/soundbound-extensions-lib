@@ -39,7 +39,7 @@ open class SongModel(
     open val comment: String?,
     open val trackURL: String,
     open val albumArtURL: String?,
-    open val downloadLinks: List<DownloadQueryResult>?,
+    open val downloadLinks: List<DownloadQueryResult> = emptyList(),
     open val audioQuality: AudioQuality = AudioQuality.KBPS192,
     open val audioFormat: AudioFormat = AudioFormat.MP4,
     override val downloaded: DownloadStatus = DownloadStatus.NotDownloaded,
@@ -65,7 +65,7 @@ open class SongModel(
         comment: String? = this.comment,
         trackURL: String = this.trackURL,
         albumArtURL: String? = this.albumArtURL,
-        downloadLinks: List<DownloadQueryResult>? = this.downloadLinks,
+        downloadLinks: List<DownloadQueryResult> = this.downloadLinks,
         audioQuality: AudioQuality = this.audioQuality,
         audioFormat: AudioFormat = this.audioFormat,
         downloaded: DownloadStatus = this.downloaded,
@@ -158,7 +158,7 @@ open class SongModel(
         result = 31 * result + (comment?.hashCode() ?: 0)
         result = 31 * result + trackURL.hashCode()
         result = 31 * result + (albumArtURL?.hashCode() ?: 0)
-        result = 31 * result + (downloadLinks?.hashCode() ?: 0)
+        result = 31 * result + (downloadLinks.hashCode() ?: 0)
         result = 31 * result + audioQuality.hashCode()
         result = 31 * result + audioFormat.hashCode()
         result = 31 * result + downloaded.hashCode()

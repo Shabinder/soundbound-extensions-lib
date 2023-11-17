@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Immutable
 @Serializable
-enum class AudioFormat: Comparable<AudioFormat> {
+enum class AudioFormat {
     MP3, MP4, FLAC, OGG, WAV, WEBM, WEBA, UNKNOWN;
 
     companion object {

@@ -30,7 +30,7 @@ paging = "3.3.0-alpha02-0.4.0"
 zipline = "1.2.0"
 
 [libraries]
-soundbound-extensions-lib = { group = "in.shabinder", name = "soundbound-extensions-lib", version = "0.11" }
+soundbound-extensions-lib = { group = "in.shabinder", name = "soundbound-extensions-lib", version = "0.12" }
 soundbound-compose = { group = "in.shabinder", name = "compose", version = "1.0.0" }
 
 clarity = { group = "com.microsoft.clarity", name = "clarity", version = "1.3.3" }
