@@ -4,6 +4,7 @@ import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.models.QueryParams
 import `in`.shabinder.soundbound.models.SearchItem
 import `in`.shabinder.soundbound.models.SongModel
+import `in`.shabinder.soundbound.models.SongModels
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -11,14 +12,14 @@ interface QueryableProvider : Provider, ZiplineService {
 
     val isISRCSupported: Boolean get() = false
 
-    suspend fun searchSongModels(queryParams: QueryParams): List<SongModel>
+    suspend fun searchSongModels(queryParams: QueryParams): SongModels
 
     // this is without auto-completions
     suspend fun searchItems(queryParams: QueryParams): List<SearchItem>
     fun loadItems(queryParams: QueryParams): Flow<List<SearchItem>>
 
     /* Get Related Media Items to following model, mostly used for `endless playback` */
-    suspend fun relatedSongs(queryParams: QueryParams): List<SongModel> = emptyList()
+    suspend fun relatedSongs(queryParams: QueryParams): SongModels = SongModels(emptyList())
 
     // only auto-completions
     suspend fun searchSuggestionItems(queryParams: QueryParams): List<SearchItem> = emptyList()

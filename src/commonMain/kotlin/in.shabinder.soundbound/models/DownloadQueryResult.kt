@@ -57,3 +57,9 @@ open class DownloadQueryResult(
 data class DownloadQueryResults(
     val results: List<DownloadQueryResult>
 )
+
+@Immutable
+@Serializable
+data class SongModels(
+    val results: List<SongModel>
+)
