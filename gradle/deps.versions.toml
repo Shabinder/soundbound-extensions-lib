@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.9.10"
+kotlin = "1.9.20"
 jbCompose = "1.5.10"
 androidGradle = "8.0.2"
 androidCoroutines = "1.7.3"
@@ -10,24 +10,24 @@ kermit = "2.0.2"
 ktor = "2.3.6"
 kotlinxSerialization = "1.6.0"
 sqlDelight = "2.0.0"
-sqliteJdbcDriver = "3.43.2.2"
+sqliteJdbcDriver = "3.44.0.0"
 composeWebView = "1.6.0"
 slf4j = "1.7.36"
 i18n4k = "0.6.2"
 cache4k = "0.11.0"
-decompose = "2.2.0-alpha04"
-essenty = "1.3.0-alpha03"
+decompose = "2.2.0-alpha05"
+essenty = "1.3.0-beta01"
 multiplatformSettings = "1.1.0"
 mviKotlin = "3.2.1"
 accompanist = "0.32.0"
 statelyVersion = "2.0.0-rc1"
 statelyIsoVersion = "2.0.0-rc1"
 androidxLifecycle = "2.6.2"
-androidxMedia3 = "1.2.0-rc01"
+androidxMedia3 = "1.2.0"
 okio = "3.6.0"
 arrow = "1.2.1"
 paging = "3.3.0-alpha02-0.4.0"
-zipline = "1.2.0"
+zipline = "1.7.0-SNAPSHOT"
 
 [libraries]
 soundbound-extensions-lib = { group = "in.shabinder", name = "soundbound-extensions-lib", version = "0.13" }
@@ -44,6 +44,7 @@ kotlin-kotlinTestJs = { group = "org.jetbrains.kotlin", name = "kotlin-test-js",
 kotlin-kotlinTestJunit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
 kotlin-kotlinTestAnnotationsCommon = { group = "org.jetbrains.kotlin", name = "kotlin-test-annotations-common", version.ref = "kotlin" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.7.3" }
+kotlinx-coroutinesGuava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version = "1.7.3" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version = "0.22.0" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.4.1" }
@@ -56,6 +57,7 @@ essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", versi
 essenty-instanceKeeper = { group = "com.arkivanov.essenty", name = "instance-keeper", version.ref = "essenty" }
 essenty-parcelable = { group = "com.arkivanov.essenty", name = "parcelable", version.ref = "essenty" }
 essenty-backHandler = { group = "com.arkivanov.essenty", name = "back-handler", version.ref = "essenty" }
+essenty-stateKeeper = { group = "com.arkivanov.essenty", name = "state-keeper", version.ref = "essenty" }
 
 decompose-dep = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
 decompose-extensions-compose = { group = "com.arkivanov.decompose", name = "extensions-compose-jetbrains", version.ref = "decompose" }
@@ -179,7 +181,7 @@ kotlin-test = ["kotlin-kotlinTestCommon", "kotlin-kotlinTestAnnotationsCommon"]
 sqldelight = ["sqldelight-runtime", "sqldelight-coroutines-extension", "sqldelight-paging"]
 mviKotlin = ["mviKotlin-dep", "mviKotlin-main", "mviKotlin-coroutines", "mviKotlin-rx", "mviKotlin-logging", "mviKotlin-timetravel"]
 kotlinx = ["kotlinx-coroutines", "kotlinx-serialization-json", "kotlinx-atomicfu", "kotlinx-datetime", "kotlinx-immutableLists"]
-essenty = ["essenty-lifecycle", "essenty-instanceKeeper", "essenty-backHandler", "essenty-parcelable"]
+essenty = ["essenty-lifecycle", "essenty-instanceKeeper", "essenty-backHandler", "essenty-parcelable", "essenty-stateKeeper"]
 decompose = ["decompose-dep", "decompose-extensions-compose"]
 koin-android = ["koin-androidx-compose", "koin-android"]
 settings = ["multiplatform-settings", "multiplatform-settings-coroutines", "multiplatform-settings_serialization"]
