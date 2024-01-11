@@ -7,15 +7,13 @@ import `in`.shabinder.soundbound.utils.GlobalJson
 import kotlinx.serialization.Serializable
 
 interface HttpClientBuilder : ZiplineService {
-    fun build(): HttpClient
+     fun build(): HttpClient
 }
 
-fun HttpClientBuilder.build(
-    config: HttpClient.() -> Unit,
-): HttpClient = build().apply(config)
+fun HttpClientBuilder.build(config: HttpClient.() -> Unit): HttpClient =
+    build().apply(config)
 
-
-interface HttpClient : ZiplineService {
+interface HttpClient: ZiplineService {
 
     var isCookiesEnabled: Boolean
 

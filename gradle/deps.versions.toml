@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.9.20"
+kotlin = "1.9.10"
 jbCompose = "1.5.10"
 androidGradle = "8.0.2"
 androidCoroutines = "1.7.3"
@@ -11,7 +11,7 @@ ktor = "2.3.6"
 kotlinxSerialization = "1.6.0"
 sqlDelight = "2.0.0"
 sqliteJdbcDriver = "3.44.0.0"
-composeWebView = "1.6.0"
+composeWebView = "1.7.4"
 slf4j = "1.7.36"
 i18n4k = "0.6.2"
 cache4k = "0.11.0"
@@ -27,7 +27,7 @@ androidxMedia3 = "1.2.0"
 okio = "3.6.0"
 arrow = "1.2.1"
 paging = "3.3.0-alpha02-0.4.0"
-zipline = "1.7.0-SNAPSHOT"
+zipline = "1.3.0-SNAPSHOT"
 
 [libraries]
 soundbound-extensions-lib = { group = "in.shabinder", name = "soundbound-extensions-lib", version = "0.13" }
