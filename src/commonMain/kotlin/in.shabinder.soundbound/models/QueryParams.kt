@@ -87,4 +87,13 @@ open class QueryParams(
     override fun toString(): String {
         return "QueryParams(trackName=$trackName, trackArtists=$trackArtists, trackDurationSec=$trackDurationSec, genre=$genre, year=$year, albumName=$albumName, albumArtists=$albumArtists, trackLink=$trackLink, interestedEntityType=$interestedEntityType, ISRC=$isrc, linkLists=$linkLists)"
     }
+
+    val simpleQuery: String
+        get() {
+            if (trackArtists.isEmpty() || trackArtists.all { it.isBlank() }) {
+                return trackName
+            }
+
+            return "$trackName - ${trackArtists.joinToString()}"
+        }
 }

@@ -120,6 +120,6 @@ data class ChartEntity(
     @Immutable
     @Serializable
     enum class Type {
-        SONG, PLAYLIST
+        SONG, PLAYLIST, ALBUM, ARTIST
     }
 }
