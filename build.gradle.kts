@@ -7,7 +7,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
     id("kotlin-parcelize")
-    id("app.cash.zipline")
+    //id("app.cash.zipline")
     id("publish")
 }
 
