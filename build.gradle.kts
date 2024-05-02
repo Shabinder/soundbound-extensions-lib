@@ -7,7 +7,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
     id("kotlin-parcelize")
-    //id("app.cash.zipline")
+    id("app.cash.zipline")
     id("publish")
 }
 
@@ -29,6 +29,27 @@ afterEvaluate {
             create<MavenPublication>("maven") {
                 from(components["versionCatalog"])
                 artifactId = "soundbound-extensions-catalog"
+            }
+        }
+    }
+}
+
+
+allprojects {
+    configurations.all {
+        resolutionStrategy {
+            eachDependency {
+                if (requested.group == "org.jetbrains.kotlin") {
+                    useVersion("1.9.0")
+                }
+
+                if (requested.name == "kotlinx-serialization-json") {
+                    useVersion("1.6.0")
+                }
+
+                if (requested.group == "app.cash.zipline") {
+                    useVersion("1.10.0-LEGACY")
+                }
             }
         }
     }
