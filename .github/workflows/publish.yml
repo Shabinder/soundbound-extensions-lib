@@ -48,40 +48,41 @@ jobs:
           GPG_PRIVATE_KEY: ${{ secrets.NEXUS_ACTIONS_GPG_PRIVATE_KEY }}
           GPG_PRIVATE_PASSWORD: ${{ secrets.NEXUS_ACTIONS_GPG_PRIVATE_PASSWORD }}
 
-  windows:
-    runs-on: windows-latest
-    needs: create_staging_repository
-    steps:
-      - name: Configure JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: 17
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Checkout zipline
-        uses: actions/checkout@v2
-        with:
-          repository: Shabinder/zipline
-          path: zipline
-      - name: Publish to Maven Local
-        run: |
-          cd zipline
-          ./gradlew publishToMavenLocal
-          cd ..
-      - name: Publish
-        run: |
-          ./gradlew publishMingwX64PublicationToMavenRepository -PSONATYPE_REPOSITORY_ID=${{ needs.create_staging_repository.outputs.repository-id }}
-        env:
-          MANUAL_REPOSITORY: ${{ secrets.MANUAL_REPOSITORY }}
-          SONATYPE_REPOSITORY_ID: ${{ needs.create_staging_repository.outputs.repository-id }}
-          SONATYPE_USERNAME: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
-          GPG_PRIVATE_KEY: ${{ secrets.NEXUS_ACTIONS_GPG_PRIVATE_KEY }}
-          GPG_PRIVATE_PASSWORD: ${{ secrets.NEXUS_ACTIONS_GPG_PRIVATE_PASSWORD }}
+# Zipline does not support Windows yet!
+#  windows:
+#    runs-on: windows-latest
+#    needs: create_staging_repository
+#    steps:
+#      - name: Configure JDK
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 17
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#      - name: Checkout zipline
+#        uses: actions/checkout@v2
+#        with:
+#          repository: Shabinder/zipline
+#          path: zipline
+#      - name: Publish to Maven Local
+#        run: |
+#          cd zipline
+#          ./gradlew publishToMavenLocal
+#          cd ..
+#      - name: Publish
+#        run: |
+#          ./gradlew publishMingwX64PublicationToMavenRepository -PSONATYPE_REPOSITORY_ID=${{ needs.create_staging_repository.outputs.repository-id }}
+#        env:
+#          MANUAL_REPOSITORY: ${{ secrets.MANUAL_REPOSITORY }}
+#          SONATYPE_REPOSITORY_ID: ${{ needs.create_staging_repository.outputs.repository-id }}
+#          SONATYPE_USERNAME: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
+#          SONATYPE_PASSWORD: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
+#          GPG_PRIVATE_KEY: ${{ secrets.NEXUS_ACTIONS_GPG_PRIVATE_KEY }}
+#          GPG_PRIVATE_PASSWORD: ${{ secrets.NEXUS_ACTIONS_GPG_PRIVATE_PASSWORD }}
 
   finalize:
     runs-on: ubuntu-latest
-    needs: [ create_staging_repository,macos,windows ]
+    needs: [ create_staging_repository,macos ] #,windows ]
     if: ${{ always() && needs.create_staging_repository.result == 'success' }}
     steps:
       - name: Discard
