@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Create staging repository
     outputs:
-      repository_id: ${{ steps.create.outputs.repository_id }}
+      repository-id: ${{ steps.create.outputs.repository_id }}
     steps:
       - id: create
         uses: nexus-actions/create-nexus-staging-repo@main
@@ -39,10 +39,10 @@ jobs:
           cd ..
       - name: Publish
         run: |
-          ./gradlew publishAllPublicationsToMavenRepository -PSONATYPE_REPOSITORY_ID=${{ needs.create_staging_repository.outputs.repository_id }}
+          ./gradlew publishAllPublicationsToMavenRepository -PSONATYPE_REPOSITORY_ID=${{ needs.create_staging_repository.outputs.repository-id }}
         env:
           MANUAL_REPOSITORY: ${{ secrets.MANUAL_REPOSITORY }}
-          SONATYPE_REPOSITORY_ID: ${{ needs.create_staging_repository.outputs.repository_id }}
+          SONATYPE_REPOSITORY_ID: ${{ needs.create_staging_repository.outputs.repository-id }}
           SONATYPE_USERNAME: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
           GPG_PRIVATE_KEY: ${{ secrets.NEXUS_ACTIONS_GPG_PRIVATE_KEY }}
@@ -70,10 +70,10 @@ jobs:
           cd ..
       - name: Publish
         run: |
-          ./gradlew publishMingwX64PublicationToMavenRepository -PSONATYPE_REPOSITORY_ID=${{ needs.create_staging_repository.outputs.repository_id }}
+          ./gradlew publishMingwX64PublicationToMavenRepository -PSONATYPE_REPOSITORY_ID=${{ needs.create_staging_repository.outputs.repository-id }}
         env:
           MANUAL_REPOSITORY: ${{ secrets.MANUAL_REPOSITORY }}
-          SONATYPE_REPOSITORY_ID: ${{ needs.create_staging_repository.outputs.repository_id }}
+          SONATYPE_REPOSITORY_ID: ${{ needs.create_staging_repository.outputs.repository-id }}
           SONATYPE_USERNAME: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
           GPG_PRIVATE_KEY: ${{ secrets.NEXUS_ACTIONS_GPG_PRIVATE_KEY }}
@@ -90,7 +90,7 @@ jobs:
         with:
           username: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
           password: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
-          staging_repository_id: ${{ needs.create_staging_repository.outputs.repository_id }}
+          staging_repository_id: ${{ needs.create_staging_repository.outputs.repository-id }}
       - name: Release
         if: ${{ needs.macos.result == 'success' && needs.windows.result == 'success' }}
         uses: nexus-actions/release-nexus-staging-repo@main
@@ -98,4 +98,4 @@ jobs:
           base_url: https://s01.oss.sonatype.org/service/local/
           username: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
           password: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
-          staging_repository_id: ${{ needs.create_staging_repository.outputs.repository_id }}
+          staging_repository_id: ${{ needs.create_staging_repository.outputs.repository-id }}
