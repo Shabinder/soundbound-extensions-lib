@@ -4,7 +4,7 @@ plugins {
     id("publish")
 }
 
-group = "in.shabinder"
+group = "io.github.shabinder"
 version = "1.0.0"
 
 kotlin {

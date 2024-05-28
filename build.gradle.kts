@@ -11,7 +11,7 @@ plugins {
     id("publish")
 }
 
-group = "in.shabinder"
+group = "io.github.shabinder"
 version = (deps.soundbound.extensions.lib.get().version as String).also {
     println("Building with lib version: $it")
 }

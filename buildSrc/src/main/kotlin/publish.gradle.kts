@@ -38,16 +38,16 @@ afterEvaluate {
                 }
                 // url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
                 credentials {
-                    username = "SONATYPE_USERNAME".byProperty
-                    password = "SONATYPE_PASSWORD".byProperty
+                    username = "SONATYPE_USERNAME".byProperty ?: "NEXUS_ACTIONS_SONATYPE_USERNAME".byProperty
+                    password = "SONATYPE_PASSWORD".byProperty ?: "NEXUS_ACTIONS_SONATYPE_PASSWORD".byProperty
                 }
             }
             maven {
                 name = "snapshot"
                 url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
                 credentials {
-                    username = "SONATYPE_USERNAME".byProperty
-                    password = "SONATYPE_PASSWORD".byProperty
+                    username = "SONATYPE_USERNAME".byProperty ?: "NEXUS_ACTIONS_SONATYPE_USERNAME".byProperty
+                    password = "SONATYPE_PASSWORD".byProperty ?: "NEXUS_ACTIONS_SONATYPE_PASSWORD".byProperty
                 }
             }
         }
@@ -57,7 +57,6 @@ afterEvaluate {
         }
 
         publications {
-
             withType<MavenPublication> {
                 artifact(javadocJar)
 
