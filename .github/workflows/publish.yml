@@ -9,7 +9,7 @@ jobs:
       repository_id: ${{ steps.create.outputs.repository_id }}
     steps:
       - id: create
-        uses: nexus-actions/create-nexus-staging-repo@1.3.0
+        uses: nexus-actions/create-nexus-staging-repo@v1.3.0
         with:
           base_url: https://s01.oss.sonatype.org/service/local/
           description: ${{ github.repository }}/${{ github.workflow }}#${{ github.run_number }}
@@ -66,14 +66,14 @@ jobs:
     steps:
       - name: Discard
         if: ${{ needs.macos.result != 'success' || needs.windows.result != 'success' }}
-        uses: nexus-actions/drop-nexus-staging-repo@main
+        uses: nexus-actions/drop-nexus-staging-repo@v1.1.0
         with:
           username: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
           password: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
           staging_repository_id: ${{ needs.create_staging_repository.outputs.repository_id }}
       - name: Release
         if: ${{ needs.macos.result == 'success' && needs.windows.result == 'success' }}
-        uses: nexus-actions/release-nexus-staging-repo@main
+        uses: nexus-actions/release-nexus-staging-repo@v1.3.0
         with:
           base_url: https://s01.oss.sonatype.org/service/local/
           username: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
