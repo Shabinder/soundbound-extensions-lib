@@ -25,6 +25,9 @@ open class ThrowableWrapper(
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
+        if (other is ThrowableWrapper && reference != null && other.reference == reference) return true
+        if (other is Throwable && reference != null && reference == other) return true
+
         if (other !is ThrowableWrapper) return false
         if (message != other.message) return false
         if (stackTrace != other.stackTrace) return false

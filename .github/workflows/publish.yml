@@ -1,0 +1,81 @@
+on:
+  [workflow_dispatch]
+
+jobs:
+  create_staging_repository:
+    runs-on: ubuntu-latest
+    name: Create staging repository
+    outputs:
+      repository_id: ${{ steps.create.outputs.repository_id }}
+    steps:
+      - id: create
+        uses: nexus-actions/create-nexus-staging-repo@1.3.0
+        with:
+          base_url: https://s01.oss.sonatype.org/service/local/
+          description: ${{ github.repository }}/${{ github.workflow }}#${{ github.run_number }}
+          username: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
+          password: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
+          staging_profile_id: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PROFILE_ID }}
+
+  macos:
+    runs-on: macos-latest
+    needs: create_staging_repository
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Configure JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+      - name: Publish
+        run: |
+          ./gradlew publishAllPublicationsToMavenRepository -PSONATYPE_REPOSITORY_ID=${{ needs.create_staging_repository.outputs.repository_id }}
+        env:
+          MANUAL_REPOSITORY: ${{ secrets.MANUAL_REPOSITORY }}
+          SONATYPE_REPOSITORY_ID: ${{ needs.create_staging_repository.outputs.repository_id }}
+          SONATYPE_USERNAME: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
+          GPG_PRIVATE_KEY: ${{ secrets.NEXUS_ACTIONS_GPG_PRIVATE_KEY }}
+          GPG_PRIVATE_PASSWORD: ${{ secrets.NEXUS_ACTIONS_GPG_PRIVATE_PASSWORD }}
+
+  windows:
+    runs-on: windows-latest
+    needs: create_staging_repository
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Configure JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+      - name: Publish
+        run: |
+          ./gradlew publishMingwX64PublicationToMavenRepository -PSONATYPE_REPOSITORY_ID=${{ needs.create_staging_repository.outputs.repository_id }}
+        env:
+          MANUAL_REPOSITORY: ${{ secrets.MANUAL_REPOSITORY }}
+          SONATYPE_REPOSITORY_ID: ${{ needs.create_staging_repository.outputs.repository_id }}
+          SONATYPE_USERNAME: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
+          GPG_PRIVATE_KEY: ${{ secrets.NEXUS_ACTIONS_GPG_PRIVATE_KEY }}
+          GPG_PRIVATE_PASSWORD: ${{ secrets.NEXUS_ACTIONS_GPG_PRIVATE_PASSWORD }}
+
+  finalize:
+    runs-on: ubuntu-latest
+    needs: [create_staging_repository,macos,windows]
+    if: ${{ always() && needs.create_staging_repository.result == 'success' }}
+    steps:
+      - name: Discard
+        if: ${{ needs.macos.result != 'success' || needs.windows.result != 'success' }}
+        uses: nexus-actions/drop-nexus-staging-repo@main
+        with:
+          username: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
+          password: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
+          staging_repository_id: ${{ needs.create_staging_repository.outputs.repository_id }}
+      - name: Release
+        if: ${{ needs.macos.result == 'success' && needs.windows.result == 'success' }}
+        uses: nexus-actions/release-nexus-staging-repo@main
+        with:
+          base_url: https://s01.oss.sonatype.org/service/local/
+          username: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
+          password: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
+          staging_repository_id: ${{ needs.create_staging_repository.outputs.repository_id }}
