@@ -1,0 +1,18 @@
+on:
+  [workflow_dispatch]
+
+jobs:
+  create_staging_repository:
+    runs-on: ubuntu-latest
+    name: Create staging repository
+    outputs:
+      repository-id: ${{ steps.create.outputs.repository_id }}
+    steps:
+      - id: create
+        uses: nexus-actions/create-nexus-staging-repo@main
+        with:
+          base_url: https://s01.oss.sonatype.org/service/local/
+          description: ${{ github.repository }}/${{ github.workflow }}#${{ github.run_number }}
+          username: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
+          password: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
+          staging_profile_id: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PROFILE_ID }}
