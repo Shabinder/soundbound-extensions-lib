@@ -27,16 +27,6 @@ jobs:
           java-version: 17
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Checkout zipline
-        uses: actions/checkout@v2
-        with:
-          repository: Shabinder/zipline
-          path: zipline
-      - name: Publish to Maven Local
-        run: |
-          cd zipline
-          ./gradlew publishToMavenLocal
-          cd ..
       - name: Publish
         run: |
           ./gradlew publishAllPublicationsToMavenRepository -PSONATYPE_REPOSITORY_ID=${{ needs.create_staging_repository.outputs.repository-id }}
