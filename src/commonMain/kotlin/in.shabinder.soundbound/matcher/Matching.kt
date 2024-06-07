@@ -1,5 +1,6 @@
 package `in`.shabinder.soundbound.matcher
 
+import `in`.shabinder.soundbound.models.Artist
 import `in`.shabinder.soundbound.zipline.FuzzySearch
 import kotlin.math.absoluteValue
 import kotlin.math.max
@@ -7,7 +8,7 @@ import kotlin.math.min
 
 interface MatchProps {
     val title: String
-    val artists: List<String>
+    val artists: List<Artist>
     val albumName: String?
     val durationSec: Long
     val isrc: String?
@@ -160,23 +161,26 @@ fun getNameMatch(matchTitle: String, matchForTitle: String, searcher: FuzzySearc
 }
 
 fun getAllArtistsMatch(
-    matchArtists: List<String>,
-    matchForArtists: List<String>,
+    matchArtists: List<Artist>,
+    matchForArtists: List<Artist>,
     searcher: FuzzySearch
 ): Float {
+    val matchArtistsName = matchArtists.map(Artist::name)
+    val matchForArtistsName = matchForArtists.map(Artist::name)
+
     var artistMatch = 0.0f
 
-    if (matchForArtists.size == 1) return artistMatch
+    if (matchForArtistsName.size == 1) return artistMatch
 
     var matchArtistsSlugged =
-        (matchArtists.takeIf { it.size > 1 } ?: matchArtists.first().split(",").map(String::trim))
+        (matchArtistsName.takeIf { it.size > 1 } ?: matchArtistsName.first().split(",").map(String::trim))
             .asSequence()
             .filter { it.isNotBlank() }.toSet().sorted()
             .map(String::sluggify).filter { it.isNotBlank() }
             .toList()
 
     val matchForArtistsSlugged =
-        matchForArtists.asSequence()
+        matchForArtistsName.asSequence()
             .filter { it.isNotBlank() }.toSet().sorted()
             .map(String::sluggify).filter { it.isNotBlank() }
             .toList()
@@ -198,20 +202,23 @@ fun getAllArtistsMatch(
 }
 
 fun getMainArtistMatch(
-    matchArtists: List<String>,
-    matchForArtists: List<String>,
+    matchArtists: List<Artist>,
+    matchForArtists: List<Artist>,
     searcher: FuzzySearch
 ): Float {
+    val matchArtistsName = matchArtists.map(Artist::name)
+    val matchForArtistsName = matchForArtists.map(Artist::name)
+
     var mainArtistMatch: Float = 0f
 
     val matchArtistsSlugged =
-        matchArtists.asSequence()
+        matchArtistsName.asSequence()
             .filter { it.isNotBlank() }.toSet()//.sorted()
             .map(String::sluggify).filter { it.isNotBlank() }
             .toList()
 
     val matchForArtistsSlugged =
-        matchForArtists.asSequence()
+        matchForArtistsName.asSequence()
             .filter { it.isNotBlank() }.toSet()//.sorted()
             .map(String::sluggify).filter { it.isNotBlank() }
             .toList()
@@ -277,7 +284,9 @@ fun checkCommonWord(string1: String, string2: String): Boolean {
 }
 
 private fun <T : MatchProps> T.sluggedArtists(): List<String> {
-    return artists.map(String::sluggify).takeIf { it.size > 1 }
-        ?: artists.firstOrNull()?.split("-")?.map(String::sluggify)
-        ?: artists
+    val artistsNames = artists.map(Artist::name)
+
+    return artistsNames.map(String::sluggify).takeIf { it.size > 1 }
+        ?: artistsNames.firstOrNull()?.split("-")?.map(String::sluggify)
+        ?: artistsNames
 }

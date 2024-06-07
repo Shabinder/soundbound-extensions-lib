@@ -1,13 +1,21 @@
 package `in`.shabinder.soundbound.utils
 
+import `in`.shabinder.soundbound.models.Artist
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlin.jvm.JvmName
 import kotlin.math.min
 
 
 @Suppress("NOTHING_TO_INLINE")
 internal inline fun List<String>.cleaned(): List<String> {
     return this.filter { it.isNotBlank() && it != "null" }
+}
+
+@Suppress("NOTHING_TO_INLINE")
+@JvmName("cleanedArtists")
+internal inline fun List<Artist>.cleaned(): List<Artist> {
+    return filter { it.name.isNotBlank() && it.name != "null" }
 }
 
 fun <T> T.limitDecimals(maxDecimals: Int): String {

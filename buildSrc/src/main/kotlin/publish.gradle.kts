@@ -99,6 +99,14 @@ afterEvaluate {
         if (signingKey.isNullOrBlank() || signingPwd.isNullOrBlank()) {
             logger.info("Signing Disable as the PGP key was not found")
         } else {
+            logger.info("Signing Enabled using PGP key")
+            //region Fix Gradle warning about signing tasks using publishing task outputs without explicit dependencies
+            // https://github.com/gradle/gradle/issues/26091
+            val signingTasks = tasks.withType<Sign>()
+            tasks.withType<AbstractPublishToMaven>().configureEach {
+                mustRunAfter(signingTasks)
+            }
+
             signing {
                 useInMemoryPgpKeys(signingKey, signingPwd)
                 sign(publishing.publications)

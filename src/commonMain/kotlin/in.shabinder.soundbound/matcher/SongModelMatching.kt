@@ -1,6 +1,7 @@
 package `in`.shabinder.soundbound.matcher
 
 import androidx.compose.runtime.Immutable
+import `in`.shabinder.soundbound.models.Artist
 import `in`.shabinder.soundbound.models.SongModel
 import `in`.shabinder.soundbound.zipline.FuzzySearch
 
@@ -25,7 +26,7 @@ fun SongModel.asMatchProps(): MatchProps {
     val song = this
     return object : MatchProps {
         override val title: String = song.title
-        override val artists: List<String> = song.artists
+        override val artists: List<Artist> = song.artists
         override val albumName: String? = song.albumName
         override val durationSec: Long = song.durationSec
         override val isrc: String? = song.isrc

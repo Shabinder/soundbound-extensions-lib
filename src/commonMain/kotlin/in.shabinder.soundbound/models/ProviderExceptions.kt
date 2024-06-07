@@ -55,4 +55,10 @@ sealed class ProviderExceptions(
     data class NoInternetException(
         val extraInfo: String? = null,
     ) : ProviderExceptions("Check your Internet Connectivity.", extraInfo)
+
+    @Immutable
+    @Serializable
+    data class UnknownException(
+        val extraInfo: String? = null,
+    ) : ProviderExceptions("Unknown Exception Occurred.", extraInfo)
 }

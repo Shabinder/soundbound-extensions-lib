@@ -11,12 +11,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 open class QueryParams(
     open val trackName: String,
-    open val trackArtists: List<String> = emptyList(),
+    open val trackArtists: List<Artist> = emptyList(),
     open val trackDurationSec: Long,
     open val genre: List<String> = emptyList(),
     open val year: Int? = null,
     open val albumName: String? = null,
-    open val albumArtists: List<String> = emptyList(),
+    open val albumArtists: List<Artist> = emptyList(),
     open val trackLink: String? = null,
     open val interestedEntityType: SearchItem.Type = SearchItem.Type.All,
     open val isrc: String? = null,
@@ -26,12 +26,12 @@ open class QueryParams(
     @kotlin.jvm.JvmOverloads
     open fun copy(
         trackName: String = this.trackName,
-        trackArtists: List<String> = this.trackArtists,
+        trackArtists: List<Artist> = this.trackArtists,
         trackDurationSec: Long = this.trackDurationSec,
         genre: List<String> = this.genre,
         year: Int? = this.year,
         albumName: String? = this.albumName,
-        albumArtists: List<String> = this.albumArtists,
+        albumArtists: List<Artist> = this.albumArtists,
         trackLink: String? = this.trackLink,
         interestedEntityType: SearchItem.Type = this.interestedEntityType,
         isrc: String? = this.isrc,
@@ -90,7 +90,7 @@ open class QueryParams(
 
     val simpleQuery: String
         get() {
-            if (trackArtists.isEmpty() || trackArtists.all { it.isBlank() }) {
+            if (trackArtists.isEmpty() || trackArtists.all { it.name.isBlank() }) {
                 return trackName
             }
 

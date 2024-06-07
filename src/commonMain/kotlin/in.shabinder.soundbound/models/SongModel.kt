@@ -17,6 +17,7 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
+import `in`.shabinder.soundbound.matcher.sluggify
 import `in`.shabinder.soundbound.utils.cleaned
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
@@ -29,12 +30,12 @@ open class SongModel(
     open val title: String,
     open val durationSec: Long,
     open val year: Int,
-    open val artists: List<String>,
+    open val artists: List<Artist>,
     open val genre: List<String>,
     open val source: SourceModel,
     open val videoID: String?,
     open val albumName: String?,
-    open val albumArtists: List<String>,
+    open val albumArtists: List<Artist>,
     open val trackNumber: Long?,
     open val comment: String?,
     open val trackURL: String,
@@ -55,12 +56,12 @@ open class SongModel(
         title: String = this.title,
         durationSec: Long = this.durationSec,
         year: Int = this.year,
-        artists: List<String> = this.artists,
+        artists: List<Artist> = this.artists,
         genre: List<String> = this.genre,
         source: SourceModel = this.source,
         videoID: String? = this.videoID,
         albumName: String? = this.albumName,
-        albumArtists: List<String> = this.albumArtists,
+        albumArtists: List<Artist> = this.albumArtists,
         trackNumber: Long? = this.trackNumber,
         comment: String? = this.comment,
         trackURL: String = this.trackURL,
@@ -174,3 +175,14 @@ open class SongModel(
         return "SongModel(id=$id, title=$title, durationSec=$durationSec, year=$year, artists=$artists, genre=$genre, source=$source, videoID=$videoID, albumName=$albumName, albumArtists=$albumArtists, trackNumber=$trackNumber, comment=$comment, trackURL=$trackURL, albumArtURL=$albumArtURL, downloadLinks=$downloadLinks, audioQuality=$audioQuality, audioFormat=$audioFormat, downloaded=$downloaded, isFavourite=$isFavourite, isrc=$isrc, extraProps=$extraProps, lyrics=$lyrics)"
     }
 }
+
+@Immutable
+@Serializable
+data class Artist(
+    val name: String,
+    val href: List<String>? = null
+)
+
+fun Artist.isNotBlank() = name.isNotBlank()
+fun Artist.isEmpty() = name.isEmpty()
+fun Artist.sluggify() = name.sluggify()
