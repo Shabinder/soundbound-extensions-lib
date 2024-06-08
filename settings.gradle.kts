@@ -1,4 +1,5 @@
 rootProject.name = "soundbound-extensions-lib"
+
 dependencyResolutionManagement {
     versionCatalogs {
         create("deps") {

@@ -3,11 +3,11 @@ import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
 
 plugins {
-    id("com.android.library")
-    kotlin("multiplatform")
-    kotlin("plugin.serialization")
-    id("kotlin-parcelize")
-    id("app.cash.zipline")
+    id(deps.plugins.android.library.get().pluginId)
+    id(deps.plugins.kotlin.multiplatform.get().pluginId)
+    id(deps.plugins.kotlin.parcelize.get().pluginId)
+    id(deps.plugins.kotlin.serialization.get().pluginId)
+    id(deps.plugins.zipline.gradle.get().pluginId)
     id("publish")
 }
 

@@ -141,8 +141,6 @@ androidx-profileInstaller = { group = "androidx.profileinstaller", name = "profi
 androidx-startUp = { group = "androidx.startup", name = "startup-runtime", version = "1.1.1" }
 androidx-palette = { group = "androidx.palette", name = "palette-ktx", version = "1.0.0" }
 androidx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "androidCoroutines" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.1.5" }
-androidx-expresso = { group = "androidx.test.espresso", name = "espresso-core", version = "3.5.1" }
 androidx-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradle" }
 androidx-lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "androidxLifecycle" }
 androidx-lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
@@ -157,6 +155,12 @@ androidx-media3-exoplayer-dash = { group = "androidx.media3", name = "media3-exo
 androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "androidxMedia3" }
 androidx-media3-session = { group = "androidx.media3", name = "media3-session", version.ref = "androidxMedia3" }
 androidx-media3-common = { group = "androidx.legacy", name = "legacy-support-v4", version = "1.0.0" }
+
+androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.1.5" }
+androidx-expresso = { group = "androidx.test.espresso", name = "espresso-core", version = "3.5.1" }
+androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version = "2.3.0" }
+androidx-benchmark-macro-junit = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version = "1.2.4" }
+
 #noinspection GradleDependency // UpsideDownCake Android 14
 androidx-splash = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
 paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "paging" }
@@ -176,6 +180,22 @@ zipline-profiler = { module = "io.github.shabinder:zipline-profiler", version.re
 
 publishing-nexus-gradle = { group = "io.github.gradle-nexus", name = "publish-plugin", version.ref = "nexusGradle" }
 
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.1.0" }
+google-services = { group = "com.google.gms", name = "google-services", version = "4.4.2" }
+firebase-plugins-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version = "3.0.1" }
+
+ffmpeg-kit-exceptions = { group = "com.arthenica", name = "smart-exception-java", version = "0.2.1" }
+ndk-libunwind = { group = "ru.ivanarh.ndcrash", name = "jndcrash-libunwind", version = "0.8" }
+android-phoenix = { group = "com.jakewharton", name = "process-phoenix", version = "2.1.2" }
+
+desktop-vlcj = { group = "uk.co.caprica", name = "vlcj", version = "4.8.2" }
+desktop-json = { group = "org.json", name = "json", version = "20231013" }
+desktop-amplitude = { group = "com.amplitude", name = "java-sdk", version = "1.12.2" }
+desktop-jcef = { group = "me.friwi", name = "jcefmaven", version = "122.1.10" }
+
+revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version = "7.11.1" }
+skrapeit = { group = "it.skrape", name = "skrapeit", version = "1.2.2" }
+
 [bundles]
 arrow = ["arrow-core", "arrow-fx"]
 ktor = ["ktor-client-core", "ktor-client-json", "ktor-client-auth", "ktor-client-logging", "ktor-client-serialization", "ktor-client-json", "ktor-client-content"]
@@ -192,3 +212,17 @@ essenty = ["essenty-lifecycle", "essenty-instanceKeeper", "essenty-backHandler",
 decompose = ["decompose-dep", "decompose-extensions-compose"]
 koin-android = ["koin-androidx-compose", "koin-android"]
 settings = ["multiplatform-settings", "multiplatform-settings-coroutines", "multiplatform-settings_serialization"]
+
+[plugins]
+android-library = { id = "com.android.library", version.ref = "androidGradle" }
+android-application = { id = "com.android.application", version.ref = "androidGradle" }
+
+kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-android = { id = "kotlin-android", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "kotlin-multiplatform", version.ref = "kotlin" }
+kotlin-kapt = { id = "kotlin-kapt", version.ref = "kotlin" }
+
+zipline-gradle = { id = "io.github.shabinder", version.ref = "zipline" }
+slqDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+baselineProfile = { id = "androidx.baselineprofile", version = "1.2.4" }

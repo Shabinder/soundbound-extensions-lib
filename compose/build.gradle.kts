@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    kotlin("multiplatform")
+    id(deps.plugins.android.library.get().pluginId)
+    id(deps.plugins.kotlin.multiplatform.get().pluginId)
     id("publish")
 }
 
