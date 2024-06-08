@@ -76,14 +76,15 @@ jobs:
     if: ${{ always() && needs.create_staging_repository.result == 'success' }}
     steps:
       - name: Discard
-        if: ${{ needs.macos.result != 'success' || needs.windows.result != 'success' }}
+        if: ${{ needs.macos.result != 'success' }}
         uses: nexus-actions/drop-nexus-staging-repo@main
         with:
+          base_url: https://s01.oss.sonatype.org/service/local/
           username: ${{ secrets.NEXUS_ACTIONS_SONATYPE_USERNAME }}
           password: ${{ secrets.NEXUS_ACTIONS_SONATYPE_PASSWORD }}
           staging_repository_id: ${{ needs.create_staging_repository.outputs.repository-id }}
       - name: Release
-        if: ${{ needs.macos.result == 'success' && needs.windows.result == 'success' }}
+        if: ${{ needs.macos.result == 'success' }}
         uses: nexus-actions/release-nexus-staging-repo@main
         with:
           base_url: https://s01.oss.sonatype.org/service/local/
