@@ -1,7 +1,7 @@
 plugins {
     id(deps.plugins.android.library.get().pluginId)
     id(deps.plugins.kotlin.multiplatform.get().pluginId)
-    id("publish")
+//    id("publish")
 }
 
 group = "io.github.shabinder"
