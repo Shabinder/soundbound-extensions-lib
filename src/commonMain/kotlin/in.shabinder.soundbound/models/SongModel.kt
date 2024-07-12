@@ -35,6 +35,7 @@ open class SongModel(
     open val source: SourceModel,
     open val videoID: String?,
     open val albumName: String?,
+    open val albumURL: String? = null,
     open val albumArtists: List<Artist>,
     open val trackNumber: Long?,
     open val comment: String?,
@@ -61,6 +62,7 @@ open class SongModel(
         source: SourceModel = this.source,
         videoID: String? = this.videoID,
         albumName: String? = this.albumName,
+        albumURL: String? = this.albumURL,
         albumArtists: List<Artist> = this.albumArtists,
         trackNumber: Long? = this.trackNumber,
         comment: String? = this.comment,
@@ -85,6 +87,7 @@ open class SongModel(
             source = source,
             videoID = videoID,
             albumName = albumName,
+            albumURL = albumURL,
             albumArtists = albumArtists,
             trackNumber = trackNumber,
             comment = comment,
@@ -127,6 +130,7 @@ open class SongModel(
         if (source != other.source) return false
         if (videoID != other.videoID) return false
         if (albumName != other.albumName) return false
+        if (albumURL != other.albumURL) return false
         if (trackNumber != other.trackNumber) return false
         if (comment != other.comment) return false
         if (trackURL != other.trackURL) return false
@@ -154,6 +158,7 @@ open class SongModel(
         result = 31 * result + source.hashCode()
         result = 31 * result + (videoID?.hashCode() ?: 0)
         result = 31 * result + (albumName?.hashCode() ?: 0)
+        result = 31 * result + (albumURL?.hashCode() ?: 0)
         result = 31 * result + albumArtists.hashCode()
         result = 31 * result + (trackNumber?.hashCode() ?: 0)
         result = 31 * result + (comment?.hashCode() ?: 0)
@@ -172,7 +177,7 @@ open class SongModel(
     }
 
     override fun toString(): String {
-        return "SongModel(id=$id, title=$title, durationSec=$durationSec, year=$year, artists=$artists, genre=$genre, source=$source, videoID=$videoID, albumName=$albumName, albumArtists=$albumArtists, trackNumber=$trackNumber, comment=$comment, trackURL=$trackURL, albumArtURL=$albumArtURL, downloadLinks=$downloadLinks, audioQuality=$audioQuality, audioFormat=$audioFormat, downloaded=$downloaded, isFavourite=$isFavourite, isrc=$isrc, extraProps=$extraProps, lyrics=$lyrics)"
+        return "SongModel(id=$id, title=$title, durationSec=$durationSec, year=$year, artists=$artists, genre=$genre, source=$source, videoID=$videoID, albumName=$albumName, albumURL=$albumURL, albumArtists=$albumArtists, trackNumber=$trackNumber, comment=$comment, trackURL=$trackURL, albumArtURL=$albumArtURL, downloadLinks=$downloadLinks, audioQuality=$audioQuality, audioFormat=$audioFormat, downloaded=$downloaded, isFavourite=$isFavourite, isrc=$isrc, extraProps=$extraProps, lyrics=$lyrics)"
     }
 }
 

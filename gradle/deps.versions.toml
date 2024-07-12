@@ -2,7 +2,7 @@
 kotlin = "1.9.23"
 jbCompose = "1.6.1"
 androidGradle = "8.4.0"
-androidCoroutines = "1.8.0"
+androidCoroutines = "1.8.1"
 ktLint = "11.6.1"
 mosaic = "0.8.0"
 koin = "3.5.6"
@@ -22,7 +22,7 @@ mviKotlin = "3.3.0"
 accompanist = "0.34.0"
 statelyVersion = "2.0.7"
 statelyIsoVersion = "2.0.0-rc1"
-androidxLifecycle = "2.8.1"
+androidxLifecycle = "2.8.3"
 androidxMedia3 = "1.3.1"
 okio = "3.9.0"
 arrow = "1.2.4"
@@ -32,7 +32,7 @@ nexusGradle = "2.0.0"
 zipline = "1.10.0-LEGACY"
 
 [libraries]
-soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.15" }
+soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.16" }
 soundbound-compose = { group = "io.github.shabinder", name = "compose", version = "1.0.0" }
 
 clarity = { group = "com.microsoft.clarity", name = "clarity", version = "1.3.3" }
@@ -156,8 +156,8 @@ androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.re
 androidx-media3-session = { group = "androidx.media3", name = "media3-session", version.ref = "androidxMedia3" }
 androidx-media3-common = { group = "androidx.legacy", name = "legacy-support-v4", version = "1.0.0" }
 
-androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.1.5" }
-androidx-expresso = { group = "androidx.test.espresso", name = "espresso-core", version = "3.5.1" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.2.1" }
+androidx-expresso = { group = "androidx.test.espresso", name = "espresso-core", version = "3.6.1" }
 androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version = "2.3.0" }
 androidx-benchmark-macro-junit = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version = "1.2.4" }
 
@@ -180,9 +180,9 @@ zipline-profiler = { module = "io.github.shabinder:zipline-profiler", version.re
 
 publishing-nexus-gradle = { group = "io.github.gradle-nexus", name = "publish-plugin", version.ref = "nexusGradle" }
 
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.1.0" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.1.2" }
 google-services = { group = "com.google.gms", name = "google-services", version = "4.4.2" }
-firebase-plugins-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version = "3.0.1" }
+firebase-plugins-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version = "3.0.2" }
 
 ffmpeg-kit-exceptions = { group = "com.arthenica", name = "smart-exception-java", version = "0.2.1" }
 ndk-libunwind = { group = "ru.ivanarh.ndcrash", name = "jndcrash-libunwind", version = "0.8" }
@@ -193,7 +193,7 @@ desktop-json = { group = "org.json", name = "json", version = "20231013" }
 desktop-amplitude = { group = "com.amplitude", name = "java-sdk", version = "1.12.2" }
 desktop-jcef = { group = "me.friwi", name = "jcefmaven", version = "122.1.10" }
 
-revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version = "7.11.1" }
+revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version = "8.2.1" }
 skrapeit = { group = "it.skrape", name = "skrapeit", version = "1.2.2" }
 
 [bundles]

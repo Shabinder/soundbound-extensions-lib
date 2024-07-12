@@ -94,6 +94,6 @@ open class QueryParams(
                 return trackName
             }
 
-            return "$trackName - ${trackArtists.joinToString()}"
+            return "$trackName - ${trackArtists.joinToString { it.name }}"
         }
 }

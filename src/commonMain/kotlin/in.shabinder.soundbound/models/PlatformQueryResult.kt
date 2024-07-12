@@ -23,7 +23,6 @@ import `in`.shabinder.soundbound.utils.cleaned
 import kotlinx.serialization.Serializable
 import kotlin.jvm.JvmOverloads
 
-typealias Creator = Artist
 
 @Immutable
 @Serializable
@@ -34,7 +33,7 @@ open class PlatformQueryResult(
     open val trackList: List<SongModel>,
     open val source: SourceModel,
     open val description: String = "",
-    open val creators: List<Creator> = emptyList(),
+    open val creators: List<Artist> = emptyList(),
 ) {
     @JvmOverloads
     open fun copy(
@@ -44,7 +43,7 @@ open class PlatformQueryResult(
         trackList: List<SongModel> = this.trackList,
         source: SourceModel = this.source,
         description: String = this.description,
-        creators: List<Creator> = this.creators,
+        creators: List<Artist> = this.creators,
     ): PlatformQueryResult {
         return PlatformQueryResult(
             title = title,
