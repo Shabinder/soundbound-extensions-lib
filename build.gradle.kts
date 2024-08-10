@@ -35,26 +35,6 @@ afterEvaluate {
 }
 
 
-allprojects {
-    configurations.all {
-        resolutionStrategy {
-            eachDependency {
-                if (requested.group == "org.jetbrains.kotlin") {
-                    useVersion("1.9.0")
-                }
-
-                if (requested.name == "kotlinx-serialization-json") {
-                    useVersion("1.6.0")
-                }
-
-                if (requested.group == "app.cash.zipline") {
-                    useVersion("1.10.0-LEGACY")
-                }
-            }
-        }
-    }
-}
-
 repositories {
     google()
     mavenLocal()
