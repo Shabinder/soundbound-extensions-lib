@@ -2,12 +2,12 @@
 kotlin = "2.0.10"
 jbCompose = "1.6.11"
 androidGradle = "8.4.2"
-androidCoroutines = "1.8.1"
+coroutines = "1.9.0-RC"
 ktLint = "11.6.1"
 mosaic = "0.8.0"
 koin = "3.5.6"
 kermit = "2.0.3"
-ktor = "2.3.9"
+ktor = "2.3.12"
 kotlinxSerialization = "1.7.1"
 sqlDelight = "2.0.1"
 sqliteJdbcDriver = "3.46.0.1"
@@ -29,7 +29,7 @@ arrow = "1.2.4"
 paging = "3.3.0-alpha02-0.4.0"
 konnection = "1.3.0"
 nexusGradle = "2.0.0"
-zipline = "1.17.0-LOCAL"
+zipline = "1.17.0-CUSTOM"
 
 [libraries]
 soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.17" }
@@ -45,8 +45,8 @@ kotlin-kotlinTestCommon = { group = "org.jetbrains.kotlin", name = "kotlin-test-
 kotlin-kotlinTestJs = { group = "org.jetbrains.kotlin", name = "kotlin-test-js", version.ref = "kotlin" }
 kotlin-kotlinTestJunit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
 kotlin-kotlinTestAnnotationsCommon = { group = "org.jetbrains.kotlin", name = "kotlin-test-annotations-common", version.ref = "kotlin" }
-kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version = "1.8.1" }
-kotlinx-coroutinesGuava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version = "1.8.1" }
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutinesGuava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version.ref = "coroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version = "0.24.0" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.6.0" }
@@ -140,7 +140,7 @@ androidx-material = { group = "androidx.compose.material", name = "material", ve
 androidx-profileInstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version = "1.3.1" }
 androidx-startUp = { group = "androidx.startup", name = "startup-runtime", version = "1.1.1" }
 androidx-palette = { group = "androidx.palette", name = "palette-ktx", version = "1.0.0" }
-androidx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "androidCoroutines" }
+androidx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 androidx-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradle" }
 androidx-lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "androidxLifecycle" }
 androidx-lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
@@ -178,10 +178,10 @@ konnection = { group = "dev.tmapps", name = "konnection", version.ref = "konnect
 #zipline-loader = { module = "io.github.shabinder:zipline-loader", version.ref = "zipline" }
 #zipline-profiler = { module = "io.github.shabinder:zipline-profiler", version.ref = "zipline" }
 
-zipline = { group = "app.cash.zipline", name = "zipline", version.ref = "zipline" }
-zipline-gradlePlugin = { group = "app.cash.zipline", name = "zipline-gradle-plugin", version.ref = "zipline" }
-zipline-loader = { group = "app.cash.zipline", name = "zipline-loader", version.ref = "zipline" }
-zipline-profiler = { group = "app.cash.zipline", name = "zipline-profiler", version.ref = "zipline" }
+zipline = { group = "io.github.shabinder", name = "zipline", version.ref = "zipline" }
+zipline-gradlePlugin = { group = "io.github.shabinder", name = "zipline-gradle-plugin", version.ref = "zipline" }
+zipline-loader = { group = "io.github.shabinder", name = "zipline-loader", version.ref = "zipline" }
+zipline-profiler = { group = "io.github.shabinder", name = "zipline-profiler", version.ref = "zipline" }
 
 publishing-nexus-gradle = { group = "io.github.gradle-nexus", name = "publish-plugin", version.ref = "nexusGradle" }
 
@@ -231,7 +231,7 @@ kotlin-android = { id = "kotlin-android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "kotlin-multiplatform", version.ref = "kotlin" }
 kotlin-kapt = { id = "kotlin-kapt", version.ref = "kotlin" }
 
-#zipline-gradle = { id = "io.github.shabinder", version.ref = "zipline" }
-zipline-gradle = { id = "app.cash.zipline", version.ref = "zipline" }
+zipline-gradle = { id = "io.github.shabinder", version.ref = "zipline" }
+#zipline-gradle = { id = "app.cash.zipline", version.ref = "zipline" }
 slqDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 baselineProfile = { id = "androidx.baselineprofile", version = "1.2.4" }
