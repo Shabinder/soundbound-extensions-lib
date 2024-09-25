@@ -1,6 +1,8 @@
 package `in`.shabinder.soundbound.utils
 
 import `in`.shabinder.soundbound.models.Artist
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlin.jvm.JvmName
@@ -16,6 +18,19 @@ internal inline fun List<String>.cleaned(): List<String> {
 @JvmName("cleanedArtists")
 internal inline fun List<Artist>.cleaned(): List<Artist> {
     return filter { it.name.isNotBlank() && it.name != "null" }
+}
+
+// Not the Best Practice, use when you just care less for the exceptions.
+inline fun <R> safeRunCatching(block: () -> R): Result<R> {
+    return try {
+        Result.success(block())
+    } catch (t: TimeoutCancellationException) {
+        Result.failure(t)
+    } catch (c: CancellationException) {
+        throw c
+    } catch (e: Throwable) {
+        Result.failure(e)
+    }
 }
 
 fun <T> T.limitDecimals(maxDecimals: Int): String {

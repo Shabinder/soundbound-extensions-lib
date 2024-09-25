@@ -101,6 +101,7 @@ kotlin {
                 with(deps) {
                     api(zipline)
                     api(kotlinx.serialization.json)
+                    api(kotlinx.coroutines)
                 }
             }
         }

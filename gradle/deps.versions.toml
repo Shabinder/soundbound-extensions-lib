@@ -1,29 +1,28 @@
 [versions]
 kotlin = "2.0.10"
-jbCompose = "1.7.0-alpha02"
-androidGradle = "8.4.2"
-coroutines = "1.9.0-RC"
+jbCompose = "1.7.0-beta01"
+androidGradle = "8.5.2"
+coroutines = "1.9.0"
 ktLint = "11.6.1"
 mosaic = "0.8.0"
 koin = "3.5.6"
-kermit = "2.0.3"
-ktor = "2.3.12"
-kotlinxSerialization = "1.7.1"
-sqlDelight = "2.0.1"
+kermit = "2.0.4"
+ktor = "3.0.0-rc-1"
+kotlinxSerialization = "1.6.3" # "1.7.2" // Blocked on Essenty
 sqliteJdbcDriver = "3.46.0.1"
-composeWebView = "1.9.8"
+composeWebView = "1.9.20"
 slf4j = "1.7.36"
 i18n4k = "0.7.1"
-cache4k = "0.11.0"
-decompose = "3.0.0"
-essenty = "2.0.0"
-multiplatformSettings = "1.1.1"
+cache4k = "0.13.0"
+decompose = "3.2.0-beta01"
+essenty = "2.2.0-beta01"
+multiplatformSettings = "1.2.0"
 mviKotlin = "3.3.0"
 accompanist = "0.34.0"
 statelyVersion = "2.0.7"
-statelyIsoVersion = "2.0.0-rc1"
-androidxLifecycle = "2.8.4"
-androidxMedia3 = "1.4.0"
+statelyIsoVersion = "2.0.6"
+androidxLifecycle = "2.8.6"
+androidxMedia3 = "1.4.1"
 okio = "3.9.0"
 arrow = "1.2.4"
 paging = "3.3.0-alpha02-0.4.0"
@@ -31,6 +30,10 @@ konnection = "1.3.0"
 nexusGradle = "2.0.0"
 zipline = "1.17.5-CUSTOM"
 jna = "5.14.0"
+coil="3.0.0-alpha10"
+googleCreds = "1.5.0-alpha05"
+#noinspection GradleDependency
+sqlDelight = "2.0.1"
 
 
 [libraries]
@@ -44,12 +47,15 @@ multiplatform-webView = { group = "io.github.kevinnzou", name = "compose-webview
 
 kotlin-kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
+kotlin-kotlinTest = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 kotlin-kotlinTestCommon = { group = "org.jetbrains.kotlin", name = "kotlin-test-common", version.ref = "kotlin" }
 kotlin-kotlinTestJs = { group = "org.jetbrains.kotlin", name = "kotlin-test-js", version.ref = "kotlin" }
 kotlin-kotlinTestJunit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
 kotlin-kotlinTestAnnotationsCommon = { group = "org.jetbrains.kotlin", name = "kotlin-test-annotations-common", version.ref = "kotlin" }
+kotlin-kotlinTestCoroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutinesGuava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version.ref = "coroutines" }
+kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version = "0.25.0" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.6.1" }
@@ -57,6 +63,8 @@ kotlinx-immutableLists = { group = "org.jetbrains.kotlinx", name = "kotlinx-coll
 
 kotlin-compose-gradle = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "jbCompose" }
 mosaic-gradle = { group = "com.jakewharton.mosaic", name = "mosaic-gradle-plugin", version.ref = "mosaic" }
+
+molecule = { group = "app.cash.molecule", name = "molecule-runtime", version = "2.0.0" }
 
 essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "essenty" }
 essenty-instanceKeeper = { group = "com.arkivanov.essenty", name = "instance-keeper", version.ref = "essenty" }
@@ -138,11 +146,11 @@ koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin"
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
-androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.9.1" }
+androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.9.2" }
 androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.13.1" }
-androidx-material = { group = "androidx.compose.material", name = "material", version = "1.6.8" }
-androidx-profileInstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version = "1.3.1" }
-androidx-startUp = { group = "androidx.startup", name = "startup-runtime", version = "1.1.1" }
+androidx-material = { group = "androidx.compose.material", name = "material", version = "1.7.2" }
+androidx-profileInstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version = "1.4.0" }
+androidx-startUp = { group = "androidx.startup", name = "startup-runtime", version = "1.2.0" }
 androidx-palette = { group = "androidx.palette", name = "palette-ktx", version = "1.0.0" }
 androidx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 androidx-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradle" }
@@ -152,7 +160,7 @@ androidx-lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-co
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version = "2.2.0" }
 
-androidx-desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.0.4" }
+androidx-desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.1.2" }
 androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "androidxMedia3" }
 androidx-media3-exoplayer-hls = { group = "androidx.media3", name = "media3-exoplayer-hls", version.ref = "androidxMedia3" }
 androidx-media3-exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "androidxMedia3" }
@@ -163,13 +171,27 @@ androidx-media3-common = { group = "androidx.legacy", name = "legacy-support-v4"
 androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.2.1" }
 androidx-expresso = { group = "androidx.test.espresso", name = "espresso-core", version = "3.6.1" }
 androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version = "2.3.0" }
-androidx-benchmark-macro-junit = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version = "1.3.0" }
+androidx-benchmark-macro-junit = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version = "1.3.1" }
 
 #noinspection GradleDependency // UpsideDownCake Android 14
 androidx-splash = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
+
+androidx-glance = { group = "androidx.glance", name = "glance-appwidget", version = "1.1.0" }
+androidx-glance-material3 = { group = "androidx.glance", name = "glance-material3", version = "1.1.0" }
+androidx-glance-material = { group = "androidx.glance", name = "glance-material", version = "1.1.0" }
+
+androidx-credential = { group = "androidx.credentials", name = "credentials", version.ref = "googleCreds" }
+androidx-credential-auth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "googleCreds" }
+androidx-credential-googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version = "1.1.1" }
+
 paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "paging" }
 paging-compose = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "paging" }
 composeUi-windowSize = { group = "dev.chrisbanes.material3", name = "material3-window-size-class-multiplatform", version = "0.3.0" }
+
+coil3-ktor3 = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
+coil3-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil3-core = { group = "io.coil-kt.coil3", name = "coil-core", version.ref = "coil" }
+coil3 = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
 
 leak-canary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version = "2.13" }
 junit = { group = "junit", name = "junit", version = "4.13.2" }
@@ -177,10 +199,12 @@ junit = { group = "junit", name = "junit", version = "4.13.2" }
 ktlint-gradle = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktLint" }
 konnection = { group = "dev.tmapps", name = "konnection", version.ref = "konnection" }
 
-jna-platform = { module = "net.java.dev.jna:jna-platform-jpms",  version.ref = "jna" }
-jna = { module = "net.java.dev.jna:jna-jpms",  version.ref = "jna" }
+jna-platform = { module = "net.java.dev.jna:jna-platform-jpms", version.ref = "jna" }
+jna = { module = "net.java.dev.jna:jna-jpms", version.ref = "jna" }
 
-filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version = "0.8.0" }
+composeUi-window-styler = { group = "com.mayakapps.compose", name = "window-styler", version = "0.3.3-SNAPSHOT" }
+
+filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version = "0.8.2" }
 
 zipline = { group = "io.github.shabinder", name = "zipline", version.ref = "zipline" }
 zipline-gradlePlugin = { group = "io.github.shabinder", name = "zipline-gradle-plugin", version.ref = "zipline" }
@@ -189,18 +213,31 @@ zipline-profiler = { group = "io.github.shabinder", name = "zipline-profiler", v
 
 publishing-nexus-gradle = { group = "io.github.gradle-nexus", name = "publish-plugin", version.ref = "nexusGradle" }
 
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.2.0" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.3.0" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 firebase-crashlytics-ndk = { group = "com.google.firebase", name = "firebase-crashlytics-ndk" }
 firebase-plugins-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version = "3.0.2" }
 google-services = { group = "com.google.gms", name = "google-services", version = "4.4.2" }
 
+firebase-remote-config = { group = "dev.gitlive", name = "firebase-config", version = "2.1.0" }
+
+kmp-notification = { group = "io.github.mirzemehdi", name = "kmpnotifier", version = "1.2.1" }
+
+supabase-bom = { group = "io.github.jan-tennert.supabase", name = "bom", version = "3.0.0-rc-1" }
+supabase-postgrest = { group = "io.github.jan-tennert.supabase", name = "postgrest-kt" }
+supabase-auth = { group = "io.github.jan-tennert.supabase", name = "auth-kt" }
+supabase-realtime = { group = "io.github.jan-tennert.supabase", name = "realtime-kt" }
+supabase-storage = { group = "io.github.jan-tennert.supabase", name = "storage-kt" }
+supabase-compose-auth = { group = "io.github.jan-tennert.supabase", name = "compose-auth" }
+supabase-compose-auth-ui = { group = "io.github.jan-tennert.supabase", name = "compose-auth-ui" }
+supabase-functions = { group = "io.github.jan-tennert.supabase", name = "functions-kt" }
+
 ffmpeg-kit-exceptions = { group = "com.arthenica", name = "smart-exception-java", version = "0.2.1" }
 ndk-libunwind = { group = "ru.ivanarh.ndcrash", name = "jndcrash-libunwind", version = "0.8" }
 android-phoenix = { group = "com.jakewharton", name = "process-phoenix", version = "2.1.2" }
 
-desktop-vlcj = { group = "uk.co.caprica", name = "vlcj", version = "4.8.2" }
+desktop-vlcj = { group = "uk.co.caprica", name = "vlcj", version = "5.0.0-M1" }
 desktop-json = { group = "org.json", name = "json", version = "20240303" }
 desktop-amplitude = { group = "com.amplitude", name = "java-sdk", version = "1.12.2" }
 desktop-jcef = { group = "me.friwi", name = "jcefmaven", version = "122.1.10" }
@@ -210,13 +247,15 @@ skrapeit = { group = "it.skrape", name = "skrapeit", version = "1.2.2" }
 
 [bundles]
 arrow = ["arrow-core", "arrow-fx"]
+coil = ["coil3-core", "coil3-ktor3", "coil3-compose", "coil3"]
 ktor = ["ktor-client-core", "ktor-client-json", "ktor-client-auth", "ktor-client-logging", "ktor-client-serialization", "ktor-client-json", "ktor-client-content"]
 stately = ["stately-concurrency", "stately-concurrentCollections"]
 androidx-lifecycle = ["androidx-lifecycle-service", "androidx-lifecycle-common", "androidx-lifecycle-runtime", "androidx-lifecycle-livedata", "androidx-lifecycle-extensions"]
 androidx-common = ["androidx-activity", "androidx-core", "androidx-splash"]
-paging-compose = ["paging-common", "paging-compose"]
+androidx-creds = ["androidx-credential", "androidx-credential-auth", "androidx-credential-googleid"]
 androidx-media3 = ["androidx-media3-session", "androidx-media3-exoplayer", "androidx-media3-ui", "androidx-media3-common"]
-kotlin-test = ["kotlin-kotlinTestCommon", "kotlin-kotlinTestAnnotationsCommon"]
+paging-compose = ["paging-common", "paging-compose"]
+kotlin-test = ["kotlin-kotlinTestCommon", "kotlin-kotlinTestAnnotationsCommon", "kotlin-kotlinTestCoroutine", "kotlin-kotlinTest"]
 sqldelight = ["sqldelight-runtime", "sqldelight-coroutines-extension", "sqldelight-paging"]
 mviKotlin = ["mviKotlin-dep", "mviKotlin-main", "mviKotlin-coroutines", "mviKotlin-rx", "mviKotlin-logging", "mviKotlin-timetravel"]
 kotlinx = ["kotlinx-coroutines", "kotlinx-serialization-json", "kotlinx-atomicfu", "kotlinx-datetime", "kotlinx-immutableLists"]
@@ -224,6 +263,7 @@ essenty = ["essenty-lifecycle", "essenty-instanceKeeper", "essenty-backHandler",
 decompose = ["decompose-dep", "decompose-extensions-compose"]
 koin-android = ["koin-androidx-compose", "koin-android"]
 settings = ["multiplatform-settings", "multiplatform-settings-coroutines", "multiplatform-settings_serialization"]
+supabase = ["supabase-postgrest", "supabase-auth", "supabase-realtime", "supabase-storage", "supabase-functions", "supabase-compose-auth"]
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "androidGradle" }
@@ -241,4 +281,4 @@ kotlin-kapt = { id = "kotlin-kapt", version.ref = "kotlin" }
 zipline-gradle = { id = "io.github.shabinder", version.ref = "zipline" }
 #zipline-gradle = { id = "app.cash.zipline", version.ref = "zipline" }
 slqDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
-baselineProfile = { id = "androidx.baselineprofile", version = "1.2.4" }
+baselineProfile = { id = "androidx.baselineprofile", version = "1.3.1" }
