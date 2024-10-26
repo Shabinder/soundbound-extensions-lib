@@ -27,6 +27,7 @@ interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, Lyr
 
     override val prefKey: String get() = source.sourceName
     override val authDataConfigKey: String get() = source.sourceName
+    val sourceLogoURL: String? get() = null
 
     /*
     * For a Particular URL, will return if this Extension Supports it for metadata fetching

@@ -39,7 +39,7 @@ androidGlance = "1.1.1"
 mokoResources = "0.24.3"
 
 [libraries]
-soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.17" }
+soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.18" }
 soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "1.0.0" }
 soundbound-compose = { group = "io.github.shabinder", name = "compose", version = "1.0.0" }
 
