@@ -70,38 +70,45 @@ interface AuthHandler : Dependencies {
     }
 
 
-    @Serializable
     @Immutable
+    @Serializable
     sealed class AuthMethod {
 
-        @Serializable
+      // Signifies that auth is a pre-requisite for operations
+      abstract val isRequired: Boolean
+
         @Immutable
+        @Serializable
         sealed class AuthData {
-            @Serializable
             @Immutable
+            @Serializable
             data class CookieData(val cookies: Map<String, String>) : AuthData()
 
-            @Serializable
             @Immutable
+            @Serializable
             data object NoAuthData : AuthData()
         }
 
-        @Serializable
         @Immutable
+        @Serializable
         data class CookieAuthAvailable(
             val originURL: String,
             val requiredCookieNames: List<List<CookieKey>>, // within list, any cookie name suffices, acts like OR
             val headers: Map<String, String> = emptyMap(),
             val userAgentString: String? = null,
+            val saveAll: Boolean = true, // we check against required cookies, but save all.
+            override val isRequired: Boolean = false
         ) : AuthMethod() {
-            @Serializable
             @Immutable
+            @Serializable
             data class CookieKey(val key: String, val forURL: String)
         }
 
-        @Serializable
         @Immutable
-        data object AuthNotNeeded : AuthMethod()
+        @Serializable
+        data object AuthNotNeeded : AuthMethod() {
+            override val isRequired: Boolean = false
+        }
     }
 
 
