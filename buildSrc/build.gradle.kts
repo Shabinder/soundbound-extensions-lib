@@ -12,6 +12,7 @@ dependencies {
     with(deps) {
         implementation(zipline.gradlePlugin)
         implementation(androidx.gradle.plugin)
+        implementation(mavenPublish.gradle.plugin)
         with(kotlin) {
             implementation(kotlinGradlePlugin)
             implementation(serialization)

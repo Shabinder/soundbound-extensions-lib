@@ -37,6 +37,7 @@ googleCreds = "1.5.0-alpha06"
 sqlDelight = "2.0.1"
 androidGlance = "1.1.1"
 mokoResources = "0.24.3"
+mavenPublish = "0.30.0"
 
 [libraries]
 soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.18" }
@@ -265,6 +266,7 @@ moko-resources = { group = "dev.icerock.moko", name = "resources", version.ref =
 moko-resources-compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "mokoResources" }
 moko-resources-generator = { group = "dev.icerock.moko", name = "resources-generator", version.ref = "mokoResources" }
 moko-resources-gradle = { group = "dev.icerock.moko", name = "multiplatform-resources", version.ref = "mokoResources" }
+mavenPublish-gradle-plugin = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "mavenPublish" }
 
 [bundles]
 arrow = ["arrow-core", "arrow-fx"]
@@ -310,3 +312,6 @@ baselineProfile = { id = "androidx.baselineprofile", version = "1.3.3" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 moko = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "mokoResources" }
+maven-publish-base = { id = "com.vanniktech.maven.publish.base", version.ref = "mavenPublish" }
+maven-publish-config = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
+version-catalog = { id = "version-catalog" }
