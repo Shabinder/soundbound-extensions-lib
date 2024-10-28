@@ -40,12 +40,18 @@ mokoResources = "0.24.3"
 
 [libraries]
 soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.18" }
-soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "1.0.0" }
+soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "2.0.0" }
 soundbound-compose = { group = "io.github.shabinder", name = "compose", version = "1.0.0" }
 
 clarity = { group = "com.microsoft.clarity", name = "clarity", version = "2.5.0" }
 kache = { group = "com.mayakapps.kache", name = "kache", version = "2.1.0" }
 multiplatform-webView = { group = "io.github.kevinnzou", name = "compose-webview-multiplatform", version.ref = "composeWebView" }
+
+kmp-io-zip = { group = "io.github.skolson", name = "kmp-io", version = "0.1.6" }
+androidx-sqlite-framework = { group = "androidx.sqlite", name = "sqlite-framework", version = "2.4.0" }
+android-play-ads = { group = "com.google.android.gms", name = "play-services-ads", version = "23.4.0" }
+restart4j = { group = "com.github.Dansoftowner", name = "Restart4j", version = "1.4.7" }
+sentry-kmp = { group = "io.sentry", name = "sentry-kotlin-multiplatform", version = "0.10.0" }
 
 kotlin-kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
@@ -192,7 +198,10 @@ androidx-credential-googleid = { group = "com.google.android.libraries.identity.
 
 paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "paging" }
 paging-compose = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "paging" }
+composeUi-window = { group = "androidx.window", name = "window", version = "1.4.0-alpha05" }
 composeUi-windowSize = { group = "dev.chrisbanes.material3", name = "material3-window-size-class-multiplatform", version = "0.5.0" }
+composeUi-waveslider = { group = "ir.mahozad.multiplatform", name = "wavy-slider", version = "1.3.0" }
+composeUi-window-styler = { group = "com.mayakapps.compose", name = "window-styler", version = "0.3.3-SNAPSHOT" }
 
 coil3-ktor3 = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
 coil3-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
@@ -208,8 +217,6 @@ konnection = { group = "dev.tmapps", name = "konnection", version.ref = "konnect
 
 jna-platform = { module = "net.java.dev.jna:jna-platform-jpms", version.ref = "jna" }
 jna = { module = "net.java.dev.jna:jna-jpms", version.ref = "jna" }
-
-composeUi-window-styler = { group = "com.mayakapps.compose", name = "window-styler", version = "0.3.3-SNAPSHOT" }
 
 filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version = "0.8.2" }
 
@@ -266,6 +273,7 @@ ktor = ["ktor-client-core", "ktor-client-json", "ktor-client-auth", "ktor-client
 stately = ["stately-concurrency", "stately-concurrentCollections"]
 androidx-lifecycle = ["androidx-lifecycle-service", "androidx-lifecycle-common", "androidx-lifecycle-runtime", "androidx-lifecycle-livedata", "androidx-lifecycle-extensions"]
 androidx-common = ["androidx-activity", "androidx-core", "androidx-splash"]
+androidx-test = ["androidx-junit", "androidx-expresso", "androidx-test-uiautomator", "androidx-benchmark-macro-junit"]
 androidx-creds = ["androidx-credential", "androidx-credential-auth", "androidx-credential-googleid"]
 androidx-media3 = ["androidx-media3-session", "androidx-media3-exoplayer", "androidx-media3-ui", "androidx-media3-common"]
 paging-compose = ["paging-common", "paging-compose"]
