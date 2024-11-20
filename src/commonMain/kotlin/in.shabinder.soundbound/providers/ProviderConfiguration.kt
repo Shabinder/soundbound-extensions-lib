@@ -2,62 +2,37 @@
 
 package `in`.shabinder.soundbound.providers
 
-import androidx.compose.runtime.Immutable
+import `in`.shabinder.soundbound.providers.config.ConfigPropertyKey
 import `in`.shabinder.soundbound.utils.GlobalJson
 import kotlinx.serialization.InternalSerializationApi
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
-
-
-/**
- * Configuration for a [Provider]
- */
-@Immutable
-@Serializable
-data class ProviderConfiguration(
-    val props: List<Data>,
-    val isUserConfigurable: Boolean = false,
-) {
-
-    @Immutable
-    @Serializable
-    data class Data(
-        val key: String,
-        val value: String? = null,
-        val isRequired: Boolean = false,
-    )
-
-    companion object {
-        val EmptyConfiguration = ProviderConfiguration(props = emptyList())
-    }
-}
-
+import kotlin.collections.List
 
 /**
  * Impl class must override [defaultConfig] if [Config] is [ProviderConfiguration.Configuration]
  *  as it will provide correct handling with [ProviderConfiguration.key] .
  *  */
 interface ConfigHandler : Dependencies {
-
     val prefKey: String
+//    val configs: List<ConfigPropertyKey<Any?>>
+//        get() = emptyList()
 
-    /*
-    * Optional Configuration which a provider might opt in to use and even make this user-configurable
-    * */
-    var configuration: ProviderConfiguration
-        get() = with(devicePreferences) {
-            getStringOrNull(prefKey)?.let {
-                GlobalJson.decodeFromString(it)
-            } ?: ProviderConfiguration.EmptyConfiguration
-        }
-        set(value) {
-            devicePreferences.putString(
-                prefKey,
-                GlobalJson.encodeToString(value)
-            )
-        }
 
-    fun updateConfiguration(data: List<ProviderConfiguration.Data>) {
-        configuration = configuration.copy(props = data)
+    val ConfigPropertyKey<*>.prefKey: String
+        get() = "$prefKey.${key}"
+
+    fun <T> getSavedValueOrDefault(key: ConfigPropertyKey<T>, defaultValue: T): T {
+        return getSavedValue(key) ?: defaultValue
+    }
+
+    fun <T> getSavedValue(key: ConfigPropertyKey<T>): T? {
+        return runCatching {
+            devicePreferences.getStringOrNull(key.key)?.let {
+                GlobalJson.decodeFromString(key.serializer, it)
+            }
+        }.getOrNull()
+    }
+
+    fun <T> saveValue(key: ConfigPropertyKey<T>, value: T) {
+        devicePreferences.putString(key.key, GlobalJson.encodeToString(key.serializer, value))
     }
 }
