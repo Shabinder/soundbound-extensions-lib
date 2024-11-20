@@ -13,26 +13,25 @@ import kotlin.collections.List
  *  */
 interface ConfigHandler : Dependencies {
     val prefKey: String
-//    val configs: List<ConfigPropertyKey<Any?>>
-//        get() = emptyList()
 
+    suspend fun <T : ConfigPropertyKey<*>> getConfigKeys(): List<T> = emptyList()
 
     val ConfigPropertyKey<*>.prefKey: String
         get() = "$prefKey.${key}"
+}
 
-    fun <T> getSavedValueOrDefault(key: ConfigPropertyKey<T>, defaultValue: T): T {
-        return getSavedValue(key) ?: defaultValue
-    }
+fun <T> ConfigHandler.getSavedValueOrDefault(key: ConfigPropertyKey<T>, defaultValue: T): T {
+    return getSavedValue(key) ?: defaultValue
+}
 
-    fun <T> getSavedValue(key: ConfigPropertyKey<T>): T? {
-        return runCatching {
-            devicePreferences.getStringOrNull(key.key)?.let {
-                GlobalJson.decodeFromString(key.serializer, it)
-            }
-        }.getOrNull()
-    }
+fun <T> ConfigHandler.getSavedValue(key: ConfigPropertyKey<T>): T? {
+    return runCatching {
+        devicePreferences.getStringOrNull(key.prefKey)?.let {
+            GlobalJson.decodeFromString(key.serializer, it)
+        }
+    }.getOrNull()
+}
 
-    fun <T> saveValue(key: ConfigPropertyKey<T>, value: T) {
-        devicePreferences.putString(key.key, GlobalJson.encodeToString(key.serializer, value))
-    }
+fun <T> ConfigHandler.saveValue(key: ConfigPropertyKey<T>, value: T) {
+    devicePreferences.putString(key.prefKey, GlobalJson.encodeToString(key.serializer, value))
 }
