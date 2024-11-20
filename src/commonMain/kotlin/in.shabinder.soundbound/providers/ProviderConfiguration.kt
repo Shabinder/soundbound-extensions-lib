@@ -3,8 +3,12 @@
 package `in`.shabinder.soundbound.providers
 
 import `in`.shabinder.soundbound.providers.config.ConfigPropertyKey
+import `in`.shabinder.soundbound.providers.config.ConfigPropertyValue
 import `in`.shabinder.soundbound.utils.GlobalJson
 import kotlinx.serialization.InternalSerializationApi
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonPrimitive
 import kotlin.collections.List
 
 /**
@@ -14,24 +18,78 @@ import kotlin.collections.List
 interface ConfigHandler : Dependencies {
     val prefKey: String
 
-    suspend fun <T : ConfigPropertyKey<*>> getConfigKeys(): List<T> = emptyList()
+    val ConfigPropertyKey.prefKey: String get() = "${this@ConfigHandler.prefKey}.${key}"
 
-    val ConfigPropertyKey<*>.prefKey: String
-        get() = "$prefKey.${key}"
+    val isConfigAvailable: Boolean get() = false
+    suspend fun getConfigKeys(): List<ConfigPropertyKey> = emptyList()
 }
 
-fun <T> ConfigHandler.getSavedValueOrDefault(key: ConfigPropertyKey<T>, defaultValue: T): T {
+suspend fun ConfigHandler.getConfigValues(): List<ConfigPropertyValue> {
+    return getConfigKeys().map { key: ConfigPropertyKey ->
+        when (key) {
+            is ConfigPropertyKey.Single -> {
+                ConfigPropertyValue.Single(
+                    key = key,
+                    value = getSavedValueOrDefault(key)
+                )
+            }
+
+            is ConfigPropertyKey.List -> {
+                ConfigPropertyValue.List(
+                    key = key,
+                    value = getSavedValueOrDefault(key)
+                )
+            }
+        }
+    }
+}
+
+fun List<ConfigPropertyValue>.getValueForKey(key: ConfigPropertyKey.Single): JsonPrimitive {
+    return first { it.key == key }.let {
+        (it as ConfigPropertyValue.Single).value
+    }
+}
+
+fun List<ConfigPropertyValue>.getValueForKey(key: ConfigPropertyKey.List): JsonArray {
+    return first { it.key == key }.let {
+        (it as ConfigPropertyValue.List).value
+    }
+}
+
+fun ConfigHandler.getSavedValueOrDefault(
+    key: ConfigPropertyKey.Single,
+    defaultValue: JsonPrimitive = key.defaultValue
+): JsonPrimitive {
     return getSavedValue(key) ?: defaultValue
 }
 
-fun <T> ConfigHandler.getSavedValue(key: ConfigPropertyKey<T>): T? {
+fun ConfigHandler.getSavedValueOrDefault(
+    key: ConfigPropertyKey.List,
+    defaultValue: JsonArray = key.defaultValue
+): JsonArray {
+    return getSavedValue(key) ?: defaultValue
+}
+
+fun ConfigHandler.getSavedValue(key: ConfigPropertyKey.List): JsonArray? {
     return runCatching {
         devicePreferences.getStringOrNull(key.prefKey)?.let {
-            GlobalJson.decodeFromString(key.serializer, it)
+            GlobalJson.parseToJsonElement(it) as JsonArray
         }
     }.getOrNull()
 }
 
-fun <T> ConfigHandler.saveValue(key: ConfigPropertyKey<T>, value: T) {
-    devicePreferences.putString(key.prefKey, GlobalJson.encodeToString(key.serializer, value))
+fun ConfigHandler.getSavedValue(key: ConfigPropertyKey.Single): JsonPrimitive? {
+    return runCatching {
+        devicePreferences.getStringOrNull(key.prefKey)?.let {
+            GlobalJson.parseToJsonElement(it) as JsonPrimitive
+        }
+    }.getOrNull()
+}
+
+fun ConfigHandler.saveValue(key: ConfigPropertyKey.Single, value: JsonPrimitive) {
+    devicePreferences.putString(key.prefKey, GlobalJson.encodeToString(value))
+}
+
+fun ConfigHandler.saveValue(key: ConfigPropertyKey.List, value: JsonArray) {
+    devicePreferences.putString(key.prefKey, GlobalJson.encodeToString(value))
 }
