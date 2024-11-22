@@ -22,6 +22,17 @@ interface ConfigHandler : Dependencies {
 
     val isConfigAvailable: Boolean get() = false
     suspend fun getConfigKeys(): List<ConfigPropertyKey> = emptyList()
+    suspend fun saveConfigValues(configValues: List<ConfigPropertyValue>) {
+        configValues.forEach {
+            when (it) {
+                is ConfigPropertyValue.Single -> saveValue(it.key, it.value)
+                is ConfigPropertyValue.List -> saveValue(it.key, it.value)
+            }
+        }
+    }
+    suspend fun saveConfigValues(configValue: ConfigPropertyValue) {
+        saveConfigValues(listOf(configValue))
+    }
 }
 
 suspend fun ConfigHandler.getConfigValues(): List<ConfigPropertyValue> {

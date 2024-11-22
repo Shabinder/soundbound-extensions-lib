@@ -21,6 +21,7 @@ sealed class ConfigPropertyKey {
     override val isRequired: Boolean = false,
     override val isUserConfigurable: Boolean = false,
     val defaultValue: JsonPrimitive,
+    val possibleValues: KotlinList<JsonPrimitive> = emptyList() // Can be Empty, if require user to enter manually
   ) : ConfigPropertyKey()
 
   @Serializable
@@ -32,6 +33,7 @@ sealed class ConfigPropertyKey {
     override val isRequired: Boolean = false,
     override val isUserConfigurable: Boolean = false,
     val defaultValue: JsonArray,
+    val possibleValues: JsonArray = JsonArray(emptyList())
   ) : ConfigPropertyKey()
 }
 

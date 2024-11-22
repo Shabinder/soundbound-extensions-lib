@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.0.10"
-jbCompose = "1.7.0"
-androidGradle = "8.5.2"
+jbCompose = "1.7.1"
+androidGradle = "8.7.2"
 coroutines = "1.9.0"
 ktLint = "12.1.1"
 spotless = "6.25.0"
@@ -22,7 +22,7 @@ mviKotlin = "3.3.0"
 accompanist = "0.34.0"
 statelyVersion = "2.1.0"
 statelyIsoVersion = "2.1.0"
-androidxLifecycle = "2.8.6"
+androidxLifecycle = "2.8.7"
 androidxMedia3 = "1.4.1"
 okio = "3.9.1"
 arrow = "1.2.4"
@@ -32,16 +32,17 @@ nexusGradle = "2.0.0"
 zipline = "1.18.5-CUSTOM"
 jna = "5.14.0"
 coil = "3.0.0-rc01"
-googleCreds = "1.5.0-alpha06"
+googleCreds = "1.5.0-beta01"
 #noinspection GradleDependency
 sqlDelight = "2.0.1"
 androidGlance = "1.1.1"
 mokoResources = "0.24.3"
 mavenPublish = "0.30.0"
+desugar = "2.1.3"
 
 [libraries]
-soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.19" }
-soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "2.0.0" }
+soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.20" }
+soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "3.0.0" }
 soundbound-compose = { group = "io.github.shabinder", name = "compose", version = "1.0.0" }
 
 clarity = { group = "com.microsoft.clarity", name = "clarity", version = "2.5.0" }
@@ -50,7 +51,7 @@ multiplatform-webView = { group = "io.github.kevinnzou", name = "compose-webview
 
 kmp-io-zip = { group = "io.github.skolson", name = "kmp-io", version = "0.1.6" }
 androidx-sqlite-framework = { group = "androidx.sqlite", name = "sqlite-framework", version = "2.4.0" }
-android-play-ads = { group = "com.google.android.gms", name = "play-services-ads", version = "23.4.0" }
+android-play-ads = { group = "com.google.android.gms", name = "play-services-ads", version = "23.5.0" }
 restart4j = { group = "com.github.Dansoftowner", name = "Restart4j", version = "1.4.7" }
 sentry-kmp = { group = "io.sentry", name = "sentry-kotlin-multiplatform", version = "0.10.0" }
 
@@ -160,8 +161,8 @@ koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = 
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
 androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.9.3" }
-androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.13.1" }
-androidx-material = { group = "androidx.compose.material", name = "material", version = "1.7.4" }
+androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.15.0" }
+androidx-material = { group = "androidx.compose.material", name = "material", version = "1.7.5" }
 androidx-profileInstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version = "1.4.1" }
 androidx-startUp = { group = "androidx.startup", name = "startup-runtime", version = "1.2.0" }
 androidx-palette = { group = "androidx.palette", name = "palette-ktx", version = "1.0.0" }
@@ -173,7 +174,7 @@ androidx-lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-co
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version = "2.2.0" }
 
-androidx-desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version = "2.1.2" }
+androidx-desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar" }
 androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "androidxMedia3" }
 androidx-media3-exoplayer-hls = { group = "androidx.media3", name = "media3-exoplayer-hls", version.ref = "androidxMedia3" }
 androidx-media3-exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "androidxMedia3" }
@@ -228,7 +229,7 @@ zipline-profiler = { group = "io.github.shabinder", name = "zipline-profiler", v
 
 publishing-nexus-gradle = { group = "io.github.gradle-nexus", name = "publish-plugin", version.ref = "nexusGradle" }
 
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.5.1" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.6.0" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 firebase-crashlytics-ndk = { group = "com.google.firebase", name = "firebase-crashlytics-ndk" }

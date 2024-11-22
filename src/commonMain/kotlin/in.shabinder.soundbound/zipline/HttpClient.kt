@@ -20,8 +20,17 @@ interface HttpClient : ZiplineService {
 
   var isCookiesEnabled: Boolean
 
-  fun getCookies(): Map<String, String>
-  fun setCookie(url: String, cookie: String)
+  // Very Basic Cookie Support
+  // Alive for the session.
+  @Serializable
+  data class Cookie(
+    val url: String,
+    val value: String,
+  )
+
+  fun getCookies(): Map<String, Cookie>
+  fun setCookie(name: String, cookie: Cookie)
+  fun clearCookies()
 
   fun getAuthInfo(): AuthType
   fun setAuth(auth: AuthType)
