@@ -41,6 +41,13 @@ sealed class ConfigPropertyKey {
 sealed class ConfigPropertyValue() {
   abstract val key: ConfigPropertyKey
 
+  open fun isDefault(): Boolean {
+    return when (this) {
+      is Single -> value == key.defaultValue
+      is List -> value == key.defaultValue
+    }
+  }
+
   @Serializable
   data class Single(
     override val key: ConfigPropertyKey.Single,

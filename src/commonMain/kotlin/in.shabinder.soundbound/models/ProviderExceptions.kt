@@ -1,10 +1,10 @@
 package `in`.shabinder.soundbound.models
 
 import androidx.compose.runtime.Immutable
+import `in`.shabinder.soundbound.diagnostics.DiagnosticsData
 
 
 import kotlinx.serialization.Serializable
-
 
 @Immutable
 @Serializable
@@ -13,6 +13,12 @@ sealed class ProviderExceptions(
   var extraErrorTrace: String? = null
 ) : Exception(message) {
 
+  @Immutable
+  @Serializable
+  data class ExceptionWithDiagnostics(
+    override val cause: ThrowableWrapper,
+    val diagnostics: List<DiagnosticsData>,
+  ) : ProviderExceptions("ExceptionWithDiagnostics: ${cause.message}")
 
   @Immutable
   @Serializable
