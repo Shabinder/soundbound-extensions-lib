@@ -12,14 +12,29 @@ data class DiagnosticsData(val key: String, val value: Map<String, String?>)
 data class DiagnosticManager(
   private val data: MutableList<DiagnosticsData> = mutableListOf()
 ) {
-  fun appendDiagnostics(key: String, value: Map<String, String?>): DiagnosticManager {
+  fun appendDiagnostics(key: String, value: Map<String, String?>): DiagnosticManager = apply {
     data.add(DiagnosticsData(key, value))
-    return this
   }
 
-  fun appendDiagnostics(data: DiagnosticsData): DiagnosticManager {
+  fun appendDiagnostics(
+    key: String,
+    error: Throwable,
+    extraValues: Map<String, String?> = emptyMap()
+  ): DiagnosticManager = apply {
+    data.add(
+      DiagnosticsData(
+        key = key,
+        value = mapOf(
+          "message" to error.message,
+          "stackTrace" to error.stackTraceToString(),
+          "errorClass" to error::class.simpleName
+        ) + extraValues
+      )
+    )
+  }
+
+  fun appendDiagnostics(data: DiagnosticsData): DiagnosticManager = apply {
     this.data.add(data)
-    return this
   }
 
   fun getDiagnostics(): List<DiagnosticsData> = data

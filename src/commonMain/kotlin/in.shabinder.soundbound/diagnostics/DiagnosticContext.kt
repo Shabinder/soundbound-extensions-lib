@@ -10,7 +10,7 @@ import kotlinx.coroutines.withContext
 class DiagnosticContext private constructor(val manager: DiagnosticManager) :
   CoroutineContext.Element {
 
-  override val key: CoroutineContext.Key<*> get() = Key
+  override val key: CoroutineContext.Key<DiagnosticContext> get() = Key
 
   companion object Key : CoroutineContext.Key<DiagnosticContext> {
     suspend fun <T> withDiagnostics(block: suspend DiagnosticManager.() -> T): T {
@@ -26,17 +26,22 @@ class DiagnosticContext private constructor(val manager: DiagnosticManager) :
       }
     }
 
+    suspend fun getDiagnosticsContext(): DiagnosticManager {
+      val currentContext = coroutineContext[Key]
+      return currentContext?.manager ?: throw IllegalStateException("No DiagnosticContext found.")
+    }
+
     private inline fun <T> DiagnosticManager.tryOrThrowWithDiagnostics(
       block: DiagnosticManager.() -> T
     ): T = try {
       block()
     } catch (e: Throwable) {
-      appendDiagnostics(
-        "ErrorCaughtWithDiagnostics", mapOf(
-          "message" to e.message,
-          "stackTrace" to e.stackTraceToString(),
-        )
-      )
+      if (e is ProviderExceptions.ExceptionWithDiagnostics) {
+        // Already has diagnostics, rethrow
+        throw e
+      }
+
+      appendDiagnostics("ErrorCaughtWithDiagnostics", e)
       throw ProviderExceptions.ExceptionWithDiagnostics(
         cause = e.toThrowableWrapper(),
         diagnostics = getDiagnostics()

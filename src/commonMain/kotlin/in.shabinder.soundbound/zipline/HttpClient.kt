@@ -1,9 +1,11 @@
 package `in`.shabinder.soundbound.zipline
 
 import app.cash.zipline.ZiplineService
+import `in`.shabinder.soundbound.diagnostics.DiagnosticContext.Key.withDiagnostics
 
 
 import `in`.shabinder.soundbound.utils.GlobalJson
+import `in`.shabinder.soundbound.utils.safeRunCatching
 import kotlinx.serialization.Serializable
 
 interface HttpClientBuilder : ZiplineService {
@@ -118,13 +120,38 @@ suspend inline fun <reified T> HttpClient.get(
   url: String,
   params: Map<String, String> = emptyMap(),
   headers: Map<String, String> = emptyMap(),
-): T {
-  return getAsString(url, params, headers).let {
+): T = withDiagnostics {
+  getAsString(url, params, headers).let {
     if (T::class == String::class) {
       return@let it as T
     }
 
-    GlobalJson.decodeFromString(it)
+    safeRunCatching {
+      GlobalJson.decodeFromString<T>(it)
+    }.onSuccess { res ->
+      appendDiagnostics(
+        key = "SuccessNetworkResponse",
+        value = mapOf(
+          "method" to HttpClient.Method.GET.toString(),
+          "url" to url,
+          "params" to params.toString(),
+          "headers" to headers.toString(),
+          "response" to res.toString(),
+        )
+      )
+    }.onFailure { e ->
+      appendDiagnostics(
+        key = "ErrorParsingResponse",
+        error = e,
+        extraValues = mapOf(
+          "method" to HttpClient.Method.GET.toString(),
+          "url" to url,
+          "params" to params.toString(),
+          "headers" to headers.toString(),
+          "response" to it,
+        )
+      )
+    }.getOrThrow()
   }
 }
 
@@ -133,12 +160,39 @@ suspend inline fun <reified T> HttpClient.post(
   params: Map<String, String> = emptyMap(),
   body: HttpClient.BodyType = HttpClient.BodyType.NONE,
   headers: Map<String, String> = emptyMap(),
-): T {
-  return postAsString(url, params, body, headers).let {
+): T = withDiagnostics {
+  postAsString(url, params, body, headers).let {
     if (T::class == String::class) {
       return@let it as T
     }
 
-    GlobalJson.decodeFromString(it)
+    safeRunCatching {
+      GlobalJson.decodeFromString<T>(it)
+    }.onSuccess { res ->
+      appendDiagnostics(
+        key = "SuccessNetworkResponse",
+        value = mapOf(
+          "method" to HttpClient.Method.POST.toString(),
+          "url" to url,
+          "params" to params.toString(),
+          "headers" to headers.toString(),
+          "body" to body.toString(),
+          "response" to res.toString(),
+        )
+      )
+    }.onFailure { e ->
+      appendDiagnostics(
+        key = "ErrorParsingResponse",
+        error = e,
+        extraValues = mapOf(
+          "method" to HttpClient.Method.POST.toString(),
+          "url" to url,
+          "params" to params.toString(),
+          "headers" to headers.toString(),
+          "body" to body.toString(),
+          "response" to it,
+        )
+      )
+    }.getOrThrow()
   }
 }
