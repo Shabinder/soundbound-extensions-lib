@@ -65,6 +65,17 @@ interface HttpClient : ZiplineService {
     headers: Map<String, String> = emptyMap(),
   ): String
 
+  suspend fun validateStatus(
+    url: String,
+    params: Map<String, String> = emptyMap(),
+    headers: Map<String, String> = emptyMap(),
+  ): Boolean
+
+  suspend fun head(
+    url: String,
+    params: Map<String, String> = emptyMap(),
+    headers: Map<String, String> = emptyMap(),
+  ): Map<String, List<String>>
 
   @Serializable
   sealed interface AuthType {

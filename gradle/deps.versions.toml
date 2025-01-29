@@ -31,18 +31,18 @@ konnection = "1.4.3"
 nexusGradle = "2.0.0"
 zipline = "1.18.5-CUSTOM"
 jna = "5.14.0"
-coil = "3.0.0-rc01"
+coil = "3.0.4"
 googleCreds = "1.5.0-beta01"
 #noinspection GradleDependency
 sqlDelight = "2.0.1"
 androidGlance = "1.1.1"
 mokoResources = "0.24.3"
 mavenPublish = "0.30.0"
-desugar = "2.1.3"
+desugar = "2.1.4"
 
 [libraries]
-soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.21" }
-soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "3.1.0" }
+soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.22" }
+soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "3.2.0" }
 soundbound-compose = { group = "io.github.shabinder", name = "compose", version = "1.0.0" }
 
 clarity = { group = "com.microsoft.clarity", name = "clarity", version = "2.5.0" }
@@ -136,8 +136,8 @@ multiplatform-settings-datastore = { group = "com.russhwolf", name = "multiplatf
 multiplatform-settings-coroutines = { group = "com.russhwolf", name = "multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
 multiplatform-settings_serialization = { group = "com.russhwolf", name = "multiplatform-settings-serialization", version.ref = "multiplatformSettings" }
 
-androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version = "1.1.1" }
-androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version = "1.1.1" }
+androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version = "1.1.2" }
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version = "1.1.2" }
 
 stately-common = { group = "co.touchlab", name = "stately-common", version.ref = "statelyVersion" }
 stately-concurrency = { group = "co.touchlab", name = "stately-concurrency", version.ref = "statelyVersion" }
@@ -160,9 +160,9 @@ koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin"
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
-androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.9.3" }
+androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.10.0" }
 androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.15.0" }
-androidx-material = { group = "androidx.compose.material", name = "material", version = "1.7.5" }
+androidx-material = { group = "androidx.compose.material", name = "material", version = "1.7.6" }
 androidx-profileInstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version = "1.4.1" }
 androidx-startUp = { group = "androidx.startup", name = "startup-runtime", version = "1.2.0" }
 androidx-palette = { group = "androidx.palette", name = "palette-ktx", version = "1.0.0" }
@@ -200,7 +200,7 @@ androidx-credential-googleid = { group = "com.google.android.libraries.identity.
 
 paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "paging" }
 paging-compose = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "paging" }
-composeUi-window = { group = "androidx.window", name = "window", version = "1.4.0-alpha05" }
+composeUi-window = { group = "androidx.window", name = "window", version = "1.4.0-beta01" }
 composeUi-windowSize = { group = "dev.chrisbanes.material3", name = "material3-window-size-class-multiplatform", version = "0.5.0" }
 composeUi-waveslider = { group = "ir.mahozad.multiplatform", name = "wavy-slider", version = "1.3.0" }
 composeUi-window-styler = { group = "com.mayakapps.compose", name = "window-styler", version = "0.3.3-SNAPSHOT" }
@@ -229,7 +229,7 @@ zipline-profiler = { group = "io.github.shabinder", name = "zipline-profiler", v
 
 publishing-nexus-gradle = { group = "io.github.gradle-nexus", name = "publish-plugin", version.ref = "nexusGradle" }
 
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.6.0" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.8.0" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 firebase-crashlytics-ndk = { group = "com.google.firebase", name = "firebase-crashlytics-ndk" }
@@ -254,11 +254,11 @@ ndk-libunwind = { group = "ru.ivanarh.ndcrash", name = "jndcrash-libunwind", ver
 android-phoenix = { group = "com.jakewharton", name = "process-phoenix", version = "2.1.2" }
 
 desktop-vlcj = { group = "uk.co.caprica", name = "vlcj", version = "4.8.3" }
-desktop-json = { group = "org.json", name = "json", version = "20240303" }
+desktop-json = { group = "org.json", name = "json", version = "20241224" }
 desktop-amplitude = { group = "com.amplitude", name = "java-sdk", version = "1.12.2" }
 desktop-jcef = { group = "me.friwi", name = "jcefmaven", version = "122.1.10" }
 
-revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version = "8.8.1" }
+revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version = "8.10.8" }
 skrapeit = { group = "it.skrape", name = "skrapeit", version = "1.2.2" }
 
 store = "org.mobilenativefoundation.store:store5:5.1.0-alpha06"
@@ -268,6 +268,10 @@ moko-resources-compose = { group = "dev.icerock.moko", name = "resources-compose
 moko-resources-generator = { group = "dev.icerock.moko", name = "resources-generator", version.ref = "mokoResources" }
 moko-resources-gradle = { group = "dev.icerock.moko", name = "multiplatform-resources", version.ref = "mokoResources" }
 mavenPublish-gradle-plugin = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "mavenPublish" }
+
+#newpipe-extractor = { group = "com.github.TeamNewPipe", name = "NewPipeExtractor", version = "v0.24.3" }
+# Use fork of NewPipeExtractor until https://github.com/TeamNewPipe/NewPipeExtractor/pull/1253 is merged
+newpipe-extractor = { group = "com.github.gechoto", name = "NewPipeExtractor", version = "00cf7dad9e49933c7faaa382c9c7b1e7afb28a7d" }
 
 [bundles]
 arrow = ["arrow-core", "arrow-fx"]
