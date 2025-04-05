@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.0.10"
-jbCompose = "1.7.1"
+jbCompose = "1.7.3"
 androidGradle = "8.5.2"
 coroutines = "1.9.0"
 ktLint = "12.1.1"
@@ -23,7 +23,7 @@ accompanist = "0.34.0"
 statelyVersion = "2.1.0"
 statelyIsoVersion = "2.1.0"
 androidxLifecycle = "2.8.7"
-androidxMedia3 = "1.4.1"
+androidxMedia3 = "1.6.0"
 okio = "3.9.1"
 arrow = "1.2.4"
 paging = "3.3.0-alpha02-0.4.0"
@@ -31,17 +31,17 @@ konnection = "1.4.3"
 nexusGradle = "2.0.0"
 zipline = "1.18.5-CUSTOM"
 jna = "5.14.0"
-coil = "3.0.4"
-googleCreds = "1.5.0-beta01"
+coil = "3.1.0"
+googleCreds = "1.5.0"
 #noinspection GradleDependency
 sqlDelight = "2.0.1"
 androidGlance = "1.1.1"
 mokoResources = "0.24.3"
-mavenPublish = "0.30.0"
-desugar = "2.1.4"
+mavenPublish = "0.31.0"
+desugar = "2.1.5"
 
 [libraries]
-soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.22" }
+soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.23" }
 soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "3.2.0" }
 soundbound-compose = { group = "io.github.shabinder", name = "compose", version = "1.0.0" }
 
@@ -51,7 +51,7 @@ multiplatform-webView = { group = "io.github.kevinnzou", name = "compose-webview
 
 kmp-io-zip = { group = "io.github.skolson", name = "kmp-io", version = "0.1.6" }
 androidx-sqlite-framework = { group = "androidx.sqlite", name = "sqlite-framework", version = "2.4.0" }
-android-play-ads = { group = "com.google.android.gms", name = "play-services-ads", version = "23.5.0" }
+android-play-ads = { group = "com.google.android.gms", name = "play-services-ads", version = "24.1.0" }
 restart4j = { group = "com.github.Dansoftowner", name = "Restart4j", version = "1.4.7" }
 sentry-kmp = { group = "io.sentry", name = "sentry-kotlin-multiplatform", version = "0.10.0" }
 
@@ -67,8 +67,8 @@ kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutin
 kotlinx-coroutinesGuava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version.ref = "coroutines" }
 kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
-kotlinx-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version = "0.25.0" }
-kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.6.1" }
+kotlinx-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version = "0.27.0" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.6.2" }
 kotlinx-immutableLists = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version = "0.3.8" }
 
 kotlin-compose-gradle = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "jbCompose" }
@@ -136,8 +136,8 @@ multiplatform-settings-datastore = { group = "com.russhwolf", name = "multiplatf
 multiplatform-settings-coroutines = { group = "com.russhwolf", name = "multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
 multiplatform-settings_serialization = { group = "com.russhwolf", name = "multiplatform-settings-serialization", version.ref = "multiplatformSettings" }
 
-androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version = "1.1.2" }
-androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version = "1.1.2" }
+androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version = "1.1.4" }
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version = "1.1.4" }
 
 stately-common = { group = "co.touchlab", name = "stately-common", version.ref = "statelyVersion" }
 stately-concurrency = { group = "co.touchlab", name = "stately-concurrency", version.ref = "statelyVersion" }
@@ -160,9 +160,9 @@ koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin"
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
-androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.10.0" }
+androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.10.1" }
 androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.15.0" }
-androidx-material = { group = "androidx.compose.material", name = "material", version = "1.7.6" }
+androidx-material = { group = "androidx.compose.material", name = "material", version = "1.7.8" }
 androidx-profileInstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version = "1.4.1" }
 androidx-startUp = { group = "androidx.startup", name = "startup-runtime", version = "1.2.0" }
 androidx-palette = { group = "androidx.palette", name = "palette-ktx", version = "1.0.0" }
@@ -185,7 +185,7 @@ androidx-media3-common = { group = "androidx.legacy", name = "legacy-support-v4"
 androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.2.1" }
 androidx-expresso = { group = "androidx.test.espresso", name = "espresso-core", version = "3.6.1" }
 androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version = "2.3.0" }
-androidx-benchmark-macro-junit = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version = "1.3.3" }
+androidx-benchmark-macro-junit = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version = "1.3.4" }
 
 #noinspection GradleDependency // UpsideDownCake Android 14
 androidx-splash = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
@@ -200,7 +200,7 @@ androidx-credential-googleid = { group = "com.google.android.libraries.identity.
 
 paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "paging" }
 paging-compose = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "paging" }
-composeUi-window = { group = "androidx.window", name = "window", version = "1.4.0-beta01" }
+composeUi-window = { group = "androidx.window", name = "window", version = "1.4.0-rc01" }
 composeUi-windowSize = { group = "dev.chrisbanes.material3", name = "material3-window-size-class-multiplatform", version = "0.5.0" }
 composeUi-waveslider = { group = "ir.mahozad.multiplatform", name = "wavy-slider", version = "1.3.0" }
 composeUi-window-styler = { group = "com.mayakapps.compose", name = "window-styler", version = "0.3.3-SNAPSHOT" }
@@ -229,11 +229,11 @@ zipline-profiler = { group = "io.github.shabinder", name = "zipline-profiler", v
 
 publishing-nexus-gradle = { group = "io.github.gradle-nexus", name = "publish-plugin", version.ref = "nexusGradle" }
 
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.8.0" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.11.0" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 firebase-crashlytics-ndk = { group = "com.google.firebase", name = "firebase-crashlytics-ndk" }
-firebase-plugins-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version = "3.0.2" }
+firebase-plugins-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version = "3.0.3" }
 google-services = { group = "com.google.gms", name = "google-services", version = "4.4.2" }
 
 firebase-remote-config = { group = "dev.gitlive", name = "firebase-config", version = "2.1.0" }
@@ -258,7 +258,7 @@ desktop-json = { group = "org.json", name = "json", version = "20241224" }
 desktop-amplitude = { group = "com.amplitude", name = "java-sdk", version = "1.12.2" }
 desktop-jcef = { group = "me.friwi", name = "jcefmaven", version = "122.1.10" }
 
-revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version = "8.10.8" }
+revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version = "8.15.0" }
 skrapeit = { group = "it.skrape", name = "skrapeit", version = "1.2.2" }
 
 store = "org.mobilenativefoundation.store:store5:5.1.0-alpha06"
@@ -271,7 +271,7 @@ mavenPublish-gradle-plugin = { module = "com.vanniktech:gradle-maven-publish-plu
 
 #newpipe-extractor = { group = "com.github.TeamNewPipe", name = "NewPipeExtractor", version = "v0.24.3" }
 # Use fork of NewPipeExtractor until https://github.com/TeamNewPipe/NewPipeExtractor/pull/1253 is merged
-newpipe-extractor = { group = "com.github.gechoto", name = "NewPipeExtractor", version = "00cf7dad9e49933c7faaa382c9c7b1e7afb28a7d" }
+newpipe-extractor = { group = "com.github.FineFindus", name = "NewPipeExtractor", version = "0e54ccb4398c215b788282b238539d4a59f70ba3" }
 
 [bundles]
 arrow = ["arrow-core", "arrow-fx"]
@@ -312,7 +312,7 @@ zipline-gradle = { id = "io.github.shabinder", version.ref = "zipline" }
 #zipline-gradle = { id = "app.cash.zipline", version.ref = "zipline" }
 
 slqDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
-baselineProfile = { id = "androidx.baselineprofile", version = "1.3.3" }
+baselineProfile = { id = "androidx.baselineprofile", version = "1.3.4" }
 
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
