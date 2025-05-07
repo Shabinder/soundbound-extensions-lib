@@ -271,7 +271,8 @@ mavenPublish-gradle-plugin = { module = "com.vanniktech:gradle-maven-publish-plu
 
 #newpipe-extractor = { group = "com.github.TeamNewPipe", name = "NewPipeExtractor", version = "v0.24.3" }
 # Use fork of NewPipeExtractor until https://github.com/TeamNewPipe/NewPipeExtractor/pull/1253 is merged
-newpipe-extractor = { group = "com.github.FineFindus", name = "NewPipeExtractor", version = "0e54ccb4398c215b788282b238539d4a59f70ba3" }
+newpipe-extractor = { group = "com.github.TeamNewPipe", name = "NewPipeExtractor", version = "v0.24.4" }
+kotlin-onetimepassword = { module = "dev.turingcomplete:kotlin-onetimepassword", version = "2.4.1" }
 
 [bundles]
 arrow = ["arrow-core", "arrow-fx"]
