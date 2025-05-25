@@ -18,6 +18,18 @@ fun HttpClientBuilder.build(
 ): HttpClient =
   build(enableCookies).apply(config)
 
+@Serializable
+data class CustomHttpResponse(
+  val body: String,
+  val headers: Map<String, List<String>>,
+  val statusCode: Int,
+  val responseUrl: String // Useful for debugging or if redirects happened
+) {
+  fun isSuccess(): Boolean {
+    return statusCode in 200..299
+  }
+}
+
 interface HttpClient : ZiplineService {
 
   var isCookiesEnabled: Boolean
@@ -47,18 +59,66 @@ interface HttpClient : ZiplineService {
   fun getDefaultParams(): Map<String, String>
   fun setDefaultParams(params: Map<String, String>)
 
+  suspend fun getRequest(
+    url: String,
+    params: Map<String, String> = emptyMap(),
+    headers: Map<String, String> = emptyMap(),
+  ): CustomHttpResponse
+
+  suspend fun postRequest(
+    url: String,
+    params: Map<String, String> = emptyMap(),
+    body: BodyType = BodyType.NONE,
+    headers: Map<String, String> = emptyMap(),
+  ): CustomHttpResponse
+
+  suspend fun headRequest(
+    url: String,
+    params: Map<String, String> = emptyMap(),
+    headers: Map<String, String> = emptyMap(),
+  ): CustomHttpResponse
+
   suspend fun getAsString(
     url: String,
     params: Map<String, String> = emptyMap(),
     headers: Map<String, String> = emptyMap(),
-  ): String
+  ): String = withDiagnostics {
+    getRequest(url, params, headers)
+      .also {
+        appendDiagnostics("GetRequest", mapOf(
+          "url" to url,
+          "params" to params.toString(),
+          "headers" to headers.toString(),
+          "responseCode" to it.statusCode.toString(),
+          "responseUrl" to it.responseUrl,
+          "responseHeaders" to it.headers.toString(),
+          "responseBody" to it.body
+        ))
+      }
+      .body
+  }
 
   suspend fun postAsString(
     url: String,
     params: Map<String, String> = emptyMap(),
     body: BodyType = BodyType.NONE,
     headers: Map<String, String> = emptyMap(),
-  ): String
+  ): String = withDiagnostics {
+    postRequest(url, params, body, headers)
+      .also {
+        appendDiagnostics("PostRequest", mapOf(
+          "url" to url,
+          "params" to params.toString(),
+          "headers" to headers.toString(),
+          "body" to body.toString(),
+          "responseCode" to it.statusCode.toString(),
+          "responseUrl" to it.responseUrl,
+          "responseHeaders" to it.headers.toString(),
+          "responseBody" to it.body,
+        ))
+      }
+      .body
+  }
 
   suspend fun getFinalUrl(
     url: String,
@@ -70,12 +130,6 @@ interface HttpClient : ZiplineService {
     params: Map<String, String> = emptyMap(),
     headers: Map<String, String> = emptyMap(),
   ): Boolean
-
-  suspend fun head(
-    url: String,
-    params: Map<String, String> = emptyMap(),
-    headers: Map<String, String> = emptyMap(),
-  ): Map<String, List<String>>
 
   @Serializable
   sealed interface AuthType {
@@ -132,24 +186,15 @@ suspend inline fun <reified T> HttpClient.get(
   params: Map<String, String> = emptyMap(),
   headers: Map<String, String> = emptyMap(),
 ): T = withDiagnostics {
-  getAsString(url, params, headers).let {
+  val result = getRequest(url, params, headers)
+
+  result.body.let {
     if (T::class == String::class) {
       return@let it as T
     }
 
     safeRunCatching {
       GlobalJson.decodeFromString<T>(it)
-    }.onSuccess { res ->
-      appendDiagnostics(
-        key = "SuccessNetworkResponse",
-        value = mapOf(
-          "method" to HttpClient.Method.GET.toString(),
-          "url" to url,
-          "params" to params.toString(),
-          "headers" to headers.toString(),
-          "response" to res.toString(),
-        )
-      )
     }.onFailure { e ->
       appendDiagnostics(
         key = "ErrorParsingResponse",
@@ -159,7 +204,9 @@ suspend inline fun <reified T> HttpClient.get(
           "url" to url,
           "params" to params.toString(),
           "headers" to headers.toString(),
-          "response" to it,
+          "responseHeaders" to result.headers.toString(),
+          "responseCode" to result.statusCode.toString(),
+          "responseBody" to it,
         )
       )
     }.getOrThrow()
@@ -172,25 +219,15 @@ suspend inline fun <reified T> HttpClient.post(
   body: HttpClient.BodyType = HttpClient.BodyType.NONE,
   headers: Map<String, String> = emptyMap(),
 ): T = withDiagnostics {
-  postAsString(url, params, body, headers).let {
+  val result = postRequest(url, params, body, headers)
+
+  result.body.let {
     if (T::class == String::class) {
       return@let it as T
     }
 
     safeRunCatching {
       GlobalJson.decodeFromString<T>(it)
-    }.onSuccess { res ->
-      appendDiagnostics(
-        key = "SuccessNetworkResponse",
-        value = mapOf(
-          "method" to HttpClient.Method.POST.toString(),
-          "url" to url,
-          "params" to params.toString(),
-          "headers" to headers.toString(),
-          "body" to body.toString(),
-          "response" to res.toString(),
-        )
-      )
     }.onFailure { e ->
       appendDiagnostics(
         key = "ErrorParsingResponse",
@@ -198,10 +235,12 @@ suspend inline fun <reified T> HttpClient.post(
         extraValues = mapOf(
           "method" to HttpClient.Method.POST.toString(),
           "url" to url,
+          "body" to body.toString(),
           "params" to params.toString(),
           "headers" to headers.toString(),
-          "body" to body.toString(),
-          "response" to it,
+          "responseHeaders" to result.headers.toString(),
+          "responseCode" to result.statusCode.toString(),
+          "responseBody" to it,
         )
       )
     }.getOrThrow()

@@ -106,9 +106,11 @@ arrow-meta = { group = "io.arrow-kt", name = "arrow-meta", version.ref = "arrow"
 arrow-plugin-optics = { group = "io.arrow-kt", name = "arrow-optics-ksp-plugin", version.ref = "arrow" }
 arrow-plugin-analysis = { group = "io.arrow-kt", name = "analysis", version.ref = "arrow" }
 
+ktor-client-kotlinx-protobuf = { group = "io.ktor", name = "ktor-serialization-kotlinx-protobuf", version.ref = "ktor" }
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serialization", version.ref = "ktor" }
+ktor-client-encoding = { group = "io.ktor", name = "ktor-client-encoding", version.ref = "ktor" }
 ktor-client-content = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
@@ -120,6 +122,8 @@ ktor-client-ios = { group = "io.ktor", name = "ktor-client-ios", version.ref = "
 ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 ktor-client-js = { group = "io.ktor", name = "ktor-client-js", version.ref = "ktor" }
 slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
+brotli-dec = { group = "org.brotli", name = "dec", version = "0.1.2" }
+
 
 i18n4k-core = { group = "de.comahe.i18n4k", name = "i18n4k-core", version.ref = "i18n4k" }
 i18n4k-gradle-plugin = { group = "de.comahe.i18n4k", name = "i18n4k-gradle-plugin", version.ref = "i18n4k" }
@@ -277,7 +281,7 @@ kotlin-onetimepassword = { module = "dev.turingcomplete:kotlin-onetimepassword",
 [bundles]
 arrow = ["arrow-core", "arrow-fx"]
 coil = ["coil3-core", "coil3-ktor3", "coil3-compose", "coil3-svg", "coil3"]
-ktor = ["ktor-client-core", "ktor-client-json", "ktor-client-auth", "ktor-client-logging", "ktor-client-serialization", "ktor-client-content"]
+ktor = ["ktor-client-core", "ktor-client-json", "ktor-client-auth", "ktor-client-logging", "ktor-client-serialization", "ktor-client-content", "ktor-client-encoding"]
 stately = ["stately-concurrency", "stately-concurrentCollections"]
 androidx-lifecycle = ["androidx-lifecycle-service", "androidx-lifecycle-common", "androidx-lifecycle-runtime", "androidx-lifecycle-livedata", "androidx-lifecycle-extensions"]
 androidx-common = ["androidx-activity", "androidx-core", "androidx-splash"]

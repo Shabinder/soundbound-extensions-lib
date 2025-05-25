@@ -1,17 +1,16 @@
 package `in`.shabinder.soundbound.utils
 
 import kotlin.reflect.KProperty
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.StateFlow
 
-private class MappedFlowProperty<T, R>(
-    private val delegate: FlowReadWriteProperty<T>,
-    private val toMapped: (T) -> R,
-    private val fromMapped: (R) -> T,
-) : FlowReadWriteProperty<R> {
+private class MappedStateFlowPropertyDelegate<T, R>(
+  private val delegate: StateFlowReadWriteProperty<T>,
+  private val toMapped: (T) -> R,
+  private val fromMapped: (R) -> T,
+) : StateFlowReadWriteProperty<R> {
 
-  override val flow: Flow<R> by lazy {
-    delegate.flow.map(toMapped)
+  override val flow: StateFlow<R> by lazy {
+    delegate.flow.mapSync(toMapped)
   }
 
   override var value: R
@@ -27,23 +26,24 @@ private class MappedFlowProperty<T, R>(
   }
 }
 
-fun <T, R> FlowReadWriteProperty<T>.map(
+fun <T, R> StateFlowReadWriteProperty<T>.map(
   toMapped: (T) -> R,
   fromMapped: (R) -> T,
-): FlowReadWriteProperty<R> {
-  return MappedFlowProperty(
+): StateFlowReadWriteProperty<R> {
+  return MappedStateFlowPropertyDelegate(
     delegate = this,
     toMapped = toMapped,
     fromMapped = fromMapped,
   )
 }
 
-fun <T> FlowReadWriteProperty<T>.map(
+fun <T> StateFlowReadWriteProperty<T>.map(
   mapper: (T) -> T,
-): FlowReadWriteProperty<T> {
-  return MappedFlowProperty(
+): StateFlowReadWriteProperty<T> {
+  return MappedStateFlowPropertyDelegate(
     delegate = this,
     toMapped = mapper,
     fromMapped = mapper,
   )
 }
+

@@ -5,7 +5,9 @@ import `in`.shabinder.soundbound.providers.Dependencies
 import `in`.shabinder.soundbound.providers.auth.AuthHandler.AuthMethod.*
 import `in`.shabinder.soundbound.providers.auth.AuthHandler.AuthMethod.AuthData.*
 import `in`.shabinder.soundbound.utils.GlobalJson
+import `in`.shabinder.soundbound.utils.getSerializedOrNull
 import `in`.shabinder.soundbound.utils.getSerializedOrNullFlow
+import `in`.shabinder.soundbound.utils.putSerializedString
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
@@ -54,7 +56,7 @@ interface AuthHandler : Dependencies {
       if (value == null) {
         devicePreferences.remove(authDataConfigKey)
       } else {
-        devicePreferences.putString(authDataConfigKey, GlobalJson.encodeToString(value))
+        devicePreferences.putSerializedString(authDataConfigKey, value)
       }
     }
     get() {
@@ -62,12 +64,7 @@ interface AuthHandler : Dependencies {
         return NoAuthData
       }
 
-      val serialisedData = devicePreferences.getStringOrNull(authDataConfigKey)
-        ?: return null
-
-      return runCatching {
-        GlobalJson.decodeFromString<AuthData>(serialisedData)
-      }.getOrNull()
+      return devicePreferences.getSerializedOrNull<AuthData>(authDataConfigKey)
     }
 
   val authDataFlow: Flow<AuthData?>
@@ -80,7 +77,7 @@ interface AuthHandler : Dependencies {
     mAuthData = authData
   }
 
-  suspend fun awaitAuth(): AuthData {
+  suspend fun awaitAuthData(): AuthData {
     if (!isAuthAvailable) return NoAuthData
     return authDataFlow.filterNotNull().first()
   }

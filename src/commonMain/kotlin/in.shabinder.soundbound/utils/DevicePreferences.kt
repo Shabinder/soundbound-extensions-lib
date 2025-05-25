@@ -7,6 +7,7 @@ import `in`.shabinder.soundbound.models.AudioQuality
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.serializer
 
 
@@ -61,15 +62,25 @@ inline fun <reified T> DevicePreferences.getSerializedFlow(key: String, defaultV
   return getSerializedFlow(key, defaultValue, serializer())
 }
 
-inline fun <reified T> DevicePreferences.getSerializedOrNullFlow(key: String, defaultValue: T): Flow<T?> {
+inline fun <reified T> DevicePreferences.getSerializedOrNullFlow(
+  key: String,
+  defaultValue: T
+): Flow<T?> {
   return getSerializedOrNullFlow(key, defaultValue, serializer())
 }
 
 fun <T> DevicePreferences.getSerializedOrNull(key: String, serializer: KSerializer<T>): T? =
   runCatching {
-    getStringOrNull(key)?.let { GlobalJson.decodeFromString(serializer, it) }
+    getStringOrNull(key)?.let {
+      if (serializer == String.serializer()) {
+        it as T?
+      } else {
+        GlobalJson.decodeFromString(serializer, it)
+      }
+    }
   }.onFailure {
-    it.printStackTrace()
+    println("Failed decoding $serializer for key $key with value: ${getStringOrNull(key)}")
+    //it.printStackTrace()
   }.getOrNull()
 
 fun <T> DevicePreferences.getSerializedFlow(

@@ -75,7 +75,7 @@ inline fun <reified T, reified S> propWithFlow(
   noinline onChange: ((old: T, new: T) -> Unit)? = null,
   crossinline saveAs: (T) -> S,
   crossinline loadFrom: (S) -> T,
-): FlowReadWriteProperty<T> = StateFlowPropertyDelegate<S>(
+): StateFlowReadWriteProperty<T> = StateFlowPropertyDelegate(
   key = key,
   defaultValue = saveAs(defaultValue),
   devicePreferences = devicePreferences,
@@ -84,4 +84,34 @@ inline fun <reified T, reified S> propWithFlow(
 ).map(
   toMapped = { loadFrom(it) },
   fromMapped = { saveAs(it) },
+)
+
+inline fun <reified T> DevicePreferences.propWithFlow(
+  key: String,
+  defaultValue: T,
+  serializer: KSerializer<T> = serializer(),
+  noinline onChange: ((old: T, new: T) -> Unit)? = null,
+): StateFlowReadWriteProperty<T> = propWithFlow(
+  key = key,
+  defaultValue = defaultValue,
+  devicePreferences = this,
+  serializer = serializer,
+  onChange = onChange,
+)
+
+inline fun <reified T, reified S> DevicePreferences.propWithFlow(
+  key: String,
+  defaultValue: T,
+  serializer: KSerializer<S> = serializer(),
+  noinline onChange: ((old: T, new: T) -> Unit)? = null,
+  crossinline saveAs: (T) -> S,
+  crossinline loadFrom: (S) -> T,
+): StateFlowReadWriteProperty<T> = propWithFlow(
+  key = key,
+  defaultValue = defaultValue,
+  devicePreferences = this,
+  serializer = serializer,
+  onChange = onChange,
+  saveAs = saveAs,
+  loadFrom = loadFrom,
 )

@@ -7,7 +7,6 @@ import `in`.shabinder.soundbound.zipline.FuzzySearch
 import `in`.shabinder.soundbound.zipline.HttpClientBuilder
 import `in`.shabinder.soundbound.zipline.LocaleProvider
 import `in`.shabinder.soundbound.zipline.SoundboundLogger
-import `in`.shabinder.soundbound.zipline.YTExtractor
 
 @Immutable
 interface Dependencies {
@@ -15,7 +14,6 @@ interface Dependencies {
     val localeProvider: LocaleProvider
     val httpClientBuilder: HttpClientBuilder
     val fuzzySearch: FuzzySearch
-    val crypto: Crypto
-    val ytExtractor: YTExtractor
     val logger: SoundboundLogger
+    val crypto: Crypto
 }
