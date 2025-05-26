@@ -42,10 +42,10 @@ desugar = "2.1.5"
 
 [libraries]
 soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.23" }
-soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "3.2.0" }
+soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "3.3.0" }
 soundbound-compose = { group = "io.github.shabinder", name = "compose", version = "1.0.0" }
 
-clarity = { group = "com.microsoft.clarity", name = "clarity", version = "2.5.0" }
+clarity = { group = "com.microsoft.clarity", name = "clarity", version = "3.3.0" }
 kache = { group = "com.mayakapps.kache", name = "kache", version = "2.1.0" }
 multiplatform-webView = { group = "io.github.kevinnzou", name = "compose-webview-multiplatform", version.ref = "composeWebView" }
 
@@ -53,7 +53,7 @@ kmp-io-zip = { group = "io.github.skolson", name = "kmp-io", version = "0.1.6" }
 androidx-sqlite-framework = { group = "androidx.sqlite", name = "sqlite-framework", version = "2.4.0" }
 android-play-ads = { group = "com.google.android.gms", name = "play-services-ads", version = "24.1.0" }
 restart4j = { group = "com.github.Dansoftowner", name = "Restart4j", version = "1.4.7" }
-sentry-kmp = { group = "io.sentry", name = "sentry-kotlin-multiplatform", version = "0.10.0" }
+sentry-kmp = { group = "io.sentry", name = "sentry-kotlin-multiplatform", version = "0.12.0" }
 
 kotlin-kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
