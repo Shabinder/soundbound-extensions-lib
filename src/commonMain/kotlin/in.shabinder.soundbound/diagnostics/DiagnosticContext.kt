@@ -2,6 +2,7 @@ package `in`.shabinder.soundbound.diagnostics
 
 import `in`.shabinder.soundbound.models.ProviderExceptions
 import `in`.shabinder.soundbound.models.toThrowableWrapper
+import `in`.shabinder.soundbound.utils.safeRunCatching
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.withContext
@@ -33,9 +34,9 @@ class DiagnosticContext private constructor(val manager: DiagnosticManager) :
 
     private inline fun <T> DiagnosticManager.tryOrThrowWithDiagnostics(
       block: DiagnosticManager.() -> T
-    ): T = try {
+    ): T = safeRunCatching {
       block()
-    } catch (e: Throwable) {
+    }.onFailure { e ->
       if (e is ProviderExceptions.ExceptionWithDiagnostics) {
         // Already has diagnostics, rethrow
         throw e
@@ -46,6 +47,6 @@ class DiagnosticContext private constructor(val manager: DiagnosticManager) :
         cause = e.toThrowableWrapper(),
         diagnostics = getDiagnostics()
       )
-    }
+    }.getOrThrow()
   }
 }
