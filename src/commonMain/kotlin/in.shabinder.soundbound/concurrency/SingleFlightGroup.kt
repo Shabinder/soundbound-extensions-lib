@@ -26,20 +26,40 @@ class SingleFlightGroup<T> {
     return job?.await()
   }
 
+  suspend fun cancel() = mu.withLock {
+    inFlight?.cancel()
+    inFlight = null
+    waitCount = 0
+  }
+
   val isActive: Boolean
     get() = mu.isLocked || (inFlight != null)
 
-  suspend fun singleFlight(message: String? = null, isForced: Boolean = false, context: CoroutineContext = EmptyCoroutineContext, block: suspend () -> T): T {
+  suspend fun singleFlight(
+    message: String? = null,
+    isForced: Boolean = false,
+    context: CoroutineContext = EmptyCoroutineContext,
+    block: suspend () -> T
+  ): T {
     return singleFlightResult(isForced, context, block)
       .getOrThrow()
   }
 
-  suspend fun singleFlightOrNull(message: String? = null, isForced: Boolean = false, context: CoroutineContext = EmptyCoroutineContext, block: suspend () -> T): T? {
+  suspend fun singleFlightOrNull(
+    message: String? = null,
+    isForced: Boolean = false,
+    context: CoroutineContext = EmptyCoroutineContext,
+    block: suspend () -> T
+  ): T? {
     return singleFlightResult(isForced, context, block)
       .getOrNull()
   }
 
-  suspend fun singleFlightResult(isForced: Boolean = false, context: CoroutineContext = EmptyCoroutineContext, block: suspend () -> T): Result<T> {
+  suspend fun singleFlightResult(
+    isForced: Boolean = false,
+    context: CoroutineContext = EmptyCoroutineContext,
+    block: suspend () -> T
+  ): Result<T> {
     return makeFlight(isForced, context, block)
   }
 
@@ -50,7 +70,11 @@ class SingleFlightGroup<T> {
    * @param block the function to execute
    * @return the response produced or throws an exception
    */
-  private suspend fun makeFlight(isForced: Boolean = false, context: CoroutineContext, block: suspend () -> T): Result<T> = withContext(context) {
+  private suspend fun makeFlight(
+    isForced: Boolean = false,
+    context: CoroutineContext,
+    block: suspend () -> T
+  ): Result<T> = withContext(context) {
     try {
       mu.lock()
 
