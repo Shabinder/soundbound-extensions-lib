@@ -71,6 +71,9 @@ interface AuthHandler : Dependencies {
     get() = devicePreferences.getSerializedOrNullFlow(authDataConfigKey, null)
 
 
+  val isAuthenticated: Boolean
+    get() = authStatus is AuthStatus.Authenticated
+
   // Subclass can override below for sanitation // cleanup if needed
   val authData: AuthData? get() = mAuthData
   fun setAuthData(authData: AuthData?) {
