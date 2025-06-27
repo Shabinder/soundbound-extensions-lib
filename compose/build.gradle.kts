@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id(deps.plugins.android.library.get().pluginId)
     id(deps.plugins.kotlin.multiplatform.get().pluginId)
@@ -54,7 +56,7 @@ android {
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+      compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
     }
 
     buildTypes {
