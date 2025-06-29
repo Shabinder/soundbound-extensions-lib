@@ -41,8 +41,8 @@ mavenPublish = "0.33.0"
 desugar = "2.1.5"
 
 [libraries]
-soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.24" }
-soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "3.4.0" }
+soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.25" }
+soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "3.5.0" }
 soundbound-compose = { group = "io.github.shabinder", name = "compose", version = "1.0.0" }
 
 clarity = { group = "com.microsoft.clarity", name = "clarity", version = "3.4.0" }

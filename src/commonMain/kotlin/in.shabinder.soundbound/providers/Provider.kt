@@ -2,6 +2,7 @@ package `in`.shabinder.soundbound.providers
 
 import androidx.compose.runtime.Immutable
 import app.cash.zipline.ZiplineService
+import `in`.shabinder.soundbound.models.AppInfo
 import `in`.shabinder.soundbound.models.PlatformQueryResult
 import `in`.shabinder.soundbound.models.SourceModel
 import `in`.shabinder.soundbound.providers.auth.AuthHandler
@@ -36,7 +37,7 @@ interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, Lyr
 
     suspend fun fetchPlatformQueryResult(URL: String): PlatformQueryResult
 
-    suspend fun init() {}
+    suspend fun init(appInfo: AppInfo) {}
 
     val isCatalogueAvailable: Boolean
         get() = this !is Catalogue.CatalogueNotAvailable
