@@ -1,4 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
@@ -39,7 +38,7 @@ afterEvaluate {
 }
 
 mavenPublishing {
-  publishToMavenCentral(SonatypeHost.S01, true)
+  publishToMavenCentral(true)
   signAllPublications()
 
   pom {
