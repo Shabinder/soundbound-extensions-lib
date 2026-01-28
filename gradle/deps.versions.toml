@@ -3,6 +3,15 @@ kotlin = "2.2.10"
 jbCompose = "1.9.0-beta03"
 androidGradle = "8.11.0"
 coroutines = "1.10.2"
+
+# Android SDK versions
+androidCompileSdk = "35"
+androidMinSdk = "21"
+androidTargetSdk = "35"
+androidBuildTools = "35.0.0"
+
+# Gradle plugins
+baselineProfile = "1.4.1"
 ktLint = "13.0.0"
 spotless = "7.2.1"
 mosaic = "0.12.0"
@@ -278,7 +287,7 @@ moko-resources-gradle = { group = "dev.icerock.moko", name = "multiplatform-reso
 mavenPublish-gradle-plugin = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "mavenPublish" }
 
 #newpipe-extractor = { group = "com.github.TeamNewPipe", name = "NewPipeExtractor", version = "v0.24.3" }
-newpipe-extractor = { group = "com.github.libre-tube", name = "NewPipeExtractor", version = "70abbdb" }
+newpipe-extractor = { group = "com.github.libre-tube", name = "NewPipeExtractor", version = "fc63085" }
 kotlin-onetimepassword = { module = "dev.turingcomplete:kotlin-onetimepassword", version = "2.4.1" }
 
 [bundles]
@@ -304,26 +313,34 @@ supabase = ["supabase-postgrest", "supabase-auth", "supabase-realtime", "supabas
 datastore = ["androidx-datastore-core", "androidx-datastore-preferences"]
 
 [plugins]
+# Android
 android-library = { id = "com.android.library", version.ref = "androidGradle" }
 android-application = { id = "com.android.application", version.ref = "androidGradle" }
+android-test = { id = "com.android.test", version.ref = "androidGradle" }
 
+# Compose
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "jbCompose" }
 
+# Kotlin
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-android = { id = "kotlin-android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "kotlin-multiplatform", version.ref = "kotlin" }
 kotlin-kapt = { id = "kotlin-kapt", version.ref = "kotlin" }
 
+# Build tools
 zipline-gradle = { id = "io.github.shabinder", version.ref = "zipline" }
-#zipline-gradle = { id = "app.cash.zipline", version.ref = "zipline" }
-
 slqDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
-baselineProfile = { id = "androidx.baselineprofile", version = "1.4.0" }
+baselineProfile = { id = "androidx.baselineprofile", version.ref = "baselineProfile" }
 
+
+# Code quality
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+
+# Resources & Publishing
 moko = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "mokoResources" }
 maven-publish-base = { id = "com.vanniktech.maven.publish.base", version.ref = "mavenPublish" }
 maven-publish-config = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }

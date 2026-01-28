@@ -51,12 +51,12 @@ android {
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-      compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
+      compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
     }
 
     buildTypes {
@@ -67,7 +67,7 @@ android {
 
     kotlin {
         jvmToolchain {
-            languageVersion.set(JavaLanguageVersion.of(17))
+            languageVersion.set(JavaLanguageVersion.of(21))
         }
     }
 }

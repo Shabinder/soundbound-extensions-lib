@@ -79,22 +79,22 @@ repositories {
 
 android {
   namespace = "in.shabinder.soundbound.extensions"
-  compileSdk = 34
+  compileSdk = deps.versions.androidCompileSdk.get().toInt()
 
   defaultConfig {
-    minSdk = 21
+    minSdk = deps.versions.androidMinSdk.get().toInt()
   }
 
   sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
   compileOptions {
     isCoreLibraryDesugaringEnabled = true
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
   }
 
   tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
   }
 
   buildTypes {
@@ -105,7 +105,7 @@ android {
 
   kotlin {
     jvmToolchain {
-      languageVersion.set(JavaLanguageVersion.of(17))
+      languageVersion.set(JavaLanguageVersion.of(21))
     }
   }
 }
