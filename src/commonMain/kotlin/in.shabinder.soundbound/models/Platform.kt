@@ -34,6 +34,11 @@ enum class MusicPlatform(
   GAANA("Gaana", listOf("gaana.com")),
   JIOSAAVN("JioSaavn", listOf("jiosaavn.com", "saavn.com")),
   SHAZAM("Shazam", listOf("shazam.com")),
+  TIKTOK("TikTok", listOf("tiktok.com")),
+  INSTAGRAM("Instagram", listOf("instagram.com")),
+  QQ_MUSIC("QQ Music", listOf("y.qq.com", "qq.com/musicalbum")),
+  MUSICBRAINZ("MusicBrainz", listOf("musicbrainz.org")),
+  LASTFM("Last.fm", listOf("last.fm", "lastfm.com")),
   UNKNOWN("Unknown", emptyList());
 
   companion object {
@@ -61,57 +66,6 @@ enum class MusicPlatform(
         platform.name.lowercase().replace("_", "") == lowercaseName ||
           platform.displayName.lowercase().replace(" ", "") == lowercaseName
       } ?: UNKNOWN
-    }
-
-    /**
-     * Get platform from Odesli/song.link API key format.
-     * Maps API keys like "appleMusic", "youtubeMusic" to MusicPlatform enum.
-     */
-    fun fromOdesliKey(key: String): MusicPlatform {
-      return when (key.lowercase()) {
-        "spotify" -> SPOTIFY
-        "applemusic", "itunes" -> APPLE_MUSIC
-        "youtubemusic" -> YOUTUBE_MUSIC
-        "youtube" -> YOUTUBE
-        "deezer" -> DEEZER
-        "tidal" -> TIDAL
-        "soundcloud" -> SOUNDCLOUD
-        "amazonmusic", "amazonstore" -> AMAZON_MUSIC
-        "pandora" -> PANDORA
-        "audiomack" -> AUDIOMACK
-        "anghami" -> ANGHAMI
-        "yandex" -> YANDEX
-        "bandcamp" -> BANDCAMP
-        "boomplay" -> BOOMPLAY
-        "napster" -> NAPSTER
-        "audius" -> AUDIUS
-        else -> UNKNOWN
-      }
-    }
-
-    /**
-     * Convert MusicPlatform to Odesli/song.link API key format.
-     */
-    fun MusicPlatform.toOdesliKey(): String? {
-      return when (this) {
-        SPOTIFY -> "spotify"
-        APPLE_MUSIC -> "appleMusic"
-        YOUTUBE_MUSIC -> "youtubeMusic"
-        YOUTUBE -> "youtube"
-        DEEZER -> "deezer"
-        TIDAL -> "tidal"
-        SOUNDCLOUD -> "soundcloud"
-        AMAZON_MUSIC -> "amazonMusic"
-        PANDORA -> "pandora"
-        AUDIOMACK -> "audiomack"
-        ANGHAMI -> "anghami"
-        YANDEX -> "yandex"
-        BANDCAMP -> "bandcamp"
-        BOOMPLAY -> "boomplay"
-        NAPSTER -> "napster"
-        AUDIUS -> "audius"
-        else -> null
-      }
     }
   }
 }
