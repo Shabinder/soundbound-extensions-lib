@@ -33,6 +33,17 @@ inline fun <R> safeRunCatching(block: () -> R): Result<R> {
     }
 }
 
+// Safe version of recoverCatching that doesn't catch CancellationException
+// This ensures coroutine cancellation propagates correctly
+inline fun <R, T : R> Result<T>.safeRecoverCatching(transform: (exception: Throwable) -> R): Result<R> {
+    val exception = exceptionOrNull() ?: return this
+    // Rethrow CancellationException (except TimeoutCancellationException which is recoverable)
+    if (exception is CancellationException && exception !is TimeoutCancellationException) {
+        throw exception
+    }
+    return safeRunCatching { transform(exception) }
+}
+
 fun <T> T.limitDecimals(maxDecimals: Int): String {
     val result = toString()
     val lastIndex = result.length - 1

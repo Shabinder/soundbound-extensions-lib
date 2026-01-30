@@ -284,6 +284,10 @@ desktop-jcef = { group = "me.friwi", name = "jcefmaven", version = "141.0.10" }
 revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version = "9.19.3" }
 skrapeit = { group = "it.skrape", name = "skrapeit", version = "1.2.2" }
 
+# Ksoup - Kotlin Multiplatform HTML parser (replacement for skrape.it in extensions)
+ksoup-html = { group = "com.mohamedrejeb.ksoup", name = "ksoup-html", version = "0.6.0" }
+ksoup-entities = { group = "com.mohamedrejeb.ksoup", name = "ksoup-entities", version = "0.6.0" }
+
 store = "org.mobilenativefoundation.store:store5:5.1.0-alpha08"
 
 moko-resources = { group = "dev.icerock.moko", name = "resources", version.ref = "mokoResources" }
