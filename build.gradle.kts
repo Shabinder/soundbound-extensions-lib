@@ -108,6 +108,10 @@ android {
       languageVersion.set(JavaLanguageVersion.of(21))
     }
   }
+
+  dependencies {
+    coreLibraryDesugaring(deps.androidx.desugar)
+  }
 }
 
 kotlin {
@@ -141,10 +145,6 @@ kotlin {
         }
       }
     }
-  }
-
-  dependencies {
-    coreLibraryDesugaring(deps.androidx.desugar)
   }
 }
 

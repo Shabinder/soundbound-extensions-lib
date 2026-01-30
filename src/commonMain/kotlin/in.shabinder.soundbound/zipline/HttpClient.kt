@@ -2,7 +2,7 @@ package `in`.shabinder.soundbound.zipline
 
 import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.diagnostics.DiagnosticContext.Key.withDiagnostics
-
+import `in`.shabinder.soundbound.diagnostics.DiagnosticManager
 
 import `in`.shabinder.soundbound.utils.GlobalJson
 import `in`.shabinder.soundbound.utils.safeRunCatching
@@ -86,9 +86,12 @@ interface HttpClient : ZiplineService {
     getRequest(url, params, headers)
       .also {
         appendDiagnostics("GetRequest", mapOf(
-          "url" to url,
-          "params" to params.toString(),
-          "headers" to headers.toString(),
+          "curl" to DiagnosticManager.buildCurlCommand(
+            method = "GET",
+            url = url,
+            headers = headers,
+            params = params
+          ),
           "responseCode" to it.statusCode.toString(),
           "responseUrl" to it.responseUrl,
           "responseHeaders" to it.headers.toString(),
@@ -107,10 +110,14 @@ interface HttpClient : ZiplineService {
     postRequest(url, params, body, headers)
       .also {
         appendDiagnostics("PostRequest", mapOf(
-          "url" to url,
-          "params" to params.toString(),
-          "headers" to headers.toString(),
-          "body" to body.toString(),
+          "curl" to DiagnosticManager.buildCurlCommand(
+            method = "POST",
+            url = url,
+            headers = headers,
+            params = params,
+            body = body.toBodyString(),
+            bodyType = body.typeName()
+          ),
           "responseCode" to it.statusCode.toString(),
           "responseUrl" to it.responseUrl,
           "responseHeaders" to it.headers.toString(),
@@ -181,6 +188,26 @@ interface HttpClient : ZiplineService {
   }
 }
 
+/**
+ * Extracts the body content as a string for diagnostic/curl purposes.
+ */
+fun HttpClient.BodyType.toBodyString(): String? = when (this) {
+  is HttpClient.BodyType.NONE -> null
+  is HttpClient.BodyType.JSON -> json
+  is HttpClient.BodyType.FORM -> form.entries.joinToString("&") { (k, v) -> "$k=$v" }
+  is HttpClient.BodyType.RAW -> raw
+}
+
+/**
+ * Returns the body type name for diagnostic/curl purposes.
+ */
+fun HttpClient.BodyType.typeName(): String = when (this) {
+  is HttpClient.BodyType.NONE -> "NONE"
+  is HttpClient.BodyType.JSON -> "JSON"
+  is HttpClient.BodyType.FORM -> "FORM"
+  is HttpClient.BodyType.RAW -> "RAW"
+}
+
 suspend inline fun <reified T> HttpClient.get(
   url: String,
   params: Map<String, String> = emptyMap(),
@@ -200,12 +227,14 @@ suspend inline fun <reified T> HttpClient.get(
         key = "ErrorParsingResponse",
         error = e,
         extraValues = mapOf(
-          "method" to HttpClient.Method.GET.toString(),
-          "url" to url,
-          "params" to params.toString(),
-          "headers" to headers.toString(),
-          "responseHeaders" to result.headers.toString(),
+          "curl" to DiagnosticManager.buildCurlCommand(
+            method = "GET",
+            url = url,
+            headers = headers,
+            params = params
+          ),
           "responseCode" to result.statusCode.toString(),
+          "responseHeaders" to result.headers.toString(),
           "responseBody" to it,
         )
       )
@@ -233,13 +262,16 @@ suspend inline fun <reified T> HttpClient.post(
         key = "ErrorParsingResponse",
         error = e,
         extraValues = mapOf(
-          "method" to HttpClient.Method.POST.toString(),
-          "url" to url,
-          "body" to body.toString(),
-          "params" to params.toString(),
-          "headers" to headers.toString(),
-          "responseHeaders" to result.headers.toString(),
+          "curl" to DiagnosticManager.buildCurlCommand(
+            method = "POST",
+            url = url,
+            headers = headers,
+            params = params,
+            body = body.toBodyString(),
+            bodyType = body.typeName()
+          ),
           "responseCode" to result.statusCode.toString(),
+          "responseHeaders" to result.headers.toString(),
           "responseBody" to it,
         )
       )
