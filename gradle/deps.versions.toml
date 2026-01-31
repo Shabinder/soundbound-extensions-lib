@@ -1,8 +1,10 @@
 [versions]
+# Core versions
 kotlin = "2.2.21"
 jbCompose = "1.10.0"
 androidGradle = "8.13.2"
 coroutines = "1.10.2"
+kotlinxSerialization = "1.10.0"
 
 # Android SDK versions
 androidCompileSdk = "35"
@@ -10,186 +12,152 @@ androidMinSdk = "21"
 androidTargetSdk = "35"
 androidBuildTools = "35.0.0"
 
-# Gradle plugins
+# Build tools & plugins
 baselineProfile = "1.4.1"
-androidXDataStore = "1.2.0"
 ktLint = "14.0.1"
 spotless = "8.2.1"
 mosaic = "0.12.0"
-koin = "4.1.1"
-kermit = "2.0.8"
-ktor = "3.4.0"
-kotlinxSerialization = "1.10.0"
-sqliteJdbcDriver = "3.51.1.0"
-composeWebView = "2.0.3"
-slf4j = "2.0.17"
-i18n4k = "0.11.1"
-cache4k = "0.14.0"
-decompose = "3.4.0"
-essenty = "2.5.0"
-multiplatformSettings = "1.3.0"
-mviKotlin = "4.3.0"
-accompanist = "0.34.0"
-statelyVersion = "2.1.0"
-statelyIsoVersion = "2.1.0"
+mavenPublish = "0.36.0"
+cmake = "4.1.1"
+ndk = "26.1.10909125"
+desugar = "2.1.5"
+sqlDelight = "2.2.1"
+
+# Testing
+junit = "4.13.2"
+
+# Firebase & Google services
+googleServices = "4.4.4"
+firebaseBom = "34.8.0"
+sentryAndroid = "6.0.0"
+googleCreds = "1.5.0"
+
+# AndroidX libraries
+androidXDataStore = "1.2.0"
 androidxLifecycle = "2.10.0"
 androidxMedia3 = "1.9.1"
+androidGlance = "1.1.1"
+
+# Compose
+composeBom = "2026.01.01"
+activityCompose = "1.12.3"
+viewmodelCompose = "2.10.0"
+composeWebView = "2.0.3"
+
+# Networking
+ktor = "3.4.0"
 okio = "3.16.4"
-arrow = "2.2.1.1"
+
+# Architecture
+decompose = "3.4.0"
+essenty = "2.5.0"
+mviKotlin = "4.3.0"
 paging = "3.3.0-alpha02-0.5.1"
-konnection = "1.4.5"
-nexusGradle = "2.0.0"
-#zipline = "1.22.0-CUSTOM"
-zipline = "1.26.0-CUSTOM"#"1.25.0"
+
+# Utilities
+cache4k = "0.14.0"
+multiplatformSettings = "1.3.0"
+stately = "2.1.0"
+datetime = "0.7.1"
+immutable = "0.4.0"
+i18n4k = "0.11.1"
+
+# Security & Play Services
+playIntegrity = "1.6.0"
+stringfogXor = "5.0.0"
+talsecSecurity = "15.1.0"
+
+# Media & Desktop
 jna = "5.18.1"
 coil = "3.3.0"
-googleCreds = "1.5.0"
 filekit = "0.12.0"
-sqlDelight = "2.2.1"
-androidGlance = "1.1.1"
-mokoResources = "0.25.2"
-mavenPublish = "0.36.0"
-desugar = "2.1.5"
+
+# Frameworks & UI
+koin = "4.1.1"
+kermit = "2.0.8"
+moko = "0.25.2"
+arrow = "2.2.1.1"
+konnection = "1.4.5"
+
+# Experimental & Custom
+zipline = "1.26.0-CUSTOM"
+sqliteJdbcDriver = "3.51.1.0"
 
 [libraries]
+# ==============================================================================
+# SoundBound Custom Libraries
+# ==============================================================================
 soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.27" }
 soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "3.5.1" }
 soundbound-compose = { group = "io.github.shabinder", name = "compose", version = "1.0.0" }
 
-clarity = { group = "com.microsoft.clarity", name = "clarity", version = "3.8.1" }
-kache = { group = "com.mayakapps.kache", name = "kache", version = "2.1.1" }
-multiplatform-webView = { group = "io.github.kevinnzou", name = "compose-webview-multiplatform", version.ref = "composeWebView" }
-
-kmp-io-zip = { group = "io.github.skolson", name = "kmp-io", version = "0.3.0" }
-androidx-sqlite-framework = { group = "androidx.sqlite", name = "sqlite-framework", version = "2.6.2" }
-android-play-ads = { group = "com.google.android.gms", name = "play-services-ads", version = "24.9.0" }
-restart4j = { group = "com.github.Dansoftowner", name = "Restart4j", version = "1.4.7" }
-sentry-kmp = { group = "io.sentry", name = "sentry-kotlin-multiplatform", version = "0.23.1" }
-
+# ==============================================================================
+# Gradle Plugins
+# ==============================================================================
+androidx-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradle" }
+androidx-benchmark-plugin = { group = "androidx.benchmark", name = "benchmark-baseline-profile-gradle-plugin", version = "1.4.1" }
+kotlin-compose-gradle = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "jbCompose" }
 kotlin-kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-serialization = { group = "org.jetbrains.kotlin", name = "kotlin-serialization", version.ref = "kotlin" }
-kotlin-kotlinTest = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
-kotlin-kotlinTestCommon = { group = "org.jetbrains.kotlin", name = "kotlin-test-common", version.ref = "kotlin" }
-kotlin-kotlinTestJs = { group = "org.jetbrains.kotlin", name = "kotlin-test-js", version.ref = "kotlin" }
-kotlin-kotlinTestJunit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
-kotlin-kotlinTestAnnotationsCommon = { group = "org.jetbrains.kotlin", name = "kotlin-test-annotations-common", version.ref = "kotlin" }
-kotlin-kotlinTestCoroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
-kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
-kotlinx-coroutinesGuava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version.ref = "coroutines" }
-kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
-kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
-kotlinx-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version = "0.31.0" }
-kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.7.1" }
-kotlinx-immutableLists = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version = "0.4.0" }
-
-kotlin-compose-gradle = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "jbCompose" }
+ktlint-gradle = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktLint" }
 mosaic-gradle = { group = "com.jakewharton.mosaic", name = "mosaic-gradle-plugin", version.ref = "mosaic" }
 
-molecule = { group = "app.cash.molecule", name = "molecule-runtime", version = "2.2.0" }
-
-essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "essenty" }
-essenty-instanceKeeper = { group = "com.arkivanov.essenty", name = "instance-keeper", version.ref = "essenty" }
-essenty-parcelable = { group = "com.arkivanov.essenty", name = "parcelable", version.ref = "essenty" }
-essenty-backHandler = { group = "com.arkivanov.essenty", name = "back-handler", version.ref = "essenty" }
-essenty-stateKeeper = { group = "com.arkivanov.essenty", name = "state-keeper", version.ref = "essenty" }
-essenty-lifecycle-coroutines = { group = "com.arkivanov.essenty", name = "lifecycle-coroutines", version.ref = "essenty" }
-
-decompose-dep = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
-decompose-extensions-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
-
-mviKotlin-dep = { group = "com.arkivanov.mvikotlin", name = "mvikotlin", version.ref = "mviKotlin" }
-mviKotlin-rx = { group = "com.arkivanov.mvikotlin", name = "rx", version.ref = "mviKotlin" }
-mviKotlin-main = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-main", version.ref = "mviKotlin" }
-mviKotlin-coroutines = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-extensions-coroutines", version.ref = "mviKotlin" }
-mviKotlin-keepers = { group = "com.arkivanov.mvikotlin", name = "keepers", version.ref = "mviKotlin" }
-mviKotlin-logging = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-logging", version.ref = "mviKotlin" }
-mviKotlin-timetravel = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-timetravel", version.ref = "mviKotlin" }
-mviKotlin-extensions-reaktive = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-extensions-reaktive", version.ref = "mviKotlin" }
-
-okioCommon = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
-okioNodeJS = { group = "com.squareup.okio", name = "okio-nodefilesystem", version.ref = "okio" }
-okioTest = { group = "com.squareup.okio", name = "okio-fakefilesystem", version.ref = "okio" }
-
-arrow-core = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
-arrow-fx = { group = "io.arrow-kt", name = "arrow-fx-coroutines", version.ref = "arrow" }
-arrow-optics = { group = "io.arrow-kt", name = "arrow-optics", version.ref = "arrow" }
-arrow-meta = { group = "io.arrow-kt", name = "arrow-meta", version.ref = "arrow" }
-arrow-plugin-optics = { group = "io.arrow-kt", name = "arrow-optics-ksp-plugin", version.ref = "arrow" }
-arrow-plugin-analysis = { group = "io.arrow-kt", name = "analysis", version.ref = "arrow" }
-
-ktor-client-kotlinx-protobuf = { group = "io.ktor", name = "ktor-serialization-kotlinx-protobuf", version.ref = "ktor" }
-ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
-ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
-ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serialization", version.ref = "ktor" }
-ktor-client-encoding = { group = "io.ktor", name = "ktor-client-encoding", version.ref = "ktor" }
-ktor-client-content = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
-ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
-ktor-client-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
-ktor-client-auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
-ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
-ktor-client-curl = { group = "io.ktor", name = "ktor-client-curl", version.ref = "ktor" }
-ktor-client-apache = { group = "io.ktor", name = "ktor-client-apache", version.ref = "ktor" }
-ktor-client-ios = { group = "io.ktor", name = "ktor-client-ios", version.ref = "ktor" }
-ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
-ktor-client-js = { group = "io.ktor", name = "ktor-client-js", version.ref = "ktor" }
-slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
-brotli-dec = { group = "org.brotli", name = "dec", version = "0.1.2" }
-
-
-i18n4k-core = { group = "de.comahe.i18n4k", name = "i18n4k-core", version.ref = "i18n4k" }
-i18n4k-gradle-plugin = { group = "de.comahe.i18n4k", name = "i18n4k-gradle-plugin", version.ref = "i18n4k" }
-
-fuzzy-wuzzy = { group = "io.github.shabinder", name = "fuzzywuzzy", version = "1.1" }
-kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
-kermit-crashlytics = { group = "co.touchlab", name = "kermit-crashlytics", version.ref = "kermit" }
-accompanist-inset = { group = "com.google.accompanist", name = "accompanist-insets", version.ref = "accompanist" }
-android-app-notifier = { group = "com.github.amitbd1508", name = "AppUpdater", version = "4.1.0" }
-jaffree = { group = "com.github.kokorin.jaffree", name = "jaffree", version = "2024.08.29" }
-cache4k = { group = "io.github.reactivecircus.cache4k", name = "cache4k", version.ref = "cache4k" }
-multiplatform-settings = { group = "com.russhwolf", name = "multiplatform-settings-no-arg", version.ref = "multiplatformSettings" }
-multiplatform-settings-datastore = { group = "com.russhwolf", name = "multiplatform-settings-datastore", version.ref = "multiplatformSettings" }
-multiplatform-settings-coroutines = { group = "com.russhwolf", name = "multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
-multiplatform-settings_serialization = { group = "com.russhwolf", name = "multiplatform-settings-serialization", version.ref = "multiplatformSettings" }
-
-androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "androidXDataStore" }
-androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidXDataStore" }
-
-stately-common = { group = "co.touchlab", name = "stately-common", version.ref = "statelyVersion" }
-stately-concurrency = { group = "co.touchlab", name = "stately-concurrency", version.ref = "statelyVersion" }
-stately-isolate = { group = "co.touchlab", name = "stately-isolate", version.ref = "statelyIsoVersion" }
-stately-iso-collections = { group = "co.touchlab", name = "stately-iso-collections", version.ref = "statelyIsoVersion" }
-stately-concurrentCollections = { group = "co.touchlab", name = "stately-concurrent-collections", version.ref = "statelyVersion" }
-
-sqldelight-paging = { group = "app.cash.sqldelight", name = "androidx-paging3-extensions", version.ref = "sqlDelight" }
-sqldelight-runtime = { group = "app.cash.sqldelight", name = "runtime", version.ref = "sqlDelight" }
-sqldelight-coroutines-extension = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqlDelight" }
+# Other libraries
 sqldelight-gradle-plugin = { group = "app.cash.sqldelight", name = "gradle-plugin", version.ref = "sqlDelight" }
-sqldelight-driver = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqlDelight" }
-sqldelight-android-driver = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqlDelight" }
-sqldelight-native-driver = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sqlDelight" }
-sqldelight-web-driver = { group = "app.cash.sqldelight", name = "web-worker-driver", version.ref = "sqlDelight" }
-sqlite-jdbc-driver = { group = "org.xerial", name = "sqlite-jdbc", version.ref = "sqliteJdbcDriver" }
+i18n4k-gradle-plugin = { group = "de.comahe.i18n4k", name = "i18n4k-gradle-plugin", version.ref = "i18n4k" }
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
+moko-resources-generator = { group = "dev.icerock.moko", name = "resources-generator", version.ref = "moko" }
+mavenPublish-gradle-plugin = { group = "com.vanniktech", name = "gradle-maven-publish-plugin", version.ref = "mavenPublish" }
 
-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
-koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+# ==============================================================================
+# Kotlin & Kotlinx
+# ==============================================================================
+kotlin-kotlinTest = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+kotlin-kotlinTestJunit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
+kotlin-kotlinTestCoroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-guava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version.ref = "coroutines" }
 
-androidx-activity = { group = "androidx.activity", name = "activity-compose", version = "1.10.1" }
+# One Time Password
+kotlin-onetimepassword = { group = "dev.turingcomplete", name = "kotlin-onetimepassword", version = "2.4.1" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime" }
+kotlinx-immutableLists = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "immutable" }
+kotlinx-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version = "0.31.0" }
+
+# ==============================================================================
+# Compose
+# ==============================================================================
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-material = { group = "androidx.compose.material", name = "material" }
+compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
+compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version = "1.7.8" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+compose-ui = { group = "androidx.compose.ui", name = "ui" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+compose-material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class" }
+
+# ==============================================================================
+# AndroidX
+# ==============================================================================
+# Activity & Core
+androidx-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.17.0" }
-androidx-material = { group = "androidx.compose.material", name = "material", version = "1.9.0" }
-androidx-profileInstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version = "1.4.1" }
-androidx-startUp = { group = "androidx.startup", name = "startup-runtime", version = "1.2.0" }
-androidx-palette = { group = "androidx.palette", name = "palette-ktx", version = "1.0.0" }
-androidx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
-androidx-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradle" }
+androidx-splash = { group = "androidx.core", name = "core-splashscreen", version = "1.2.0" }
+
+# Lifecycle
 androidx-lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "androidxLifecycle" }
 androidx-lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-common-java8", version.ref = "androidxLifecycle" }
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version = "2.2.0" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewmodelCompose" }
 
-androidx-desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar" }
+# Media3
 androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "androidxMedia3" }
 androidx-media3-exoplayer-hls = { group = "androidx.media3", name = "media3-exoplayer-hls", version.ref = "androidxMedia3" }
 androidx-media3-exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "androidxMedia3" }
@@ -197,72 +165,257 @@ androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.re
 androidx-media3-session = { group = "androidx.media3", name = "media3-session", version.ref = "androidxMedia3" }
 androidx-media3-common = { group = "androidx.legacy", name = "legacy-support-v4", version = "1.0.0" }
 
-androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.3.0" }
-androidx-expresso = { group = "androidx.test.espresso", name = "espresso-core", version = "3.7.0" }
-androidx-test-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version = "2.3.0" }
-androidx-benchmark-macro-junit = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version = "1.4.1" }
+# Startup
+androidx-startUp = { group = "androidx.startup", name = "startup-runtime", version = "1.2.0" }
 
-#noinspection GradleDependency // UpsideDownCake Android 14
-androidx-splash = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
+# DataStore
+androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "androidXDataStore" }
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidXDataStore" }
 
+# Glance
 androidx-glance = { group = "androidx.glance", name = "glance-appwidget", version.ref = "androidGlance" }
 androidx-glance-material3 = { group = "androidx.glance", name = "glance-material3", version.ref = "androidGlance" }
 androidx-glance-material = { group = "androidx.glance", name = "glance-material", version.ref = "androidGlance" }
 
+# Credentials
 androidx-credential = { group = "androidx.credentials", name = "credentials", version.ref = "googleCreds" }
 androidx-credential-auth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "googleCreds" }
-androidx-credential-googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version = "1.1.1" }
+androidx-credential-googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version = "1.2.0" }
 
-paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "paging" }
-paging-compose = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "paging" }
-composeUi-window = { group = "androidx.window", name = "window", version = "1.5.1" }
-composeUi-windowSize = { group = "dev.chrisbanes.material3", name = "material3-window-size-class-multiplatform", version = "0.5.0" }
+# Profile
+profileInstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version = "1.4.1" }
+
+# Wavy Slider
 composeUi-waveslider = { group = "ir.mahozad.multiplatform", name = "wavy-slider", version = "2.2.0" }
 composeUi-window-styler = { group = "com.mayakapps.compose", name = "window-styler", version = "0.3.3-SNAPSHOT" }
 
-coil3-ktor3 = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
-coil3-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
-coil3-core = { group = "io.coil-kt.coil3", name = "coil-core", version.ref = "coil" }
-coil3-svg = { group = "io.coil-kt.coil3", name = "coil-svg", version.ref = "coil" }
-coil3 = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
-
-leak-canary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version = "2.14" }
+# Testing
+androidx-junit = { group = "androidx.test.ext", name = "junit", version = "1.3.0" }
+androidx-expresso = { group = "androidx.test.espresso", name = "espresso-core", version = "3.7.0" }
+androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version = "2.3.0" }
+androidx-benchmark = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version = "1.4.1" }
 junit = { group = "junit", name = "junit", version = "4.13.2" }
 
-ktlint-gradle = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktLint" }
-konnection = { group = "dev.tmapps", name = "konnection", version.ref = "konnection" }
+# Apollo GraphQL
+apollo-runtime = { group = "com.apollographql.apollo", name = "apollo-runtime", version = "4.4.1" }
 
-jna-platform = { module = "net.java.dev.jna:jna-platform-jpms", version.ref = "jna" }
-jna = { module = "net.java.dev.jna:jna-jpms", version.ref = "jna" }
+# Desugaring
+androidx-desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar" }
 
-filekit-coil = { module = "io.github.vinceglb:filekit-coil", version.ref = "filekit" }
-filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "filekit" }
-filekit-dialogs = { module = "io.github.vinceglb:filekit-dialogs", version.ref = "filekit" }
-filekit-dialogs-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
-
-#zipline = { group = "io.github.shabinder", name = "zipline", version.ref = "zipline" }
-#zipline-gradlePlugin = { group = "io.github.shabinder", name = "zipline-gradle-plugin", version.ref = "zipline" }
-#zipline-loader = { group = "io.github.shabinder", name = "zipline-loader", version.ref = "zipline" }
-#zipline-profiler = { group = "io.github.shabinder", name = "zipline-profiler", version.ref = "zipline" }
-
-zipline = { group = "app.cash.zipline", name = "zipline", version.ref = "zipline" }
-zipline-gradlePlugin = { group = "app.cash.zipline", name = "zipline-gradle-plugin", version.ref = "zipline" }
-zipline-loader = { group = "app.cash.zipline", name = "zipline-loader", version.ref = "zipline" }
-zipline-profiler = { group = "app.cash.zipline", name = "zipline-profiler", version.ref = "zipline" }
-
-publishing-nexus-gradle = { group = "io.github.gradle-nexus", name = "publish-plugin", version.ref = "nexusGradle" }
-
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "34.8.0" }
+# ==============================================================================
+# Firebase & Google
+# ==============================================================================
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 firebase-crashlytics-ndk = { group = "com.google.firebase", name = "firebase-crashlytics-ndk" }
-firebase-plugins-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version = "3.0.6" }
-google-services = { group = "com.google.gms", name = "google-services", version = "4.4.4" }
-
+firebase-appcheck-playintegrity = { group = "com.google.firebase", name = "firebase-appcheck-playintegrity" }
+firebase-appcheck-debug = { group = "com.google.firebase", name = "firebase-appcheck-debug" }
 firebase-remote-config = { group = "dev.gitlive", name = "firebase-config", version = "2.4.0" }
+firebase-plugins-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version = "3.0.6" }
+play-integrity = { group = "com.google.android.play", name = "integrity", version.ref = "playIntegrity" }
+google-play-ads = { group = "com.google.android.gms", name = "play-services-ads", version = "24.9.0" }
 
-kmp-notification = { group = "io.github.mirzemehdi", name = "kmpnotifier", version = "1.6.1" }
+# Sentry
+sentry-kmp = { group = "io.sentry", name = "sentry-kotlin-multiplatform", version = "0.23.1" }
 
+# Ad Network & Analytics
+google-ump = { group = "com.google.android.ump", name = "user-messaging-platform", version = "4.0.0" }
+google-play-ads-identifier = { group = "com.google.android.gms", name = "play-services-ads-identifier", version = "18.3.0" }
+google-play-base = { group = "com.google.android.gms", name = "play-services-base", version = "18.10.0" }
+picasso = { group = "com.squareup.picasso", name = "picasso", version = "2.71828" }
+recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.4.0" }
+sqlite-framework = { group = "androidx.sqlite", name = "sqlite-framework", version = "2.6.2" }
+
+# Ad Network Adapters
+applovin-mediation-google = { group = "com.applovin.mediation", name = "google-adapter", version = "+" }
+applovin-mediation-inmobi = { group = "com.applovin.mediation", name = "inmobi-adapter", version = "+" }
+applovin-mediation-vungle = { group = "com.applovin.mediation", name = "vungle-adapter", version = "+" }
+applovin-mediation-facebook = { group = "com.applovin.mediation", name = "facebook-adapter", version = "+" }
+applovin-mediation-yandex = { group = "com.applovin.mediation", name = "yandex-adapter", version = "+" }
+applovin-mediation-ironsource = { group = "com.applovin.mediation", name = "ironsource-adapter", version = "+" }
+
+# ==============================================================================
+# Ktor Networking
+# ==============================================================================
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-auth = { group = "io.ktor", name = "ktor-client-auth", version.ref = "ktor" }
+ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serialization", version.ref = "ktor" }
+ktor-client-content = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-encoding = { group = "io.ktor", name = "ktor-client-encoding", version.ref = "ktor" }
+ktor-client-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
+ktor-client-curl = { group = "io.ktor", name = "ktor-client-curl", version.ref = "ktor" }
+ktor-client-apache = { group = "io.ktor", name = "ktor-client-apache", version.ref = "ktor" }
+ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+ktor-client-js = { group = "io.ktor", name = "ktor-client-js", version.ref = "ktor" }
+
+# ==============================================================================
+# Architecture
+# ==============================================================================
+# Decompose
+decompose-dep = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
+decompose-extensions-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
+
+# Essenty
+essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "essenty" }
+essenty-instanceKeeper = { group = "com.arkivanov.essenty", name = "instance-keeper", version.ref = "essenty" }
+essenty-parcelable = { group = "com.arkivanov.essenty", name = "parcelable", version.ref = "essenty" }
+essenty-backHandler = { group = "com.arkivanov.essenty", name = "back-handler", version.ref = "essenty" }
+essenty-stateKeeper = { group = "com.arkivanov.essenty", name = "state-keeper", version.ref = "essenty" }
+essenty-lifecycle-coroutines = { group = "com.arkivanov.essenty", name = "lifecycle-coroutines", version.ref = "essenty" }
+
+# MVIKotlin
+mvikotlin = { group = "com.arkivanov.mvikotlin", name = "mvikotlin", version.ref = "mviKotlin" }
+mvikotlin-main = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-main", version.ref = "mviKotlin" }
+mvikotlin-coroutines = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-extensions-coroutines", version.ref = "mviKotlin" }
+mvikotlin-logging = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-logging", version.ref = "mviKotlin" }
+mvikotlin-timetravel = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-timetravel", version.ref = "mviKotlin" }
+mvikotlin-keepers = { group = "com.arkivanov.mvikotlin", name = "keepers", version.ref = "mviKotlin" }
+mvikotlin-rx = { group = "com.arkivanov.mvikotlin", name = "rx", version.ref = "mviKotlin" }
+mvikotlin-reaktive = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-extensions-reaktive", version.ref = "mviKotlin" }
+
+# Stately
+stately-common = { group = "co.touchlab", name = "stately-common", version.ref = "stately" }
+stately-concurrency = { group = "co.touchlab", name = "stately-concurrency", version.ref = "stately" }
+stately-isolate = { group = "co.touchlab", name = "stately-isolate", version.ref = "stately" }
+stately-iso-collections = { group = "co.touchlab", name = "stately-iso-collections", version.ref = "stately" }
+stately-concurrentCollections = { group = "co.touchlab", name = "stately-concurrent-collections", version.ref = "stately" }
+
+# ==============================================================================
+# Utilities
+# ==============================================================================
+# Okio
+okioCommon = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
+
+# KMP IO
+kmp-io-zip = { group = "io.github.skolson", name = "kmp-io", version = "0.3.0" }
+okio-node = { group = "com.squareup.okio", name = "okio-nodefilesystem", version.ref = "okio" }
+okio-fake = { group = "com.squareup.okio", name = "okio-fakefilesystem", version.ref = "okio" }
+
+# Koin
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+
+# Settings
+multiplatform-settings = { group = "com.russhwolf", name = "multiplatform-settings-no-arg", version.ref = "multiplatformSettings" }
+multiplatform-settings-datastore = { group = "com.russhwolf", name = "multiplatform-settings-datastore", version.ref = "multiplatformSettings" }
+multiplatform-settings-coroutines = { group = "com.russhwolf", name = "multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
+multiplatform-settings-serialization = { group = "com.russhwolf", name = "multiplatform-settings-serialization", version.ref = "multiplatformSettings" }
+
+# Cache4k
+cache4k = { group = "io.github.reactivecircus.cache4k", name = "cache4k", version.ref = "cache4k" }
+
+# Kermit
+kermit = { group = "co.touchlab", name = "kermit", version.ref = "kermit" }
+kermit-crashlytics = { group = "co.touchlab", name = "kermit-crashlytics", version.ref = "kermit" }
+
+# Arrow
+arrow-core = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
+arrow-fx = { group = "io.arrow-kt", name = "arrow-fx-coroutines", version.ref = "arrow" }
+arrow-optics = { group = "io.arrow-kt", name = "arrow-optics", version.ref = "arrow" }
+arrow-meta = { group = "io.arrow-kt", name = "arrow-meta", version.ref = "arrow" }
+arrow-optics-ksp = { group = "io.arrow-kt", name = "arrow-optics-ksp-plugin", version.ref = "arrow" }
+
+# Konnection
+konnection = { group = "dev.tmapps", name = "konnection", version.ref = "konnection" }
+
+# JNA
+jna = { module = "net.java.dev.jna:jna-jpms", version.ref = "jna" }
+jna-platform = { module = "net.java.dev.jna:jna-platform-jpms", version.ref = "jna" }
+
+# Coil
+coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
+coil-core = { group = "io.coil-kt.coil3", name = "coil-core", version.ref = "coil" }
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
+coil-svg = { group = "io.coil-kt.coil3", name = "coil-svg", version.ref = "coil" }
+
+# FileKit
+filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "filekit" }
+filekit-coil = { module = "io.github.vinceglb:filekit-coil", version.ref = "filekit" }
+filekit-dialogs = { module = "io.github.vinceglb:filekit-dialogs", version.ref = "filekit" }
+filekit-dialogs-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
+
+# ==============================================================================
+# SQLite
+# ==============================================================================
+sqldelight-runtime = { group = "app.cash.sqldelight", name = "runtime", version.ref = "sqlDelight" }
+sqldelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqlDelight" }
+sqldelight-android-driver = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqlDelight" }
+sqldelight-driver = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqlDelight" }
+sqldelight-native = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sqlDelight" }
+sqlite-jdbc-driver = { group = "org.xerial", name = "sqlite-jdbc", version.ref = "sqliteJdbcDriver" }
+sqldelight-paging = { group = "app.cash.sqldelight", name = "androidx-paging3-extensions", version.ref = "sqlDelight" }
+
+# ==============================================================================
+# Paging
+# ==============================================================================
+paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "paging" }
+paging-compose = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "paging" }
+
+# ==============================================================================
+# SoundBound Specific
+# ==============================================================================
+# FFmpeg
+ffmpeg-kit-exceptions = { group = "com.arthenica", name = "smart-exception-java", version = "0.2.1" }
+ffmpeg-platform = { group = "org.bytedeco", name = "ffmpeg-platform", version = "7.1-1.5.11" }
+
+# JNDCrash
+jndcrash = { group = "io.github.shabinder", name = "jndcrash", version = "1.0.0" }
+jndcrash-libunwind = { group = "ru.ivanarh.ndcrash", name = "jndcrash-libunwind", version = "0.8" }
+
+# Store5
+store5 = { group = "io.github.shabinder", name = "store5", version = "5.1.0-alpha08" }
+
+# PostHog
+posthog = { group = "com.posthog", name = "posthog-android", version = "3.+" }
+
+# Ad Networks
+applovin-sdk = { group = "com.applovin", name = "applovin-sdk", version = "+" }
+vungle-ads = { group = "com.vungle", name = "vungle-ads", version = "7.7.0" }
+inmobi-ads = { group = "com.inmobi.monetization", name = "inmobi-ads-kotlin", version = "11.1.1" }
+facebook-audience = { group = "com.facebook.android", name = "audience-network-sdk", version = "6.21.0" }
+
+# StringFog
+stringfog-xor = { group = "com.github.megatronking.stringfog", name = "xor", version.ref = "stringfogXor" }
+
+# Talsec Security
+talsec-security = { group = "com.aheaditec.talsec.security", name = "TalsecSecurity-Community", version.ref = "talsecSecurity" }
+
+# AppNotifier
+android-app-notifier = { group = "com.github.amitbd1508", name = "AppUpdater", version = "4.1.0" }
+
+# Phoenix
+android-phoenix = { group = "com.jakewharton", name = "process-phoenix", version = "3.0.0" }
+
+# FuzzyWuzzy
+fuzzy-wuzzy = { group = "io.github.shabinder", name = "fuzzywuzzy", version = "1.1" }
+
+# KSoup
+ksoup-html = { group = "com.mohamedrejeb.ksoup", name = "ksoup-html", version = "0.6.0" }
+ksoup-entities = { group = "com.mohamedrejeb.ksoup", name = "ksoup-entities", version = "0.6.0" }
+
+# Jaffree
+jaffree = { group = "com.github.kokorin.jaffree", name = "jaffree", version = "2024.08.29" }
+
+# NewPipe Extractor
+newpipe-extractor = { group = "com.github.libre-tube", name = "NewPipeExtractor", version = "fc63085" }
+
+# ==============================================================================
+# Third Party
+# ==============================================================================
+# Compose WebView
+multiplatform-webView = { group = "io.github.kevinnzou", name = "compose-webview-multiplatform", version.ref = "composeWebView" }
+
+# Molecule
+molecule = { group = "app.cash.molecule", name = "molecule-runtime", version = "2.2.0" }
+
+# Supabase
 supabase-bom = { group = "io.github.jan-tennert.supabase", name = "bom", version = "3.3.0" }
 supabase-postgrest = { group = "io.github.jan-tennert.supabase", name = "postgrest-kt" }
 supabase-auth = { group = "io.github.jan-tennert.supabase", name = "auth-kt" }
@@ -272,60 +425,114 @@ supabase-compose-auth = { group = "io.github.jan-tennert.supabase", name = "comp
 supabase-compose-auth-ui = { group = "io.github.jan-tennert.supabase", name = "compose-auth-ui" }
 supabase-functions = { group = "io.github.jan-tennert.supabase", name = "functions-kt" }
 
-ffmpeg-kit-exceptions = { group = "com.arthenica", name = "smart-exception-java", version = "0.2.1" }
-ndk-libunwind = { group = "ru.ivanarh.ndcrash", name = "jndcrash-libunwind", version = "0.8" }
-android-phoenix = { group = "com.jakewharton", name = "process-phoenix", version = "3.0.0" }
+# KMP Notifier
+kmp-notification = { group = "io.github.mirzemehdi", name = "kmpnotifier", version = "1.6.1" }
 
+# Leak Canary
+leak-canary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version = "2.14" }
+
+# Acccompanist
+accompanist-inset = { group = "com.google.accompanist", name = "accompanist-insets", version = "0.34.0" }
+
+# Zipline
+zipline = { group = "app.cash.zipline", name = "zipline", version.ref = "zipline" }
+zipline-loader = { group = "app.cash.zipline", name = "zipline-loader", version.ref = "zipline" }
+zipline-gradlePlugin = { group = "app.cash.zipline", name = "zipline-gradle-plugin", version.ref = "zipline" }
+zipline-profiler = { group = "app.cash.zipline", name = "zipline-profiler", version.ref = "zipline" }
+
+# Moko
+moko-resources = { group = "dev.icerock.moko", name = "resources", version.ref = "moko" }
+moko-resources-compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "moko" }
+
+# Clarity
+clarity = { group = "com.microsoft.clarity", name = "clarity", version = "3.8.1" }
+
+# Kache
+kache = { group = "com.mayakapps.kache", name = "kache", version = "2.1.1" }
+
+# Restart4j
+restart4j = { group = "com.github.Dansoftowner", name = "Restart4j", version = "1.4.7" }
+
+# SLF4J
+slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version = "2.0.17" }
+
+# Brotli
+brotli-dec = { group = "org.brotli", name = "dec", version = "0.1.2" }
+
+# SkrapeIt
+skrapeit = { group = "it.skrape", name = "skrapeit", version = "1.2.2" }
+
+# RevenueCat
+revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version = "9.19.4" }
+
+# ==============================================================================
+# Desktop
+# ==============================================================================
 desktop-vlcj = { group = "uk.co.caprica", name = "vlcj", version = "4.12.1" }
 desktop-json = { group = "org.json", name = "json", version = "20251224" }
 desktop-amplitude = { group = "com.amplitude", name = "java-sdk", version = "1.12.4" }
 desktop-jcef = { group = "me.friwi", name = "jcefmaven", version = "141.0.10" }
 
-revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version = "9.19.3" }
-skrapeit = { group = "it.skrape", name = "skrapeit", version = "1.2.2" }
-
-# Ksoup - Kotlin Multiplatform HTML parser (replacement for skrape.it in extensions)
-ksoup-html = { group = "com.mohamedrejeb.ksoup", name = "ksoup-html", version = "0.6.0" }
-ksoup-entities = { group = "com.mohamedrejeb.ksoup", name = "ksoup-entities", version = "0.6.0" }
-
-store = "org.mobilenativefoundation.store:store5:5.1.0-alpha08"
-
-moko-resources = { group = "dev.icerock.moko", name = "resources", version.ref = "mokoResources" }
-moko-resources-compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "mokoResources" }
-moko-resources-generator = { group = "dev.icerock.moko", name = "resources-generator", version.ref = "mokoResources" }
-moko-resources-gradle = { group = "dev.icerock.moko", name = "multiplatform-resources", version.ref = "mokoResources" }
-mavenPublish-gradle-plugin = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "mavenPublish" }
-
-#newpipe-extractor = { group = "com.github.TeamNewPipe", name = "NewPipeExtractor", version = "v0.24.3" }
-newpipe-extractor = { group = "com.github.libre-tube", name = "NewPipeExtractor", version = "fc63085" }
-kotlin-onetimepassword = { module = "dev.turingcomplete:kotlin-onetimepassword", version = "2.4.1" }
-
+# ==============================================================================
+# Bundles - Group related libraries
+# ==============================================================================
 [bundles]
-arrow = ["arrow-core", "arrow-fx"]
-coil = ["coil3-core", "coil3-ktor3", "coil3-compose", "coil3-svg", "coil3"]
-ktor = ["ktor-client-core", "ktor-client-json", "ktor-client-auth", "ktor-client-logging", "ktor-client-serialization", "ktor-client-content", "ktor-client-encoding"]
-stately = ["stately-concurrency", "stately-concurrentCollections"]
+# Kotlin
+kotlin-test = ["kotlin-kotlinTest"]
+
+# Kotlinx
+kotlinx = ["kotlinx-coroutines", "kotlinx-serialization-json", "kotlinx-atomicfu"]
+
+# AndroidX
 androidx-lifecycle = ["androidx-lifecycle-service", "androidx-lifecycle-common", "androidx-lifecycle-runtime", "androidx-lifecycle-livedata", "androidx-lifecycle-extensions"]
 androidx-common = ["androidx-activity", "androidx-core", "androidx-splash"]
-androidx-test = ["androidx-junit", "androidx-expresso", "androidx-test-uiautomator", "androidx-benchmark-macro-junit"]
+androidx-test = ["androidx-junit", "androidx-expresso", "androidx-uiautomator", "androidx-benchmark"]
 androidx-creds = ["androidx-credential", "androidx-credential-auth", "androidx-credential-googleid"]
 androidx-media3 = ["androidx-media3-session", "androidx-media3-exoplayer", "androidx-media3-ui", "androidx-media3-common"]
-paging-compose = ["paging-common", "paging-compose"]
-kotlin-test = ["kotlin-kotlinTestCommon", "kotlin-kotlinTestAnnotationsCommon", "kotlin-kotlinTestCoroutine", "kotlin-kotlinTest"]
-sqldelight = ["sqldelight-runtime", "sqldelight-coroutines-extension", "sqldelight-paging"]
-mviKotlin = ["mviKotlin-dep", "mviKotlin-main", "mviKotlin-coroutines", "mviKotlin-logging", "mviKotlin-timetravel"]
-kotlinx = ["kotlinx-coroutines", "kotlinx-serialization-json", "kotlinx-atomicfu", "kotlinx-datetime", "kotlinx-immutableLists"]
+
+# Ktor
+ktor = ["ktor-client-core", "ktor-client-json", "ktor-client-auth", "ktor-client-logging", "ktor-client-serialization", "ktor-client-content", "ktor-client-encoding"]
+
+# MVI Kotlin
+mviKotlin = ["mvikotlin", "mvikotlin-main", "mvikotlin-coroutines", "mvikotlin-logging", "mvikotlin-timetravel"]
+
+# Essenty
 essenty = ["essenty-lifecycle", "essenty-instanceKeeper", "essenty-backHandler", "essenty-stateKeeper", "essenty-lifecycle-coroutines"]
+
+# Decompose
 decompose = ["decompose-dep", "decompose-extensions-compose"]
-koin-android = ["koin-androidx-compose", "koin-android"]
-settings = ["multiplatform-settings", "multiplatform-settings-coroutines", "multiplatform-settings_serialization", "multiplatform-settings-datastore"]
-supabase = ["supabase-postgrest", "supabase-auth", "supabase-realtime", "supabase-storage", "supabase-functions", "supabase-compose-auth"]
+
+# Arrow
+arrow = ["arrow-core", "arrow-fx"]
+
+# Coil
+coil = ["coil-core", "coil-ktor", "coil-compose", "coil-svg", "coil"]
+
+# Stately
+stately = ["stately-concurrency", "stately-concurrentCollections"]
+
+# Settings
+settings = ["multiplatform-settings", "multiplatform-settings-coroutines", "multiplatform-settings-serialization", "multiplatform-settings-datastore"]
+
+# DataStore
 datastore = ["androidx-datastore-core", "androidx-datastore-preferences"]
+
+# SQLDelight
+sqldelight = ["sqldelight-runtime", "sqldelight-coroutines", "sqldelight-paging"]
+
+# Paging
+paging-compose = ["paging-common", "paging-compose"]
+
+# Supabase
+supabase = ["supabase-postgrest", "supabase-auth", "supabase-realtime", "supabase-storage", "supabase-functions", "supabase-compose-auth"]
+
+# Koin
+koin-android = ["koin-compose", "koin-android"]
 
 [plugins]
 # Android
-android-library = { id = "com.android.library", version.ref = "androidGradle" }
 android-application = { id = "com.android.application", version.ref = "androidGradle" }
+android-library = { id = "com.android.library", version.ref = "androidGradle" }
 android-test = { id = "com.android.test", version.ref = "androidGradle" }
 
 # Compose
@@ -334,25 +541,25 @@ jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "jbCompose" }
 
 # Kotlin
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-android = { id = "kotlin-android", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "kotlin-multiplatform", version.ref = "kotlin" }
+kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-kapt = { id = "kotlin-kapt", version.ref = "kotlin" }
 
-# Build tools
-#zipline-gradle = { id = "io.github.shabinder", version.ref = "zipline" }
-zipline-gradle = { id = "app.cash.zipline", version.ref = "zipline" }
-slqDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+# Build Tools
 baselineProfile = { id = "androidx.baselineprofile", version.ref = "baselineProfile" }
+sentryAndroid = { id = "io.sentry.android.gradle", version.ref = "sentryAndroid" }
+zipline-gradle = { id = "app.cash.zipline", version.ref = "zipline" }
+version-catalog = { id = "version-catalog" }
 
-
-# Code quality
+# Code Quality
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
-# Resources & Publishing
-moko = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "mokoResources" }
+# Publishing
 maven-publish-base = { id = "com.vanniktech.maven.publish.base", version.ref = "mavenPublish" }
 maven-publish-config = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
-version-catalog = { id = "version-catalog" }
+
+# Moko
+moko = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko" }
