@@ -42,7 +42,7 @@ androidGlance = "1.1.1"
 composeBom = "2026.01.01"
 activityCompose = "1.12.3"
 viewmodelCompose = "2.10.0"
-composeWebView = "2.0.3"
+composeWebView = "1.0.0-alpha-10"
 
 # Networking
 ktor = "3.4.0"
@@ -410,7 +410,7 @@ newpipe-extractor = { group = "com.github.libre-tube", name = "NewPipeExtractor"
 # Third Party
 # ==============================================================================
 # Compose WebView
-multiplatform-webView = { group = "io.github.kevinnzou", name = "compose-webview-multiplatform", version.ref = "composeWebView" }
+multiplatform-webView = { group = "io.github.kdroidfilter", name = "composewebview", version.ref = "composeWebView" }
 
 # Molecule
 molecule = { group = "app.cash.molecule", name = "molecule-runtime", version = "2.2.0" }
