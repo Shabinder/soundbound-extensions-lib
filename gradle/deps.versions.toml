@@ -404,7 +404,7 @@ ksoup-entities = { group = "com.mohamedrejeb.ksoup", name = "ksoup-entities", ve
 jaffree = { group = "com.github.kokorin.jaffree", name = "jaffree", version = "2024.08.29" }
 
 # NewPipe Extractor
-newpipe-extractor = { group = "com.github.libre-tube", name = "NewPipeExtractor", version = "fc63085" }
+newpipe-extractor = { group = "com.github.libre-tube", name = "NewPipeExtractor", version = "0c7e95b" }
 
 # ==============================================================================
 # Third Party
