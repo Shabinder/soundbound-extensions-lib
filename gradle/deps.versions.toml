@@ -367,7 +367,9 @@ ffmpeg-kit-exceptions = { group = "com.arthenica", name = "smart-exception-java"
 ffmpeg-platform = { group = "org.bytedeco", name = "ffmpeg-platform", version = "8.0.1-1.5.13" }
 
 # JNDCrash
-jndcrash = { group = "io.github.shabinder", name = "jndcrash", version = "1.0.0" }
+# jndcrash AAR vendored at android-jndcrash/libs/jndcrash-1.0.1.aar for 16KB compliance.
+# See Docs/ARCHITECTURE/native_crash_handlers.md for the rebuild process.
+# jndcrash = { group = "io.github.shabinder", name = "jndcrash", version = "1.0.0" } # REPLACED by vendored AAR
 jndcrash-libunwind = { group = "ru.ivanarh.ndcrash", name = "jndcrash-libunwind", version = "0.8" }
 
 # Store5
