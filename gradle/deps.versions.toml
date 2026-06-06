@@ -45,7 +45,11 @@ viewmodelCompose = "2.10.0"
 composeWebView = "1.0.0-beta-02"
 
 # Networking
-ktor = "3.5.0"
+# HOLD at 3.4.3: supabase-kt 3.6.0 (latest as of 2026-06-06) pins Ktor 3.4.3.
+# Ktor 3.5.0 makes HttpMethod.Post inaccessible to supabase's inlined postJson
+# call (IllegalAccessError at runtime, breaks Google Sign-In). Bump when
+# supabase-kt ships a 3.5-compatible release.
+ktor = "3.4.3"
 okio = "3.17.0"
 
 # Architecture
@@ -419,7 +423,7 @@ multiplatform-webView = { group = "io.github.kdroidfilter", name = "composewebvi
 molecule = { group = "app.cash.molecule", name = "molecule-runtime", version = "2.2.0" }
 
 # Supabase
-supabase-bom = { group = "io.github.jan-tennert.supabase", name = "bom", version = "3.5.0" }
+supabase-bom = { group = "io.github.jan-tennert.supabase", name = "bom", version = "3.6.0" }
 supabase-postgrest = { group = "io.github.jan-tennert.supabase", name = "postgrest-kt" }
 supabase-auth = { group = "io.github.jan-tennert.supabase", name = "auth-kt" }
 supabase-realtime = { group = "io.github.jan-tennert.supabase", name = "realtime-kt" }
