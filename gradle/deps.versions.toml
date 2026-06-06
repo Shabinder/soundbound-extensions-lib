@@ -1,8 +1,22 @@
 [versions]
 # Core versions
+# HOLD at 2.3.10: Kotlin 2.4 breaks Compose Multiplatform 1.11.1 ABI
+# (IrGenerationExtension$Companion cast failure — CMP 1.11.1 was compiled against
+# Kotlin 2.3.x). Bump together with `jbCompose` when CMP 1.12.x reaches stable.
+# Chain blocker for AGP 9 — see `androidGradle` below.
 kotlin = "2.3.10"
+# HOLD at 1.11.1: CMP 1.12.0-alpha01 exists but is alpha-only on the Compose UI
+# layer — alpha rendering bugs would ship to real Play Store users. Bump together
+# with `kotlin` when CMP 1.12.x reaches stable (typical JetBrains alpha -> stable
+# is 2-3 months). Chain blocker for Kotlin 2.4 and AGP 9.
 jbCompose = "1.11.1"
-androidGradle = "8.13.2" # HOLD: AGP 9.2.1 available but deferred (separate migration; android/skills agp-9-upgrade skill installed)
+# HOLD at 8.13.2: AGP 9.2.1 requires Kotlin 2.4+ (built-in Kotlin DSL), which is
+# blocked by the `kotlin` + `jbCompose` holds above. Google's own
+# android/skills agp-9-upgrade skill is also explicitly off-limits for KMP
+# projects ("Do not use this skill for migrating KMP projects"). Bump once the
+# CMP / Kotlin chain unblocks. See Docs/PLANS/agp-9-migration.md for the
+# step-by-step migration plan when the time comes.
+androidGradle = "8.13.2"
 coroutines = "1.11.0"
 kotlinxSerialization = "1.11.0"
 
@@ -151,7 +165,9 @@ compose-material3-window-size = { group = "androidx.compose.material3", name = "
 # ==============================================================================
 # Activity & Core
 androidx-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.17.0" } # 1.18+ requires compileSdk 37 / AGP 9+; pinned for AGP 8.13.2 hold
+# HOLD at 1.17.0: androidx.core:core-ktx 1.18+ requires compileSdk 37 + AGP 9.x.
+# Blocked by the AGP 8.13.2 hold (see `androidGradle` above). Bump together with AGP 9.
+androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.17.0" }
 androidx-splash = { group = "androidx.core", name = "core-splashscreen", version = "1.2.0" }
 
 # Lifecycle
