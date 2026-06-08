@@ -24,7 +24,7 @@ kotlinxSerialization = "1.11.0"
 androidCompileSdk = "36"
 androidMinSdk = "21"
 androidTargetSdk = "36"
-androidBuildTools = "36.0.0"
+androidBuildTools = "36.1.0"
 
 # Build tools & plugins
 baselineProfile = "1.4.1"
