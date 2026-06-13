@@ -71,7 +71,7 @@ okio = "3.17.0"
 decompose = "3.5.0"
 essenty = "2.5.0"
 mviKotlin = "4.4.0"
-paging = "3.3.0-alpha02-0.5.1"
+paging = "3.5.0"
 
 # Utilities
 cache4k = "0.14.0"
@@ -386,8 +386,15 @@ sqldelight-paging = { group = "app.cash.sqldelight", name = "androidx-paging3-ex
 # ==============================================================================
 # Paging
 # ==============================================================================
-paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "paging" }
-paging-compose = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "paging" }
+# androidx.paging (NOT the app.cash.paging fork): the fork is frozen at
+# 3.3.0-alpha02 and hard-references androidx.paging.DifferCallback, which androidx
+# deleted in paging 3.4 — so the fork crashes at runtime (NoClassDefFoundError)
+# once SQLDelight's androidx-paging3-extensions transitively pulls androidx
+# paging-common >= 3.4. androidx.paging is fully KMP (paging-compose-desktop target
+# exists) since 3.3.0, making the fork unnecessary. Keep this on androidx, aligned
+# with sqldelight's transitive paging-common version.
+paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "paging" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 
 # ==============================================================================
 # SoundBound Specific
