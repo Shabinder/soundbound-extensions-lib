@@ -192,6 +192,12 @@ androidx-startUp = { group = "androidx.startup", name = "startup-runtime", versi
 
 # Tracing - Perfetto-compatible section markers for app startup diagnosis
 androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", version.ref = "androidxTracing" }
+# Composition Tracing - adds composable function names to system traces.
+# Per https://developer.android.com/develop/ui/compose/tooling/tracing this dep is
+# debug/benchmark-only (don't ship in release): when present, system traces include
+# named composable bars without manual trace("label") sections.
+# Version follows the androidx-compose-runtime release line (matches jbCompose 1.11.x).
+androidx-compose-runtime-tracing = { group = "androidx.compose.runtime", name = "runtime-tracing", version = "1.7.0" }
 
 # DataStore
 androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "androidXDataStore" }
