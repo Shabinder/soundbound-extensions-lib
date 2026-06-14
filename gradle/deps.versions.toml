@@ -58,6 +58,7 @@ composeBom = "2026.05.01"
 activityCompose = "1.13.0"
 viewmodelCompose = "2.10.0"
 composeWebView = "1.0.0-beta-02"
+nucleus = "1.15.7"
 
 # Networking
 # HOLD at 3.4.3: supabase-kt 3.6.0 (latest as of 2026-06-06) pins Ktor 3.4.3.
@@ -512,6 +513,11 @@ desktop-vlcj = { group = "uk.co.caprica", name = "vlcj", version = "4.12.1" }
 desktop-json = { group = "org.json", name = "json", version = "20251224" }
 desktop-amplitude = { group = "com.amplitude", name = "java-sdk", version = "1.13.0" }
 desktop-jcef = { group = "me.friwi", name = "jcefmaven", version = "141.0.10" }
+
+# Nucleus runtime libs (JNA-free, GraalVM-native-image compatible). Runtime libs
+# ONLY — the Nucleus Gradle plugin is deliberately NOT used (it would replace our
+# jpackage/ProGuard pipeline with electron-builder). See Docs/PLANS/graalvm-native-image.md.
+nucleus-decorated-window-jni = { group = "io.github.kdroidfilter", name = "nucleus.decorated-window-jni", version.ref = "nucleus" }
 
 # ==============================================================================
 # Bundles - Group related libraries
