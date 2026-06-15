@@ -522,6 +522,7 @@ desktop-jcef = { group = "me.friwi", name = "jcefmaven", version = "141.0.10" }
 # jpackage/ProGuard pipeline with electron-builder). See Docs/PLANS/graalvm-native-image.md.
 nucleus-decorated-window-jni = { group = "io.github.kdroidfilter", name = "nucleus.decorated-window-jni", version.ref = "nucleus" }
 nucleus-media-control = { group = "io.github.kdroidfilter", name = "nucleus.media-control", version.ref = "nucleus" }
+nucleus-energy-manager = { group = "io.github.kdroidfilter", name = "nucleus.energy-manager", version.ref = "nucleus" }
 
 # ==============================================================================
 # Bundles - Group related libraries
