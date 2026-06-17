@@ -589,6 +589,7 @@ android-test = { id = "com.android.test", version.ref = "androidGradle" }
 # Compose
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "jbCompose" }
+nucleus = { id = "io.github.kdroidfilter.nucleus", version.ref = "nucleus" }
 composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
 
 # Kotlin
