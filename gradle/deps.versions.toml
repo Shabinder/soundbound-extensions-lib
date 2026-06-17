@@ -523,6 +523,9 @@ desktop-jcef = { group = "me.friwi", name = "jcefmaven", version = "141.0.10" }
 nucleus-decorated-window-jni = { group = "io.github.kdroidfilter", name = "nucleus.decorated-window-jni", version.ref = "nucleus" }
 nucleus-media-control = { group = "io.github.kdroidfilter", name = "nucleus.media-control", version.ref = "nucleus" }
 nucleus-energy-manager = { group = "io.github.kdroidfilter", name = "nucleus.energy-manager", version.ref = "nucleus" }
+nucleus-taskbar-progress = { group = "io.github.kdroidfilter", name = "nucleus.taskbar-progress", version.ref = "nucleus" }
+nucleus-autolaunch = { group = "io.github.kdroidfilter", name = "nucleus.autolaunch", version.ref = "nucleus" }
+nucleus-updater-runtime = { group = "io.github.kdroidfilter", name = "nucleus.updater-runtime", version.ref = "nucleus" }
 
 # ==============================================================================
 # Bundles - Group related libraries
