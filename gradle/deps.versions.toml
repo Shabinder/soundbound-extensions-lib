@@ -525,7 +525,6 @@ nucleus-media-control = { group = "io.github.kdroidfilter", name = "nucleus.medi
 nucleus-energy-manager = { group = "io.github.kdroidfilter", name = "nucleus.energy-manager", version.ref = "nucleus" }
 nucleus-taskbar-progress = { group = "io.github.kdroidfilter", name = "nucleus.taskbar-progress", version.ref = "nucleus" }
 nucleus-autolaunch = { group = "io.github.kdroidfilter", name = "nucleus.autolaunch", version.ref = "nucleus" }
-nucleus-updater-runtime = { group = "io.github.kdroidfilter", name = "nucleus.updater-runtime", version.ref = "nucleus" }
 
 # ==============================================================================
 # Bundles - Group related libraries
