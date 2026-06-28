@@ -18,13 +18,22 @@ class Request(
     val method: String = HttpClient.Method.GET.name,
     val body: HttpClient.BodyType = HttpClient.BodyType.NONE,
     val downloadChunkSize: Long? = null,
-    val decryption: DecryptionSpec? = null
+    val decryption: DecryptionSpec? = null,
+    // DASH/segmented streams (e.g. Tidal): ordered media-segment URLs the app downloads and
+    // concatenates (after [initSegment]) into one fragmented-MP4, then remuxes to the target
+    // container. Non-null routes the download through the segment-assembly path. The bytes
+    // never cross the extension boundary — the extension only resolves the URL list.
+    val segments: List<String>? = null,
+    val initSegment: String? = null,
 ) {
     val httpMethod: HttpClient.Method
         get() = HttpClient.Method.valueOf(method)
 
     val isDownloadToBeChunked: Boolean
         get() = downloadChunkSize != null
+
+    val isSegmented: Boolean
+        get() = !segments.isNullOrEmpty()
 
     companion object {
         const val DEFAULT_CHUNK_SIZE = 10485760L // 10mb
@@ -35,7 +44,9 @@ class Request(
             method: String = HttpClient.Method.GET.name,
             body: HttpClient.BodyType = HttpClient.BodyType.NONE,
             downloadChunkSize: Long? = null,
-            decryption: DecryptionSpec? = null
+            decryption: DecryptionSpec? = null,
+            segments: List<String>? = null,
+            initSegment: String? = null,
         ) = Request(
             url,
             method = method,
@@ -43,12 +54,14 @@ class Request(
             headers = headers,
             body = body,
             downloadChunkSize = downloadChunkSize,
-            decryption = decryption
+            decryption = decryption,
+            segments = segments,
+            initSegment = initSegment,
         )
     }
 
     override fun toString(): String {
-        return "DownloadRequest(url='$url', headers=$headers, method='$method', body=$body, downloadChunkSize=$downloadChunkSize, decryption=${decryption?.algorithm})"
+        return "DownloadRequest(url='$url', headers=$headers, method='$method', body=$body, downloadChunkSize=$downloadChunkSize, decryption=${decryption?.algorithm}, segments=${segments?.size})"
     }
 
     fun copy(
@@ -58,7 +71,9 @@ class Request(
         body: HttpClient.BodyType = this.body,
         params: Map<String, String> = this.params,
         downloadChunkSize: Long? = this.downloadChunkSize,
-        decryption: DecryptionSpec? = this.decryption
+        decryption: DecryptionSpec? = this.decryption,
+        segments: List<String>? = this.segments,
+        initSegment: String? = this.initSegment,
     ): Request {
         return Request(
             url = url,
@@ -67,7 +82,9 @@ class Request(
             body = body,
             params = params,
             downloadChunkSize = downloadChunkSize,
-            decryption = decryption
+            decryption = decryption,
+            segments = segments,
+            initSegment = initSegment,
         )
     }
 
@@ -81,6 +98,8 @@ class Request(
         if (params != other.params) return false
         if (downloadChunkSize != other.downloadChunkSize) return false
         if (decryption != other.decryption) return false
+        if (segments != other.segments) return false
+        if (initSegment != other.initSegment) return false
         return true
     }
 
@@ -92,6 +111,8 @@ class Request(
         result = 31 * result + params.hashCode()
         result = 31 * result + downloadChunkSize.hashCode()
         result = 31 * result + (decryption?.hashCode() ?: 0)
+        result = 31 * result + (segments?.hashCode() ?: 0)
+        result = 31 * result + (initSegment?.hashCode() ?: 0)
         return result
     }
 }
