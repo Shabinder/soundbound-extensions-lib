@@ -17,7 +17,8 @@ class Request(
     val params: Map<String, String> = emptyMap(),
     val method: String = HttpClient.Method.GET.name,
     val body: HttpClient.BodyType = HttpClient.BodyType.NONE,
-    val downloadChunkSize: Long? = null
+    val downloadChunkSize: Long? = null,
+    val decryption: DecryptionSpec? = null
 ) {
     val httpMethod: HttpClient.Method
         get() = HttpClient.Method.valueOf(method)
@@ -33,19 +34,21 @@ class Request(
             params: Map<String, String> = emptyMap(),
             method: String = HttpClient.Method.GET.name,
             body: HttpClient.BodyType = HttpClient.BodyType.NONE,
-            downloadChunkSize: Long? = null
+            downloadChunkSize: Long? = null,
+            decryption: DecryptionSpec? = null
         ) = Request(
             url,
             method = method,
             params = params,
             headers = headers,
             body = body,
-            downloadChunkSize = downloadChunkSize
+            downloadChunkSize = downloadChunkSize,
+            decryption = decryption
         )
     }
 
     override fun toString(): String {
-        return "DownloadRequest(url='$url', headers=$headers, method='$method', body=$body, downloadChunkSize=$downloadChunkSize)"
+        return "DownloadRequest(url='$url', headers=$headers, method='$method', body=$body, downloadChunkSize=$downloadChunkSize, decryption=${decryption?.algorithm})"
     }
 
     fun copy(
@@ -54,7 +57,8 @@ class Request(
         method: String = this.method,
         body: HttpClient.BodyType = this.body,
         params: Map<String, String> = this.params,
-        downloadChunkSize: Long? = this.downloadChunkSize
+        downloadChunkSize: Long? = this.downloadChunkSize,
+        decryption: DecryptionSpec? = this.decryption
     ): Request {
         return Request(
             url = url,
@@ -62,7 +66,8 @@ class Request(
             method = method,
             body = body,
             params = params,
-            downloadChunkSize = downloadChunkSize
+            downloadChunkSize = downloadChunkSize,
+            decryption = decryption
         )
     }
 
@@ -75,6 +80,7 @@ class Request(
         if (body != other.body) return false
         if (params != other.params) return false
         if (downloadChunkSize != other.downloadChunkSize) return false
+        if (decryption != other.decryption) return false
         return true
     }
 
@@ -85,6 +91,7 @@ class Request(
         result = 31 * result + body.hashCode()
         result = 31 * result + params.hashCode()
         result = 31 * result + downloadChunkSize.hashCode()
+        result = 31 * result + (decryption?.hashCode() ?: 0)
         return result
     }
 }
