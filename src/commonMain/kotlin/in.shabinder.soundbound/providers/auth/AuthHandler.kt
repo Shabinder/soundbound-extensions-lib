@@ -113,11 +113,21 @@ interface AuthHandler : Dependencies {
       val headers: Map<String, String> = emptyMap(),
       val userAgentString: String? = null,
       val saveAll: Boolean = true, // we check against required cookies, but save all.
-      override val isRequired: Boolean = false
+      override val isRequired: Boolean = false,
+      // Credentials some platforms keep in localStorage, not cookies (e.g. Qobuz user_auth_token
+      // under `localuser`, Tidal access_token). The app evals each [LocalStorageKey.js] in the
+      // logged-in page and merges the result into the same CookieData map under [LocalStorageKey.key],
+      // so the extension reads it via authData.cookies[key] exactly like a cookie. Auth succeeds
+      // only when all required cookies AND all localStorage keys are present.
+      val localStorageKeys: List<LocalStorageKey> = emptyList(),
     ) : AuthMethod() {
       @Immutable
       @Serializable
       data class CookieKey(val key: String, val forURL: String)
+
+      @Immutable
+      @Serializable
+      data class LocalStorageKey(val key: String, val js: String)
     }
 
     @Immutable
