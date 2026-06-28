@@ -39,7 +39,11 @@ afterEvaluate {
 
 mavenPublishing {
   publishToMavenCentral(true)
-  signAllPublications()
+  // Only sign when a GPG key is configured (Maven Central release). Local-dev publishing to
+  // mavenLocal (for building extension Zipline binaries against the lib) has no key -> skip.
+  if (!System.getenv("GPG_PRIVATE_KEY").isNullOrBlank() || project.findProperty("GPG_PRIVATE_KEY") != null) {
+    signAllPublications()
+  }
 
   pom {
     name.set("soundbound-extensions-lib")
