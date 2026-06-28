@@ -13,7 +13,11 @@ open class DownloadQueryResult(
     open val downloadRequest: DownloadRequest,
     open val audioFormat: AudioFormat,
     open val audioQuality: AudioQuality,
-    open val lyrics: String? = null // actual lyrics with matching with download audio
+    open val lyrics: String? = null, // actual lyrics with matching with download audio
+    open val bitDepth: Int? = null,
+    open val sampleRateHz: Int? = null,
+    open val codec: String? = null,
+    open val audioQualityLabel: String? = null, // provider-declared human label, e.g. "24-bit/96kHz"
 ) {
     @JvmOverloads
     open fun copy(
@@ -21,12 +25,20 @@ open class DownloadQueryResult(
         audioFormat: AudioFormat = this.audioFormat,
         audioQuality: AudioQuality = this.audioQuality,
         lyrics: String? = this.lyrics,
+        bitDepth: Int? = this.bitDepth,
+        sampleRateHz: Int? = this.sampleRateHz,
+        codec: String? = this.codec,
+        audioQualityLabel: String? = this.audioQualityLabel,
     ): DownloadQueryResult {
         return DownloadQueryResult(
             downloadRequest = downloadRequest,
             audioFormat = audioFormat,
             audioQuality = audioQuality,
-            lyrics = lyrics
+            lyrics = lyrics,
+            bitDepth = bitDepth,
+            sampleRateHz = sampleRateHz,
+            codec = codec,
+            audioQualityLabel = audioQualityLabel,
         )
     }
 
@@ -37,6 +49,10 @@ open class DownloadQueryResult(
         if (audioFormat != other.audioFormat) return false
         if (audioQuality != other.audioQuality) return false
         if (lyrics != other.lyrics) return false
+        if (bitDepth != other.bitDepth) return false
+        if (sampleRateHz != other.sampleRateHz) return false
+        if (codec != other.codec) return false
+        if (audioQualityLabel != other.audioQualityLabel) return false
         return true
     }
 
@@ -45,11 +61,15 @@ open class DownloadQueryResult(
         result = 31 * result + audioFormat.hashCode()
         result = 31 * result + audioQuality.hashCode()
         result = 31 * result + lyrics.hashCode()
+        result = 31 * result + (bitDepth ?: 0)
+        result = 31 * result + (sampleRateHz ?: 0)
+        result = 31 * result + (codec?.hashCode() ?: 0)
+        result = 31 * result + (audioQualityLabel?.hashCode() ?: 0)
         return result
     }
 
     override fun toString(): String =
-        "DownloadQueryResult(downloadRequest=$downloadRequest, audioFormat=$audioFormat, audioQuality=$audioQuality, lyrics=$lyrics)"
+        "DownloadQueryResult(downloadRequest=$downloadRequest, audioFormat=$audioFormat, audioQuality=$audioQuality, lyrics=$lyrics, bitDepth=$bitDepth, sampleRateHz=$sampleRateHz, codec=$codec, audioQualityLabel=$audioQualityLabel)"
 }
 
 @Immutable
