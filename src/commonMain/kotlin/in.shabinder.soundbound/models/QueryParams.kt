@@ -20,7 +20,8 @@ open class QueryParams(
     open val trackLink: String? = null,
     open val interestedEntityType: SearchItem.Type = SearchItem.Type.All,
     open val isrc: String? = null,
-    open val linkLists: List<String> = emptyList() // matched links from which this query was generated
+    open val linkLists: List<String> = emptyList(), // matched links from which this query was generated
+    open val preferredQuality: AudioQuality? = null // requested tier; null = provider default. Not part of identity.
 ) {
 
     @kotlin.jvm.JvmOverloads
@@ -35,7 +36,8 @@ open class QueryParams(
         trackLink: String? = this.trackLink,
         interestedEntityType: SearchItem.Type = this.interestedEntityType,
         isrc: String? = this.isrc,
-        linkLists: List<String> = this.linkLists
+        linkLists: List<String> = this.linkLists,
+        preferredQuality: AudioQuality? = this.preferredQuality
     ): QueryParams {
         return QueryParams(
             trackName = trackName,
@@ -48,7 +50,8 @@ open class QueryParams(
             trackLink = trackLink,
             interestedEntityType = interestedEntityType,
             isrc = isrc,
-            linkLists = linkLists
+            linkLists = linkLists,
+            preferredQuality = preferredQuality
         )
     }
 
@@ -85,7 +88,7 @@ open class QueryParams(
     }
 
     override fun toString(): String {
-        return "QueryParams(trackName=$trackName, trackArtists=$trackArtists, trackDurationSec=$trackDurationSec, genre=$genre, year=$year, albumName=$albumName, albumArtists=$albumArtists, trackLink=$trackLink, interestedEntityType=$interestedEntityType, ISRC=$isrc, linkLists=$linkLists)"
+        return "QueryParams(trackName=$trackName, trackArtists=$trackArtists, trackDurationSec=$trackDurationSec, genre=$genre, year=$year, albumName=$albumName, albumArtists=$albumArtists, trackLink=$trackLink, interestedEntityType=$interestedEntityType, ISRC=$isrc, linkLists=$linkLists, preferredQuality=$preferredQuality)"
     }
 
     val simpleQuery: String
