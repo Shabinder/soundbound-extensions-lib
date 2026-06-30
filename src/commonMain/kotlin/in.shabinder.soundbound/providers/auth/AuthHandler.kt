@@ -26,25 +26,27 @@ interface AuthHandler : Dependencies {
     get() = authMethodType !is AuthNotNeeded && authStatus !is AuthStatus.Authenticated
 
   val authStatus: AuthStatus
-    get() {
-      return when (val authType = authMethodType) {
-        is CookieAuthAvailable -> {
-          val savedCookies = (mAuthData as? CookieData)?.cookies
+    get() = when (val authType = authMethodType) {
+      is CookieAuthAvailable -> {
+        val saved = (mAuthData as? CookieData)?.cookies.orEmpty()
 
-          authType.requiredCookieNames.forEach { cookieNames ->
-            if (cookieNames.none { savedCookies?.containsKey(it.key) == true }) {
-              return AuthStatus.NotAuthenticated
-            }
-          }
+        // Both credential sources are captured into the same map (localStorage values merged
+        // under their key). A cookie GROUP is satisfied if ANY key in it is present (OR within
+        // a group); a localStorage key must be present. ALL declared requirements must hold,
+        // and at least one must be declared — otherwise "no requirements" reads as authed.
+        val cookiesSatisfied = authType.requiredCookieNames.all { group -> group.any { saved.containsKey(it.key) } }
+        val localStorageSatisfied = authType.localStorageKeys.all { saved.containsKey(it.key) }
+        val declaresAnyRequirement =
+          authType.requiredCookieNames.isNotEmpty() || authType.localStorageKeys.isNotEmpty()
 
-          return AuthStatus.Authenticated
-        }
-
-        is AuthNotNeeded -> {
-          // Auth not needed
+        if (declaresAnyRequirement && cookiesSatisfied && localStorageSatisfied) {
           AuthStatus.Authenticated
+        } else {
+          AuthStatus.NotAuthenticated
         }
       }
+
+      is AuthNotNeeded -> AuthStatus.Authenticated
     }
 
 
@@ -120,6 +122,11 @@ interface AuthHandler : Dependencies {
       // so the extension reads it via authData.cookies[key] exactly like a cookie. Auth succeeds
       // only when all required cookies AND all localStorage keys are present.
       val localStorageKeys: List<LocalStorageKey> = emptyList(),
+      // Extension-provided JS injected at document-start into the auth webview (before page JS
+      // runs). Use to hook fetch/XHR and capture a token from a login response, fix layout, or
+      // set up storage. Desktop wires it as the native initScript; capture results into
+      // localStorage and read them back via [localStorageKeys].
+      val injectedJS: String? = null,
     ) : AuthMethod() {
       @Immutable
       @Serializable
