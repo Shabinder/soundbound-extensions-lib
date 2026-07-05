@@ -102,7 +102,7 @@ konnection = "1.4.5"
 # Experimental & Custom
 zipline = "1.27.2-CUSTOM"
 sqliteJdbcDriver = "3.53.2.0"
-composeHotReload = "1.2.0-alpha01"
+composeHotReload = "1.2.0-beta01" # brings MCP server for agent-driven UI control (get_semantic_tree/click/type_text)
 
 [libraries]
 # ==============================================================================
