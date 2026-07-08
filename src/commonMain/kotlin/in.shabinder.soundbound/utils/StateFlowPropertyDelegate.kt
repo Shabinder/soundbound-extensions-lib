@@ -12,9 +12,18 @@ class StateFlowPropertyDelegate<T>(
   private val key: String,
   private val defaultValue: T,
   private val devicePreferences: DevicePreferences,
-  private val serializer: KSerializer<T>,
+  serializerProvider: () -> KSerializer<T>,
   private val onChange: ((old: T, new: T) -> Unit)? = null,
 ) : StateFlowReadWriteProperty<T> {
+  // Resolve the serializer lazily. The no-arg reified serializer() default runs a reflective
+  // kotlinx-serialization lookup (kotlin-reflect / kotlinx-metadata) whose class-name string
+  // interning shows up as main-thread "Lock contention on InternTable" during cold start, because
+  // all ~40 PreferenceManager props construct at once and each resolved its serializer eagerly
+  // (Perfetto-proven on S23 Ultra: ~289ms). Deferring to first prop access means startup only pays
+  // for the handful of props actually read then; the ~30 never-touched-at-startup props stay off
+  // the critical path entirely.
+  private val serializer: KSerializer<T> by lazy(serializerProvider)
+
   private val _flow by lazy { MutableStateFlow(readValue()) }
   override val flow: StateFlow<T> get() = _flow
 
@@ -51,17 +60,20 @@ class StateFlowPropertyDelegate<T>(
   }
 }
 
+// serializerProvider is a lambda, not a resolved KSerializer, so the reflective serializer()
+// default is not invoked at call time (PreferenceManager init) - only when the delegate first
+// touches its value. See StateFlowPropertyDelegate for the cold-start rationale.
 inline fun <reified T> propWithFlow(
   key: String,
   defaultValue: T,
   devicePreferences: DevicePreferences,
-  serializer: KSerializer<T> = serializer(),
+  noinline serializerProvider: () -> KSerializer<T> = { serializer() },
   noinline onChange: ((old: T, new: T) -> Unit)? = null,
 ): StateFlowReadWriteProperty<T> = StateFlowPropertyDelegate(
   key = key,
   defaultValue = defaultValue,
   devicePreferences = devicePreferences,
-  serializer = serializer,
+  serializerProvider = serializerProvider,
   onChange = onChange,
 )
 
@@ -71,7 +83,7 @@ inline fun <reified T, reified S> propWithFlow(
   key: String,
   defaultValue: T,
   devicePreferences: DevicePreferences,
-  serializer: KSerializer<S> = serializer(),
+  noinline serializerProvider: () -> KSerializer<S> = { serializer() },
   noinline onChange: ((old: T, new: T) -> Unit)? = null,
   crossinline saveAs: (T) -> S,
   crossinline loadFrom: (S) -> T,
@@ -79,7 +91,7 @@ inline fun <reified T, reified S> propWithFlow(
   key = key,
   defaultValue = saveAs(defaultValue),
   devicePreferences = devicePreferences,
-  serializer = serializer,
+  serializerProvider = serializerProvider,
   onChange = { old, new -> onChange?.invoke(loadFrom(old), loadFrom(new)) },
 ).map(
   toMapped = { loadFrom(it) },
@@ -89,20 +101,20 @@ inline fun <reified T, reified S> propWithFlow(
 inline fun <reified T> DevicePreferences.propWithFlow(
   key: String,
   defaultValue: T,
-  serializer: KSerializer<T> = serializer(),
+  noinline serializerProvider: () -> KSerializer<T> = { serializer() },
   noinline onChange: ((old: T, new: T) -> Unit)? = null,
 ): StateFlowReadWriteProperty<T> = propWithFlow(
   key = key,
   defaultValue = defaultValue,
   devicePreferences = this,
-  serializer = serializer,
+  serializerProvider = serializerProvider,
   onChange = onChange,
 )
 
 inline fun <reified T, reified S> DevicePreferences.propWithFlow(
   key: String,
   defaultValue: T,
-  serializer: KSerializer<S> = serializer(),
+  noinline serializerProvider: () -> KSerializer<S> = { serializer() },
   noinline onChange: ((old: T, new: T) -> Unit)? = null,
   crossinline saveAs: (T) -> S,
   crossinline loadFrom: (S) -> T,
@@ -110,7 +122,7 @@ inline fun <reified T, reified S> DevicePreferences.propWithFlow(
   key = key,
   defaultValue = defaultValue,
   devicePreferences = this,
-  serializer = serializer,
+  serializerProvider = serializerProvider,
   onChange = onChange,
   saveAs = saveAs,
   loadFrom = loadFrom,
