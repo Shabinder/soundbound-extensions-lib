@@ -3,13 +3,15 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
   id(deps.plugins.android.library.get().pluginId)
   id(deps.plugins.kotlin.multiplatform.get().pluginId)
-//    id("publish")
+  id("maven-publish")
 }
 
 group = "io.github.shabinder"
-version = "1.0.0"
+version = "1.0.1"
 
 kotlin {
+  iosArm64()
+  iosSimulatorArm64()
   androidTarget {
     publishLibraryVariants("release", "debug")
   }

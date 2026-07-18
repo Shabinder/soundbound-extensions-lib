@@ -119,7 +119,8 @@ android {
 }
 
 kotlin {
-  //ios()
+  iosArm64()
+  iosSimulatorArm64()
   androidTarget {
     publishLibraryVariants("release", "debug")
   }
