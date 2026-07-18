@@ -96,7 +96,7 @@ filekit = "0.14.1"
 koin = "4.2.1"
 kermit = "2.1.0"
 moko = "0.26.4"
-arrow = "2.2.3"
+arrow = "2.2.1"
 konnection = "1.4.5"
 
 # Experimental & Custom
