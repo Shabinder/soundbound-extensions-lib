@@ -401,6 +401,9 @@ sqldelight-paging = { group = "app.cash.sqldelight", name = "androidx-paging3-ex
 # with sqldelight's transitive paging-common version.
 paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "paging" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+# paging-testing.asSnapshot() is the sanctioned multiplatform way to extract a List<T> from a
+# PagingData/Flow<PagingData<T>> — replaces the JVM-only reflection hack so iOS PagingData.toList works.
+paging-testing = { group = "androidx.paging", name = "paging-testing", version.ref = "paging" }
 
 # ==============================================================================
 # SoundBound Specific
