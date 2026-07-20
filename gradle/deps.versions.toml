@@ -58,7 +58,7 @@ composeBom = "2026.05.01"
 activityCompose = "1.13.0"
 viewmodelCompose = "2.10.0"
 composeWebView = "1.0.0-beta-02"
-nucleus = "1.15.7"
+nucleus = "2.1.4"
 
 # Networking
 # HOLD at 3.4.3: supabase-kt 3.6.0 (latest as of 2026-06-06) pins Ktor 3.4.3.
@@ -524,11 +524,11 @@ desktop-jcef = { group = "me.friwi", name = "jcefmaven", version = "141.0.10" }
 # Nucleus runtime libs (JNA-free, GraalVM-native-image compatible). Runtime libs
 # ONLY — the Nucleus Gradle plugin is deliberately NOT used (it would replace our
 # jpackage/ProGuard pipeline with electron-builder). See Docs/PLANS/graalvm-native-image.md.
-nucleus-decorated-window-jni = { group = "io.github.kdroidfilter", name = "nucleus.decorated-window-jni", version.ref = "nucleus" }
-nucleus-media-control = { group = "io.github.kdroidfilter", name = "nucleus.media-control", version.ref = "nucleus" }
-nucleus-energy-manager = { group = "io.github.kdroidfilter", name = "nucleus.energy-manager", version.ref = "nucleus" }
-nucleus-taskbar-progress = { group = "io.github.kdroidfilter", name = "nucleus.taskbar-progress", version.ref = "nucleus" }
-nucleus-autolaunch = { group = "io.github.kdroidfilter", name = "nucleus.autolaunch", version.ref = "nucleus" }
+nucleus-decorated-window-jni = { group = "dev.nucleusframework", name = "nucleus.decorated-window-jni", version.ref = "nucleus" }
+nucleus-media-control = { group = "dev.nucleusframework", name = "nucleus.media-control", version.ref = "nucleus" }
+nucleus-energy-manager = { group = "dev.nucleusframework", name = "nucleus.energy-manager", version.ref = "nucleus" }
+nucleus-taskbar-progress = { group = "dev.nucleusframework", name = "nucleus.taskbar-progress", version.ref = "nucleus" }
+nucleus-autolaunch = { group = "dev.nucleusframework", name = "nucleus.autolaunch", version.ref = "nucleus" }
 
 # ==============================================================================
 # Bundles - Group related libraries
@@ -595,7 +595,7 @@ android-test = { id = "com.android.test", version.ref = "androidGradle" }
 # Compose
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "jbCompose" }
-nucleus = { id = "io.github.kdroidfilter.nucleus", version.ref = "nucleus" }
+nucleus = { id = "dev.nucleusframework", version.ref = "nucleus" }
 composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
 
 # Kotlin
