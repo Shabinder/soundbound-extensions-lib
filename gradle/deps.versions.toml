@@ -529,6 +529,7 @@ nucleus-media-control = { group = "dev.nucleusframework", name = "nucleus.media-
 nucleus-energy-manager = { group = "dev.nucleusframework", name = "nucleus.energy-manager", version.ref = "nucleus" }
 nucleus-taskbar-progress = { group = "dev.nucleusframework", name = "nucleus.taskbar-progress", version.ref = "nucleus" }
 nucleus-autolaunch = { group = "dev.nucleusframework", name = "nucleus.autolaunch", version.ref = "nucleus" }
+nucleus-core-runtime = { group = "dev.nucleusframework", name = "nucleus.core-runtime", version.ref = "nucleus" }
 
 # ==============================================================================
 # Bundles - Group related libraries
