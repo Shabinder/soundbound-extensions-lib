@@ -100,7 +100,10 @@ arrow = "2.2.3"
 konnection = "1.4.5"
 
 # Experimental & Custom
-zipline = "1.27.2-CUSTOM"
+# -CUSTOM-2 = Kotlin 2.4 rebuild (ExtensionPointDescriptor cast fix in zipline-kotlin-plugin).
+# Maven Central's 1.27.2-CUSTOM is the STALE pre-2.4 build under the same version — never
+# downgrade to it. -2 published to mavenLocal + GitHub Packages (Shabinder/zipline).
+zipline = "1.27.2-CUSTOM-2"
 sqliteJdbcDriver = "3.53.2.0"
 composeHotReload = "1.2.0-beta01" # brings MCP server for agent-driven UI control (get_semantic_tree/click/type_text)
 
