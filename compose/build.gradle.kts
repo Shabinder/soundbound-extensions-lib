@@ -35,6 +35,18 @@ repositories {
   google()
   mavenLocal()
   mavenCentral()
+  // Zipline fork artifacts at 1.27.2-CUSTOM-2+ (transitive via the lib project) — Central's
+  // 1.27.2-CUSTOM is a stale pre-Kotlin-2.4 build. Filtered; needs any GitHub token with
+  // read:packages when mavenLocal doesn't have the artifacts.
+  maven {
+    name = "GitHubPackagesZipline"
+    url = uri("https://maven.pkg.github.com/Shabinder/zipline")
+    credentials {
+      username = System.getenv("GH_PACKAGES_USER") ?: System.getenv("GITHUB_ACTOR") ?: "Shabinder"
+      password = System.getenv("GH_PACKAGES_TOKEN") ?: System.getenv("GITHUB_TOKEN") ?: ""
+    }
+    content { includeModuleByRegex("io\\.github\\.shabinder", "zipline.*") }
+  }
 }
 
 android {
