@@ -43,7 +43,7 @@ junit = "4.13.2"
 # Firebase & Google services
 googleServices = "4.4.4"
 firebaseBom = "34.14.0"
-sentryAndroid = "6.10.0"
+sentryAndroid = "6.18.0"
 googleCreds = "1.6.0"
 
 # AndroidX libraries
