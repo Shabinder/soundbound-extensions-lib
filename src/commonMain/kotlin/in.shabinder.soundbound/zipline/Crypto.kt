@@ -5,6 +5,15 @@ import app.cash.zipline.ZiplineService
 interface Crypto : ZiplineService {
   fun desECBDecrypt(key: String, input: String): String
 
+  /**
+   * AES/CBC/PKCS5Padding decrypt of a base64 [input], returning the UTF-8 plaintext.
+   *
+   * [key] and [iv] are used as their raw UTF-8 bytes, so a 16-character key/IV is AES-128 - this
+   * matches how providers ship them (as ASCII string literals in their web bundles) rather than as
+   * hex. Gaana's encrypted `stream_path` is the current caller.
+   */
+  fun aesCBCDecrypt(key: String, iv: String, input: String): String
+
   fun encodeBase64(input: String): String
 
   fun decodeBase64(input: String): String
