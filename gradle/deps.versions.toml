@@ -111,7 +111,7 @@ composeHotReload = "1.2.0-beta01" # brings MCP server for agent-driven UI contro
 # ==============================================================================
 # SoundBound Custom Libraries
 # ==============================================================================
-soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.30" }
+soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.31" }
 soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "3.7.0" }
 soundbound-compose = { group = "io.github.shabinder", name = "compose", version = "1.0.1" }
 
