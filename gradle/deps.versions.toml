@@ -51,6 +51,7 @@ androidXDataStore = "1.2.1"
 androidxLifecycle = "2.10.0"
 androidxMedia3 = "1.11.0"
 androidGlance = "1.1.1"
+androidxWebkit = "1.17.0"
 androidxTracing = "1.3.0"
 
 # Compose
@@ -213,6 +214,10 @@ androidx-datastore-preferences = { group = "androidx.datastore", name = "datasto
 
 # Glance
 androidx-glance = { group = "androidx.glance", name = "glance-appwidget", version.ref = "androidGlance" }
+# WebViewCompat.addDocumentStartJavaScript: the only way to run a script BEFORE a page's own
+# scripts on Android. Without it HeadlessBrowser can only inject after onPageFinished,
+# which is too late for globals a page reads eagerly.
+androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "androidxWebkit" }
 androidx-glance-material3 = { group = "androidx.glance", name = "glance-material3", version.ref = "androidGlance" }
 androidx-glance-material = { group = "androidx.glance", name = "glance-material", version.ref = "androidGlance" }
 
