@@ -101,13 +101,15 @@ arrow = "2.2.3"
 konnection = "1.4.5"
 
 # Experimental & Custom
-# -CUSTOM-3-qjs2026 = QuickJS upgraded 2021-03-27 -> 2026-06-04 in the fork. The engine swap
-# needed no JNI/cinterop changes; validated with 3 consecutive whole-suite runs at 266 tests /
-# 0 failures, matching the pre-upgrade baseline. See Docs/PLANS/quickjs-upgrade.md.
+# -CUSTOM-5-qjs2026 = QuickJS upgraded 2021-03-27 -> 2026-06-04 in the fork.
+# NOT interchangeable with earlier versions: QuickJS bytecode went v1 -> v5 and the two are
+# mutually unreadable, so extension bundles MUST be rebuilt with this toolchain and shipped
+# together with a host that has it. An older host reading a new bundle (or the reverse) fails
+# with "invalid version". See Docs/PLANS/quickjs-upgrade.md and Shabinder/zipline#1.
 # -CUSTOM-2 = Kotlin 2.4 rebuild (ExtensionPointDescriptor cast fix in zipline-kotlin-plugin).
 # Maven Central's 1.27.2-CUSTOM is the STALE pre-2.4 build under the same version — never
 # downgrade to it. Published to mavenLocal + GitHub Packages (Shabinder/zipline).
-zipline = "1.27.2-CUSTOM-3-qjs2026"
+zipline = "1.27.2-CUSTOM-5-qjs2026"
 sqliteJdbcDriver = "3.53.2.0"
 composeHotReload = "1.2.0-beta01" # brings MCP server for agent-driven UI control (get_semantic_tree/click/type_text)
 
