@@ -8,16 +8,13 @@ import kotlinx.serialization.Serializable
  *
  * ## Why this exists
  *
- * Extensions run in QuickJS, which is small, embedded and old (the build we ship reports
- * `VERSION 2021-03-27`). That is fine for ordinary work and hopeless for some of it:
+ * Extensions run in QuickJS, which is deliberately small and embedded. That is fine for ordinary
+ * work, but some tasks require a full browser engine:
  *
  * - it lacks modern built-ins (`String.prototype.at`, `Object.hasOwn`, `BigInt`, class static
  *   blocks, the RegExp `d` flag), so many published libraries will not even load;
- * - it is slow on large inputs — YouTube's `base.js` is ~2.9 MB and takes minutes to parse there
- *   versus under a second in a browser;
- * - it has no DOM, so anything that inspects its environment sees through it. Google's attestation
- *   service refuses an integrity token to a hand-shimmed QuickJS environment and grants one to a
- *   genuine engine (both measured).
+ * - parsing and evaluating large third-party programs can be substantially slower;
+ * - it has no DOM or genuine browser environment for pages that require one.
  *
  * So the app hands extensions the engine, and the extension keeps the logic. Anything an extension
  * needs a browser for — attestation, signature deciphering, a login flow, scraping a page that
@@ -26,12 +23,9 @@ import kotlinx.serialization.Serializable
  *
  * ## The rule this interface exists to enforce
  *
- * **Nothing here may name a provider, a site, or a scheme.** The predecessor of this interface was
- * `YTExtractor`, whose methods were `getSignatureTimestamp`, `getStreamUrl` and
- * `getWebClientPoTokenOrNull`. Because YouTube's concepts were baked into an app-side interface,
- * every change YouTube made implied an application release — the opposite of what an
- * over-the-air extension system is for. If a future capability cannot be expressed here without
- * naming a provider, the fix is a more general primitive, not a special case.
+ * **Nothing here may name a provider, site, or protocol.** Provider-specific behavior belongs in
+ * its over-the-air bundle. If a future capability cannot be expressed here without naming a
+ * provider, the fix is a more general primitive, not a special case.
  *
  * ## Shape
  *

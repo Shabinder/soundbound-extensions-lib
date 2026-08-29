@@ -9,6 +9,14 @@ import `in`.shabinder.soundbound.models.SongModel
 
 interface DownloadableProvider : QueryableProvider, ZiplineService {
 
+    /**
+     * Opens an ephemeral source for playback when the provider needs to retain transport state.
+     *
+     * Returning null preserves the existing [findBestMatchURL] path for providers that only
+     * expose serializable download requests.
+     */
+    suspend fun openPlaybackSource(songModel: SongModel): ExtensionPlaybackSource? = null
+
     /*
     * The quality tiers this provider can deliver, best-first. The app shows these in the
     * per-download picker and passes the chosen one back via QueryParams.preferredQuality.

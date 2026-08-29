@@ -101,6 +101,9 @@ arrow = "2.2.3"
 konnection = "1.4.5"
 
 # Experimental & Custom
+# -CUSTOM-6-binbridge = QuickJS 2026 plus binary payload transport across Zipline services.
+# Required by extension-owned playback sources so media/protobuf bytes never become JSON text.
+# This is an ABI/channel change: host and every extension bundle must be rebuilt together.
 # -CUSTOM-5-qjs2026 = QuickJS upgraded 2021-03-27 -> 2026-06-04 in the fork.
 # NOT interchangeable with earlier versions: QuickJS bytecode went v1 -> v5 and the two are
 # mutually unreadable, so extension bundles MUST be rebuilt with this toolchain and shipped
@@ -109,7 +112,7 @@ konnection = "1.4.5"
 # -CUSTOM-2 = Kotlin 2.4 rebuild (ExtensionPointDescriptor cast fix in zipline-kotlin-plugin).
 # Maven Central's 1.27.2-CUSTOM is the STALE pre-2.4 build under the same version — never
 # downgrade to it. Published to mavenLocal + GitHub Packages (Shabinder/zipline).
-zipline = "1.27.2-CUSTOM-5-qjs2026"
+zipline = "1.27.2-CUSTOM-6-binbridge"
 sqliteJdbcDriver = "3.53.2.0"
 composeHotReload = "1.2.0-beta01" # brings MCP server for agent-driven UI control (get_semantic_tree/click/type_text)
 
