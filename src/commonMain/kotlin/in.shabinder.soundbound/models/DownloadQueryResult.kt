@@ -18,6 +18,7 @@ open class DownloadQueryResult(
     open val sampleRateHz: Int? = null,
     open val codec: String? = null,
     open val audioQualityLabel: String? = null, // provider-declared human label, e.g. "24-bit/96kHz"
+    open val sabrPlaybackInputs: SabrPlaybackInputs? = null,
 ) {
     @JvmOverloads
     open fun copy(
@@ -29,6 +30,7 @@ open class DownloadQueryResult(
         sampleRateHz: Int? = this.sampleRateHz,
         codec: String? = this.codec,
         audioQualityLabel: String? = this.audioQualityLabel,
+        sabrPlaybackInputs: SabrPlaybackInputs? = this.sabrPlaybackInputs,
     ): DownloadQueryResult {
         return DownloadQueryResult(
             downloadRequest = downloadRequest,
@@ -39,6 +41,7 @@ open class DownloadQueryResult(
             sampleRateHz = sampleRateHz,
             codec = codec,
             audioQualityLabel = audioQualityLabel,
+            sabrPlaybackInputs = sabrPlaybackInputs,
         )
     }
 
@@ -53,6 +56,7 @@ open class DownloadQueryResult(
         if (sampleRateHz != other.sampleRateHz) return false
         if (codec != other.codec) return false
         if (audioQualityLabel != other.audioQualityLabel) return false
+        if (sabrPlaybackInputs != other.sabrPlaybackInputs) return false
         return true
     }
 
@@ -65,11 +69,12 @@ open class DownloadQueryResult(
         result = 31 * result + (sampleRateHz ?: 0)
         result = 31 * result + (codec?.hashCode() ?: 0)
         result = 31 * result + (audioQualityLabel?.hashCode() ?: 0)
+        result = 31 * result + (sabrPlaybackInputs?.hashCode() ?: 0)
         return result
     }
 
     override fun toString(): String =
-        "DownloadQueryResult(downloadRequest=$downloadRequest, audioFormat=$audioFormat, audioQuality=$audioQuality, lyrics=$lyrics, bitDepth=$bitDepth, sampleRateHz=$sampleRateHz, codec=$codec, audioQualityLabel=$audioQualityLabel)"
+        "DownloadQueryResult(downloadRequest=$downloadRequest, audioFormat=$audioFormat, audioQuality=$audioQuality, lyrics=$lyrics, bitDepth=$bitDepth, sampleRateHz=$sampleRateHz, codec=$codec, audioQualityLabel=$audioQualityLabel, sabrPlaybackInputs=${sabrPlaybackInputs != null})"
 }
 
 @Immutable
