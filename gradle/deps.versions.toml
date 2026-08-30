@@ -116,7 +116,7 @@ konnection = "1.4.5"
 # with "invalid version". See Docs/PLANS/quickjs-upgrade.md and Shabinder/zipline#1.
 # -CUSTOM-2 = Kotlin 2.4 rebuild (ExtensionPointDescriptor cast fix in zipline-kotlin-plugin).
 # Maven Central's 1.27.2-CUSTOM is the STALE pre-2.4 build under the same version — never
-# downgrade to it. Published to mavenLocal + GitHub Packages (Shabinder/zipline).
+# downgrade to it. Older custom versions exist in GitHub Packages; selected v9 is Maven-local only.
 zipline = "1.27.2-CUSTOM-9-nativeabi"
 sqliteJdbcDriver = "3.53.2.0"
 composeHotReload = "1.2.0-beta01" # brings MCP server for agent-driven UI control (get_semantic_tree/click/type_text)
