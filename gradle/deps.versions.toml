@@ -102,8 +102,9 @@ konnection = "1.4.5"
 
 # Experimental & Custom
 # -CUSTOM-7-gzipota = optional manifest-advertised gzip module sidecars, decoded before hashing.
-# -CUSTOM-9-nativeabi = Brotli OTA plus matching QuickJS static archives embedded in published
-# Apple cinterop KLIBs; fixes headers/runtime ABI drift without app-side linker workarounds.
+# -CUSTOM-9-nativeabi = Brotli OTA plus matching QuickJS static archives embedded in Apple
+# cinterop KLIBs; fixes headers/runtime ABI drift without app-side linker workarounds. This version
+# is Maven-local only; publish to GitHub Packages later as a separate release operation.
 # -CUSTOM-8-brotliota = ordered Brotli/gzip sidecars with raw fallback and decoded-content hashing.
 # -CUSTOM-6-binbridge = QuickJS 2026 plus binary payload transport across Zipline services.
 # Required by extension-owned playback sources so media/protobuf bytes never become JSON text.
