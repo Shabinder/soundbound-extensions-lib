@@ -101,6 +101,8 @@ arrow = "2.2.3"
 konnection = "1.4.5"
 
 # Experimental & Custom
+# -CUSTOM-7-gzipota = optional manifest-advertised gzip module sidecars, decoded before hashing.
+# -CUSTOM-8-brotliota = ordered Brotli/gzip sidecars with raw fallback and decoded-content hashing.
 # -CUSTOM-6-binbridge = QuickJS 2026 plus binary payload transport across Zipline services.
 # Required by extension-owned playback sources so media/protobuf bytes never become JSON text.
 # This is an ABI/channel change: host and every extension bundle must be rebuilt together.
@@ -112,7 +114,7 @@ konnection = "1.4.5"
 # -CUSTOM-2 = Kotlin 2.4 rebuild (ExtensionPointDescriptor cast fix in zipline-kotlin-plugin).
 # Maven Central's 1.27.2-CUSTOM is the STALE pre-2.4 build under the same version — never
 # downgrade to it. Published to mavenLocal + GitHub Packages (Shabinder/zipline).
-zipline = "1.27.2-CUSTOM-6-binbridge"
+zipline = "1.27.2-CUSTOM-8-brotliota"
 sqliteJdbcDriver = "3.53.2.0"
 composeHotReload = "1.2.0-beta01" # brings MCP server for agent-driven UI control (get_semantic_tree/click/type_text)
 
