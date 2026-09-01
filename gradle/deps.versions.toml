@@ -102,6 +102,12 @@ konnection = "1.4.5"
 
 # Experimental & Custom
 # -CUSTOM-7-gzipota = optional manifest-advertised gzip module sidecars, decoded before hashing.
+# -CUSTOM-10-coalesce = ZiplineCache.getOrPut coalesces concurrent downloads of the same sha256.
+# It was read -> miss -> download -> write with nothing joining concurrent callers, so loading
+# extensions in parallel (ProviderManager uses parMap) meant every extension reaching a shared
+# module before the first writer finished fetched its own copy: 15 extensions took 154 downloads
+# where 42 were needed. No ABI change; bundles do not need rebuilding. Maven-local only until
+# published to GitHub Packages.
 # -CUSTOM-9-nativeabi = Brotli OTA plus matching QuickJS static archives embedded in Apple
 # cinterop KLIBs; fixes headers/runtime ABI drift without app-side linker workarounds. This version
 # is Maven-local only; publish to GitHub Packages later as a separate release operation.
@@ -117,7 +123,7 @@ konnection = "1.4.5"
 # -CUSTOM-2 = Kotlin 2.4 rebuild (ExtensionPointDescriptor cast fix in zipline-kotlin-plugin).
 # Maven Central's 1.27.2-CUSTOM is the STALE pre-2.4 build under the same version — never
 # downgrade to it. Older custom versions exist in GitHub Packages; selected v9 is Maven-local only.
-zipline = "1.27.2-CUSTOM-9-nativeabi"
+zipline = "1.27.2-CUSTOM-10-coalesce"
 sqliteJdbcDriver = "3.53.2.0"
 composeHotReload = "1.2.0-beta01" # brings MCP server for agent-driven UI control (get_semantic_tree/click/type_text)
 
