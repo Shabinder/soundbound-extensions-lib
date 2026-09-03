@@ -41,7 +41,13 @@ mavenPublishing {
   publishToMavenCentral(true)
   // Only sign when a GPG key is configured (Maven Central release). Local-dev publishing to
   // mavenLocal (for building extension Zipline binaries against the lib) has no key -> skip.
-  if (!System.getenv("GPG_PRIVATE_KEY").isNullOrBlank() || project.findProperty("GPG_PRIVATE_KEY") != null) {
+  // vanniktech's plugin signs with `signingInMemoryKey` (supplied as
+  // ORG_GRADLE_PROJECT_signingInMemoryKey). Guard on the SAME property the plugin reads: the old
+  // GPG_PRIVATE_KEY guard was a different name from the one that carries the key, so setting only
+  // GPG_PRIVATE_KEY enabled signing the plugin had no key for, and setting only signingInMemoryKey
+  // skipped signAllPublications() and produced UNSIGNED artifacts, which Maven Central rejects.
+  // Matches the convention in references/Nucleus and references/ComposeNativeWebview.
+  if (project.findProperty("signingInMemoryKey") != null) {
     signAllPublications()
   }
 
