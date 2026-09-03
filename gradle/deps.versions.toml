@@ -1,10 +1,10 @@
 [versions]
 # Core versions
-# HOLD at 2.3.10: Kotlin 2.4 breaks Compose Multiplatform 1.11.1 ABI
-# (IrGenerationExtension$Companion cast failure — CMP 1.11.1 was compiled against
-# Kotlin 2.3.x). Bump together with `jbCompose` when CMP 1.12.x reaches stable.
-# Chain blocker for AGP 9 — see `androidGradle` below.
-kotlin = "2.4.0"
+# Kotlin 2.4 landed: the old "HOLD at 2.3.10" note claimed 2.4 broke the CMP 1.11.1 ABI
+# (IrGenerationExtension$Companion cast failure), but 2.4.0 + CMP 1.11.1 is what SoundBound
+# 2.1.0 shipped on, so that blocker is gone. 2.4.10 is the current patch — see
+# Docs/PLANS/2026-09-dependency-upgrade.md tranche 1.
+kotlin = "2.4.10"
 # HOLD at 1.11.1: CMP 1.12.0-alpha01 exists but is alpha-only on the Compose UI
 # layer — alpha rendering bugs would ship to real Play Store users. Bump together
 # with `kotlin` when CMP 1.12.x reaches stable (typical JetBrains alpha -> stable
