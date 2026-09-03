@@ -7,6 +7,17 @@ import `in`.shabinder.soundbound.diagnostics.DiagnosticManager
 import `in`.shabinder.soundbound.utils.GlobalJson
 import `in`.shabinder.soundbound.utils.safeRunCatching
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Contextual
+
+@Serializable
+data class BinaryHttpResponse(
+  val statusCode: Int,
+  val headers: Map<String, List<String>>,
+  val responseUrl: String,
+  @Contextual val body: ByteArray,
+) {
+  fun isSuccess(): Boolean = statusCode in 200..299
+}
 
 interface HttpClientBuilder : ZiplineService {
   fun build(enableCookies: Boolean = true): HttpClient
@@ -71,6 +82,14 @@ interface HttpClient : ZiplineService {
     body: BodyType = BodyType.NONE,
     headers: Map<String, String> = emptyMap(),
   ): CustomHttpResponse
+
+  /** Performs a binary request without encoding either payload as text. */
+  suspend fun postBytes(
+    url: String,
+    params: Map<String, String> = emptyMap(),
+    headers: Map<String, String> = emptyMap(),
+    body: ByteArray,
+  ): BinaryHttpResponse
 
   suspend fun headRequest(
     url: String,

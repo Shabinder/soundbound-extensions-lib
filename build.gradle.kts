@@ -39,7 +39,17 @@ afterEvaluate {
 
 mavenPublishing {
   publishToMavenCentral(true)
-  signAllPublications()
+  // Only sign when a GPG key is configured (Maven Central release). Local-dev publishing to
+  // mavenLocal (for building extension Zipline binaries against the lib) has no key -> skip.
+  // vanniktech's plugin signs with `signingInMemoryKey` (supplied as
+  // ORG_GRADLE_PROJECT_signingInMemoryKey). Guard on the SAME property the plugin reads: the old
+  // GPG_PRIVATE_KEY guard was a different name from the one that carries the key, so setting only
+  // GPG_PRIVATE_KEY enabled signing the plugin had no key for, and setting only signingInMemoryKey
+  // skipped signAllPublications() and produced UNSIGNED artifacts, which Maven Central rejects.
+  // Matches the convention in references/Nucleus and references/ComposeNativeWebview.
+  if (project.findProperty("signingInMemoryKey") != null) {
+    signAllPublications()
+  }
 
   pom {
     name.set("soundbound-extensions-lib")
@@ -75,6 +85,17 @@ repositories {
   google()
   mavenLocal()
   mavenCentral()
+  // Zipline fork artifacts (runtime libs + zipline-kotlin-plugin compiler classpath) at
+  // 1.27.2-CUSTOM-2+ — Central's 1.27.2-CUSTOM is a stale pre-Kotlin-2.4 build. Filtered so only
+  // zipline requests hit this repo (GH Packages needs any GitHub token with read:packages).
+  maven("https://maven.pkg.github.com/Shabinder/zipline") {
+    name = "GitHubPackagesZipline"
+    credentials {
+      username = System.getenv("GH_PACKAGES_USER") ?: System.getenv("GITHUB_ACTOR") ?: "Shabinder"
+      password = System.getenv("GH_PACKAGES_TOKEN") ?: System.getenv("GITHUB_TOKEN") ?: ""
+    }
+    content { includeModuleByRegex("io\\.github\\.shabinder", "zipline.*") }
+  }
 }
 
 android {
@@ -115,7 +136,8 @@ android {
 }
 
 kotlin {
-  //ios()
+  iosArm64()
+  iosSimulatorArm64()
   androidTarget {
     publishLibraryVariants("release", "debug")
   }

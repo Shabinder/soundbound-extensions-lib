@@ -1,8 +1,22 @@
 [versions]
 # Core versions
-kotlin = "2.3.10"
+# HOLD at 2.3.10: Kotlin 2.4 breaks Compose Multiplatform 1.11.1 ABI
+# (IrGenerationExtension$Companion cast failure — CMP 1.11.1 was compiled against
+# Kotlin 2.3.x). Bump together with `jbCompose` when CMP 1.12.x reaches stable.
+# Chain blocker for AGP 9 — see `androidGradle` below.
+kotlin = "2.4.0"
+# HOLD at 1.11.1: CMP 1.12.0-alpha01 exists but is alpha-only on the Compose UI
+# layer — alpha rendering bugs would ship to real Play Store users. Bump together
+# with `kotlin` when CMP 1.12.x reaches stable (typical JetBrains alpha -> stable
+# is 2-3 months). Chain blocker for Kotlin 2.4 and AGP 9.
 jbCompose = "1.11.1"
-androidGradle = "8.13.2" # HOLD: AGP 9.2.1 available but deferred (separate migration; android/skills agp-9-upgrade skill installed)
+# HOLD at 8.13.2: AGP 9.2.1 requires Kotlin 2.4+ (built-in Kotlin DSL), which is
+# blocked by the `kotlin` + `jbCompose` holds above. Google's own
+# android/skills agp-9-upgrade skill is also explicitly off-limits for KMP
+# projects ("Do not use this skill for migrating KMP projects"). Bump once the
+# CMP / Kotlin chain unblocks. See Docs/PLANS/agp-9-migration.md for the
+# step-by-step migration plan when the time comes.
+androidGradle = "8.13.2"
 coroutines = "1.11.0"
 kotlinxSerialization = "1.11.0"
 
@@ -10,7 +24,7 @@ kotlinxSerialization = "1.11.0"
 androidCompileSdk = "36"
 androidMinSdk = "21"
 androidTargetSdk = "36"
-androidBuildTools = "36.0.0"
+androidBuildTools = "36.1.0"
 
 # Build tools & plugins
 baselineProfile = "1.4.1"
@@ -29,30 +43,37 @@ junit = "4.13.2"
 # Firebase & Google services
 googleServices = "4.4.4"
 firebaseBom = "34.14.0"
-sentryAndroid = "6.10.0"
+sentryAndroid = "6.18.0"
 googleCreds = "1.6.0"
 
 # AndroidX libraries
 androidXDataStore = "1.2.1"
 androidxLifecycle = "2.10.0"
-androidxMedia3 = "1.10.1"
+androidxMedia3 = "1.11.0"
 androidGlance = "1.1.1"
+androidxWebkit = "1.17.0"
+androidxTracing = "1.3.0"
 
 # Compose
 composeBom = "2026.05.01"
 activityCompose = "1.13.0"
 viewmodelCompose = "2.10.0"
 composeWebView = "1.0.0-beta-02"
+nucleus = "2.1.4"
 
 # Networking
-ktor = "3.5.0"
+# HOLD at 3.4.3: supabase-kt 3.6.0 (latest as of 2026-06-06) pins Ktor 3.4.3.
+# Ktor 3.5.0 makes HttpMethod.Post inaccessible to supabase's inlined postJson
+# call (IllegalAccessError at runtime, breaks Google Sign-In). Bump when
+# supabase-kt ships a 3.5-compatible release.
+ktor = "3.4.3"
 okio = "3.17.0"
 
 # Architecture
 decompose = "3.5.0"
 essenty = "2.5.0"
 mviKotlin = "4.4.0"
-paging = "3.3.0-alpha02-0.5.1"
+paging = "3.5.0"
 
 # Utilities
 cache4k = "0.14.0"
@@ -69,7 +90,7 @@ talsecSecurity = "17.0.0" # HOLD: v18 changed ThreatListener interfaces to abstr
 
 # Media & Desktop
 jna = "5.19.0"
-coil = "3.4.0"
+coil = "3.5.0"
 filekit = "0.14.1"
 
 # Frameworks & UI
@@ -80,17 +101,39 @@ arrow = "2.2.3"
 konnection = "1.4.5"
 
 # Experimental & Custom
-zipline = "1.27.2-CUSTOM"
+# -CUSTOM-7-gzipota = optional manifest-advertised gzip module sidecars, decoded before hashing.
+# -CUSTOM-10-coalesce = ZiplineCache.getOrPut coalesces concurrent downloads of the same sha256.
+# It was read -> miss -> download -> write with nothing joining concurrent callers, so loading
+# extensions in parallel (ProviderManager uses parMap) meant every extension reaching a shared
+# module before the first writer finished fetched its own copy: 15 extensions took 154 downloads
+# where 42 were needed. No ABI change; bundles do not need rebuilding. Maven-local only until
+# published to GitHub Packages.
+# -CUSTOM-9-nativeabi = Brotli OTA plus matching QuickJS static archives embedded in Apple
+# cinterop KLIBs; fixes headers/runtime ABI drift without app-side linker workarounds. This version
+# is Maven-local only; publish to GitHub Packages later as a separate release operation.
+# -CUSTOM-8-brotliota = ordered Brotli/gzip sidecars with raw fallback and decoded-content hashing.
+# -CUSTOM-6-binbridge = QuickJS 2026 plus binary payload transport across Zipline services.
+# Required by extension-owned playback sources so media/protobuf bytes never become JSON text.
+# This is an ABI/channel change: host and every extension bundle must be rebuilt together.
+# -CUSTOM-5-qjs2026 = QuickJS upgraded 2021-03-27 -> 2026-06-04 in the fork.
+# NOT interchangeable with earlier versions: QuickJS bytecode went v1 -> v5 and the two are
+# mutually unreadable, so extension bundles MUST be rebuilt with this toolchain and shipped
+# together with a host that has it. An older host reading a new bundle (or the reverse) fails
+# with "invalid version". See Docs/PLANS/quickjs-upgrade.md and Shabinder/zipline#1.
+# -CUSTOM-2 = Kotlin 2.4 rebuild (ExtensionPointDescriptor cast fix in zipline-kotlin-plugin).
+# Maven Central's 1.27.2-CUSTOM is the STALE pre-2.4 build under the same version — never
+# downgrade to it. Older custom versions exist in GitHub Packages; selected v9 is Maven-local only.
+zipline = "1.27.3"
 sqliteJdbcDriver = "3.53.2.0"
-composeHotReload = "1.2.0-alpha01"
+composeHotReload = "1.2.0-beta01" # brings MCP server for agent-driven UI control (get_semantic_tree/click/type_text)
 
 [libraries]
 # ==============================================================================
 # SoundBound Custom Libraries
 # ==============================================================================
-soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.29" }
-soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "3.6.2" }
-soundbound-compose = { group = "io.github.shabinder", name = "compose", version = "1.0.0" }
+soundbound-extensions-lib = { group = "io.github.shabinder", name = "soundbound-extensions-lib", version = "0.31" }
+soundbound-extensions-loader = { group = "io.github.shabinder", name = "soundbound-extension-loader", version = "3.7.0" }
+soundbound-compose = { group = "io.github.shabinder", name = "compose", version = "1.0.1" }
 
 # ==============================================================================
 # Gradle Plugins
@@ -123,6 +166,7 @@ kotlinx-coroutines-guava = { group = "org.jetbrains.kotlinx", name = "kotlinx-co
 kotlin-onetimepassword = { group = "dev.turingcomplete", name = "kotlin-onetimepassword", version = "3.0.0" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
+kotlinx-serialization-protobuf = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-protobuf", version.ref = "kotlinxSerialization" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime" }
 kotlinx-immutableLists = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "immutable" }
 kotlinx-atomicfu = { group = "org.jetbrains.kotlinx", name = "atomicfu", version = "0.33.0" }
@@ -135,6 +179,10 @@ compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 compose-material = { group = "androidx.compose.material", name = "material" }
 compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version = "1.7.8" } # pinned to last AndroidX standalone before BOM-controlled
+# JetBrains multiplatform material-icons-extended (same androidx.compose.material.icons package).
+# Used in :common:shared to match :common:compose so the icon artifact isn't duplicated on the
+# desktop classpath. Version follows jbCompose.
+compose-jb-material-icons-extended = { group = "org.jetbrains.compose.material", name = "material-icons-extended", version = "1.7.3" } # the version the CMP 1.11.1 plugin's compose.materialIconsExtended accessor maps to (icons lib lags the plugin); keep in sync with :common:compose
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -147,7 +195,9 @@ compose-material3-window-size = { group = "androidx.compose.material3", name = "
 # ==============================================================================
 # Activity & Core
 androidx-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.17.0" } # 1.18+ requires compileSdk 37 / AGP 9+; pinned for AGP 8.13.2 hold
+# HOLD at 1.17.0: androidx.core:core-ktx 1.18+ requires compileSdk 37 + AGP 9.x.
+# Blocked by the AGP 8.13.2 hold (see `androidGradle` above). Bump together with AGP 9.
+androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.17.0" }
 androidx-splash = { group = "androidx.core", name = "core-splashscreen", version = "1.2.0" }
 
 # Lifecycle
@@ -169,12 +219,25 @@ androidx-media3-common = { group = "androidx.legacy", name = "legacy-support-v4"
 # Startup
 androidx-startUp = { group = "androidx.startup", name = "startup-runtime", version = "1.2.0" }
 
+# Tracing - Perfetto-compatible section markers for app startup diagnosis
+androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", version.ref = "androidxTracing" }
+# Composition Tracing - adds composable function names to system traces.
+# Per https://developer.android.com/develop/ui/compose/tooling/tracing this dep is
+# debug/benchmark-only (don't ship in release): when present, system traces include
+# named composable bars without manual trace("label") sections.
+# Version follows the androidx-compose-runtime release line (matches jbCompose 1.11.x).
+androidx-compose-runtime-tracing = { group = "androidx.compose.runtime", name = "runtime-tracing", version = "1.7.0" }
+
 # DataStore
 androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "androidXDataStore" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidXDataStore" }
 
 # Glance
 androidx-glance = { group = "androidx.glance", name = "glance-appwidget", version.ref = "androidGlance" }
+# WebViewCompat.addDocumentStartJavaScript: the only way to run a script BEFORE a page's own
+# scripts on Android. Without it HeadlessBrowser can only inject after onPageFinished,
+# which is too late for globals a page reads eagerly.
+androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "androidxWebkit" }
 androidx-glance-material3 = { group = "androidx.glance", name = "glance-material3", version.ref = "androidGlance" }
 androidx-glance-material = { group = "androidx.glance", name = "glance-material", version.ref = "androidGlance" }
 
@@ -252,6 +315,9 @@ ktor-client-curl = { group = "io.ktor", name = "ktor-client-curl", version.ref =
 ktor-client-apache = { group = "io.ktor", name = "ktor-client-apache", version.ref = "ktor" }
 ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
 ktor-client-js = { group = "io.ktor", name = "ktor-client-js", version.ref = "ktor" }
+ktor-client-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
+ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
+ktor-server-cio = { group = "io.ktor", name = "ktor-server-cio", version.ref = "ktor" }
 
 # ==============================================================================
 # Architecture
@@ -356,8 +422,18 @@ sqldelight-paging = { group = "app.cash.sqldelight", name = "androidx-paging3-ex
 # ==============================================================================
 # Paging
 # ==============================================================================
-paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "paging" }
-paging-compose = { group = "app.cash.paging", name = "paging-compose-common", version.ref = "paging" }
+# androidx.paging (NOT the app.cash.paging fork): the fork is frozen at
+# 3.3.0-alpha02 and hard-references androidx.paging.DifferCallback, which androidx
+# deleted in paging 3.4 — so the fork crashes at runtime (NoClassDefFoundError)
+# once SQLDelight's androidx-paging3-extensions transitively pulls androidx
+# paging-common >= 3.4. androidx.paging is fully KMP (paging-compose-desktop target
+# exists) since 3.3.0, making the fork unnecessary. Keep this on androidx, aligned
+# with sqldelight's transitive paging-common version.
+paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "paging" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+# paging-testing.asSnapshot() is the sanctioned multiplatform way to extract a List<T> from a
+# PagingData/Flow<PagingData<T>> — replaces the JVM-only reflection hack so iOS PagingData.toList works.
+paging-testing = { group = "androidx.paging", name = "paging-testing", version.ref = "paging" }
 
 # ==============================================================================
 # SoundBound Specific
@@ -367,7 +443,9 @@ ffmpeg-kit-exceptions = { group = "com.arthenica", name = "smart-exception-java"
 ffmpeg-platform = { group = "org.bytedeco", name = "ffmpeg-platform", version = "8.0.1-1.5.13" }
 
 # JNDCrash
-jndcrash = { group = "io.github.shabinder", name = "jndcrash", version = "1.0.0" }
+# jndcrash AAR vendored at android-jndcrash/libs/jndcrash-1.0.1.aar for 16KB compliance.
+# See Docs/ARCHITECTURE/native_crash_handlers.md for the rebuild process.
+# jndcrash = { group = "io.github.shabinder", name = "jndcrash", version = "1.0.0" } # REPLACED by vendored AAR
 jndcrash-libunwind = { group = "ru.ivanarh.ndcrash", name = "jndcrash-libunwind", version = "0.8" }
 
 # Store5
@@ -417,7 +495,7 @@ multiplatform-webView = { group = "io.github.kdroidfilter", name = "composewebvi
 molecule = { group = "app.cash.molecule", name = "molecule-runtime", version = "2.2.0" }
 
 # Supabase
-supabase-bom = { group = "io.github.jan-tennert.supabase", name = "bom", version = "3.5.0" }
+supabase-bom = { group = "io.github.jan-tennert.supabase", name = "bom", version = "3.6.0" }
 supabase-postgrest = { group = "io.github.jan-tennert.supabase", name = "postgrest-kt" }
 supabase-auth = { group = "io.github.jan-tennert.supabase", name = "auth-kt" }
 supabase-realtime = { group = "io.github.jan-tennert.supabase", name = "realtime-kt" }
@@ -469,10 +547,19 @@ revenuecat = { group = "com.revenuecat.purchases", name = "purchases", version =
 # ==============================================================================
 # Desktop
 # ==============================================================================
-desktop-vlcj = { group = "uk.co.caprica", name = "vlcj", version = "4.12.1" }
 desktop-json = { group = "org.json", name = "json", version = "20251224" }
 desktop-amplitude = { group = "com.amplitude", name = "java-sdk", version = "1.13.0" }
 desktop-jcef = { group = "me.friwi", name = "jcefmaven", version = "141.0.10" }
+
+# Nucleus runtime libs (JNA-free, GraalVM-native-image compatible). Runtime libs
+# ONLY — the Nucleus Gradle plugin is deliberately NOT used (it would replace our
+# jpackage/ProGuard pipeline with electron-builder). See Docs/PLANS/graalvm-native-image.md.
+nucleus-decorated-window-jni = { group = "dev.nucleusframework", name = "nucleus.decorated-window-jni", version.ref = "nucleus" }
+nucleus-media-control = { group = "dev.nucleusframework", name = "nucleus.media-control", version.ref = "nucleus" }
+nucleus-energy-manager = { group = "dev.nucleusframework", name = "nucleus.energy-manager", version.ref = "nucleus" }
+nucleus-taskbar-progress = { group = "dev.nucleusframework", name = "nucleus.taskbar-progress", version.ref = "nucleus" }
+nucleus-autolaunch = { group = "dev.nucleusframework", name = "nucleus.autolaunch", version.ref = "nucleus" }
+nucleus-core-runtime = { group = "dev.nucleusframework", name = "nucleus.core-runtime", version.ref = "nucleus" }
 
 # ==============================================================================
 # Bundles - Group related libraries
@@ -539,6 +626,7 @@ android-test = { id = "com.android.test", version.ref = "androidGradle" }
 # Compose
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "jbCompose" }
+nucleus = { id = "dev.nucleusframework", version.ref = "nucleus" }
 composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
 
 # Kotlin
