@@ -12,7 +12,7 @@ kotlin = "2.4.10"
 # So CMP does not UNBLOCK the AGP 9 chain (as the old note assumed) -- it is PART of it. Bump
 # jbCompose + androidGradle + androidCompileSdk + androidx-core + Gradle together.
 # See Docs/PLANS/2026-09-dependency-upgrade.md.
-jbCompose = "1.11.1"
+jbCompose = "1.12.0"
 # HOLD at 8.13.2 — blocked by androidx.baselineprofile, verified 2026-09-04.
 # The Kotlin/CMP part of the old chain has cleared, and AGP 9.4.0 gets further than before:
 # removing `kotlin-android` from :android, :android-ffmpeg and :baselineprofile satisfies AGP 9's
@@ -24,14 +24,14 @@ jbCompose = "1.11.1"
 # androidx.baselineprofile ships AGP 9 support; nothing else blocks the tranche.
 # Google's agp-9-upgrade skill remains off-limits for KMP projects.
 # Full findings: Docs/PLANS/2026-09-dependency-upgrade.md.
-androidGradle = "8.13.2"
+androidGradle = "9.4.0"
 coroutines = "1.11.0"
 kotlinxSerialization = "1.11.0"
 
 # Android SDK versions
-androidCompileSdk = "36"
+androidCompileSdk = "37"
 androidMinSdk = "21"
-androidTargetSdk = "36"
+androidTargetSdk = "37"
 androidBuildTools = "36.1.0"
 
 # Build tools & plugins
@@ -205,7 +205,7 @@ compose-material3-window-size = { group = "androidx.compose.material3", name = "
 androidx-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 # HOLD at 1.17.0: androidx.core:core-ktx 1.18+ requires compileSdk 37 + AGP 9.x.
 # Blocked by the AGP 8.13.2 hold (see `androidGradle` above). Bump together with AGP 9.
-androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.17.0" }
+androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.18.0" }
 androidx-splash = { group = "androidx.core", name = "core-splashscreen", version = "1.2.0" }
 
 # Lifecycle
@@ -222,6 +222,10 @@ androidx-media3-exoplayer-hls = { group = "androidx.media3", name = "media3-exop
 androidx-media3-exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "androidxMedia3" }
 androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "androidxMedia3" }
 androidx-media3-session = { group = "androidx.media3", name = "media3-session", version.ref = "androidxMedia3" }
+# media3-session dropped its transitive androidx.media dependency in 1.11.0, but
+# MusicSessionCallback/SoundBoundPlayerService import androidx.media.utils.MediaConstants directly,
+# so it is declared explicitly rather than inherited.
+androidx-mediaCompat = { group = "androidx.media", name = "media", version = "1.8.0" }
 androidx-media3-common = { group = "androidx.legacy", name = "legacy-support-v4", version = "1.0.0" }
 
 # Startup
@@ -481,7 +485,11 @@ android-app-notifier = { group = "com.github.amitbd1508", name = "AppUpdater", v
 android-phoenix = { group = "com.jakewharton", name = "process-phoenix", version = "3.0.0" }
 
 # FuzzyWuzzy
-fuzzy-wuzzy = { group = "io.github.shabinder", name = "fuzzywuzzy", version = "1.1" }
+# The platform artifact, not the KMP root module: fuzzywuzzy 1.1's Gradle metadata predates the
+# standard JVM attributes, so from Gradle 9.6 the desktop target cannot choose between its
+# debug/release/jvm variants ("cannot choose between ... jvmApiElements-published"). The library
+# is JVM-only regardless, so both android and desktop take the same jar.
+fuzzy-wuzzy = { group = "io.github.shabinder", name = "fuzzywuzzy-jvm", version = "1.1" }
 
 # KSoup
 ksoup-html = { group = "com.mohamedrejeb.ksoup", name = "ksoup-html", version = "0.6.0" }
@@ -629,6 +637,8 @@ koin-android = ["koin-compose", "koin-android"]
 # Android
 android-application = { id = "com.android.application", version.ref = "androidGradle" }
 android-library = { id = "com.android.library", version.ref = "androidGradle" }
+# AGP 9: KMP modules must use this instead of com.android.library.
+android-kmp-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "androidGradle" }
 android-test = { id = "com.android.test", version.ref = "androidGradle" }
 
 # Compose
