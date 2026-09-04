@@ -5,10 +5,13 @@
 # 2.1.0 shipped on, so that blocker is gone. 2.4.10 is the current patch — see
 # Docs/PLANS/2026-09-dependency-upgrade.md tranche 1.
 kotlin = "2.4.10"
-# HOLD at 1.11.1: CMP 1.12.0-alpha01 exists but is alpha-only on the Compose UI
-# layer — alpha rendering bugs would ship to real Play Store users. Bump together
-# with `kotlin` when CMP 1.12.x reaches stable (typical JetBrains alpha -> stable
-# is 2-3 months). Chain blocker for Kotlin 2.4 and AGP 9.
+# HOLD at 1.11.1: CMP 1.12.0 IS stable, but it is not a standalone bump -- it requires
+# compileSdk 37, which requires AGP 9:
+#   "androidx.compose.material:material-android:1.12.0 requires ... version 37 or later of the
+#    Android APIs. :android is currently compiled against android-36."
+# So CMP does not UNBLOCK the AGP 9 chain (as the old note assumed) -- it is PART of it. Bump
+# jbCompose + androidGradle + androidCompileSdk + androidx-core + Gradle together.
+# See Docs/PLANS/2026-09-dependency-upgrade.md.
 jbCompose = "1.11.1"
 # HOLD at 8.13.2: AGP 9.2.1 requires Kotlin 2.4+ (built-in Kotlin DSL), which is
 # blocked by the `kotlin` + `jbCompose` holds above. Google's own
@@ -62,11 +65,11 @@ composeWebView = "1.0.0-beta-02"
 nucleus = "2.1.4"
 
 # Networking
-# HOLD at 3.4.3: supabase-kt 3.6.0 (latest as of 2026-06-06) pins Ktor 3.4.3.
-# Ktor 3.5.0 makes HttpMethod.Post inaccessible to supabase's inlined postJson
-# call (IllegalAccessError at runtime, breaks Google Sign-In). Bump when
-# supabase-kt ships a 3.5-compatible release.
-ktor = "3.4.3"
+# supabase-kt 3.8.0 requires ktor 3.5.1 (verified in auth-kt-3.8.0.module), which lifts the old
+# "HOLD at 3.4.3" -- that hold existed because supabase-kt 3.6.0 pinned 3.4.3 and ktor 3.5.0 made
+# HttpMethod.Post inaccessible to supabase's inlined postJson call (IllegalAccessError at runtime,
+# breaking Google Sign-In). These two MUST move together for that reason.
+ktor = "3.5.2"
 okio = "3.17.0"
 
 # Architecture
@@ -495,7 +498,7 @@ multiplatform-webView = { group = "io.github.kdroidfilter", name = "composewebvi
 molecule = { group = "app.cash.molecule", name = "molecule-runtime", version = "2.2.0" }
 
 # Supabase
-supabase-bom = { group = "io.github.jan-tennert.supabase", name = "bom", version = "3.6.0" }
+supabase-bom = { group = "io.github.jan-tennert.supabase", name = "bom", version = "3.8.0" }
 supabase-postgrest = { group = "io.github.jan-tennert.supabase", name = "postgrest-kt" }
 supabase-auth = { group = "io.github.jan-tennert.supabase", name = "auth-kt" }
 supabase-realtime = { group = "io.github.jan-tennert.supabase", name = "realtime-kt" }
