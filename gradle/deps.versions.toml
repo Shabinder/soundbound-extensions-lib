@@ -13,12 +13,17 @@ kotlin = "2.4.10"
 # jbCompose + androidGradle + androidCompileSdk + androidx-core + Gradle together.
 # See Docs/PLANS/2026-09-dependency-upgrade.md.
 jbCompose = "1.11.1"
-# HOLD at 8.13.2: AGP 9.2.1 requires Kotlin 2.4+ (built-in Kotlin DSL), which is
-# blocked by the `kotlin` + `jbCompose` holds above. Google's own
-# android/skills agp-9-upgrade skill is also explicitly off-limits for KMP
-# projects ("Do not use this skill for migrating KMP projects"). Bump once the
-# CMP / Kotlin chain unblocks. See Docs/PLANS/agp-9-migration.md for the
-# step-by-step migration plan when the time comes.
+# HOLD at 8.13.2 — blocked by androidx.baselineprofile, verified 2026-09-04.
+# The Kotlin/CMP part of the old chain has cleared, and AGP 9.4.0 gets further than before:
+# removing `kotlin-android` from :android, :android-ffmpeg and :baselineprofile satisfies AGP 9's
+# built-in Kotlin DSL. It then dies on a plugin we cannot fix:
+#   Failed to apply plugin 'androidx.baselineprofile'
+#   > Module `:android` is not a supported android module.
+# Reproduced on baselineProfile 1.4.1 AND on 1.5.0-rc02 (the newest published build, RC only) --
+# identical failure, so no released version of that plugin supports AGP 9. Revisit when
+# androidx.baselineprofile ships AGP 9 support; nothing else blocks the tranche.
+# Google's agp-9-upgrade skill remains off-limits for KMP projects.
+# Full findings: Docs/PLANS/2026-09-dependency-upgrade.md.
 androidGradle = "8.13.2"
 coroutines = "1.11.0"
 kotlinxSerialization = "1.11.0"
