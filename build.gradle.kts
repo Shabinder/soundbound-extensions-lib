@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
 
 plugins {
-  id(deps.plugins.android.library.get().pluginId)
+  id(deps.plugins.android.kmp.library.get().pluginId)
   id(deps.plugins.kotlin.multiplatform.get().pluginId)
   id(deps.plugins.kotlin.parcelize.get().pluginId)
   id(deps.plugins.kotlin.serialization.get().pluginId)
@@ -98,49 +98,20 @@ repositories {
   }
 }
 
-android {
-  namespace = "in.shabinder.soundbound.extensions"
-  compileSdk = deps.versions.androidCompileSdk.get().toInt()
-
-  defaultConfig {
-    minSdk = deps.versions.androidMinSdk.get().toInt()
-  }
-
-  sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-
-  compileOptions {
-    isCoreLibraryDesugaringEnabled = true
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-  }
-
-  tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
-  }
-
-  buildTypes {
-    getByName("release") {
-      isMinifyEnabled = false
-    }
-  }
-
-  kotlin {
-    jvmToolchain {
-      languageVersion.set(JavaLanguageVersion.of(21))
-    }
-  }
-
-  dependencies {
-    coreLibraryDesugaring(deps.androidx.desugar)
-  }
+dependencies {
+  coreLibraryDesugaring(deps.androidx.desugar)
 }
 
 kotlin {
   iosArm64()
   iosSimulatorArm64()
-  androidTarget {
-    publishLibraryVariants("release", "debug")
+  androidLibrary {
+    namespace = "in.shabinder.soundbound.extensions"
+    compileSdk = deps.versions.androidCompileSdk.get().toInt()
+    minSdk = deps.versions.androidMinSdk.get().toInt()
+    enableCoreLibraryDesugaring = true
   }
+  jvmToolchain(21)
   jvm {
     testRuns["test"].executionTask.configure {
       useJUnit()
