@@ -96,6 +96,14 @@ class BestMatchRejectionTest {
     }
 
     @Test
+    fun fallsBackWhenSurvivorsScoreNothing() {
+        // The only non-rejected hit fails the common-word check, so the karaoke is still returned.
+        val query = props("Shape of You", 234)
+        val hits = listOf(props("Shape of You (Karaoke)", 234), props("Totally Different", 234))
+        assertEquals(listOf("Shape of You (Karaoke)"), orderResults(query, hits, EqualsFuzz).keys.map { it.title })
+    }
+
+    @Test
     fun cleanSearchTitle() {
         val table = mapOf(
             "Paniyon Sa (From \"Satyamev Jayate\")" to "Paniyon Sa",

@@ -19,14 +19,23 @@ fun <S : MatchProps, T : MatchProps> orderResults(
     allMatches: Collection<S>,
     searcher: FuzzySearch
 ): Map<S, Float> {
+    // Hard-reject wrong recordings first. When nothing survives (every hit rejected, or the
+    // survivors fail the thresholds below) score all hits with the penalty rules alone, the
+    // pre-C-02 behaviour, so a regional catalogue that titles everything "Live" still finds one.
+    val pool = allMatches.filterNot { isWrongRecording(matchFor, it) }
+    return scoreMatches(matchFor, pool, searcher).ifEmpty {
+        if (pool.size == allMatches.size) emptyMap() else scoreMatches(matchFor, allMatches, searcher)
+    }
+}
+
+private fun <S : MatchProps, T : MatchProps> scoreMatches(
+    matchFor: T,
+    allMatches: Collection<S>,
+    searcher: FuzzySearch
+): Map<S, Float> {
     val resultsWithMatchValue = mutableMapOf<S, Float>()
 
-    // Hard-reject wrong recordings first; when every hit is rejected, fall back to scoring all of
-    // them with the penalty rules below (the pre-C-02 behaviour), so a regional catalogue that
-    // titles everything "Live" still finds something.
-    val pool = allMatches.filterNot { isWrongRecording(matchFor, it) }.ifEmpty { allMatches }
-
-    for (match in pool) {
+    for (match in allMatches) {
         // skip results that have no common words in their name
         if (!checkCommonWord(match.title.lowercase(), matchFor.title.lowercase())) {
             continue
