@@ -4,7 +4,7 @@
 # (IrGenerationExtension$Companion cast failure), but 2.4.0 + CMP 1.11.1 is what SoundBound
 # 2.1.0 shipped on, so that blocker is gone. 2.4.10 is the current patch — see
 # Docs/PLANS/2026-09-dependency-upgrade.md tranche 1.
-kotlin = "2.4.10"
+kotlin = "2.4.21"
 # HOLD at 1.11.1: CMP 1.12.0 IS stable, but it is not a standalone bump -- it requires
 # compileSdk 37, which requires AGP 9:
 #   "androidx.compose.material:material-android:1.12.0 requires ... version 37 or later of the
@@ -12,7 +12,7 @@ kotlin = "2.4.10"
 # So CMP does not UNBLOCK the AGP 9 chain (as the old note assumed) -- it is PART of it. Bump
 # jbCompose + androidGradle + androidCompileSdk + androidx-core + Gradle together.
 # See Docs/PLANS/2026-09-dependency-upgrade.md.
-jbCompose = "1.12.0"
+jbCompose = "1.12.2"
 # HOLD at 8.13.2 — blocked by androidx.baselineprofile, verified 2026-09-04.
 # The Kotlin/CMP part of the old chain has cleared, and AGP 9.4.0 gets further than before:
 # removing `kotlin-android` from :android, :android-ffmpeg and :baselineprofile satisfies AGP 9's
@@ -24,9 +24,9 @@ jbCompose = "1.12.0"
 # androidx.baselineprofile ships AGP 9 support; nothing else blocks the tranche.
 # Google's agp-9-upgrade skill remains off-limits for KMP projects.
 # Full findings: Docs/PLANS/2026-09-dependency-upgrade.md.
-androidGradle = "9.4.0"
+androidGradle = "9.4.1"
 coroutines = "1.11.0"
-kotlinxSerialization = "1.11.0"
+kotlinxSerialization = "1.12.0"
 
 # Android SDK versions
 androidCompileSdk = "37"
@@ -35,9 +35,9 @@ androidTargetSdk = "37"
 androidBuildTools = "36.1.0"
 
 # Build tools & plugins
-baselineProfile = "1.4.1"
+baselineProfile = "1.5.0"
 ktLint = "14.2.0"
-spotless = "8.6.0"
+spotless = "8.10.4"
 mosaic = "0.12.0"
 mavenPublish = "0.36.0"
 cmake = "4.1.2"
@@ -49,23 +49,23 @@ sqlDelight = "2.3.2"
 junit = "4.13.2"
 
 # Firebase & Google services
-googleServices = "4.4.4"
+googleServices = "4.5.0"
 firebaseBom = "34.14.0"
-sentryAndroid = "6.18.0"
+sentryAndroid = "6.24.0"
 googleCreds = "1.6.0"
 
 # AndroidX libraries
-androidXDataStore = "1.2.1"
-androidxLifecycle = "2.10.0"
-androidxMedia3 = "1.11.0"
-androidGlance = "1.1.1"
-androidxWebkit = "1.17.0"
+androidXDataStore = "1.3.0"
+androidxLifecycle = "2.11.0"
+androidxMedia3 = "1.11.1"
+androidGlance = "1.2.0"
+androidxWebkit = "1.18.0"
 androidxTracing = "1.3.0"
 
 # Compose
-composeBom = "2026.05.01"
+composeBom = "2026.09.00"
 activityCompose = "1.13.0"
-viewmodelCompose = "2.10.0"
+viewmodelCompose = "2.11.0"
 composeWebView = "1.0.0-beta-02"
 nucleus = "2.1.4"
 
@@ -75,13 +75,13 @@ nucleus = "2.1.4"
 # HttpMethod.Post inaccessible to supabase's inlined postJson call (IllegalAccessError at runtime,
 # breaking Google Sign-In). These two MUST move together for that reason.
 ktor = "3.5.2"
-okio = "3.17.0"
+okio = "3.18.2"
 
 # Architecture
 decompose = "3.5.0"
-essenty = "2.5.0"
+essenty = "2.7.0"
 mviKotlin = "4.4.0"
-paging = "3.5.0"
+paging = "3.5.3"
 
 # Utilities
 cache4k = "0.14.0"
@@ -97,13 +97,13 @@ stringfogXor = "5.0.0" # Maven Central latest is 5.0.0 (no newer release)
 talsecSecurity = "17.0.0" # HOLD: v18 changed ThreatListener interfaces to abstract classes; separate migration PR needed
 
 # Media & Desktop
-jna = "5.19.0"
-coil = "3.5.0"
+jna = "5.19.1"
+coil = "3.6.3"
 filekit = "0.14.1"
 
 # Frameworks & UI
-koin = "4.2.1"
-kermit = "2.1.0"
+koin = "4.2.2"
+kermit = "2.2.0"
 moko = "0.26.4"
 arrow = "2.2.3"
 konnection = "1.4.5"
@@ -132,8 +132,8 @@ konnection = "1.4.5"
 # Maven Central's 1.27.2-CUSTOM is the STALE pre-2.4 build under the same version — never
 # downgrade to it. Older custom versions exist in GitHub Packages; selected v9 is Maven-local only.
 zipline = "1.27.3"
-sqliteJdbcDriver = "3.53.2.0"
-composeHotReload = "1.2.0-beta01" # brings MCP server for agent-driven UI control (get_semantic_tree/click/type_text)
+sqliteJdbcDriver = "3.53.4.0"
+composeHotReload = "1.2.0" # brings MCP server for agent-driven UI control (get_semantic_tree/click/type_text)
 
 [libraries]
 # ==============================================================================
