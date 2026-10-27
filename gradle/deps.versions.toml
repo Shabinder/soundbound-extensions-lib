@@ -4,11 +4,7 @@
 # (IrGenerationExtension$Companion cast failure), but 2.4.0 + CMP 1.11.1 is what SoundBound
 # 2.1.0 shipped on, so that blocker is gone. 2.4.10 is the current patch — see
 # Docs/PLANS/2026-09-dependency-upgrade.md tranche 1.
-# HOLD at 2.4.10: 2.4.21 is latest (2026-10-27). Kotlin compiler plugins must match the compiler
-# exactly, and the zipline-kotlin-plugin fork (references/zipline, io.github.shabinder:zipline 1.27.3)
-# was built for 2.4.0-2.4.10; on 2.4.21 it dies in IrFactory.createSimpleFunction (IrGenerationException).
-# Revisit with a zipline fork rebuild + Maven Central release (Docs/ARCHITECTURE/publishing.md).
-kotlin = "2.4.10"
+kotlin = "2.4.21"
 # HOLD at 1.11.1: CMP 1.12.0 IS stable, but it is not a standalone bump -- it requires
 # compileSdk 37, which requires AGP 9:
 #   "androidx.compose.material:material-android:1.12.0 requires ... version 37 or later of the
@@ -135,7 +131,7 @@ konnection = "1.4.5"
 # -CUSTOM-2 = Kotlin 2.4 rebuild (ExtensionPointDescriptor cast fix in zipline-kotlin-plugin).
 # Maven Central's 1.27.2-CUSTOM is the STALE pre-2.4 build under the same version — never
 # downgrade to it. Older custom versions exist in GitHub Packages; selected v9 is Maven-local only.
-zipline = "1.27.3"
+zipline = "1.28.1"
 sqliteJdbcDriver = "3.53.4.0"
 composeHotReload = "1.2.0" # brings MCP server for agent-driven UI control (get_semantic_tree/click/type_text)
 
