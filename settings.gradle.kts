@@ -27,6 +27,11 @@ pluginManagement {
 dependencyResolutionManagement {
     versionCatalogs {
         create("deps") {
+            // Opt-in local runtime proof; shipping and plugin versions keep their defaults.
+            providers.gradleProperty("ziplineRuntimeVersion").orNull?.let { runtimeVersion ->
+                // Loader transitives must not upgrade an explicitly selected development runtime.
+                version("ziplineRuntime") { strictly(runtimeVersion) }
+            }
             from(files("gradle/deps.versions.toml"))
         }
     }

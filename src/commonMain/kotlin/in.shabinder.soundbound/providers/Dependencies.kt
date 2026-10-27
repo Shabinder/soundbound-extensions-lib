@@ -10,6 +10,8 @@ import `in`.shabinder.soundbound.zipline.RuntimeAssets
 import `in`.shabinder.soundbound.zipline.SoundboundLogger
 import `in`.shabinder.soundbound.zipline.HeadlessBrowser
 import `in`.shabinder.soundbound.zipline.UnavailableRuntimeAssets
+import `in`.shabinder.soundbound.zipline.ContentDecryption
+import `in`.shabinder.soundbound.zipline.UnavailableContentDecryption
 
 @Immutable
 interface Dependencies {
@@ -31,4 +33,7 @@ interface Dependencies {
   val runtimeAssets: RuntimeAssets
     get() = UnavailableRuntimeAssets
   val crypto: Crypto
+  /** Optional host backend; extensions must query supported schemes before use. */
+  val contentDecryption: ContentDecryption
+    get() = UnavailableContentDecryption
 }
