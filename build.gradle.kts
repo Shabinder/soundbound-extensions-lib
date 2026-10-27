@@ -138,6 +138,9 @@ kotlin {
         }
       }
     }
+    commonTest.dependencies {
+      implementation(kotlin("test"))
+    }
   }
 }
 
