@@ -99,6 +99,9 @@ talsecSecurity = "17.0.0" # HOLD: v18 changed ThreatListener interfaces to abstr
 # Media & Desktop
 jna = "5.19.1"
 coil = "3.6.3"
+# Haze 2.0.1 (latest on Maven Central 2026-10-28) needs Kotlin >= 2.4.20 + CMP >= 1.12.1. Only
+# common/designsystem Glass.kt may import it (scripts/check-design-tokens.sh hard zero).
+haze = "2.0.1"
 filekit = "0.14.1"
 
 # Frameworks & UI
@@ -413,6 +416,10 @@ coil-core = { group = "io.coil-kt.coil3", name = "coil-core", version.ref = "coi
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
 coil-svg = { group = "io.coil-kt.coil3", name = "coil-svg", version.ref = "coil" }
+
+# Haze (glass blur). haze-blur carries hazeBlur/HazeBlurStyle; core haze is transitive.
+haze = { group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
+haze-blur = { group = "dev.chrisbanes.haze", name = "haze-blur", version.ref = "haze" }
 
 # FileKit
 filekit-core = { group = "io.github.vinceglb", name = "filekit-core", version.ref = "filekit" }
