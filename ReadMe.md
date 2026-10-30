@@ -21,8 +21,9 @@ https://gitlab.com/shabinder/soundbound/-/raw/main/Experimental-Sources/sources.
 ### Skip segments (`Provider.getSkipSegments`)
 
 An extension may return spans of a track that the player can skip automatically, as
-`List<SkipSegment>` (`startMs`, `endMs`, `category`, `actionType`, `id`). It has a default
-implementation returning an empty list, so existing extensions need no change. Extension bundles
+`List<SkipSegment>` (`startMs`, `endMs`, `category`, `actionType`, `id`), and sets
+`isSkipSegmentsAvailable = true`. Both have defaults (empty list / false), so existing extensions
+need no change. Extension bundles
 built before this function existed do not have it, and the host's call fails with
 `ZiplineApiMismatchException`; hosts must treat any failure as "no segments". The contract is
 provider-neutral: `category` is a free-form label, and the app acts only on `actionType == "skip"`.

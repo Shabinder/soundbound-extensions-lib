@@ -47,15 +47,18 @@ interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, Lyr
     val isLyricsAvailable: Boolean
         get() = this !is LyricsProvider.LyricsNotAvailable
 
+    /** True if [getSkipSegments] is implemented; hosts check this before calling it. */
+    val isSkipSegmentsAvailable: Boolean get() = false
+
     /**
      * Optional capability: spans of [songModel] the player may skip automatically.
      *
      * Return an empty list when the track is unknown or unsupported. Keep it fast (short network
      * timeouts): the app calls it off the playback path, but a slow answer means a late skip.
      *
-     * Backward compatible: extensions built before this existed have no such function in their
+     * Backward compatible: extensions built before this existed have neither member in their
      * Zipline bundle, so the host's call throws `ZiplineApiMismatchException`. Callers must treat
-     * any failure as "no segments".
+     * any failure (of either member) as "no segments", and must not count it as provider ill health.
      */
     suspend fun getSkipSegments(songModel: SongModel): List<SkipSegment> = emptyList()
 }
