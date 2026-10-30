@@ -16,6 +16,20 @@ https://gitlab.com/shabinder/soundbound/-/raw/main/Experimental-Sources/sources.
 
 ---
 
+## Optional capabilities
+
+### Skip segments (`Provider.getSkipSegments`)
+
+An extension may return spans of a track that the player can skip automatically, as
+`List<SkipSegment>` (`startMs`, `endMs`, `category`, `actionType`, `id`), and sets
+`isSkipSegmentsAvailable = true`. Both have defaults (empty list / false), so existing extensions
+need no change. Extension bundles
+built before this function existed do not have it, and the host's call fails with
+`ZiplineApiMismatchException`; hosts must treat any failure as "no segments". The contract is
+provider-neutral: `category` is a free-form label, and the app acts only on `actionType == "skip"`.
+
+---
+
 ## 📃 Disclaimer
 All downloading and use of the software and its accompaniments are deemed to have carefully read and fully agreed to the following terms:
 * The software is only for personal learning and communication, and it is strictly prohibited for any foul and illegal purposes.
