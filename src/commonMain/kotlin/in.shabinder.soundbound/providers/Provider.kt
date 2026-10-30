@@ -4,6 +4,8 @@ import androidx.compose.runtime.Immutable
 import app.cash.zipline.ZiplineService
 import `in`.shabinder.soundbound.models.AppInfo
 import `in`.shabinder.soundbound.models.PlatformQueryResult
+import `in`.shabinder.soundbound.models.SkipSegment
+import `in`.shabinder.soundbound.models.SongModel
 import `in`.shabinder.soundbound.models.SourceModel
 import `in`.shabinder.soundbound.providers.auth.AuthHandler
 import `in`.shabinder.soundbound.providers.catalog.Catalogue
@@ -44,4 +46,16 @@ interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, Lyr
 
     val isLyricsAvailable: Boolean
         get() = this !is LyricsProvider.LyricsNotAvailable
+
+    /**
+     * Optional capability: spans of [songModel] the player may skip automatically.
+     *
+     * Return an empty list when the track is unknown or unsupported. Keep it fast (short network
+     * timeouts): the app calls it off the playback path, but a slow answer means a late skip.
+     *
+     * Backward compatible: extensions built before this existed have no such function in their
+     * Zipline bundle, so the host's call throws `ZiplineApiMismatchException`. Callers must treat
+     * any failure as "no segments".
+     */
+    suspend fun getSkipSegments(songModel: SongModel): List<SkipSegment> = emptyList()
 }
