@@ -76,6 +76,8 @@ nucleus = "2.1.4"
 # breaking Google Sign-In). These two MUST move together for that reason.
 ktor = "3.5.2"
 okio = "3.17.0"
+# KMP crypto (CENC AES-CTR in commonMain; same lib + version ktvine's host CDM uses)
+cryptography = "0.6.0"
 
 # Architecture
 decompose = "3.5.0"
@@ -366,6 +368,10 @@ stately-concurrentCollections = { group = "co.touchlab", name = "stately-concurr
 # ==============================================================================
 # Okio
 okioCommon = { group = "com.squareup.okio", name = "okio", version.ref = "okio" }
+
+# KMP crypto — provider-optimal resolves JDK (jvm/android) + CryptoKit/OpenSSL3 (apple/native)
+cryptography-core = { group = "dev.whyoleg.cryptography", name = "cryptography-core", version.ref = "cryptography" }
+cryptography-provider-optimal = { group = "dev.whyoleg.cryptography", name = "cryptography-provider-optimal", version.ref = "cryptography" }
 
 # KMP IO
 kmp-io-zip = { group = "io.github.skolson", name = "kmp-io", version = "0.3.0" }
