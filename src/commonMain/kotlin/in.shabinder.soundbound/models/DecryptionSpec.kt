@@ -30,6 +30,14 @@ data class DecryptionSpec(
     companion object {
         const val BLOWFISH_CBC = "blowfish-cbc"
 
+        /**
+         * CENC / ISO Common Encryption, AES-128-CTR (`cenc` scheme). The host demuxes the
+         * fragmented-MP4, CTR-decrypts each sample with [key] (hex content key the extension
+         * obtained — e.g. via a Widevine license exchange), strips protection boxes and remuxes.
+         * Runs in commonMain (cryptography-kotlin) on every platform, needing no OS CDM.
+         */
+        const val CENC = "cenc"
+
         const val PARAM_IV_HEX = "ivHex"
         const val PARAM_CHUNK_SIZE_BYTES = "chunkSizeBytes"
         const val PARAM_ENCRYPT_EVERY_NTH_CHUNK = "encryptEveryNthChunk"
