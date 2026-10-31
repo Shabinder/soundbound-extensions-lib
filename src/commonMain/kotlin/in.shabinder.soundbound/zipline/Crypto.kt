@@ -41,6 +41,20 @@ interface Crypto : ZiplineService {
   /** HMAC-SHA256 of [message] under [key] (both UTF-8 bytes), lower-case hex. */
   fun hmacSha256Hex(key: String, message: String): String
 
+  /**
+   * RSA signature over the UTF-8 bytes of [message], returned base64 (standard, padded).
+   *
+   * [algorithm] is any JCA Signature name, e.g. "SHA256withRSA" / "SHA1withRSA" — the digest and
+   * the RSA sign happen in one pass (the only performant way to sign with RSA), so no separate
+   * hash primitive is needed. [privateKeyBase64] is a PKCS#8 (`PrivateKeyInfo`) DER key, base64.
+   *
+   * Source-agnostic host capability: the extension passes the key it holds (e.g. an Amazon MAP
+   * device key read from [DevicePreferences]); the host performs the sign and returns only the
+   * signature. No key material is retained host-side. Providers needing device-token request
+   * signing (Amazon MAP, etc.) build their own canonical string and call this.
+   */
+  fun rsaSign(algorithm: String, privateKeyBase64: String, message: String): String
+
   fun urlEncode(input: String): String
 
   fun urlDecode(input: String): String
