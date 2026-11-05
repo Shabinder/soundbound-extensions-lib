@@ -19,6 +19,20 @@ fun <S : MatchProps, T : MatchProps> orderResults(
     allMatches: Collection<S>,
     searcher: FuzzySearch
 ): Map<S, Float> {
+    // Hard-reject wrong recordings first. When nothing survives (every hit rejected, or the
+    // survivors fail the thresholds below) score all hits with the penalty rules alone, the
+    // pre-C-02 behaviour, so a regional catalogue that titles everything "Live" still finds one.
+    val pool = allMatches.filterNot { isWrongRecording(matchFor, it) }
+    return scoreMatches(matchFor, pool, searcher).ifEmpty {
+        if (pool.size == allMatches.size) emptyMap() else scoreMatches(matchFor, allMatches, searcher)
+    }
+}
+
+private fun <S : MatchProps, T : MatchProps> scoreMatches(
+    matchFor: T,
+    allMatches: Collection<S>,
+    searcher: FuzzySearch
+): Map<S, Float> {
     val resultsWithMatchValue = mutableMapOf<S, Float>()
 
     for (match in allMatches) {
@@ -290,3 +304,81 @@ private fun <T : MatchProps> T.sluggedArtists(): List<String> {
         ?: artistsNames.firstOrNull()?.split("-")?.map(String::sluggify)
         ?: artistsNames
 }
+
+// ---- C-02 hard rejection -------------------------------------------------------------------
+// Reimplemented from facts in melodybridge FuzzyMatcher.cs (AGPL-3.0, no code copied): the
+// modifier/marker word lists, the spelling folds and the [0.55, 1.8] duration window skipped
+// under 45 s. See Docs/RESEARCH/competitors/melodybridge.md in the app repo.
+
+/** Words that make a hit a different recording when the query does not name them. */
+private val UNREQUESTED_MODIFIERS = setOf(
+    "karaoke", "cover", "tribute", "instrumental", "remix", "live", "acoustic", "reprise",
+    "demo", "orchestral", "piano", "8d", "sped", "slowed", "nightcore", "mashup", "review",
+    "reaction", "bassboost", "bassboosted", "boosted", "reverb", "8daudio",
+)
+
+/**
+ * Version markers that, when the query names them in brackets, the hit must carry too.
+ * "version", "radio" and "edit" stay out: platforms drop them freely.
+ */
+private val RECORDING_MARKERS = setOf(
+    "vip", "acoustic", "live", "remix", "remaster", "instrumental", "demo", "extended",
+    "slowed", "sped", "nightcore", "cover", "karaoke", "piano", "orchestral", "8d", "mashup",
+    "reprise",
+)
+
+private fun canonicalMarker(word: String): String = when (word) {
+    "remastered", "remastering", "remasters" -> "remaster"
+    "remixes", "remixed" -> "remix"
+    "covers" -> "cover"
+    "instrumentals" -> "instrumental"
+    "mashups" -> "mashup"
+    "demos" -> "demo"
+    else -> word
+}
+
+private val BRACKETED = Regex("""[(\[][^)\]]*[)\]]""")
+
+/** Lower-cased, diacritic-folded, spelling-folded word tokens. "Alive" never yields "live". */
+private fun markerWords(text: String?): Set<String> =
+    words(foldDiacritics(text.orEmpty().lowercase())).mapTo(mutableSetOf(), ::canonicalMarker)
+
+private fun words(text: String): List<String> {
+    val out = mutableListOf<String>()
+    val sb = StringBuilder()
+    for (c in text) {
+        if (c.isLetterOrDigit()) sb.append(c)
+        else if (sb.isNotEmpty()) { out += sb.toString(); sb.clear() }
+    }
+    if (sb.isNotEmpty()) out += sb.toString()
+    return out
+}
+
+/** The hit carries a modifier ("Karaoke", "Live", "Slowed") the query does not. */
+internal fun addsUnrequestedModifier(queryTitle: String, hitTitle: String?): Boolean {
+    val requested = markerWords(queryTitle)
+    return markerWords(hitTitle).any { it in UNREQUESTED_MODIFIERS && it !in requested }
+}
+
+/** The query names a version in brackets ("Song (VIP)") that the hit does not carry. */
+internal fun dropsRequestedMarker(queryTitle: String, hitTitle: String?): Boolean {
+    val markers = BRACKETED.findAll(queryTitle)
+        .flatMap { markerWords(it.value) }
+        .filter { it in RECORDING_MARKERS }
+        .toSet()
+    if (markers.isEmpty()) return false
+    val hit = markerWords(hitTitle)
+    return markers.any { it !in hit }
+}
+
+/** Hit length within [0.55x, 1.8x] of the query; unknown (<= 0) or < 45 s queries always pass. */
+internal fun isDurationPlausible(queryDurationSec: Long, hitDurationSec: Long): Boolean {
+    if (queryDurationSec <= 0 || hitDurationSec <= 0 || queryDurationSec < 45) return true
+    val ratio = hitDurationSec.toDouble() / queryDurationSec
+    return ratio in 0.55..1.8
+}
+
+fun isWrongRecording(query: MatchProps, hit: MatchProps): Boolean =
+    addsUnrequestedModifier(query.title, hit.title) ||
+        dropsRequestedMarker(query.title, hit.title) ||
+        !isDurationPlausible(query.durationSec, hit.durationSec)
