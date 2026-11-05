@@ -7,7 +7,9 @@ import `in`.shabinder.soundbound.models.QueryParams
 interface LyricsProvider {
     val isSyncedLyricsSupported: Boolean get() = false
 
-    // title to lyricsURL map from provider search
+    // title to lyricsURL map from provider search.
+    // Values may be plain text, line LRC, or enhanced LRC with <mm:ss.xx> word stamps, the latter
+    // only when the app opts in. See docs/word-lrc.md.
     suspend fun getAllLyrics(queryParams: QueryParams): Map<String, String>
     suspend fun extractLyrics(lyricsURL: String): String
 
