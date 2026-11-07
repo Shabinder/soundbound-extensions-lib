@@ -3,8 +3,8 @@ package `in`.shabinder.soundbound.matcher
 import `in`.shabinder.soundbound.models.Artist
 import `in`.shabinder.soundbound.zipline.FuzzySearch
 import kotlin.math.absoluteValue
+import kotlin.math.exp
 import kotlin.math.max
-import kotlin.math.min
 
 interface MatchProps {
     val title: String
@@ -12,84 +12,52 @@ interface MatchProps {
     val albumName: String?
     val durationSec: Long
     val isrc: String?
+
+    /** Where this side came from, when known. A YouTube side gets the wider duration window (uploads add intros). */
+    val trackUrl: String? get() = null
 }
 
+/**
+ * Matching v2: the candidates that are the same recording as [matchFor], best first (the map iterates in score order,
+ * so `keys.firstOrNull()` is the best match). An equal ISRC scores 100. Every other candidate must pass
+ * [RecordingMatch.score]: version family (live/remix/acoustic/sped up/…, word-bounded, both directions), featured
+ * guests, whole artist credits (tribute/karaoke guard), the duration window (±3 s, ±15 s when either side is
+ * YouTube) and two-tier title similarity. Gates ported from songmirror (MIT), see [RecordingMatch].
+ * [searcher] is kept for ABI compatibility; v2 scoring is self-contained so app and extensions agree.
+ */
+@Suppress("UNUSED_PARAMETER")
 fun <S : MatchProps, T : MatchProps> orderResults(
     matchFor: T,
     allMatches: Collection<S>,
     searcher: FuzzySearch
 ): Map<S, Float> {
-    val resultsWithMatchValue = mutableMapOf<S, Float>()
-
-    for (match in allMatches) {
-        // skip results that have no common words in their name
-        if (!checkCommonWord(match.title.lowercase(), matchFor.title.lowercase())) {
-            continue
-        }
-
-        var artistMatch = getMainArtistMatch(match.artists, matchFor.artists, searcher)
-        val otherArtistsMatch = getAllArtistsMatch(match.artists, matchFor.artists, searcher)
-
-        artistMatch += otherArtistsMatch
-        artistMatch /= if (matchFor.artists.size > 1) 2 else 1
-
-        // TODO artist match fixes
-
-        val nameMatch = calculateNameMatch(match, matchFor, searcher)
-
-        // degrade this match if includes one of the forbidden words
-        val totalForbiddenOccurrences = FORBIDDEN_WORDS.mapNotNull {
-            //match contains while matchFor doesn't
-            if (match.title.contains(it, ignoreCase = true)
-                && !matchFor.title.contains(it, ignoreCase = true)
-            ) it
-            else null
-        }
-
-        val finalNameMatch = nameMatch - (totalForbiddenOccurrences.size * 10)
-
-        if (finalNameMatch < 50) {
-            // ignoring matches with too low name match ratio
-            continue
-        }
-
-        if (artistMatch < 50) {
-            // ignoring matches with too low artist match ratio
-            continue
-        }
-
-
-        // Calculate total match
-        var avgMatch = (artistMatch + nameMatch) / 2
-
-        // add album match if certain
-        val albumMatch = getAlbumMatch(match.albumName, matchFor.albumName, searcher)
-        if (!match.isrc.isNullOrBlank() && albumMatch != 0f && albumMatch <= 80f) {
-            avgMatch += albumMatch
-            avgMatch /= 2
-        }
-
-        val durationMatch = calculateDurationMatch(match.durationSec, matchFor.durationSec)
-
-        if (durationMatch < 50 && avgMatch < 75) {
-            // ignoring matches with too low duration match ratio
-            continue
-        }
-
-        if (!match.isrc.isNullOrBlank() && avgMatch <= 75 && durationMatch <= 75) {
-            // add duration into avg if match is certain and confident
-            avgMatch += durationMatch
-            avgMatch /= 2
-        }
-
-        avgMatch = min(avgMatch, 100f)
-
-        resultsWithMatchValue[match] = avgMatch
+    val wantedIsrc = RecordingMatch.normalizeIsrc(matchFor.isrc)
+    val wantedArtists = matchFor.artists.map(Artist::name)
+    val scored = allMatches.mapNotNull { match ->
+        if (wantedIsrc.isNotEmpty() && RecordingMatch.normalizeIsrc(match.isrc) == wantedIsrc) return@mapNotNull match to 100f
+        val verdict = RecordingMatch.score(
+            matchFor.title, wantedArtists, matchFor.durationSec,
+            match.title, match.artists.map(Artist::name), match.durationSec,
+            youtube = RecordingMatch.isYoutube(matchFor.trackUrl) || RecordingMatch.isYoutube(match.trackUrl),
+        )
+        if (verdict.accepted) match to verdict.score else null
     }
-
-    return resultsWithMatchValue
+    if (scored.isNotEmpty() || allMatches.isEmpty()) return scored.sortedByDescending { it.second }.toMap(LinkedHashMap())
+    // From lib #70 (C-02): a regional catalogue can label EVERY upload the same way ("Live", "Lofi").
+    // When all candidates carry one identical version signature that the query lacks, judge them as
+    // if that marker were absent, so the user still gets the closest one instead of nothing.
+    val signatures = allMatches.map { RecordingMatch.versionSignature(it.title) }.toSet()
+    if (signatures.size != 1 || signatures.single() == RecordingMatch.versionSignature(matchFor.title)) return emptyMap()
+    return allMatches.mapNotNull { match ->
+        val verdict = RecordingMatch.score(
+            matchFor.title, wantedArtists, matchFor.durationSec,
+            RecordingMatch.stripVersionWords(match.title),
+            match.artists.map(Artist::name), match.durationSec,
+            youtube = RecordingMatch.isYoutube(matchFor.trackUrl) || RecordingMatch.isYoutube(match.trackUrl),
+        )
+        if (verdict.accepted) match to verdict.score * 0.9f else null
+    }.sortedByDescending { it.second }.toMap(LinkedHashMap())
 }
-
 fun getAlbumMatch(
     matchAlbumName: String?,
     matchForAlbumName: String?,
@@ -102,9 +70,9 @@ fun getAlbumMatch(
     return searcher.ratio(matchAlbumName.sluggify(), matchForAlbumName.sluggify())
 }
 
-fun calculateDurationMatch(matchDuration: Long, matchForDuration: Long): Float {
-    return 100f - (matchDuration - matchForDuration).absoluteValue
-}
+/** `100·e^(−0.1·|Δs|)`: 100 at 0 s, ~74 at 3 s, ~22 at 15 s (spotDL `matching.py`, MIT). */
+fun calculateDurationMatch(matchDuration: Long, matchForDuration: Long): Float =
+    (100.0 * exp(-0.1 * (matchDuration - matchForDuration).absoluteValue)).toFloat()
 
 fun <T : MatchProps> calculateNameMatch(match: T, matchFor: T, searcher: FuzzySearch): Float {
     var nameMatch = getNameMatch(match.title, matchFor.title, searcher)
@@ -130,19 +98,6 @@ fun <T : MatchProps> calculateNameMatch(match: T, matchFor: T, searcher: FuzzySe
 
     return nameMatch
 }
-
-@Suppress("PrivatePropertyName")
-private val FORBIDDEN_WORDS = listOf(
-    "bassboosted",
-    "remix",
-    "remastered",
-    "remaster",
-    "reverb",
-    "bassboost",
-    "live",
-    "acoustic",
-    "8daudio",
-)
 
 fun getNameMatch(matchTitle: String, matchForTitle: String, searcher: FuzzySearch): Float {
     var match = searcher.ratio(matchForTitle, matchTitle)
