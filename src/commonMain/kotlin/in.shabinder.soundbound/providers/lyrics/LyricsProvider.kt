@@ -13,6 +13,24 @@ interface LyricsProvider {
     suspend fun getAllLyrics(queryParams: QueryParams): Map<String, String>
     suspend fun extractLyrics(lyricsURL: String): String
 
+    /** True if [translateLyrics] is implemented; hosts check this before calling it. */
+    val isLyricsTranslationAvailable: Boolean get() = false
+
+    /**
+     * Optional capability: translations of the song's lyric [lines] into [targetLanguage] (ISO 639-1, e.g. "en").
+     *
+     * [lines] are the plain lines the app shows (timestamps stripped). Return a map from an original line, exactly as
+     * given, to its translation; leave out lines you could not translate (an empty map means "nothing for this song").
+     * Providers with human translations for a track (e.g. a lyrics catalogue) and machine translators both fit; the app
+     * asks providers in priority order and keeps the first non-empty answer per song.
+     *
+     * Backward compatible: extensions built before this existed have neither member in their Zipline bundle, so the
+     * host's call throws `ZiplineApiMismatchException`. Callers must treat any failure as "no translation", and must
+     * not count it as provider ill health.
+     */
+    suspend fun translateLyrics(queryParams: QueryParams, lines: List<String>, targetLanguage: String): Map<String, String> =
+        emptyMap()
+
     @Immutable
     interface LyricsNotAvailable : LyricsProvider {
         override suspend fun getAllLyrics(
