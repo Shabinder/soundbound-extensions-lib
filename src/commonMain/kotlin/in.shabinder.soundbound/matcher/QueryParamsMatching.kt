@@ -25,5 +25,6 @@ fun QueryParams.asMatchProps(): MatchProps {
         override val albumName: String? = queryParams.albumName
         override val durationSec: Long = queryParams.trackDurationSec
         override val isrc: String? = queryParams.isrc
+        override val trackUrl: String? = queryParams.trackLink
     }
 }
