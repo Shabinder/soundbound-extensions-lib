@@ -107,7 +107,8 @@ class RecordingMatchTest {
     }
 
     @Test fun normalisationKeepsNonLatinScriptsAndTurkishDottedI() {
-        assertEquals("iki şeye pişmanım", RecordingMatch.normalizeText("İki Şeye Pişmanım"))
+        // Turkish dotted I folds to i; ş folds to s (lib #70 accent folding, applied to both sides alike).
+        assertEquals("iki seye pismanım", RecordingMatch.normalizeText("İki Şeye Pişmanım"))
         assertEquals("嘘", RecordingMatch.normalizeText("嘘"))
         assertEquals("जो तुम मेरे हो", RecordingMatch.normalizeText("जो तुम मेरे हो!"))
         assertEquals("GBSMU2629433", RecordingMatch.normalizeIsrc("gb-smu-26-29433"))
@@ -219,5 +220,32 @@ class RecordingMatchTest {
 
         // Same pair without a YouTube side: 13 s off is outside the store window.
         assertTrue(orderResults(wanted.copy(trackUrl = null), listOf(studio), NoFuzzy).isEmpty())
+    }
+
+    // --- carried over from lib #70 (C-02) ---
+
+    @Test fun accentsFoldSoSpellingDriftStillMatches() {
+        assertTrue(accepts("Crazy in Love", "Beyoncé", 236, "Crazy In Love", "Beyonce", 236))
+        assertEquals("deja vu", RecordingMatch.normalizeText("Déjà Vu"))
+        assertEquals("केसरिया", RecordingMatch.normalizeText("केसरिया")) // Indic vowel signs untouched
+    }
+
+    @Test fun reactionAndReviewUploadsAreNotTheRecording() {
+        assertFalse(accepts("Kesariya", "Arijit Singh", 268, "Kesariya Reaction", "Arijit Singh", 268, yt = true))
+        assertFalse(accepts("Kesariya", "Arijit Singh", 268, "Kesariya (Review)", "Arijit Singh", 268, yt = true))
+        assertTrue(accepts("Kesariya Reaction", "Arijit Singh", 268, "Kesariya Reaction", "Arijit Singh", 268))
+    }
+
+    @Test fun allSameLabelCatalogueStillYieldsClosestMatch() {
+        val wanted = P("Pasoori", "Ali Sethi & Shae Gill", 224)
+        val a = P("Pasoori (Live)", "Ali Sethi & Shae Gill", 224)
+        val b = P("Pasoori (Live)", "Someone Else", 224)
+        // Every candidate is labelled Live and the query is not: take the closest, best first.
+        assertEquals(listOf(a), orderResults(wanted, listOf(a, b), NoFuzzy).keys.toList())
+        // Mixed labels: the gate stays strict, no fallback.
+        val remix = P("Pasoori (Remix)", "Ali Sethi & Shae Gill", 224)
+        assertTrue(orderResults(wanted, listOf(a, remix), NoFuzzy).isEmpty())
+        // The query asks for Live itself: normal path, no fallback needed.
+        assertEquals(listOf(a), orderResults(wanted.copy(title = "Pasoori (Live)"), listOf(a, b), NoFuzzy).keys.toList())
     }
 }

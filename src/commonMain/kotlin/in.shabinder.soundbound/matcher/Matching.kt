@@ -42,7 +42,21 @@ fun <S : MatchProps, T : MatchProps> orderResults(
         )
         if (verdict.accepted) match to verdict.score else null
     }
-    return scored.sortedByDescending { it.second }.toMap(LinkedHashMap())
+    if (scored.isNotEmpty() || allMatches.isEmpty()) return scored.sortedByDescending { it.second }.toMap(LinkedHashMap())
+    // From lib #70 (C-02): a regional catalogue can label EVERY upload the same way ("Live", "Lofi").
+    // When all candidates carry one identical version signature that the query lacks, judge them as
+    // if that marker were absent, so the user still gets the closest one instead of nothing.
+    val signatures = allMatches.map { RecordingMatch.versionSignature(it.title) }.toSet()
+    if (signatures.size != 1 || signatures.single() == RecordingMatch.versionSignature(matchFor.title)) return emptyMap()
+    return allMatches.mapNotNull { match ->
+        val verdict = RecordingMatch.score(
+            matchFor.title, wantedArtists, matchFor.durationSec,
+            RecordingMatch.stripVersionWords(match.title),
+            match.artists.map(Artist::name), match.durationSec,
+            youtube = RecordingMatch.isYoutube(matchFor.trackUrl) || RecordingMatch.isYoutube(match.trackUrl),
+        )
+        if (verdict.accepted) match to verdict.score * 0.9f else null
+    }.sortedByDescending { it.second }.toMap(LinkedHashMap())
 }
 fun getAlbumMatch(
     matchAlbumName: String?,

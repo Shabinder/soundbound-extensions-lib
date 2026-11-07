@@ -76,6 +76,8 @@ object RecordingMatch {
         "reprise" to Regex("""\breprise\b"""),
         "solo" to Regex("""\bsolo\b"""),
         "alternate" to Regex("""\b(?:alternate|alternative)\b"""),
+        // From lib #70 (C-02): commentary uploads are never the recording.
+        "reaction" to Regex("""\b(?:reaction|reacts?|reacting|review)\b"""),
     )
     private val VERSION_WORD = Regex("""\bversion\b""")
     private val VER_ABBREV = Regex("""\bver\b""")
@@ -87,6 +89,11 @@ object RecordingMatch {
     private val PLACEHOLDER_ARTISTS = setOf("", "release", "release topic", "unknown", "unknown artist", "various artists")
     private val TRIBUTE = Regex("""\b(?:tribute|karaoke|covers?|renditions?)\b""")
 
+    // From lib #70 (C-02): fold common Latin accents so "Beyoncé" == "Beyonce". No NFD in commonMain (JS/iOS).
+    // ponytail: Latin table only; extend when a catalogue needs more. Indic vowel signs are untouched.
+    private const val ACCENTED = "àáâãäåāăąçćčďèéêëēėęěìíîïīįñńňòóôõöøōőùúûüūůűųýÿžźżśšşřłğ"
+    private const val PLAIN = "aaaaaaaaacccdeeeeeeeeiiiiiinnnoooooooouuuuuuuuyyzzzsssrlg"
+
     /** Unicode-aware: letters, digits and combining marks (Devanagari/Gurmukhi vowel signs) survive in any script. */
     fun normalizeText(value: String?): String {
         if (value.isNullOrEmpty()) return ""
@@ -95,7 +102,8 @@ object RecordingMatch {
         for (c in lower) {
             val keep = c.isLetterOrDigit() || c.category == CharCategory.NON_SPACING_MARK ||
                 c.category == CharCategory.COMBINING_SPACING_MARK
-            sb.append(if (keep) c else ' ')
+            val folded = ACCENTED.indexOf(c).let { if (it < 0) c else PLAIN[it] }
+            sb.append(if (keep) folded else ' ')
         }
         return sb.split(' ').filter { it.isNotEmpty() }.joinToString(" ")
     }
@@ -131,6 +139,14 @@ object RecordingMatch {
         val markers = VERSION_PATTERNS.filter { it.second.containsMatchIn(n) }.map { it.first }.toMutableSet()
         if (markers.isEmpty() && VERSION_WORD.containsMatchIn(n)) markers += "alternate-version"
         return markers
+    }
+
+    /** The title with every version marker word removed ("Kesariya (Live)" -> "Kesariya"); used by the all-same-label fallback. */
+    fun stripVersionWords(title: String?): String {
+        var n = VER_ABBREV.replace(normalizeText(cleanTitle(title)), "version")
+        for ((_, pattern) in VERSION_PATTERNS) n = pattern.replace(n, " ")
+        n = VERSION_WORD.replace(n, " ")
+        return n.split(' ').filter { it.isNotBlank() }.joinToString(" ").ifEmpty { title.orEmpty() }
     }
 
     /** Recording family plus named mix/venue/version details: "First DJ Remix" ≠ "Second DJ Remix". */
