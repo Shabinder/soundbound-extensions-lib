@@ -30,5 +30,6 @@ fun SongModel.asMatchProps(): MatchProps {
         override val albumName: String? = song.albumName
         override val durationSec: Long = song.durationSec
         override val isrc: String? = song.isrc
+        override val trackUrl: String? = song.trackURL
     }
 }
