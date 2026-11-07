@@ -251,8 +251,8 @@ object Similarity {
 
     /** 1.0 when one side's tokens are a subset of the other's (rapidfuzz `token_set_ratio`). */
     fun tokenSet(a: String, b: String): Double {
-        val ta = tokens(a).toSortedSet()
-        val tb = tokens(b).toSortedSet()
+        val ta = tokens(a).toSet()
+        val tb = tokens(b).toSet()
         if (ta.isEmpty() || tb.isEmpty()) return 0.0
         val common = ta intersect tb
         val diffAb = ta - tb
