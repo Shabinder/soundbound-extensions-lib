@@ -3,6 +3,7 @@ package `in`.shabinder.soundbound.providers.library
 import androidx.compose.runtime.Immutable
 import `in`.shabinder.soundbound.models.PlatformQueryResult
 import `in`.shabinder.soundbound.models.SearchItem
+import `in`.shabinder.soundbound.models.SongModel
 import kotlinx.serialization.Serializable
 
 /**
@@ -69,8 +70,11 @@ interface ServerLibrary {
 
   // ---------------------------------------------------------------- 0.33: library listing, instances, device login
 
-  /** Every song in the library, paged in a stable order. The app mirrors it for the library view. */
-  suspend fun songs(offset: Int, limit: Int): List<SearchItem> = unsupported()
+  /**
+   * Every song in the library, paged in a stable order, as full [SongModel]s (ISRC / MBID / favourite flag
+   * included) so the host can mirror the library offline and dedupe it against other sources.
+   */
+  suspend fun songs(offset: Int, limit: Int): List<SongModel> = unsupported()
 
   /**
    * Turn this loaded copy into instance [instanceId] of a multi-instance source (a second server of the same
