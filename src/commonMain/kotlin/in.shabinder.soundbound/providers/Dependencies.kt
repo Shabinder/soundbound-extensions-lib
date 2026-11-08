@@ -10,6 +10,10 @@ import `in`.shabinder.soundbound.zipline.RuntimeAssets
 import `in`.shabinder.soundbound.zipline.SoundboundLogger
 import `in`.shabinder.soundbound.zipline.HeadlessBrowser
 import `in`.shabinder.soundbound.zipline.UnavailableRuntimeAssets
+import `in`.shabinder.soundbound.zipline.LocalIpc
+import `in`.shabinder.soundbound.zipline.UnavailableLocalIpc
+import `in`.shabinder.soundbound.zipline.UnavailableWebSocket
+import `in`.shabinder.soundbound.zipline.WebSocketClient
 
 @Immutable
 interface Dependencies {
@@ -31,4 +35,12 @@ interface Dependencies {
   val runtimeAssets: RuntimeAssets
     get() = UnavailableRuntimeAssets
   val crypto: Crypto
+
+  /** Local unix socket / named pipe; unavailable on old hosts and on mobile. */
+  val localIpc: LocalIpc
+    get() = UnavailableLocalIpc
+
+  /** WebSocket client; unavailable on old hosts. */
+  val webSocket: WebSocketClient
+    get() = UnavailableWebSocket
 }

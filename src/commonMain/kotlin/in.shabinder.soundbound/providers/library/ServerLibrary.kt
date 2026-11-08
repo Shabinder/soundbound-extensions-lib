@@ -168,7 +168,33 @@ interface ServerLibrary {
     } while (cursor != null)
     return LibraryChanges(added, boundaryFound = false)
   }
+
+  /**
+   * The link this library would hold for each local song, index-aligned with [tracks]; null when it cannot
+   * hold it (the "Not on <source>" list). Batch so ISRC / MBID-keyed libraries (`LibrarySyncSpec.keying`) can
+   * look foreign songs up in one go. Default: the song's own link when [isLinkSupported] says it is ours.
+   */
+  suspend fun matchForLibrary(tracks: List<LibraryTrackRef>): List<String?> =
+    tracks.map { t -> t.trackUrl.takeIf { isLinkSupported(it) } }
+
+  /**
+   * Same contract as `Provider.isLinkSupported` (which re-declares it abstract); declared here so
+   * [matchForLibrary]'s default can use it. The default only serves host-side wrappers that are not providers.
+   */
+  fun isLinkSupported(URL: String): Boolean = false
 }
+
+/** A local song as [ServerLibrary.matchForLibrary] sees it. */
+@Immutable
+@Serializable
+data class LibraryTrackRef(
+  val trackUrl: String,
+  val title: String,
+  val artists: List<String>,
+  val durationSec: Long,
+  val isrc: String? = null,
+  val mbid: String? = null,
+)
 
 private const val FINGERPRINT_PAGE = 100
 

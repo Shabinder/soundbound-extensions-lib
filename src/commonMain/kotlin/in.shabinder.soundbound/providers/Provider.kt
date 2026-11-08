@@ -13,10 +13,26 @@ import `in`.shabinder.soundbound.models.SourceModel
 import `in`.shabinder.soundbound.providers.auth.AuthHandler
 import `in`.shabinder.soundbound.providers.catalog.Catalogue
 import `in`.shabinder.soundbound.providers.lyrics.LyricsProvider
+import `in`.shabinder.soundbound.providers.presence.PresenceProvider
+import `in`.shabinder.soundbound.providers.scrobble.ScrobbleProvider
+import `in`.shabinder.soundbound.providers.source.SourceDescriptor
+import `in`.shabinder.soundbound.providers.source.defaultDescriptor
+import `in`.shabinder.soundbound.providers.stats.StatsProvider
 
 @Immutable
 interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, LyricsProvider,
-    AuthHandler, SongRecognizer, ServerLibrary {
+    AuthHandler, SongRecognizer, ServerLibrary, ScrobbleProvider, PresenceProvider, StatsProvider {
+
+    /**
+     * What this source is and can do; the app renders sync rows, chips, labels, icons and search policy from it
+     * and names no source itself. The default is derived from existing members, so a provider that never
+     * overrides it still shows up. Extensions usually `defaultDescriptor().copy(...)`.
+     *
+     * Backward compatible: a bundle built before this has no `descriptor` member, so the host's call throws
+     * `ZiplineApiMismatchException`; the loader then builds the same fallback from the manifest and the probes
+     * (`descriptorOrFallback()`).
+     */
+    val descriptor: SourceDescriptor get() = defaultDescriptor()
 
     /*
     * Preference priority
@@ -38,7 +54,7 @@ interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, Lyr
     /*
     * For a Particular URL, will return if this Extension Supports it for metadata fetching
     * */
-    fun isLinkSupported(URL: String): Boolean
+    override fun isLinkSupported(URL: String): Boolean
 
     suspend fun fetchPlatformQueryResult(URL: String): PlatformQueryResult
 
