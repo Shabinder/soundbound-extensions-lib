@@ -21,7 +21,10 @@ sealed class ConfigPropertyKey {
     override val isRequired: Boolean = false,
     override val isUserConfigurable: Boolean = false,
     val defaultValue: JsonPrimitive,
-    val possibleValues: KotlinList<JsonPrimitive> = emptyList() // Can be Empty, if require user to enter manually
+    val possibleValues: KotlinList<JsonPrimitive> = emptyList(), // Can be Empty, if require user to enter manually
+    // How the app should render / store the value. Older apps ignore it (Zipline JSON drops
+    // unknown keys) and show a plain text field, so TEXT is the safe default.
+    val inputType: ConfigInputType = ConfigInputType.TEXT,
   ) : ConfigPropertyKey()
 
   @Serializable
@@ -35,6 +38,19 @@ sealed class ConfigPropertyKey {
     val defaultValue: JsonArray,
     val possibleValues: JsonArray = JsonArray(emptyList())
   ) : ConfigPropertyKey()
+}
+
+/** Rendering / storage hint for a [ConfigPropertyKey.Single] value. */
+@Serializable
+enum class ConfigInputType {
+  TEXT,
+  /** A server address (http/https). The app may validate it and allow LAN http. */
+  URL,
+  USERNAME,
+  /** Password / API key / token: masked, never echoed, stored in the platform keystore where available. */
+  SECRET,
+  NUMBER,
+  BOOLEAN,
 }
 
 @Serializable

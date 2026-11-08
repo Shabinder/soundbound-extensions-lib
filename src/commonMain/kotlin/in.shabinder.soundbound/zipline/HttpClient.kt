@@ -91,6 +91,25 @@ interface HttpClient : ZiplineService {
     body: ByteArray,
   ): BinaryHttpResponse
 
+  /**
+   * Any-method request (PUT, DELETE, ...), for REST APIs whose writes need them.
+   * Default covers GET/POST/HEAD through the methods above, so hosts that predate it keep working
+   * for those; other methods need a host that overrides this (older hosts throw
+   * `ZiplineApiMismatchException` across the bridge, which callers should treat as "unsupported").
+   */
+  suspend fun request(
+    method: Method,
+    url: String,
+    params: Map<String, String> = emptyMap(),
+    body: BodyType = BodyType.NONE,
+    headers: Map<String, String> = emptyMap(),
+  ): CustomHttpResponse = when (method) {
+    Method.GET -> getRequest(url, params, headers)
+    Method.POST -> postRequest(url, params, body, headers)
+    Method.HEAD -> headRequest(url, params, headers)
+    else -> throw UnsupportedOperationException("HTTP $method not supported by this host")
+  }
+
   suspend fun headRequest(
     url: String,
     params: Map<String, String> = emptyMap(),

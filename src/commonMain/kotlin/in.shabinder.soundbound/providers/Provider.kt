@@ -1,6 +1,7 @@
 package `in`.shabinder.soundbound.providers
 
 import `in`.shabinder.soundbound.providers.recognition.SongRecognizer
+import `in`.shabinder.soundbound.providers.library.ServerLibrary
 
 import androidx.compose.runtime.Immutable
 import app.cash.zipline.ZiplineService
@@ -15,7 +16,7 @@ import `in`.shabinder.soundbound.providers.lyrics.LyricsProvider
 
 @Immutable
 interface Provider : ConfigHandler, Dependencies, ZiplineService, Catalogue, LyricsProvider,
-    AuthHandler, SongRecognizer {
+    AuthHandler, SongRecognizer, ServerLibrary {
 
     /*
     * Preference priority
