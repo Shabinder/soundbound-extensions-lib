@@ -34,13 +34,11 @@ interface Dependencies {
   /** Large app-bundled assets fetched only when an extension actually needs them. */
   val runtimeAssets: RuntimeAssets
     get() = UnavailableRuntimeAssets
-  val crypto: Crypto
-
-  /** Local unix socket / named pipe; unavailable on old hosts and on mobile. */
+  /** Unix socket / named pipe to another local app. Desktop only, gated per extension by the host. */
   val localIpc: LocalIpc
     get() = UnavailableLocalIpc
-
-  /** WebSocket client; unavailable on old hosts. */
+  /** Text WebSocket client. */
   val webSocket: WebSocketClient
     get() = UnavailableWebSocket
+  val crypto: Crypto
 }
