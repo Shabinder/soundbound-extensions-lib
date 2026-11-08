@@ -49,7 +49,10 @@ interface ServerLibrary {
   /** Favourite or un-favourite a song / album / artist link. */
   suspend fun setFavourite(link: String, favourite: Boolean): Unit = unsupported()
 
-  /** Create a playlist holding [songLinks] (in order); returns the new playlist's link. */
+  /**
+   * Create a playlist holding [songLinks] (in order); returns the new playlist's link.
+   * Backends with a privacy setting create it [PlaylistPrivacy.PRIVATE].
+   */
   suspend fun createPlaylist(name: String, songLinks: List<String>): String = unsupported()
 
   suspend fun addToPlaylist(playlistLink: String, songLinks: List<String>): Unit = unsupported()
@@ -96,7 +99,93 @@ interface ServerLibrary {
    * the provider has already saved the resulting token in its own config.
    */
   suspend fun pollDeviceLogin(handle: String): DeviceLoginState = unsupported()
+
+  // ------------------------------------------------------------------ library sync
+  // Lets one sync engine treat every backend (YouTube Music, Navidrome, Jellyfin, Plex) alike:
+  // cheap fingerprints decide WHICH collections to re-read, changesSince reads only the new head
+  // of newest-first collections. Defaults below are built on the paged listing above, so existing
+  // providers get working (if not the cheapest) behaviour without changes; override for speed.
+
+  /** Library songs / albums / artists ("Save to library"). Backends without a separate library throw. */
+  suspend fun setInLibrary(link: String, inLibrary: Boolean): Unit = unsupported()
+
+  suspend fun renamePlaylist(playlistLink: String, name: String): Unit = unsupported()
+
+  suspend fun setPlaylistPrivacy(playlistLink: String, privacy: PlaylistPrivacy): Unit = unsupported()
+
+  /**
+   * One page of a collection ([LibraryCollections] id or a playlist link). [cursor] is null for the
+   * first page, then the previous page's [LibraryPage.nextCursor].
+   * Default: favourites and playlist contents via [favouriteSongs] / [fetchPage] (cursor = offset),
+   * [LibraryCollections.PLAYLISTS] via [playlists] in one page; the library:* collections throw.
+   */
+  suspend fun libraryPage(collection: String, cursor: String?, limit: Int): LibraryPage {
+    val offset = cursor?.toIntOrNull() ?: 0
+    val items = when (collection) {
+      LibraryCollections.PLAYLISTS -> return LibraryPage(playlists())
+      LibraryCollections.FAVOURITE_SONGS -> favouriteSongs(offset, limit)
+      LibraryCollections.LIBRARY_SONGS, LibraryCollections.LIBRARY_ALBUMS, LibraryCollections.LIBRARY_ARTISTS -> unsupported()
+      else -> fetchPage(collection, offset, limit).trackList.map { it.toLibraryItem() }
+    }
+    return LibraryPage(items, nextCursor = if (items.size < limit) null else (offset + items.size).toString())
+  }
+
+  /**
+   * Fingerprints of the favourites, the playlist list, and every playlist (keyed by playlist link).
+   * Default: one first-page read per collection, hashed ([CollectionFingerprint.exact] only when the
+   * page held the whole collection). Override when the backend reports counts / timestamps.
+   */
+  suspend fun libraryFingerprints(): Map<String, CollectionFingerprint> = buildMap {
+    // ponytail: one first-page read per playlist, N+2 requests; backends with counts/etags in their listing override.
+    put(LibraryCollections.FAVOURITE_SONGS, firstPageFingerprint(LibraryCollections.FAVOURITE_SONGS))
+    val lists = playlists()
+    put(LibraryCollections.PLAYLISTS, fingerprintOf(lists, complete = true))
+    lists.forEach { put(it.link, firstPageFingerprint(it.link)) }
+  }
+
+  /**
+   * A stronger (first-page hash) fingerprint of one collection, for when [libraryFingerprints] is
+   * cheaper but coarser (e.g. YouTube Music derives playlist fingerprints from the listing alone).
+   */
+  suspend fun collectionFingerprint(collection: String): CollectionFingerprint = firstPageFingerprint(collection)
+
+  /**
+   * Items newer than the first of [knownNewestLinks] found, for a newest-first collection, stopping
+   * at it instead of reading the rest. Pass a few newest known links, not one, so un-liking the
+   * newest item does not force a full read. See [LibraryChanges] for what the result guarantees.
+   */
+  suspend fun changesSince(collection: String, knownNewestLinks: List<String>, pageSize: Int = 50): LibraryChanges {
+    val known = knownNewestLinks.toSet()
+    val added = mutableListOf<SearchItem>()
+    var cursor: String? = null
+    do {
+      val page = libraryPage(collection, cursor, pageSize)
+      for (item in page.items) {
+        if (item.link in known) return LibraryChanges(added, boundaryFound = true)
+        added += item
+      }
+      cursor = page.nextCursor
+    } while (cursor != null)
+    return LibraryChanges(added, boundaryFound = false)
+  }
 }
+
+private const val FINGERPRINT_PAGE = 100
+
+private suspend fun ServerLibrary.firstPageFingerprint(collection: String): CollectionFingerprint {
+  val page = libraryPage(collection, null, FINGERPRINT_PAGE)
+  return fingerprintOf(page.items, complete = page.nextCursor == null)
+}
+
+/** Fingerprint of a first page: exact only when [complete] (the page is the whole collection). */
+fun fingerprintOf(items: List<SearchItem>, complete: Boolean, newestFirst: Boolean = false): CollectionFingerprint =
+  CollectionFingerprint(
+    count = if (complete) items.size else null,
+    newestLink = items.firstOrNull()?.link,
+    version = libraryVersionOf(items.map { it.link }),
+    newestFirst = newestFirst,
+    exact = complete,
+  )
 
 private fun unsupported(): Nothing = throw UnsupportedOperationException("Not supported by this source")
 
