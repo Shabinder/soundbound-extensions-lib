@@ -66,9 +66,55 @@ interface ServerLibrary {
    * [PlaybackEvent.FINISHED] = scrobble (played). Best effort; hosts call it off the playback path.
    */
   suspend fun reportPlayback(songLink: String, event: PlaybackEvent, positionMs: Long): Unit = unsupported()
+
+  // ---------------------------------------------------------------- 0.33: library listing, instances, device login
+
+  /** Every song in the library, paged in a stable order. The app mirrors it for the library view. */
+  suspend fun songs(offset: Int, limit: Int): List<SearchItem> = unsupported()
+
+  /**
+   * Turn this loaded copy into instance [instanceId] of a multi-instance source (a second server of the same
+   * kind). Called once by the host right after load, before `init`. The provider then reports
+   * `source.instanceId = instanceId` and `source.sourceName = SourceModel.instanceSourceName(base, instanceId)`,
+   * so config, auth and links (`<scheme>+<instanceId>://...`) never collide with another instance.
+   * Empty = the default instance (today's keys and links).
+   */
+  suspend fun bindInstance(instanceId: String): Unit = unsupported()
+
+  /** True if [startDeviceLogin] works (Jellyfin QuickConnect, Plex PIN). */
+  val isDeviceLoginAvailable: Boolean get() = false
+
+  /** Begin a device-code sign-in with the saved server URL. Show [DeviceLogin.code] / [DeviceLogin.verificationUrl]. */
+  suspend fun startDeviceLogin(): DeviceLogin = unsupported()
+
+  /**
+   * Poll a login started by [startDeviceLogin] every [DeviceLogin.pollIntervalSec]. On [DeviceLoginState.Status.APPROVED]
+   * the provider has already saved the resulting token in its own config.
+   */
+  suspend fun pollDeviceLogin(handle: String): DeviceLoginState = unsupported()
 }
 
 private fun unsupported(): Nothing = throw UnsupportedOperationException("Not supported by this source")
+
+@Immutable
+@Serializable
+data class DeviceLogin(
+  /** Opaque, passed back to [ServerLibrary.pollDeviceLogin]. */
+  val handle: String,
+  /** What the user enters / confirms (QuickConnect code, Plex PIN). */
+  val code: String,
+  /** Where the user approves it; may already carry the code. */
+  val verificationUrl: String,
+  val pollIntervalSec: Int = 3,
+  val expiresInSec: Int = 300,
+)
+
+@Immutable
+@Serializable
+data class DeviceLoginState(val status: Status, val message: String = "") {
+  @Serializable
+  enum class Status { PENDING, APPROVED, EXPIRED, FAILED }
+}
 
 @Serializable
 enum class PlaybackEvent { STARTED, FINISHED }
