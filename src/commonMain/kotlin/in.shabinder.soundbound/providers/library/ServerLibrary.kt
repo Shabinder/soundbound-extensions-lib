@@ -150,7 +150,7 @@ interface ServerLibrary {
     // ponytail: one first-page read per playlist, N+2 requests; backends with counts/etags in their listing override.
     put(LibraryCollections.FAVOURITE_SONGS, firstPageFingerprint(LibraryCollections.FAVOURITE_SONGS))
     val lists = playlists()
-    put(LibraryCollections.PLAYLISTS, fingerprintOf(lists, complete = true))
+    put(LibraryCollections.PLAYLISTS, fingerprintOf(lists, complete = true, titled = true))
     lists.forEach { put(it.link, firstPageFingerprint(it.link)) }
   }
 
@@ -214,12 +214,16 @@ private suspend fun ServerLibrary.firstPageFingerprint(collection: String): Coll
   return fingerprintOf(page.items, complete = page.nextCursor == null)
 }
 
-/** Fingerprint of a first page: exact only when [complete] (the page is the whole collection). */
-fun fingerprintOf(items: List<SearchItem>, complete: Boolean, newestFirst: Boolean = false): CollectionFingerprint =
+/**
+ * Fingerprint of a first page: exact only when [complete] (the page is the whole collection).
+ * [titled]: hash titles too. Use it for the playlist list, where a rename on the service changes no link and would
+ * otherwise never be pulled.
+ */
+fun fingerprintOf(items: List<SearchItem>, complete: Boolean, newestFirst: Boolean = false, titled: Boolean = false): CollectionFingerprint =
   CollectionFingerprint(
     count = if (complete) items.size else null,
     newestLink = items.firstOrNull()?.link,
-    version = libraryVersionOf(items.map { it.link }),
+    version = libraryVersionOf(if (titled) items.flatMap { listOf(it.link, it.title) } else items.map { it.link }),
     newestFirst = newestFirst,
     exact = complete,
   )

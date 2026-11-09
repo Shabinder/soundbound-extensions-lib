@@ -78,4 +78,12 @@ class LibrarySyncTest {
     assertNull(big.count) // first page is not the whole collection
     assertFalse(big.exact)
   }
+
+  @Test
+  fun titledFingerprintSeesARename() {
+    val before = listOf(SearchItem("Mix", "pl:1", "", SearchItem.Type.Playlist))
+    val after = listOf(SearchItem("Mix renamed", "pl:1", "", SearchItem.Type.Playlist))
+    assertEquals(fingerprintOf(before, true).version, fingerprintOf(after, true).version, "links-only stays link-keyed")
+    assertTrue(fingerprintOf(before, true, titled = true).version != fingerprintOf(after, true, titled = true).version)
+  }
 }
