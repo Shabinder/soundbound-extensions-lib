@@ -1,12 +1,42 @@
-soundbound-extensions-lib includes code ported from the following project:
+soundbound-extensions-lib includes code ported from the following projects:
 
-songmirror (https://github.com/ahnafnafee/songmirror), commit 3897c5f
-Ported into src/commonMain/kotlin/in.shabinder.soundbound/matcher/RecordingMatch.kt and the tests in
-src/commonTest/kotlin/in.shabinder.soundbound/matcher/RecordingMatchTest.kt.
+songmirror (https://github.com/ahnafnafee/songmirror), commit 3897c5f (matching code unchanged through 9382cfe)
+Ported into src/commonMain/kotlin/in.shabinder.soundbound/matcher/RecordingMatch.kt and Matching.kt, and the tests in
+src/commonTest/kotlin/in.shabinder.soundbound/matcher/RecordingMatchTest.kt and MatchingRegressionTest.kt.
 
 MIT License
 
 Copyright (c) 2026 Ahnaf An Nafee
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--------------------------------------------------------------------------------
+
+SoulSync (https://github.com/Nezreka/SoulSync), commit 32480b35a
+Version keywords (extended, rmx, rough cut) and derivative-artist keywords (salute, parody, soundalike, backing
+track/band) from core/matching_engine.py ported into src/commonMain/kotlin/in.shabinder.soundbound/matcher/RecordingMatch.kt;
+guard cases from tests/matching/test_divergent_version.py ported into
+src/commonTest/kotlin/in.shabinder.soundbound/matcher/MatchingRegressionTest.kt.
+
+MIT License
+
+Copyright (c) [2025] [SoulSync]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
