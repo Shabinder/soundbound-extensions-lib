@@ -43,11 +43,23 @@ data class SourceDescriptor(
   val instanceLabel: String? = null,
   /** Link prefixes this loaded copy owns (`navidrome://`, `navidrome+2://`, `https://music.youtube.com/`). */
   val linkPrefixes: List<String> = emptyList(),
+  /**
+   * Host capabilities beyond HTTP this extension asks for. The app lists them on the extension's page with a switch
+   * each, off until the user turns it on; the host enforces the switch whatever the bundle declares.
+   */
+  val hostPermissions: Set<HostPermission> = emptySet(),
 ) {
   /** The label the app shows for this loaded copy. */
   val label: String get() = instanceLabel ?: displayName
 
   fun has(capability: SourceCapability): Boolean = capability in capabilities
+}
+
+/** See [SourceDescriptor.hostPermissions]. */
+@Serializable
+enum class HostPermission {
+  /** Raw TCP through `Dependencies.networkSockets` (peer-to-peer networks, NNTP, IRC, game/media daemons). */
+  NETWORK_SOCKETS,
 }
 
 @Serializable
