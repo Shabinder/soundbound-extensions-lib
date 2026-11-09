@@ -2,6 +2,7 @@ package `in`.shabinder.soundbound.providers
 
 import androidx.compose.runtime.Immutable
 import `in`.shabinder.soundbound.utils.DevicePreferences
+import `in`.shabinder.soundbound.zipline.AccountLink
 import `in`.shabinder.soundbound.zipline.Crypto
 import `in`.shabinder.soundbound.zipline.FuzzySearch
 import `in`.shabinder.soundbound.zipline.HttpClientBuilder
@@ -11,6 +12,7 @@ import `in`.shabinder.soundbound.zipline.SoundboundLogger
 import `in`.shabinder.soundbound.zipline.HeadlessBrowser
 import `in`.shabinder.soundbound.zipline.UnavailableRuntimeAssets
 import `in`.shabinder.soundbound.zipline.LocalIpc
+import `in`.shabinder.soundbound.zipline.UnavailableAccountLink
 import `in`.shabinder.soundbound.zipline.UnavailableLocalIpc
 import `in`.shabinder.soundbound.zipline.UnavailableWebSocket
 import `in`.shabinder.soundbound.zipline.WebSocketClient
@@ -40,5 +42,8 @@ interface Dependencies {
   /** Text WebSocket client. */
   val webSocket: WebSocketClient
     get() = UnavailableWebSocket
+  /** OAuth2 account linking through the SoundBound backend, gated per extension by the host. */
+  val accountLink: AccountLink
+    get() = UnavailableAccountLink
   val crypto: Crypto
 }
