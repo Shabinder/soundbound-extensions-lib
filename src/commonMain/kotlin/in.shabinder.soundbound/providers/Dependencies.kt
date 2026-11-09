@@ -16,6 +16,8 @@ import `in`.shabinder.soundbound.zipline.UnavailableAccountLink
 import `in`.shabinder.soundbound.zipline.UnavailableLocalIpc
 import `in`.shabinder.soundbound.zipline.UnavailableWebSocket
 import `in`.shabinder.soundbound.zipline.WebSocketClient
+import `in`.shabinder.soundbound.zipline.NetworkSockets
+import `in`.shabinder.soundbound.zipline.UnavailableNetworkSockets
 
 @Immutable
 interface Dependencies {
@@ -46,4 +48,7 @@ interface Dependencies {
   val accountLink: AccountLink
     get() = UnavailableAccountLink
   val crypto: Crypto
+  /** Raw TCP, gated per extension by the user ([in.shabinder.soundbound.providers.source.HostPermission.NETWORK_SOCKETS]). */
+  val networkSockets: NetworkSockets
+    get() = UnavailableNetworkSockets
 }
