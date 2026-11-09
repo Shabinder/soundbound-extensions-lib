@@ -108,6 +108,17 @@ interface HttpClient : ZiplineService {
   ): BinaryHttpResponse
 
   /**
+   * GET whose body is returned as raw bytes, e.g. a `Range: bytes=0-65535` read of a media file's header.
+   * [getRequest] decodes its body as text, which corrupts binary content. Hosts that predate this method throw
+   * `ZiplineApiMismatchException` across the bridge; callers should treat that as "unsupported" and degrade.
+   */
+  suspend fun getBytes(
+    url: String,
+    params: Map<String, String> = emptyMap(),
+    headers: Map<String, String> = emptyMap(),
+  ): BinaryHttpResponse = throw UnsupportedOperationException("Binary GET not supported by this host")
+
+  /**
    * Any-method request (PUT, DELETE, PATCH, ...), for REST APIs whose writes need them.
    * Default covers GET/POST/HEAD through the methods above, so hosts that predate it keep working
    * for those; other methods need a host that overrides this (older hosts throw
