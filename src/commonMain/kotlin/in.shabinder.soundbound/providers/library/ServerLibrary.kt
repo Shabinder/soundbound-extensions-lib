@@ -40,7 +40,10 @@ interface ServerLibrary {
   /** Albums of an artist link, paged. */
   suspend fun artistAlbums(artistLink: String, offset: Int, limit: Int): List<SearchItem> = unsupported()
 
-  /** The user's playlists. */
+  /**
+   * The user's playlists (owned, collaborative and followed). Rows carry [SearchItem.ownership] /
+   * [SearchItem.editable] when the source knows them.
+   */
   suspend fun playlists(): List<SearchItem> = unsupported()
 
   /** Favourited (starred) songs, paged. */
@@ -112,6 +115,14 @@ interface ServerLibrary {
   suspend fun renamePlaylist(playlistLink: String, name: String): Unit = unsupported()
 
   suspend fun setPlaylistPrivacy(playlistLink: String, privacy: PlaylistPrivacy): Unit = unsupported()
+
+  /**
+   * Follow (save to library) or unfollow someone else's playlist link. Unfollowing removes it from the user's
+   * library without deleting it (for an [in.shabinder.soundbound.models.PlaylistOwnership.OWNED] playlist some
+   * backends, e.g. Spotify, treat unfollow as delete: hosts use [deletePlaylist] for owned ones).
+   * Declared by `LibrarySyncSpec.followablePlaylists`. Default throws [UnsupportedOperationException].
+   */
+  suspend fun setPlaylistFollowed(link: String, followed: Boolean): Unit = unsupported()
 
   /**
    * One page of a collection ([LibraryCollections] id or a playlist link). [cursor] is null for the

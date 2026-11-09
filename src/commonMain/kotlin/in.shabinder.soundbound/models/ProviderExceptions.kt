@@ -31,6 +31,19 @@ sealed class ProviderExceptions(
   @Serializable
   data object AuthNeeded : ProviderExceptions("Please Sign In")
 
+  /**
+   * Signed in, but the account's plan has no access to the requested feature (Apple Music error 40015
+   * "CloudLibrary": the library API needs an active subscription). Not a sign-in problem: show
+   * "[service] library needs an active subscription" instead of a sign-in banner.
+   * Like [AuthNeeded], hosts match it across the Zipline bridge by class name ("SubscriptionRequired").
+   */
+  @Immutable
+  @Serializable
+  data class SubscriptionRequired(
+    val service: String? = null,
+    val extraInfo: String? = null,
+  ) : ProviderExceptions("SubscriptionRequired: ${service ?: "This"} library needs an active subscription", extraInfo)
+
   @Immutable
   @Serializable
   data class DownloadLinkFetchFailed(
