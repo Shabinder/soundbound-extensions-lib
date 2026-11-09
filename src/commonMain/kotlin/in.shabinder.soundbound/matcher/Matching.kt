@@ -2,8 +2,6 @@ package `in`.shabinder.soundbound.matcher
 
 import `in`.shabinder.soundbound.models.Artist
 import `in`.shabinder.soundbound.zipline.FuzzySearch
-import kotlin.math.absoluteValue
-import kotlin.math.exp
 import kotlin.math.max
 
 interface MatchProps {
@@ -19,10 +17,7 @@ interface MatchProps {
 
 /**
  * Matching v2: the candidates that are the same recording as [matchFor], best first (the map iterates in score order,
- * so `keys.firstOrNull()` is the best match). An equal ISRC scores 100. Every other candidate must pass
- * [RecordingMatch.score]: version family (live/remix/acoustic/sped up/…, word-bounded, both directions), featured
- * guests, whole artist credits (tribute/karaoke guard), the duration window (±3 s, ±15 s when either side is
- * YouTube) and two-tier title similarity. Gates ported from songmirror (MIT), see [RecordingMatch].
+ * so `keys.firstOrNull()` is the best match). Scores only; [rankMatches] also gives each verdict's reason/confidence.
  * [searcher] is kept for ABI compatibility; v2 scoring is self-contained so app and extensions agree.
  */
 @Suppress("UNUSED_PARAMETER")
@@ -30,34 +25,44 @@ fun <S : MatchProps, T : MatchProps> orderResults(
     matchFor: T,
     allMatches: Collection<S>,
     searcher: FuzzySearch
-): Map<S, Float> {
+): Map<S, Float> = rankMatches(matchFor, allMatches).associateTo(LinkedHashMap()) { it.first to it.second.score }
+
+/**
+ * The accepted candidates with their [MatchVerdict], best first. An equal ISRC scores 100 ([MatchReason.ISRC]) unless
+ * known metadata contradicts it ([RecordingMatch.idConflict]: a search that tags the wrong upload with the wanted code
+ * must not win). Every other candidate must pass [RecordingMatch.score]: version family (live/remix/acoustic/sped
+ * up/…, word-bounded, both directions), featured guests, whole artist credits (tribute/karaoke guard), the duration
+ * window (±3 s, ±15 s when either side is YouTube) and two-tier title similarity. Gates ported from songmirror and
+ * SoulSync (MIT), see [RecordingMatch].
+ */
+fun <S : MatchProps, T : MatchProps> rankMatches(matchFor: T, allMatches: Collection<S>): List<Pair<S, MatchVerdict>> {
     val wantedIsrc = RecordingMatch.normalizeIsrc(matchFor.isrc)
     val wantedArtists = matchFor.artists.map(Artist::name)
-    val scored = allMatches.mapNotNull { match ->
-        if (wantedIsrc.isNotEmpty() && RecordingMatch.normalizeIsrc(match.isrc) == wantedIsrc) return@mapNotNull match to 100f
-        val verdict = RecordingMatch.score(
-            matchFor.title, wantedArtists, matchFor.durationSec,
-            match.title, match.artists.map(Artist::name), match.durationSec,
-            youtube = RecordingMatch.isYoutube(matchFor.trackUrl) || RecordingMatch.isYoutube(match.trackUrl),
-        )
-        if (verdict.accepted) match to verdict.score else null
+    fun yt(match: S) = RecordingMatch.isYoutube(matchFor.trackUrl) || RecordingMatch.isYoutube(match.trackUrl)
+    fun verdict(match: S, title: String = match.title, trustIsrc: Boolean = true): MatchVerdict {
+        val candArtists = match.artists.map(Artist::name)
+        if (trustIsrc && wantedIsrc.isNotEmpty() && RecordingMatch.normalizeIsrc(match.isrc) == wantedIsrc &&
+            RecordingMatch.idConflict(matchFor.title, wantedArtists, matchFor.durationSec, title, candArtists, match.durationSec, yt(match)) == null
+        ) return MatchVerdict(100f, true, MatchReason.ISRC)
+        return RecordingMatch.score(matchFor.title, wantedArtists, matchFor.durationSec, title, candArtists, match.durationSec, youtube = yt(match))
     }
-    if (scored.isNotEmpty() || allMatches.isEmpty()) return scored.sortedByDescending { it.second }.toMap(LinkedHashMap())
+    val scored = allMatches.map { it to verdict(it) }.filter { it.second.accepted }
+    // A perfect text match also scores 100; on ties the code-proven candidate goes first.
+    if (scored.isNotEmpty() || allMatches.isEmpty()) {
+        return scored.sortedWith(compareByDescending<Pair<S, MatchVerdict>> { it.second.score }.thenByDescending { it.second.reason == MatchReason.ISRC })
+    }
     // From lib #70 (C-02): a regional catalogue can label EVERY upload the same way ("Live", "Lofi").
     // When all candidates carry one identical version signature that the query lacks, judge them as
     // if that marker were absent, so the user still gets the closest one instead of nothing.
     val signatures = allMatches.map { RecordingMatch.versionSignature(it.title) }.toSet()
-    if (signatures.size != 1 || signatures.single() == RecordingMatch.versionSignature(matchFor.title)) return emptyMap()
+    if (signatures.size != 1 || signatures.single() == RecordingMatch.versionSignature(matchFor.title)) return emptyList()
     return allMatches.mapNotNull { match ->
-        val verdict = RecordingMatch.score(
-            matchFor.title, wantedArtists, matchFor.durationSec,
-            RecordingMatch.stripVersionWords(match.title),
-            match.artists.map(Artist::name), match.durationSec,
-            youtube = RecordingMatch.isYoutube(matchFor.trackUrl) || RecordingMatch.isYoutube(match.trackUrl),
-        )
-        if (verdict.accepted) match to verdict.score * 0.9f else null
-    }.sortedByDescending { it.second }.toMap(LinkedHashMap())
+        // Text only: an ISRC on a relabelled title proves nothing about which cut it is.
+        val v = verdict(match, RecordingMatch.stripVersionWords(match.title), trustIsrc = false)
+        if (v.accepted) match to MatchVerdict(v.score * 0.9f, true, MatchReason.SAME_LABEL_FALLBACK) else null
+    }.sortedByDescending { it.second.score }
 }
+
 fun getAlbumMatch(
     matchAlbumName: String?,
     matchForAlbumName: String?,
@@ -70,9 +75,9 @@ fun getAlbumMatch(
     return searcher.ratio(matchAlbumName.sluggify(), matchForAlbumName.sluggify())
 }
 
-/** `100·e^(−0.1·|Δs|)`: 100 at 0 s, ~74 at 3 s, ~22 at 15 s (spotDL `matching.py`, MIT). */
+/** [RecordingMatch.durationBand] on 0..100: 100 within 1 s, 90 within 2.5 s, 70 within 5 s, … 0 past 15 s. */
 fun calculateDurationMatch(matchDuration: Long, matchForDuration: Long): Float =
-    (100.0 * exp(-0.1 * (matchDuration - matchForDuration).absoluteValue)).toFloat()
+    (100.0 * RecordingMatch.durationBand(matchDuration - matchForDuration)).toFloat()
 
 fun <T : MatchProps> calculateNameMatch(match: T, matchFor: T, searcher: FuzzySearch): Float {
     var nameMatch = getNameMatch(match.title, matchFor.title, searcher)

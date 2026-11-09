@@ -182,10 +182,13 @@ class RecordingMatchTest {
         assertEquals(listOf("Karan Aujla", "Ikky"), RecordingMatch.splitCredits(listOf("Karan Aujla x Ikky")))
     }
 
-    @Test fun durationScoreIsExponential() {
+    @Test fun durationScoreIsBanded() {
         assertEquals(100f, calculateDurationMatch(200, 200))
-        assertEquals(74.08f, calculateDurationMatch(203, 200), 0.01f)
-        assertEquals(22.31f, calculateDurationMatch(185, 200), 0.01f)
+        assertEquals(100f, calculateDurationMatch(201, 200))
+        assertEquals(90f, calculateDurationMatch(198, 200))
+        assertEquals(70f, calculateDurationMatch(205, 200))
+        assertEquals(15f, calculateDurationMatch(185, 200))
+        assertEquals(0f, calculateDurationMatch(240, 200))
     }
 
     // --- orderResults public API ---
@@ -215,8 +218,11 @@ class RecordingMatchTest {
         val ordered = orderResults(wanted, listOf(acoustic, far, studio, near), NoFuzzy)
         assertEquals(listOf(near, far, studio), ordered.keys.toList())
 
-        val byIsrc = P("Totally Different", "Nobody", 10, isrc = "QZDA62590546")
-        assertEquals(listOf(byIsrc), orderResults(wanted.copy(isrc = "qz-da6-25-90546"), listOf(byIsrc), NoFuzzy).keys.toList())
+        // An equal ISRC wins outright over a closer title, unless metadata contradicts it (v3: wrong upload tagged with the code).
+        val byIsrc = P("Jhol", "Maanu, Annural Khalid", 270, isrc = "QZDA62590546")
+        assertEquals(byIsrc, orderResults(wanted.copy(isrc = "qz-da6-25-90546"), listOf(near, byIsrc), NoFuzzy).keys.first())
+        val wrongIsrc = P("Totally Different", "Nobody", 10, isrc = "QZDA62590546")
+        assertTrue(orderResults(wanted.copy(isrc = "qz-da6-25-90546"), listOf(wrongIsrc), NoFuzzy).isEmpty())
 
         // Same pair without a YouTube side: 13 s off is outside the store window.
         assertTrue(orderResults(wanted.copy(trackUrl = null), listOf(studio), NoFuzzy).isEmpty())

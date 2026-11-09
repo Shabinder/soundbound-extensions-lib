@@ -1,23 +1,53 @@
 package `in`.shabinder.soundbound.matcher
 
 import kotlin.math.abs
-import kotlin.math.exp
 import kotlin.math.max
 
 /*
  * Recording gates and two-tier name similarity, ported from songmirror `songmirror/engine/matching.py`
  * (https://github.com/ahnafnafee/songmirror at 3897c5f, MIT License, Copyright (c) 2026 Ahnaf An Nafee; full text
- * in this repository's NOTICE). Changes from the original: Kotlin; no anyascii romanisation (so Latin-vs-native-script
- * titles do not match yet); seconds instead of ms; YouTube-upload title cleanup and the store ±3 s / YouTube ±15 s
- * windows from SoundBound's Docs/RESEARCH/song-identity-benchmark; marker spellings canonicalised in the compared name
- * instead of a Jaro-Winkler floor; the duration score is spotDL's `100·e^(−0.1·|Δs|)` (spotDL, MIT).
+ * in this repository's NOTICE). Changes from the original: Kotlin; a minimal Cyrillic/Greek romaniser instead of
+ * anyascii; seconds instead of ms; YouTube-upload title cleanup and the store ±3 s / YouTube ±15 s windows from
+ * SoundBound's Docs/RESEARCH/song-identity-benchmark; marker spellings canonicalised in the compared name instead of a
+ * Jaro-Winkler floor; a banded duration score instead of the linear term.
+ * Also from SoulSync `core/matching_engine.py` (https://github.com/Nezreka/SoulSync at 32480b35a, MIT License,
+ * Copyright (c) 2025 SoulSync; NOTICE): the derivative-artist keywords (salute/parody/soundalike/backing track) and the
+ * extended / rmx / rough cut version keywords.
  */
 
 /** Bumped whenever accept/reject behaviour changes, so persisted automatic matches are re-checked. */
-const val MATCHER_VERSION = 2
+const val MATCHER_VERSION = 3
+
+/** How much a verdict can be trusted, weakest first. Callers gate account writes on it (e.g. only [STRONG] or [EXACT]). */
+enum class MatchConfidence { NONE, LOOSE, STRONG, EXACT }
+
+/** Why a candidate was accepted or rejected; [confidence] follows from it. */
+enum class MatchReason(val confidence: MatchConfidence) {
+    /** Equal ISRC and no metadata contradicts it. */
+    ISRC(MatchConfidence.EXACT),
+    /** Strict title similarity, artists and a duration within [RecordingMatch.LOOSE_NAME_WINDOW_SEC] all agree. */
+    STRICT_TITLE_AND_DURATION(MatchConfidence.STRONG),
+    /** Only the loose (token-subset) title tier passed, carried by close durations. */
+    LOOSE_TITLE_AND_DURATION(MatchConfidence.LOOSE),
+    /** Strict title and artists agree; the duration is unknown or only inside the wide window. */
+    STRICT_TITLE(MatchConfidence.LOOSE),
+    /** Every candidate carried the same version label the query lacks; best of those (see `orderResults`). */
+    SAME_LABEL_FALLBACK(MatchConfidence.LOOSE),
+    VERSION_MISMATCH(MatchConfidence.NONE),
+    FEATURED_GUEST_MISMATCH(MatchConfidence.NONE),
+    ARTIST_MISMATCH(MatchConfidence.NONE),
+    DURATION_MISMATCH(MatchConfidence.NONE),
+    TITLE_MISMATCH(MatchConfidence.NONE),
+}
 
 /** [score] is 0..100; [accepted] is whether the candidate is safe to treat as the same recording. */
-data class MatchVerdict(val score: Float, val accepted: Boolean)
+data class MatchVerdict(
+    val score: Float,
+    val accepted: Boolean,
+    val reason: MatchReason = if (accepted) MatchReason.STRICT_TITLE else MatchReason.TITLE_MISMATCH,
+) {
+    val confidence: MatchConfidence get() = reason.confidence
+}
 
 object RecordingMatch {
     const val ARTIST_THRESHOLD = 0.92
@@ -26,6 +56,8 @@ object RecordingMatch {
     /** Hard duration windows: store vs store, and when either side is a YouTube upload (intros/outros). */
     const val STORE_TOLERANCE_SEC = 3L
     const val YOUTUBE_TOLERANCE_SEC = 15L
+    /** An equal ISRC still loses to a store-vs-store length gap above this (songmirror CATALOG_DURATION_TOLERANCE_MS). */
+    const val ID_TOLERANCE_SEC = 5L
 
     private val I = RegexOption.IGNORE_CASE
 
@@ -53,15 +85,17 @@ object RecordingMatch {
     private val VERSION_PATTERNS: List<Pair<String, Regex>> = listOf(
         "live" to Regex("""\b(?:live|canli|ao vivo|en vivo)\b"""),
         "acoustic" to Regex("""\b(?:acoustic|akustik|ac[uú]stic[oa]|acoustique|unplugged|stripped)\b"""),
-        "remix" to Regex("""\b(?:remix|rework|mashup)\b"""),
+        "remix" to Regex("""\b(?:remix|rmx|rework|mashup)\b"""),
         "dub" to Regex("""\b(?:dub|dubbed)\b"""),
         "mix" to Regex("""\bmix\b"""),
         "edit" to Regex("""\bedit\b"""),
+        "extended" to Regex("""\bextended\b"""), // SoulSync
+        "restrung" to Regex("""\brestrung\b"""), // string re-arrangement ("Faded (Restrung)")
         "vip" to Regex("""\bvip\b"""),
         "instrumental" to Regex("""\binstrumental\b"""),
         "karaoke" to Regex("""\bkaraoke\b"""),
         "piano" to Regex("""\bpiano\b"""),
-        "demo" to Regex("""\bdemo\b"""),
+        "demo" to Regex("""\b(?:demo|rough cut)\b"""),
         "session" to Regex("""\bsession\b"""),
         "alternate-speed" to Regex("""\b(?:sped up|speed up|slowed(?: down)?|nightcore)\b"""),
         "mix-format" to Regex("""\b(?:mono|stereo)\b"""),
@@ -87,7 +121,8 @@ object RecordingMatch {
     private val CREDIT_SPLIT =
         Regex("""\u0000|\\0|\s*(?:,|;|&|\||\s+x\s+|\b(?:feat|ft)\.?\s|\bfeaturing\s|\band\b|\bwith\b)\s*""", I)
     private val PLACEHOLDER_ARTISTS = setOf("", "release", "release topic", "unknown", "unknown artist", "various artists")
-    private val TRIBUTE = Regex("""\b(?:tribute|karaoke|covers?|renditions?)\b""")
+    // songmirror's tribute markers plus SoulSync's derivative-artist keywords.
+    private val TRIBUTE = Regex("""\b(?:tribute|karaoke|covers?|renditions?|salute|parody|soundalike|backing (?:track|band))\b""")
 
     // From lib #70 (C-02): fold common Latin accents so "Beyoncé" == "Beyonce". No NFD in commonMain (JS/iOS).
     // ponytail: Latin table only; extend when a catalogue needs more. Indic vowel signs are untouched.
@@ -107,6 +142,23 @@ object RecordingMatch {
         }
         return sb.split(' ').filter { it.isNotEmpty() }.joinToString(" ")
     }
+
+    // ponytail: Cyrillic + Greek only (they romanise letter by letter); Indic/CJK need real tables, add when a
+    // catalogue pairs those scripts with Latin titles. Keys are lowercase, as normalizeText leaves them.
+    private val ROMAN: Map<Char, String> = buildMap {
+        val cyr = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяіїєґ"
+        val cyrLat = listOf("a", "b", "v", "g", "d", "e", "e", "zh", "z", "i", "y", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u",
+            "f", "kh", "ts", "ch", "sh", "shch", "", "y", "", "e", "yu", "ya", "i", "yi", "ye", "g")
+        val gr = "αβγδεζηθικλμνξοπρσςτυφχψωάέήίόύώϊϋΐΰ"
+        val grLat = listOf("a", "v", "g", "d", "e", "z", "i", "th", "i", "k", "l", "m", "n", "x", "o", "p", "r", "s", "s", "t", "y",
+            "f", "ch", "ps", "o", "a", "e", "i", "i", "o", "y", "o", "i", "y", "i", "y")
+        cyr.forEachIndexed { i, c -> put(c, cyrLat[i]) }
+        gr.forEachIndexed { i, c -> put(c, grLat[i]) }
+    }
+
+    /** Latin reading of a normalised string's Cyrillic/Greek letters (Камин → kamin); other text unchanged. */
+    fun romanize(normalized: String): String =
+        if (normalized.none { it in ROMAN }) normalized else buildString { for (c in normalized) append(ROMAN[c] ?: c.toString()) }
 
     fun normalizeIsrc(value: String?): String = value.orEmpty().filter { it.isLetterOrDigit() }.uppercase()
 
@@ -135,7 +187,7 @@ object RecordingMatch {
     }
 
     fun versionMarkers(title: String?): Set<String> {
-        val n = VER_ABBREV.replace(normalizeText(cleanTitle(title)), "version")
+        val n = VER_ABBREV.replace(romanize(normalizeText(cleanTitle(title))), "version")
         val markers = VERSION_PATTERNS.filter { it.second.containsMatchIn(n) }.map { it.first }.toMutableSet()
         if (markers.isEmpty() && VERSION_WORD.containsMatchIn(n)) markers += "alternate-version"
         return markers
@@ -156,7 +208,7 @@ object RecordingMatch {
         val details = mutableSetOf<String>()
         for (part in cleaned.split(PART_SPLIT).drop(1)) {
             if (versionMarkers(part).isEmpty()) continue
-            var n = VER_ABBREV.replace(normalizeText(part), "version")
+            var n = VER_ABBREV.replace(romanize(normalizeText(part)), "version")
             for ((marker, pattern) in VERSION_PATTERNS) n = pattern.replace(n, marker)
             if (markers != setOf("alternate-version")) n = VERSION_WORD.replace(n, "")
             val detail = n.split(' ').filter { it.isNotBlank() }.sorted().joinToString(" ")
@@ -172,16 +224,21 @@ object RecordingMatch {
         }
     }
 
-    private fun hasCredit(guest: String, credits: String) = " ${normalizeText(credits)} ".contains(" ${normalizeText(guest)} ")
+    private fun hasCredit(guest: String, credits: String) =
+        " ${romanize(normalizeText(credits))} ".contains(" ${romanize(normalizeText(guest))} ")
 
     /** Same version family and details, and every explicit guest is credited on the other side. */
-    fun versionsCompatible(title: String, artists: List<String>, candTitle: String, candArtists: List<String>): Boolean {
-        if (versionSignature(title) != versionSignature(candTitle)) return false
+    fun versionsCompatible(title: String, artists: List<String>, candTitle: String, candArtists: List<String>): Boolean =
+        versionConflict(title, artists, candTitle, candArtists) == null
+
+    private fun versionConflict(title: String, artists: List<String>, candTitle: String, candArtists: List<String>): MatchReason? {
+        if (versionSignature(title) != versionSignature(candTitle)) return MatchReason.VERSION_MISMATCH
         val features = featuredArtists(title)
         val candFeatures = featuredArtists(candTitle)
         val credits = (artists + features).joinToString(" ")
         val candCredits = (candArtists + candFeatures).joinToString(" ")
-        return features.all { hasCredit(it, candCredits) } && candFeatures.all { hasCredit(it, credits) }
+        val ok = features.all { hasCredit(it, candCredits) } && candFeatures.all { hasCredit(it, credits) }
+        return if (ok) null else MatchReason.FEATURED_GUEST_MISMATCH
     }
 
     /** Whole performer names: splits , ; & x feat with and \u0000, drops "- Topic" and placeholder credits. */
@@ -190,14 +247,15 @@ object RecordingMatch {
             .map { it.trim() }
             .filter { normalizeText(it) !in PLACEHOLDER_ARTISTS }
 
-    private fun nameVariants(name: String) = normalizeText(name).let { setOf(it, it.replace(" ", "")) }
+    private fun nameVariants(name: String) =
+        normalizeText(name).let { n -> setOf(n, romanize(n)).flatMap { listOf(it, it.replace(" ", "")) }.toSet() }
 
     /** 0..1. A tribute/karaoke/cover credit only matches another; otherwise one side's credits must all appear on the other. */
     fun artistSimilarity(artists: List<String>, candArtists: List<String>): Double {
         val left = splitCredits(artists)
         val right = splitCredits(candArtists)
         if (left.isEmpty() || right.isEmpty()) return 0.0
-        fun tributes(names: List<String>) = TRIBUTE.findAll(normalizeText(names.joinToString(" "))).map { it.value }.toSet()
+        fun tributes(names: List<String>) = TRIBUTE.findAll(romanize(normalizeText(names.joinToString(" ")))).map { it.value }.toSet()
         if (tributes(left) != tributes(right)) return 0.0
         if ((nameVariants(left.joinToString(" ")) intersect nameVariants(right.joinToString(" "))).isNotEmpty()) return 1.0
         fun allCredits(l: List<String>, r: List<String>): Double {
@@ -210,36 +268,81 @@ object RecordingMatch {
     fun isYoutube(url: String?): Boolean = url != null && (url.contains("youtube.com") || url.contains("youtu.be"))
 
     /**
+     * Banded duration agreement, 0..1: 1 within 1 s, 0.9 within 2.5 s, then 0.7 / 0.5 / 0.3 / 0.15 up to 5 / 8 / 12 / 15 s.
+     * Within a band every candidate ties, so a few seconds of encoder padding never outranks a better title.
+     */
+    fun durationBand(deltaSec: Long): Double = when (abs(deltaSec)) {
+        in 0L..1L -> 1.0
+        2L -> 0.9 // ≤ LOOSE_NAME_WINDOW_SEC in whole seconds
+        in 3L..5L -> 0.7
+        in 6L..8L -> 0.5
+        in 9L..12L -> 0.3
+        in 13L..15L -> 0.15
+        else -> 0.0
+    }
+
+    /**
+     * songmirror `recording_metadata_compatible`: a hard identifier (equal ISRC) names the recording unless known
+     * metadata contradicts it — another version/guest, another performer, or a length outside [ID_TOLERANCE_SEC]
+     * ([YOUTUBE_TOLERANCE_SEC] when either side is YouTube). Missing metadata never disproves the identifier.
+     * Null = compatible, else why not.
+     */
+    fun idConflict(
+        title: String, artists: List<String>, durationSec: Long,
+        candTitle: String, candArtists: List<String>, candDurationSec: Long,
+        youtube: Boolean = false,
+    ): MatchReason? {
+        versionConflict(title, artists, candTitle, candArtists)?.let { return it }
+        if (splitCredits(artists).isNotEmpty() && splitCredits(candArtists).isNotEmpty() &&
+            artistSimilarity(artists, candArtists) < ARTIST_THRESHOLD
+        ) return MatchReason.ARTIST_MISMATCH
+        if (durationSec > 0 && candDurationSec > 0 &&
+            abs(durationSec - candDurationSec) > if (youtube) YOUTUBE_TOLERANCE_SEC else ID_TOLERANCE_SEC
+        ) return MatchReason.DURATION_MISMATCH
+        return null
+    }
+
+    /**
      * songmirror `score_candidate`: version + feature gate, artist gate, hard duration window, then accept when the
      * strict title similarity is high, or the loose one is high and the durations agree within [LOOSE_NAME_WINDOW_SEC].
+     * Titles compare over raw and romanised variants (Камин == Kamin).
      */
     fun score(
         title: String, artists: List<String>, durationSec: Long,
         candTitle: String, candArtists: List<String>, candDurationSec: Long,
         youtube: Boolean = false,
     ): MatchVerdict {
-        val reject = MatchVerdict(0f, false)
-        if (!versionsCompatible(title, artists, candTitle, candArtists)) return reject
+        versionConflict(title, artists, candTitle, candArtists)?.let { return MatchVerdict(0f, false, it) }
         val artistSim = artistSimilarity(artists, candArtists)
         val durationScore: Double
         val durationClose: Boolean
         if (durationSec > 0 && candDurationSec > 0) {
             val delta = abs(durationSec - candDurationSec)
-            if (delta > if (youtube) YOUTUBE_TOLERANCE_SEC else STORE_TOLERANCE_SEC) return reject
-            durationScore = exp(-0.1 * delta)
+            if (delta > if (youtube) YOUTUBE_TOLERANCE_SEC else STORE_TOLERANCE_SEC) {
+                return MatchVerdict(0f, false, MatchReason.DURATION_MISMATCH)
+            }
+            durationScore = durationBand(delta)
             durationClose = delta <= LOOSE_NAME_WINDOW_SEC
         } else {
             durationScore = 0.5
             durationClose = false
         }
-        val a = looseName(title)
-        val b = looseName(candTitle)
-        val strict = Similarity.tokenSort(a, b)
-        val nameSim = if (durationClose) max(strict, Similarity.tokenSet(a, b)) else strict
-        val score = 0.45 * nameSim + 0.35 * artistSim + 0.20 * durationScore
-        val strong = durationClose && nameSim >= 0.78 && artistSim >= ARTIST_THRESHOLD
-        val fuzzy = strict >= 0.88 && artistSim >= ARTIST_THRESHOLD
-        return MatchVerdict((score * 100).toFloat(), strong || fuzzy)
+        val a = looseName(title).let { setOf(it, romanize(it)) }
+        val b = looseName(candTitle).let { setOf(it, romanize(it)) }
+        fun best(sim: (String, String) -> Double) = a.maxOf { x -> b.maxOf { y -> sim(x, y) } }
+        val strict = best(Similarity::tokenSort)
+        val loose = if (durationClose) best(Similarity::tokenSet) else 0.0
+        val nameSim = max(strict, loose)
+        val score = ((0.45 * nameSim + 0.35 * artistSim + 0.20 * durationScore) * 100).toFloat()
+        val artistOk = artistSim >= ARTIST_THRESHOLD
+        val reason = when {
+            !artistOk -> MatchReason.ARTIST_MISMATCH
+            durationClose && strict >= 0.88 -> MatchReason.STRICT_TITLE_AND_DURATION
+            durationClose && nameSim >= 0.78 -> MatchReason.LOOSE_TITLE_AND_DURATION
+            strict >= 0.88 -> MatchReason.STRICT_TITLE
+            else -> MatchReason.TITLE_MISMATCH
+        }
+        return MatchVerdict(score, reason.confidence != MatchConfidence.NONE, reason)
     }
 }
 
