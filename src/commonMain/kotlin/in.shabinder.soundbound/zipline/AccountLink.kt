@@ -23,6 +23,13 @@ interface AccountLink : ZiplineService {
   suspend fun authorize(url: String, redirectUri: String): String?
 
   /**
+   * The first of [candidates] (redirect URIs the provider accepts, best first) this host can capture right now, e.g.
+   * a custom scheme only when the installed app is registered for it, else a loopback URI. Null = none.
+   * Hosts before this member existed throw across the bridge; callers then fall back to their own choice.
+   */
+  suspend fun pickRedirect(candidates: List<String>): String? = candidates.firstOrNull()
+
+  /**
    * POST [jsonBody] to the SoundBound backend function [name] as the signed-in user. Never throws for an HTTP error:
    * the status comes back in [CustomHttpResponse.statusCode] (401 = not signed in to SoundBound, 0 = network failure).
    */
@@ -40,6 +47,7 @@ interface AccountLink : ZiplineService {
 object UnavailableAccountLink : AccountLink {
   override suspend fun isAvailable(): Boolean = false
   override suspend fun authorize(url: String, redirectUri: String): String? = null
+  override suspend fun pickRedirect(candidates: List<String>): String? = null
   override suspend fun callBackend(name: String, jsonBody: String) = CustomHttpResponse("", emptyMap(), 0, "")
   override suspend fun getSecret(key: String): String? = null
   override suspend fun putSecret(key: String, value: String) = throw UnsupportedOperationException("no account link")
