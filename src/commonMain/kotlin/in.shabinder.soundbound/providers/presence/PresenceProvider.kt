@@ -23,7 +23,23 @@ interface PresenceProvider {
 
   /** The user turned presence off for this provider, or it is being unloaded: remove anything published. */
   suspend fun clearPresence(): Unit = unsupported()
+
+  /**
+   * An account this provider can link so presence also works where no local client is reachable. Null = nothing to
+   * link. [PresenceLink.description] is the provider's own consent copy, shown next to the link button.
+   */
+  suspend fun presenceLink(): PresenceLink? = null
+
+  /** Runs the provider's sign-in (browser consent) and returns true once linked. */
+  suspend fun linkPresenceAccount(): Boolean = unsupported()
+
+  /** Forget the linked account and remove anything published through it. */
+  suspend fun unlinkPresenceAccount(): Unit = unsupported()
 }
+
+@Immutable
+@Serializable
+data class PresenceLink(val isLinked: Boolean, val description: String)
 
 @Immutable
 @Serializable
