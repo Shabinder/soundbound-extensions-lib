@@ -70,7 +70,11 @@ enum class LoginKind { COOKIE, WEBVIEW_JS, TOKEN, DEVICE_CODE }
 data class LibrarySyncSpec(
   /** [LibraryCollections] ids the engine may read. */
   val readable: Set<String> = setOf(LibraryCollections.FAVOURITE_SONGS, LibraryCollections.PLAYLISTS),
-  /** [LibraryCollections] ids the engine may write. Declare only writes that work. */
+  /**
+   * [LibraryCollections] ids the engine may write. Declare only writes that work.
+   * [LibraryCollections.PLAYLISTS] here means the user's OWNED / COLLABORATIVE playlists are editable (with the
+   * ops in [playlistEditOps]); FOLLOWED and PLATFORM_GENERATED ones (see `SearchItem.ownership`) never are.
+   */
   val writable: Set<String> = readable,
   /** True when `libraryFingerprints()` are exact, so the engine may skip periodic full reads. */
   val exactFingerprints: Boolean = false,
@@ -78,10 +82,36 @@ data class LibrarySyncSpec(
   val keying: Keying = Keying.LINK,
   /** Regexes over playlist links the user cannot edit (auto mixes, system lists): pulled read-only, never pushed. */
   val readOnlyPlaylists: List<String> = emptyList(),
+  /** `ServerLibrary.setPlaylistFollowed` works: the engine may follow / unfollow other users' playlists. */
+  val followablePlaylists: Boolean = false,
+  /**
+   * Which playlist edits work when [LibraryCollections.PLAYLISTS] is [writable]. Default: every op when playlists
+   * are writable ([PlaylistEditOp.FOLLOW] only with [followablePlaylists]), none otherwise. Add-only backends
+   * (Apple Music public API) declare `setOf(CREATE, ADD)`.
+   */
+  val playlistEditOps: Set<PlaylistEditOp> = defaultPlaylistEditOps(writable, followablePlaylists),
 ) {
   @Serializable
   enum class Keying { LINK, ISRC, MBID }
+
+  fun canEditPlaylists(op: PlaylistEditOp): Boolean = op in playlistEditOps
 }
+
+/**
+ * One playlist write, mapped onto ServerLibrary: CREATE = `createPlaylist`, ADD = `addToPlaylist`,
+ * REMOVE = `removeFromPlaylist`, MOVE = `movePlaylistItem`, RENAME = `renamePlaylist`, DELETE = `deletePlaylist`,
+ * FOLLOW = `setPlaylistFollowed`.
+ */
+@Serializable
+enum class PlaylistEditOp { CREATE, ADD, REMOVE, MOVE, RENAME, DELETE, FOLLOW }
+
+/** [LibrarySyncSpec.playlistEditOps]'s default. */
+fun defaultPlaylistEditOps(writable: Set<String>, followablePlaylists: Boolean): Set<PlaylistEditOp> =
+  if (LibraryCollections.PLAYLISTS !in writable) {
+    if (followablePlaylists) setOf(PlaylistEditOp.FOLLOW) else emptySet()
+  } else {
+    PlaylistEditOp.entries.filter { it != PlaylistEditOp.FOLLOW || followablePlaylists }.toSet()
+  }
 
 @Immutable
 @Serializable

@@ -92,7 +92,7 @@ interface HttpClient : ZiplineService {
   ): BinaryHttpResponse
 
   /**
-   * Any-method request (PUT, DELETE, ...), for REST APIs whose writes need them.
+   * Any-method request (PUT, DELETE, PATCH, ...), for REST APIs whose writes need them.
    * Default covers GET/POST/HEAD through the methods above, so hosts that predate it keep working
    * for those; other methods need a host that overrides this (older hosts throw
    * `ZiplineApiMismatchException` across the bridge, which callers should treat as "unsupported").
@@ -222,7 +222,8 @@ interface HttpClient : ZiplineService {
 
   @Serializable
   enum class Method {
-    GET, POST, PUT, DELETE, HEAD
+    // PATCH (lib 2026-11): a host built before it cannot decode the name, so that call fails; callers may fall back.
+    GET, POST, PUT, DELETE, HEAD, PATCH
   }
 }
 
