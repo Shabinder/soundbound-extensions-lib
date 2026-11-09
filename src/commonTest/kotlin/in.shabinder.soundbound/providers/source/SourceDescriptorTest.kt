@@ -71,5 +71,6 @@ class SourceDescriptorTest {
     }
     val refs = listOf("mine://song/1", "other://song/2").map { LibraryTrackRef(it, "t", listOf("a"), 100) }
     assertEquals(listOf("mine://song/1", null), lib.matchForLibrary(refs))
+    assertEquals(listOf<Boolean?>(null, null), lib.verifyExists(refs.map { it.trackUrl }), "no check by default: unknown")
   }
 }

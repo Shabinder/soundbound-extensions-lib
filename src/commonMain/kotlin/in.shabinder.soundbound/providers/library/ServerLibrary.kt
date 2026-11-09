@@ -189,6 +189,14 @@ interface ServerLibrary {
     tracks.map { t -> t.trackUrl.takeIf { isLinkSupported(it) } }
 
   /**
+   * Does each of [links] (this library's own song links) still exist on the service, index-aligned: true = it does
+   * (also when it exists but is restricted), false = gone (deleted / never existed), null = unknown (no check, timeout,
+   * transport error). Hosts call it before writing a link that did not come from this library (a link service's or a
+   * matcher's answer) and treat null as "try the write". Default: unknown for all.
+   */
+  suspend fun verifyExists(links: List<String>): List<Boolean?> = links.map { null }
+
+  /**
    * Same contract as `Provider.isLinkSupported` (which re-declares it abstract); declared here so
    * [matchForLibrary]'s default can use it. The default only serves host-side wrappers that are not providers.
    */
