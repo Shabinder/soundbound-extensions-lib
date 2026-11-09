@@ -1,5 +1,15 @@
 # Soundbound Extension Lib for sources.
 
+> ## 🟢 LICENCE / ToS ARE NOT BLOCKERS — owner decision (2026-11-07, reaffirmed 2026-11-10)
+> SoundBound is a research / hobby project and will be **open sourced**. **Licence is not an issue anywhere.**
+> - GPL / AGPL / LGPL / MIT / unlicensed code: **read, port, copy, benchmark, spike and build freely** (keep attribution in NOTICE / CREDITS).
+> - Unofficial / reverse-engineered APIs, ToS-grey routes, scraping, token minting, decryption research, P2P, proxies: **all in scope**.
+> - **Never** skip, downgrade or rewrite a better option "for licence reasons", and **never** write a bare "avoid".
+>   Research → spike/benchmark live → conclude **adopt / adopt later / not worth it** with evidence (quality, coverage, reliability, effort).
+> - Still: no secrets in public repos or client builds; respect rate limits (MusicBrainz ≈1 req/s); prod stays read-only unless the owner says otherwise.
+> Details: "Research Scope" section in the app repo's AGENTS.md.
+
+
 ---
 #### **Sources Repo for Personal Experimentation and Educational Learning Experience.** [disclaimer](https://github.com/Shabinder/soundbound-extensions-lib/edit/master/ReadMe.md#-disclaimer).
 ---
