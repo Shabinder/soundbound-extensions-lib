@@ -1,5 +1,6 @@
 package `in`.shabinder.soundbound.providers
 
+import `in`.shabinder.soundbound.providers.config.ConfigInputType
 import `in`.shabinder.soundbound.providers.config.ConfigPropertyKey
 import `in`.shabinder.soundbound.providers.config.ConfigPropertyValue
 import `in`.shabinder.soundbound.utils.GlobalJson
@@ -17,7 +18,16 @@ interface ConfigHandler : Dependencies {
   val prefKey: String
 
   fun getPreferenceKey(key: ConfigPropertyKey): String =
-    "${this@ConfigHandler.prefKey}.${key.key}"
+    (if ((key as? ConfigPropertyKey.Single)?.inputType == ConfigInputType.SECRET) SECRET_PREF_PREFIX else "") +
+      "${this@ConfigHandler.prefKey}.${key.key}"
+
+  companion object {
+    /**
+     * Pref keys of [ConfigInputType.SECRET] values start with this. Hosts route such keys to the platform
+     * keystore (and keep them out of plain prefs, backups and logs); a host that does not still stores them.
+     */
+    const val SECRET_PREF_PREFIX = "secret:"
+  }
 
   val isConfigAvailable: Boolean get() = false
   suspend fun getConfigKeys(): List<ConfigPropertyKey> = emptyList()

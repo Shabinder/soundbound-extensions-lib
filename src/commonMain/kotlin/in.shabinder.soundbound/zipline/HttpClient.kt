@@ -29,6 +29,22 @@ fun HttpClientBuilder.build(
 ): HttpClient =
   build(enableCookies).apply(config)
 
+/**
+ * Opts requests in to host-side bot-challenge solving. Some sites answer plain HTTP clients with an
+ * interstitial "checking your browser" page (HTTP 403/503) that only a real browser engine can pass.
+ * A request carrying this header lets the host pass it in a system web view, visibly to the user
+ * when it needs interaction, then retry the request with the clearance it earned. The extension
+ * receives only the final response; the clearance cookies and the matching user agent stay in the
+ * host, which keeps sending them for that site. The host strips the header before sending.
+ *
+ * Send it per request, or on every request of a client via [enableChallengeSolving]. Hosts that
+ * predate it ignore it, and the user can switch solving off in the host.
+ */
+const val SOLVE_CHALLENGE_HEADER = "X-Soundbound-Solve-Challenge"
+
+/** Adds [SOLVE_CHALLENGE_HEADER] to this client's default headers, so every request opts in. */
+fun HttpClient.enableChallengeSolving() = setDefaultHeaders(defaultHeaders() + (SOLVE_CHALLENGE_HEADER to "1"))
+
 @Serializable
 data class CustomHttpResponse(
   val body: String,
@@ -90,6 +106,36 @@ interface HttpClient : ZiplineService {
     headers: Map<String, String> = emptyMap(),
     body: ByteArray,
   ): BinaryHttpResponse
+
+  /**
+   * GET whose body is returned as raw bytes, e.g. a `Range: bytes=0-65535` read of a media file's header.
+   * [getRequest] decodes its body as text, which corrupts binary content. Hosts that predate this method throw
+   * `ZiplineApiMismatchException` across the bridge; callers should treat that as "unsupported" and degrade.
+   */
+  suspend fun getBytes(
+    url: String,
+    params: Map<String, String> = emptyMap(),
+    headers: Map<String, String> = emptyMap(),
+  ): BinaryHttpResponse = throw UnsupportedOperationException("Binary GET not supported by this host")
+
+  /**
+   * Any-method request (PUT, DELETE, PATCH, ...), for REST APIs whose writes need them.
+   * Default covers GET/POST/HEAD through the methods above, so hosts that predate it keep working
+   * for those; other methods need a host that overrides this (older hosts throw
+   * `ZiplineApiMismatchException` across the bridge, which callers should treat as "unsupported").
+   */
+  suspend fun request(
+    method: Method,
+    url: String,
+    params: Map<String, String> = emptyMap(),
+    body: BodyType = BodyType.NONE,
+    headers: Map<String, String> = emptyMap(),
+  ): CustomHttpResponse = when (method) {
+    Method.GET -> getRequest(url, params, headers)
+    Method.POST -> postRequest(url, params, body, headers)
+    Method.HEAD -> headRequest(url, params, headers)
+    else -> throw UnsupportedOperationException("HTTP $method not supported by this host")
+  }
 
   suspend fun headRequest(
     url: String,
@@ -203,7 +249,8 @@ interface HttpClient : ZiplineService {
 
   @Serializable
   enum class Method {
-    GET, POST, PUT, DELETE, HEAD
+    // PATCH (lib 2026-11): a host built before it cannot decode the name, so that call fails; callers may fall back.
+    GET, POST, PUT, DELETE, HEAD, PATCH
   }
 }
 

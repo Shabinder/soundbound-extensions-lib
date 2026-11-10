@@ -103,6 +103,10 @@ dependencies {
 }
 
 kotlin {
+  // Public API guard: `./gradlew checkKotlinAbi` fails on any unrecorded API change;
+  // `./gradlew updateKotlinAbi` rewrites api/ after an intentional change. Run before each publish.
+  @OptIn(org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation::class)
+  abiValidation {}
   iosArm64()
   iosSimulatorArm64()
   androidLibrary {
@@ -138,7 +142,10 @@ kotlin {
         }
       }
     }
-    commonTest.dependencies { implementation(kotlin("test")) }
+    commonTest.dependencies {
+      implementation(kotlin("test"))
+      implementation(deps.kotlin.kotlinTestCoroutine)
+    }
   }
 }
 

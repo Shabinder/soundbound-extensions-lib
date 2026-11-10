@@ -2,6 +2,7 @@ package `in`.shabinder.soundbound.providers
 
 import androidx.compose.runtime.Immutable
 import `in`.shabinder.soundbound.utils.DevicePreferences
+import `in`.shabinder.soundbound.zipline.AccountLink
 import `in`.shabinder.soundbound.zipline.Crypto
 import `in`.shabinder.soundbound.zipline.FuzzySearch
 import `in`.shabinder.soundbound.zipline.HttpClientBuilder
@@ -10,6 +11,13 @@ import `in`.shabinder.soundbound.zipline.RuntimeAssets
 import `in`.shabinder.soundbound.zipline.SoundboundLogger
 import `in`.shabinder.soundbound.zipline.HeadlessBrowser
 import `in`.shabinder.soundbound.zipline.UnavailableRuntimeAssets
+import `in`.shabinder.soundbound.zipline.LocalIpc
+import `in`.shabinder.soundbound.zipline.UnavailableAccountLink
+import `in`.shabinder.soundbound.zipline.UnavailableLocalIpc
+import `in`.shabinder.soundbound.zipline.UnavailableWebSocket
+import `in`.shabinder.soundbound.zipline.WebSocketClient
+import `in`.shabinder.soundbound.zipline.NetworkSockets
+import `in`.shabinder.soundbound.zipline.UnavailableNetworkSockets
 
 @Immutable
 interface Dependencies {
@@ -30,5 +38,17 @@ interface Dependencies {
   /** Large app-bundled assets fetched only when an extension actually needs them. */
   val runtimeAssets: RuntimeAssets
     get() = UnavailableRuntimeAssets
+  /** Unix socket / named pipe to another local app. Desktop only, gated per extension by the host. */
+  val localIpc: LocalIpc
+    get() = UnavailableLocalIpc
+  /** Text WebSocket client. */
+  val webSocket: WebSocketClient
+    get() = UnavailableWebSocket
+  /** OAuth2 account linking through the SoundBound backend, gated per extension by the host. */
+  val accountLink: AccountLink
+    get() = UnavailableAccountLink
   val crypto: Crypto
+  /** Raw TCP, gated per extension by the user ([in.shabinder.soundbound.providers.source.HostPermission.NETWORK_SOCKETS]). */
+  val networkSockets: NetworkSockets
+    get() = UnavailableNetworkSockets
 }

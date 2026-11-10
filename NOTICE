@@ -1,8 +1,8 @@
-soundbound-extensions-lib includes code ported from the following project:
+soundbound-extensions-lib includes code ported from the following projects:
 
-songmirror (https://github.com/ahnafnafee/songmirror), commit 3897c5f
-Ported into src/commonMain/kotlin/in.shabinder.soundbound/matcher/RecordingMatch.kt and the tests in
-src/commonTest/kotlin/in.shabinder.soundbound/matcher/RecordingMatchTest.kt.
+songmirror (https://github.com/ahnafnafee/songmirror), commit 3897c5f (matching code unchanged through 9382cfe)
+Ported into src/commonMain/kotlin/in.shabinder.soundbound/matcher/RecordingMatch.kt and Matching.kt, and the tests in
+src/commonTest/kotlin/in.shabinder.soundbound/matcher/RecordingMatchTest.kt and MatchingRegressionTest.kt.
 
 MIT License
 
@@ -25,3 +25,83 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+--------------------------------------------------------------------------------
+
+SoulSync (https://github.com/Nezreka/SoulSync), commit 32480b35a
+Version keywords (extended, rmx, rough cut) and derivative-artist keywords (salute, parody, soundalike, backing
+track/band) from core/matching_engine.py ported into src/commonMain/kotlin/in.shabinder.soundbound/matcher/RecordingMatch.kt;
+guard cases from tests/matching/test_divergent_version.py ported into
+src/commonTest/kotlin/in.shabinder.soundbound/matcher/MatchingRegressionTest.kt.
+
+MIT License
+
+Copyright (c) [2025] [SoulSync]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--------------------------------------------------------------------------------
+
+SimpMusic core (https://github.com/maxrave-dev/core), commit c8999216813587995d941a3215dcf365e60e8422
+Romanisation engines from org.simpmusic.lyrics.romanization (LyricsRomanizer, RomanizationLanguage, IndicRomanizer,
+HangulRomanizer, KanaRomanizer, CyrillicRomanizer) adapted into
+src/commonMain/kotlin/in.shabinder.soundbound/text/Romanizer.kt (moved here from the SoundBound app's
+common/shared/.../lyrics/LyricsRomanizer.kt so the app and the matcher share one implementation). Changes: Indic tables
+switched from Hunterian to ISO 15919 and extended to every ISCII-aligned Brahmic block, word-final schwa deletion,
+Gurmukhi addak/carriers, Hangul liquidisation, Cyrillic language guessed per line; Greek, Thai, Arabic/Persian/Urdu,
+Hebrew and Han pinyin added.
+
+GNU General Public License v3.0 (https://www.gnu.org/licenses/gpl-3.0.txt). Copyright (c) maxrave-dev and SimpMusic
+contributors. The Romanizer.kt file as a whole is distributed under GPL-3.0.
+
+--------------------------------------------------------------------------------
+
+Unicode Han Database (Unihan) 18.0.0, Unihan_Readings.txt field kMandarin
+(https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip), generated into
+src/commonMain/kotlin/in.shabinder.soundbound/text/PinyinData.kt.
+
+UNICODE LICENSE V3 (https://www.unicode.org/license.txt)
+
+Copyright (c) 1991-2026 Unicode, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of data files and any associated
+documentation (the "Data Files") or software and any associated documentation (the "Software") to deal in the Data
+Files or Software without restriction, including without limitation the rights to use, copy, modify, merge, publish,
+distribute, and/or sell copies of the Data Files or Software, and to permit persons to whom the Data Files or Software
+are furnished to do so, provided that either (a) this copyright and permission notice appear with all copies of the
+Data Files or Software, or (b) this copyright and permission notice appear in associated Documentation.
+
+THE DATA FILES AND SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY
+RIGHTS. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE BE LIABLE FOR ANY CLAIM, OR ANY
+SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THE DATA FILES OR SOFTWARE.
+
+Except as contained in this notice, the name of a copyright holder shall not be used in advertising or otherwise to
+promote the sale, use or other dealings in these Data Files or Software without prior written authorization of the
+copyright holder.
+
+--------------------------------------------------------------------------------
+
+MusicBrainz artist data (https://musicbrainz.org/doc/MusicBrainz_Database), JSON dump 20261107-001001, artist names,
+sort names and aliases; ranked by ListenBrainz artist listen counts (https://listenbrainz.org,
+/1/popularity/artist). Generated into src/commonMain/kotlin/in.shabinder.soundbound/matcher/ArtistAliasData.kt.
+Both datasets are released under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/) by the MetaBrainz
+Foundation; no attribution is required, it is given as a courtesy.
