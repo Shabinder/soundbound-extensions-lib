@@ -18,6 +18,8 @@ import `in`.shabinder.soundbound.zipline.UnavailableWebSocket
 import `in`.shabinder.soundbound.zipline.WebSocketClient
 import `in`.shabinder.soundbound.zipline.NetworkSockets
 import `in`.shabinder.soundbound.zipline.UnavailableNetworkSockets
+import `in`.shabinder.soundbound.zipline.RemoteConfig
+import `in`.shabinder.soundbound.zipline.UnavailableRemoteConfig
 
 @Immutable
 interface Dependencies {
@@ -51,4 +53,7 @@ interface Dependencies {
   /** Raw TCP, gated per extension by the user ([in.shabinder.soundbound.providers.source.HostPermission.NETWORK_SOCKETS]). */
   val networkSockets: NetworkSockets
     get() = UnavailableNetworkSockets
+  /** Per-extension JSON config fetched and cached by the host (endpoints, ids, kill switch). See [RemoteConfig]. */
+  val remoteConfig: RemoteConfig
+    get() = UnavailableRemoteConfig
 }
