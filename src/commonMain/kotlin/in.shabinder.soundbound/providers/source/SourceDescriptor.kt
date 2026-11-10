@@ -54,7 +54,7 @@ data class SourceDescriptor(
   /**
    * Host capabilities beyond catalogue HTTP this extension asks for. The host keeps one grant per (extension,
    * permission), lists each declared one on the extension's page with a switch, and refuses any it does not declare
-   * or the user has not granted. Declaring a permission added after [HostApi] 41 needs `min_host_api` >= its level in
+   * or the user has not granted. Declaring a permission added at or after [HostApi] 40 needs `min_host_api` >= its level in
    * the repository listing, or older hosts drop the whole descriptor.
    */
   @Serializable(with = HostPermissionSetSerializer::class)
@@ -114,7 +114,7 @@ enum class HostPermission {
   /** Raw TCP through `Dependencies.networkSockets` (peer-to-peer networks, NNTP, IRC, game/media daemons). */
   NETWORK_SOCKETS,
 
-  /** Loopback and private-network targets for [NETWORK_SOCKETS]. Since [HostApi] 42, like every entry below. */
+  /** Loopback and private-network targets for [NETWORK_SOCKETS]. Since [HostApi] 40, like every entry below. */
   LOCAL_NETWORK,
 
   /** `Dependencies.webSocket`. */
