@@ -11,8 +11,11 @@ interface MatchProps {
     val durationSec: Long
     val isrc: String?
 
-    /** Where this side came from, when known. A YouTube side gets the wider duration window (uploads add intros). */
+    /** Where this side came from, when known. */
     val trackUrl: String? get() = null
+
+    /** This side's length may include intros/outros, so it gets [RecordingMatch.LOOSE_TOLERANCE_SEC]. */
+    val looseDuration: Boolean get() = RecordingMatch.hasLooseDuration(trackUrl)
 }
 
 /**
@@ -32,19 +35,19 @@ fun <S : MatchProps, T : MatchProps> orderResults(
  * known metadata contradicts it ([RecordingMatch.idConflict]: a search that tags the wrong upload with the wanted code
  * must not win). Every other candidate must pass [RecordingMatch.score]: version family (live/remix/acoustic/sped
  * up/…, word-bounded, both directions), featured guests, whole artist credits (tribute/karaoke guard), the duration
- * window (±3 s, ±15 s when either side is YouTube) and two-tier title similarity. Gates ported from songmirror and
+ * window (±3 s, ±15 s when either side has loose durations) and two-tier title similarity. Gates ported from songmirror and
  * SoulSync (MIT), see [RecordingMatch].
  */
 fun <S : MatchProps, T : MatchProps> rankMatches(matchFor: T, allMatches: Collection<S>): List<Pair<S, MatchVerdict>> {
     val wantedIsrc = RecordingMatch.normalizeIsrc(matchFor.isrc)
     val wantedArtists = matchFor.artists.map(Artist::name)
-    fun yt(match: S) = RecordingMatch.isYoutube(matchFor.trackUrl) || RecordingMatch.isYoutube(match.trackUrl)
+    fun yt(match: S) = matchFor.looseDuration || match.looseDuration
     fun verdict(match: S, title: String = match.title, trustIsrc: Boolean = true): MatchVerdict {
         val candArtists = match.artists.map(Artist::name)
         if (trustIsrc && wantedIsrc.isNotEmpty() && RecordingMatch.normalizeIsrc(match.isrc) == wantedIsrc &&
             RecordingMatch.idConflict(matchFor.title, wantedArtists, matchFor.durationSec, title, candArtists, match.durationSec, yt(match)) == null
         ) return MatchVerdict(100f, true, MatchReason.ISRC)
-        return RecordingMatch.score(matchFor.title, wantedArtists, matchFor.durationSec, title, candArtists, match.durationSec, youtube = yt(match))
+        return RecordingMatch.score(matchFor.title, wantedArtists, matchFor.durationSec, title, candArtists, match.durationSec, looseDuration = yt(match))
     }
     val scored = allMatches.map { it to verdict(it) }.filter { it.second.accepted }
     // A perfect text match also scores 100; on ties the code-proven candidate goes first.

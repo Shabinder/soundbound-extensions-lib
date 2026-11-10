@@ -23,9 +23,17 @@ class SourceDescriptorTest {
     assertEquals("X", d.shortName)
     assertEquals(SyncDefaults(defaultTarget = false, privatePlaylistsSupported = false, likesPublic = false), d.syncDefaults)
     assertEquals(SearchDefaults(ungated = false, enabledByDefault = false, tileRank = 100, chipless = false), d.search)
-    assertEquals(IdentitySpec(odesliInputRank = null, catalogStore = false, durationSlackSec = 3), d.identity)
+    assertEquals(IdentitySpec(linkServiceInputRank = null, catalogStore = false, durationSlackSec = 3), d.identity)
     assertNull(d.library); assertNull(d.login); assertNull(d.instanceLabel)
     assertEquals("X", d.label)
+  }
+
+  @Test
+  fun linkServiceInputRankKeepsItsWireKey() {
+    // Bundles and hosts built against 0.40 exchange this key; the Kotlin rename must not change it.
+    val wire = json.encodeToString(IdentitySpec.serializer(), IdentitySpec(linkServiceInputRank = 2))
+    assertEquals(true, "\"odesliInputRank\":2" in wire, wire)
+    assertEquals(2, json.decodeFromString(IdentitySpec.serializer(), """{"odesliInputRank":2}""").linkServiceInputRank)
   }
 
   @Test

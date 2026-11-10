@@ -54,9 +54,11 @@ object RecordingMatch {
     const val ARTIST_THRESHOLD = 0.92
     /** Loose (token-set) title similarity only counts when the durations agree this closely. */
     const val LOOSE_NAME_WINDOW_SEC = 2.5
-    /** Hard duration windows: store vs store, and when either side is a YouTube upload (intros/outros). */
+    /** Hard duration windows: store vs store, and when either side has loose durations (video uploads: intros/outros). */
     const val STORE_TOLERANCE_SEC = 3L
-    const val YOUTUBE_TOLERANCE_SEC = 15L
+    const val LOOSE_TOLERANCE_SEC = 15L
+    @Deprecated("Renamed to a role.", ReplaceWith("LOOSE_TOLERANCE_SEC"))
+    const val YOUTUBE_TOLERANCE_SEC = LOOSE_TOLERANCE_SEC
     /** An equal ISRC still loses to a store-vs-store length gap above this (songmirror CATALOG_DURATION_TOLERANCE_MS). */
     const val ID_TOLERANCE_SEC = 5L
     /** A [soundKey] shorter than this (one or two consonants) is too common to identify a name. */
@@ -298,7 +300,12 @@ object RecordingMatch {
         return max(allCredits(left, right), allCredits(right, left))
     }
 
-    fun isYoutube(url: String?): Boolean = url != null && (url.contains("youtube.com") || url.contains("youtu.be"))
+    /** Default for [MatchProps.looseDuration]: a link on a video-upload host, whose lengths include intros/outros. */
+    fun hasLooseDuration(url: String?): Boolean = url != null && LOOSE_DURATION_HOSTS.any { url.contains(it) }
+    private val LOOSE_DURATION_HOSTS = listOf("youtube.com", "youtu.be")
+
+    @Deprecated("Renamed to a role.", ReplaceWith("hasLooseDuration(url)"))
+    fun isYoutube(url: String?): Boolean = hasLooseDuration(url)
 
     /**
      * Banded duration agreement, 0..1: 1 within 1 s, 0.9 within 2.5 s, then 0.7 / 0.5 / 0.3 / 0.15 up to 5 / 8 / 12 / 15 s.
@@ -317,20 +324,20 @@ object RecordingMatch {
     /**
      * songmirror `recording_metadata_compatible`: a hard identifier (equal ISRC) names the recording unless known
      * metadata contradicts it — another version/guest, another performer, or a length outside [ID_TOLERANCE_SEC]
-     * ([YOUTUBE_TOLERANCE_SEC] when either side is YouTube). Missing metadata never disproves the identifier.
+     * ([LOOSE_TOLERANCE_SEC] when either side has [looseDuration]). Missing metadata never disproves the identifier.
      * Null = compatible, else why not.
      */
     fun idConflict(
         title: String, artists: List<String>, durationSec: Long,
         candTitle: String, candArtists: List<String>, candDurationSec: Long,
-        youtube: Boolean = false,
+        looseDuration: Boolean = false,
     ): MatchReason? {
         versionConflict(title, artists, candTitle, candArtists)?.let { return it }
         if (splitCredits(artists).isNotEmpty() && splitCredits(candArtists).isNotEmpty() &&
             artistSimilarity(artists, candArtists) < ARTIST_THRESHOLD
         ) return MatchReason.ARTIST_MISMATCH
         if (durationSec > 0 && candDurationSec > 0 &&
-            abs(durationSec - candDurationSec) > if (youtube) YOUTUBE_TOLERANCE_SEC else ID_TOLERANCE_SEC
+            abs(durationSec - candDurationSec) > if (looseDuration) LOOSE_TOLERANCE_SEC else ID_TOLERANCE_SEC
         ) return MatchReason.DURATION_MISMATCH
         return null
     }
@@ -343,7 +350,7 @@ object RecordingMatch {
     fun score(
         title: String, artists: List<String>, durationSec: Long,
         candTitle: String, candArtists: List<String>, candDurationSec: Long,
-        youtube: Boolean = false,
+        looseDuration: Boolean = false,
     ): MatchVerdict {
         versionConflict(title, artists, candTitle, candArtists)?.let { return MatchVerdict(0f, false, it) }
         // "Part 1" vs "Part 2": one token apart scores 0.89, above the strict tier, so numbers must agree when both
@@ -358,7 +365,7 @@ object RecordingMatch {
         val durationClose: Boolean
         if (durationSec > 0 && candDurationSec > 0) {
             val delta = abs(durationSec - candDurationSec)
-            if (delta > if (youtube) YOUTUBE_TOLERANCE_SEC else STORE_TOLERANCE_SEC) {
+            if (delta > if (looseDuration) LOOSE_TOLERANCE_SEC else STORE_TOLERANCE_SEC) {
                 return MatchVerdict(0f, false, MatchReason.DURATION_MISMATCH)
             }
             durationScore = durationBand(delta)
