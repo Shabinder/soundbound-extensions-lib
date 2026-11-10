@@ -1,13 +1,14 @@
 package `in`.shabinder.soundbound.matcher
 
+import `in`.shabinder.soundbound.text.Romanizer
 import kotlin.math.abs
 import kotlin.math.max
 
 /*
  * Recording gates and two-tier name similarity, ported from songmirror `songmirror/engine/matching.py`
  * (https://github.com/ahnafnafee/songmirror at 3897c5f, MIT License, Copyright (c) 2026 Ahnaf An Nafee; full text
- * in this repository's NOTICE). Changes from the original: Kotlin; a minimal Cyrillic/Greek romaniser instead of
- * anyascii; seconds instead of ms; YouTube-upload title cleanup and the store ±3 s / YouTube ±15 s windows from
+ * in this repository's NOTICE). Changes from the original: Kotlin; the shared text.Romanizer (SimpMusic-derived, GPL-3.0)
+ * instead of anyascii; seconds instead of ms; YouTube-upload title cleanup and the store ±3 s / YouTube ±15 s windows from
  * SoundBound's Docs/RESEARCH/song-identity-benchmark; marker spellings canonicalised in the compared name instead of a
  * Jaro-Winkler floor; a banded duration score instead of the linear term.
  * Also from SoulSync `core/matching_engine.py` (https://github.com/Nezreka/SoulSync at 32480b35a, MIT License,
@@ -16,7 +17,7 @@ import kotlin.math.max
  */
 
 /** Bumped whenever accept/reject behaviour changes, so persisted automatic matches are re-checked. */
-const val MATCHER_VERSION = 3
+const val MATCHER_VERSION = 4
 
 /** How much a verdict can be trusted, weakest first. Callers gate account writes on it (e.g. only [STRONG] or [EXACT]). */
 enum class MatchConfidence { NONE, LOOSE, STRONG, EXACT }
@@ -58,6 +59,10 @@ object RecordingMatch {
     const val YOUTUBE_TOLERANCE_SEC = 15L
     /** An equal ISRC still loses to a store-vs-store length gap above this (songmirror CATALOG_DURATION_TOLERANCE_MS). */
     const val ID_TOLERANCE_SEC = 5L
+    /** A [soundKey] shorter than this (one or two consonants) is too common to identify a name. */
+    const val MIN_SOUND_KEY = 3
+    /** Strict-tier title similarity (songmirror). */
+    const val STRICT_NAME = 0.88
 
     private val I = RegexOption.IGNORE_CASE
 
@@ -83,7 +88,7 @@ object RecordingMatch {
 
     /** Word-bounded, matched on the normalised (lowercase, punctuation → space) title. Order is songmirror's. */
     private val VERSION_PATTERNS: List<Pair<String, Regex>> = listOf(
-        "live" to Regex("""\b(?:live|canli|ao vivo|en vivo)\b"""),
+        "live" to Regex("""\b(?:live|canli|ao vivo|en vivo|raivu|raibu|raibeu)\b"""), // ライヴ ライブ 라이브
         "acoustic" to Regex("""\b(?:acoustic|akustik|ac[uú]stic[oa]|acoustique|unplugged|stripped)\b"""),
         "remix" to Regex("""\b(?:remix|rmx|rework|mashup)\b"""),
         "dub" to Regex("""\b(?:dub|dubbed)\b"""),
@@ -92,7 +97,7 @@ object RecordingMatch {
         "extended" to Regex("""\bextended\b"""), // SoulSync
         "restrung" to Regex("""\brestrung\b"""), // string re-arrangement ("Faded (Restrung)")
         "vip" to Regex("""\bvip\b"""),
-        "instrumental" to Regex("""\binstrumental\b"""),
+        "instrumental" to Regex("""\binst(?:rumental)?\b"""),
         "karaoke" to Regex("""\bkaraoke\b"""),
         "piano" to Regex("""\bpiano\b"""),
         "demo" to Regex("""\b(?:demo|rough cut)\b"""),
@@ -117,6 +122,7 @@ object RecordingMatch {
     private val VER_ABBREV = Regex("""\bver\b""")
     private val PART_SPLIT = Regex("""\s+[-–—]\s+|[()\[\]{}]""")
 
+    private val NUMBER = Regex("""\d+""")
     private val TOPIC = Regex("""\s*-\s*topic\s*$""", I)
     private val CREDIT_SPLIT =
         Regex("""\u0000|\\0|\s*(?:,|;|&|\||\s+x\s+|\b(?:feat|ft)\.?\s|\bfeaturing\s|\band\b|\bwith\b)\s*""", I)
@@ -143,22 +149,39 @@ object RecordingMatch {
         return sb.split(' ').filter { it.isNotEmpty() }.joinToString(" ")
     }
 
-    // ponytail: Cyrillic + Greek only (they romanise letter by letter); Indic/CJK need real tables, add when a
-    // catalogue pairs those scripts with Latin titles. Keys are lowercase, as normalizeText leaves them.
-    private val ROMAN: Map<Char, String> = buildMap {
-        val cyr = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяіїєґ"
-        val cyrLat = listOf("a", "b", "v", "g", "d", "e", "e", "zh", "z", "i", "y", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u",
-            "f", "kh", "ts", "ch", "sh", "shch", "", "y", "", "e", "yu", "ya", "i", "yi", "ye", "g")
-        val gr = "αβγδεζηθικλμνξοπρσςτυφχψωάέήίόύώϊϋΐΰ"
-        val grLat = listOf("a", "v", "g", "d", "e", "z", "i", "th", "i", "k", "l", "m", "n", "x", "o", "p", "r", "s", "s", "t", "y",
-            "f", "ch", "ps", "o", "a", "e", "i", "i", "o", "y", "o", "i", "y", "i", "y")
-        cyr.forEachIndexed { i, c -> put(c, cyrLat[i]) }
-        gr.forEachIndexed { i, c -> put(c, grLat[i]) }
+    /**
+     * Latin reading of a normalised string in any script the shared [Romanizer] covers (Камин → kamin, तुम ही हो → tum
+     * hi ho, 사랑해 → saranghae, 月亮 → yue liang); Latin text comes back unchanged.
+     */
+    fun romanize(normalized: String): String =
+        if (normalized.all { it.code < 0x370 }) normalized else normalizeText(Romanizer.latin(normalized, spaceHan = false))
+
+    private fun nonLatin(s: String) = s.any { it.code >= 0x370 && it.isLetter() }
+
+    /**
+     * Coarse sound key for comparing two Latin readings of one name made by different spelling systems: no spaces, no
+     * vowels, voicing and aspiration merged, doubles collapsed (ரவுடி "ravuti" and "Rowdy" → "rwt"; معسل "msl" and
+     * "Masaal" → "msl"; Ukrainian read as Russian "zagrali" and "zahraly" → "skrl"). Only used when a name holds
+     * non-Latin letters, so Latin-vs-Latin scoring is untouched.
+     * ponytail: one key for every script; per-language keys (Thai tones, Arabic dialect q/g) if this over-merges.
+     */
+    fun soundKey(latin: String): String {
+        var s = latin.lowercase().filter { it in 'a'..'z' || it in '0'..'9' }
+        for ((from, to) in SOUND_DIGRAPHS) s = s.replace(from, to)
+        val sb = StringBuilder(s.length)
+        for (c in s) {
+            val m = SOUND_MERGE[c] ?: c
+            if (m == '_' || sb.lastOrNull() == m) continue
+            sb.append(m)
+        }
+        return sb.toString()
     }
 
-    /** Latin reading of a normalised string's Cyrillic/Greek letters (Камин → kamin); other text unchanged. */
-    fun romanize(normalized: String): String =
-        if (normalized.none { it in ROMAN }) normalized else buildString { for (c in normalized) append(ROMAN[c] ?: c.toString()) }
+    private val SOUND_DIGRAPHS = listOf("ng" to "n", "ph" to "f", "sh" to "s", "ch" to "c", "zh" to "j", "ts" to "s", "ks" to "x", "h" to "")
+    private val SOUND_MERGE = mapOf(
+        'a' to '_', 'e' to '_', 'i' to '_', 'o' to '_', 'u' to '_', 'y' to '_', 'w' to 'v', 'b' to 'p', 'd' to 't',
+        'g' to 'k', 'q' to 'k', 'c' to 'c', 'z' to 's', 'x' to 'k',
+    )
 
     fun normalizeIsrc(value: String?): String = value.orEmpty().filter { it.isLetterOrDigit() }.uppercase()
 
@@ -247,8 +270,10 @@ object RecordingMatch {
             .map { it.trim() }
             .filter { normalizeText(it) !in PLACEHOLDER_ARTISTS }
 
-    private fun nameVariants(name: String) =
-        normalizeText(name).let { n -> setOf(n, romanize(n)).flatMap { listOf(it, it.replace(" ", "")) }.toSet() }
+    private fun nameVariants(name: String) = normalizeText(name).let { n ->
+        val r = romanize(n)
+        setOf(n, r).flatMap { listOf(it, it.replace(" ", "")) }.toSet() + if (nonLatin(n)) setOf(soundKey(r)) else emptySet()
+    }
 
     /** 0..1. A tribute/karaoke/cover credit only matches another; otherwise one side's credits must all appear on the other. */
     fun artistSimilarity(artists: List<String>, candArtists: List<String>): Double {
@@ -258,9 +283,12 @@ object RecordingMatch {
         fun tributes(names: List<String>) = TRIBUTE.findAll(romanize(normalizeText(names.joinToString(" ")))).map { it.value }.toSet()
         if (tributes(left) != tributes(right)) return 0.0
         if ((nameVariants(left.joinToString(" ")) intersect nameVariants(right.joinToString(" "))).isNotEmpty()) return 1.0
+        val cross = nonLatin(left.joinToString(" ")) || nonLatin(right.joinToString(" "))
+        fun variants(name: String) = nameVariants(name) + if (cross) setOf(soundKey(romanize(normalizeText(name)))) else emptySet()
+        if (cross && soundKey(romanize(normalizeText(left.joinToString(" ")))).let { k -> k.length >= MIN_SOUND_KEY && k == soundKey(romanize(normalizeText(right.joinToString(" ")))) }) return 1.0
         fun allCredits(l: List<String>, r: List<String>): Double {
-            val rv = r.flatMap(::nameVariants)
-            return l.minOf { name -> nameVariants(name).maxOf { a -> rv.maxOf { b -> Similarity.tokenSort(a, b) } } }
+            val rv = r.flatMap(::variants)
+            return l.minOf { name -> variants(name).maxOf { a -> rv.maxOf { b -> Similarity.tokenSort(a, b) } } }
         }
         return max(allCredits(left, right), allCredits(right, left))
     }
@@ -313,6 +341,13 @@ object RecordingMatch {
         youtube: Boolean = false,
     ): MatchVerdict {
         versionConflict(title, artists, candTitle, candArtists)?.let { return MatchVerdict(0f, false, it) }
+        // "Part 1" vs "Part 2": one token apart scores 0.89, above the strict tier, so numbers must agree when both
+        // titles carry some.
+        val numbers = NUMBER.findAll(looseName(title)).map { it.value.trimStart('0') }.toSet()
+        val candNumbers = NUMBER.findAll(looseName(candTitle)).map { it.value.trimStart('0') }.toSet()
+        if (numbers.isNotEmpty() && candNumbers.isNotEmpty() && numbers != candNumbers) {
+            return MatchVerdict(0f, false, MatchReason.TITLE_MISMATCH)
+        }
         val artistSim = artistSimilarity(artists, candArtists)
         val durationScore: Double
         val durationClose: Boolean
@@ -327,19 +362,35 @@ object RecordingMatch {
             durationScore = 0.5
             durationClose = false
         }
-        val a = looseName(title).let { setOf(it, romanize(it)) }
-        val b = looseName(candTitle).let { setOf(it, romanize(it)) }
+        // Compared without version words: the gate above made them agree, and a long shared "instrumental" would
+        // otherwise carry two different titles over the threshold ("SHE (inst)" vs "Deutgosipeo (inst.)").
+        val bare = stripVersionWords(title).let(::normalizeText)
+        val candBare = stripVersionWords(candTitle).let(::normalizeText)
+        val a = setOf(bare, romanize(bare))
+        val b = setOf(candBare, romanize(candBare))
         fun best(sim: (String, String) -> Double) = a.maxOf { x -> b.maxOf { y -> sim(x, y) } }
-        val strict = best(Similarity::tokenSort)
+        // Across scripts, also compare unspaced readings (Thai/kana write no spaces) and sound keys, both long enough
+        // that a short key cannot collide by chance; that tier only ever counts as strict.
+        val crossSim = if (!nonLatin(title) && !nonLatin(candTitle)) 0.0 else {
+            val ra = romanize(bare)
+            val rb = romanize(candBare)
+            val ka = soundKey(ra)
+            val kb = soundKey(rb)
+            maxOf(
+                Similarity.ratio(ra.replace(" ", ""), rb.replace(" ", "")),
+                if (minOf(ka.length, kb.length) >= MIN_SOUND_KEY) Similarity.ratio(ka, kb) else 0.0,
+            )
+        }
+        val strict = max(best(Similarity::tokenSort), if (crossSim >= STRICT_NAME) crossSim else 0.0)
         val loose = if (durationClose) best(Similarity::tokenSet) else 0.0
         val nameSim = max(strict, loose)
         val score = ((0.45 * nameSim + 0.35 * artistSim + 0.20 * durationScore) * 100).toFloat()
         val artistOk = artistSim >= ARTIST_THRESHOLD
         val reason = when {
             !artistOk -> MatchReason.ARTIST_MISMATCH
-            durationClose && strict >= 0.88 -> MatchReason.STRICT_TITLE_AND_DURATION
+            durationClose && strict >= STRICT_NAME -> MatchReason.STRICT_TITLE_AND_DURATION
             durationClose && nameSim >= 0.78 -> MatchReason.LOOSE_TITLE_AND_DURATION
-            strict >= 0.88 -> MatchReason.STRICT_TITLE
+            strict >= STRICT_NAME -> MatchReason.STRICT_TITLE
             else -> MatchReason.TITLE_MISMATCH
         }
         return MatchVerdict(score, reason.confidence != MatchConfidence.NONE, reason)
