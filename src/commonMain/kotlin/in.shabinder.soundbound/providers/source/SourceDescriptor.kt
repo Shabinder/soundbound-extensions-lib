@@ -3,11 +3,18 @@ package `in`.shabinder.soundbound.providers.source
 import androidx.compose.runtime.Immutable
 import `in`.shabinder.soundbound.models.SourceModel
 import `in`.shabinder.soundbound.providers.DownloadableProvider
+import `in`.shabinder.soundbound.providers.HostApi
 import `in`.shabinder.soundbound.providers.Provider
 import `in`.shabinder.soundbound.providers.QueryableProvider
 import `in`.shabinder.soundbound.providers.auth.AuthHandler
 import `in`.shabinder.soundbound.providers.library.LibraryCollections
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.builtins.SetSerializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.Serializable
 
 /**
@@ -45,15 +52,60 @@ data class SourceDescriptor(
   /** Link prefixes this loaded copy owns (`navidrome://`, `navidrome+2://`, `https://music.youtube.com/`). */
   val linkPrefixes: List<String> = emptyList(),
   /**
-   * Host capabilities beyond HTTP this extension asks for. The app lists them on the extension's page with a switch
-   * each, off until the user turns it on; the host enforces the switch whatever the bundle declares.
+   * Host capabilities beyond catalogue HTTP this extension asks for. The host keeps one grant per (extension,
+   * permission), lists each declared one on the extension's page with a switch, and refuses any it does not declare
+   * or the user has not granted. Declaring a permission added after [HostApi] 41 needs `min_host_api` >= its level in
+   * the repository listing, or older hosts drop the whole descriptor.
    */
+  @Serializable(with = HostPermissionSetSerializer::class)
   val hostPermissions: Set<HostPermission> = emptySet(),
+  /**
+   * [HostPermission.LOCAL_IPC]: socket-name prefixes this extension may open through `LocalIpc` ("discord-ipc-").
+   * Empty = none.
+   */
+  val ipcTargets: List<String> = emptyList(),
+  /** [HostPermission.BACKEND_CALL]: SoundBound backend functions this extension calls through `AccountLink.callBackend`. */
+  val backendFunctions: Set<String> = emptySet(),
 ) {
+  /** Binary compatibility with 0.41 callers; new code uses the primary constructor. */
+  @Deprecated("0.41 shape", level = DeprecationLevel.HIDDEN)
+  constructor(
+    displayName: String, shortName: String = displayName, iconUrl: String? = null, brandColor: Long? = null,
+    capabilities: Set<SourceCapability> = emptySet(), library: LibrarySyncSpec? = null, login: LoginKind? = null,
+    syncDefaults: SyncDefaults = SyncDefaults(), identity: IdentitySpec = IdentitySpec(),
+    search: SearchDefaults = SearchDefaults(), isServer: Boolean = false, instanceLabel: String? = null,
+    linkPrefixes: List<String> = emptyList(), hostPermissions: Set<HostPermission> = emptySet(),
+  ) : this(
+    displayName, shortName, iconUrl, brandColor, capabilities, library, login, syncDefaults, identity, search, isServer,
+    instanceLabel, linkPrefixes, hostPermissions, emptyList(), emptySet(),
+  )
+
+  @Deprecated("0.41 shape", level = DeprecationLevel.HIDDEN)
+  fun copy(
+    displayName: String = this.displayName, shortName: String = this.shortName, iconUrl: String? = this.iconUrl,
+    brandColor: Long? = this.brandColor, capabilities: Set<SourceCapability> = this.capabilities,
+    library: LibrarySyncSpec? = this.library, login: LoginKind? = this.login, syncDefaults: SyncDefaults = this.syncDefaults,
+    identity: IdentitySpec = this.identity, search: SearchDefaults = this.search, isServer: Boolean = this.isServer,
+    instanceLabel: String? = this.instanceLabel, linkPrefixes: List<String> = this.linkPrefixes,
+    hostPermissions: Set<HostPermission> = this.hostPermissions,
+  ): SourceDescriptor = copy(
+    displayName, shortName, iconUrl, brandColor, capabilities, library, login, syncDefaults, identity, search, isServer,
+    instanceLabel, linkPrefixes, hostPermissions, ipcTargets, backendFunctions,
+  )
+
   /** The label the app shows for this loaded copy. */
   val label: String get() = instanceLabel ?: displayName
 
   fun has(capability: SourceCapability): Boolean = capability in capabilities
+}
+
+/** Decodes [HostPermission] names this lib does not know (a newer bundle's) by dropping them, not the descriptor. */
+internal object HostPermissionSetSerializer : KSerializer<Set<HostPermission>> {
+  private val names = SetSerializer(String.serializer())
+  override val descriptor: SerialDescriptor = names.descriptor
+  override fun serialize(encoder: Encoder, value: Set<HostPermission>) = names.serialize(encoder, value.mapTo(LinkedHashSet()) { it.name })
+  override fun deserialize(decoder: Decoder): Set<HostPermission> =
+    names.deserialize(decoder).mapNotNullTo(LinkedHashSet()) { n -> HostPermission.entries.firstOrNull { it.name == n } }
 }
 
 /** See [SourceDescriptor.hostPermissions]. */
@@ -61,6 +113,24 @@ data class SourceDescriptor(
 enum class HostPermission {
   /** Raw TCP through `Dependencies.networkSockets` (peer-to-peer networks, NNTP, IRC, game/media daemons). */
   NETWORK_SOCKETS,
+
+  /** Loopback and private-network targets for [NETWORK_SOCKETS]. Since [HostApi] 42, like every entry below. */
+  LOCAL_NETWORK,
+
+  /** `Dependencies.webSocket`. */
+  WEB_SOCKET,
+
+  /** `Dependencies.localIpc`, limited to [SourceDescriptor.ipcTargets]. */
+  LOCAL_IPC,
+
+  /** `AccountLink` browser sign-in and per-extension secrets. */
+  ACCOUNT_LINK,
+
+  /** `Dependencies.headlessBrowser`: a hidden browser and the cookies of the sites it loads. */
+  WEB_VIEW,
+
+  /** `AccountLink.callBackend`, limited to [SourceDescriptor.backendFunctions]. */
+  BACKEND_CALL,
 }
 
 @Serializable
