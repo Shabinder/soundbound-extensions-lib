@@ -94,7 +94,7 @@ coil = "3.6.3"
 # Haze 2.0.1 (latest on Maven Central 2026-10-28) needs Kotlin >= 2.4.20 + CMP >= 1.12.1. Only
 # common/designsystem Glass.kt may import it (scripts/check-design-tokens.sh hard zero).
 haze = "2.0.1"
-filekit = "0.14.1"
+filekit = "0.17.0"
 
 # Frameworks & UI
 koin = "4.2.2"
