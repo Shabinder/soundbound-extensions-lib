@@ -66,8 +66,8 @@ class RemoteConfigValues(val json: JsonObject) {
 /**
  * The cache every [RemoteConfig] host shares: fresh for [ttlMs] (6 h), then served stale while one refresh runs
  * ([revalidate] launches it in the background; without it the refresh runs inline). A failed fetch keeps the last good
- * document and is not retried for [retryMs]. `If-None-Match` is sent when the last answer had an ETag. A 404 caches "no
- * document". Only a JSON object is accepted.
+ * document and is not retried for [retryMs]. `If-None-Match` is sent when the last answer had an ETag. A 404 means "no
+ * document" until [retryMs] passes, so a newly published one is picked up quickly. Only a JSON object is accepted.
  *
  * Signatures are not verified: documents come over HTTPS from [RemoteConfig.DEFAULT_BASE_URL]'s host.
  *
@@ -126,7 +126,7 @@ class CachingRemoteConfig(
     val next = when {
       r == null -> old.copy(retryAt = t + retryMs)
       r.status == 304 -> old.copy(fetchedAt = t, retryAt = 0)
-      r.status == 404 -> Entry(fetchedAt = t)
+      r.status == 404 -> Entry(retryAt = t + retryMs) // no document (yet): asked again after the retry window, not the TTL
       r.status in 200..299 && isObject(r.body) -> Entry(r.body, r.etag, fetchedAt = t)
       else -> old.copy(retryAt = t + retryMs)
     }

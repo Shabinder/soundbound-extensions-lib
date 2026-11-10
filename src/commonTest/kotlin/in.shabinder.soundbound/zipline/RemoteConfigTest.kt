@@ -53,8 +53,9 @@ class RemoteConfigTest {
     val pending = mutableListOf<suspend () -> Unit>()
     answer = { CachingRemoteConfig.Response(200, """{"n":1}""") }
     val c = config { pending += it }
-    t += 200
-    assertEquals("""{"n":1}""", c.document("y")) // 404 cached nothing to serve stale, so this one is inline
+    t += 10; assertNull(c.document("y")) // 404 remembered inside the retry window
+    t += 60
+    assertEquals("""{"n":1}""", c.document("y")) // published since: nothing stale to serve, so this one is inline
     assertTrue(pending.isEmpty())
     answer = { CachingRemoteConfig.Response(200, """{"n":2}""") }
     t += 200
