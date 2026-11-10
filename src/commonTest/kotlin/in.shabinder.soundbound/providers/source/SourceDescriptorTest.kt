@@ -37,6 +37,15 @@ class SourceDescriptorTest {
   }
 
   @Test
+  fun unknownHostPermissionsAreDroppedNotFatal() {
+    val d = json.decodeFromString(SourceDescriptor.serializer(),
+      """{"displayName":"X","hostPermissions":["WEB_VIEW","SOME_FUTURE_PERMISSION"],"ipcTargets":["x-ipc-"],"backendFunctions":["fn"]}""")
+    assertEquals(setOf(HostPermission.WEB_VIEW), d.hostPermissions)
+    assertEquals(listOf("x-ipc-"), d.ipcTargets)
+    assertEquals(setOf("fn"), d.backendFunctions)
+  }
+
+  @Test
   fun fullDescriptorRoundTrips() {
     val d = SourceDescriptor(
       displayName = "Server", shortName = "S", iconUrl = "https://soundbound.app/assets/ic_x.svg", brandColor = 0xFF112233,
