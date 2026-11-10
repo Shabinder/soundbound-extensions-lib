@@ -17,7 +17,7 @@ import kotlin.math.max
  */
 
 /** Bumped whenever accept/reject behaviour changes, so persisted automatic matches are re-checked. */
-const val MATCHER_VERSION = 4
+const val MATCHER_VERSION = 5
 
 /** How much a verdict can be trusted, weakest first. Callers gate account writes on it (e.g. only [STRONG] or [EXACT]). */
 enum class MatchConfidence { NONE, LOOSE, STRONG, EXACT }
@@ -275,8 +275,11 @@ object RecordingMatch {
         setOf(n, r).flatMap { listOf(it, it.replace(" ", "")) }.toSet() + if (nonLatin(n)) setOf(soundKey(r)) else emptySet()
     }
 
-    /** 0..1. A tribute/karaoke/cover credit only matches another; otherwise one side's credits must all appear on the other. */
-    fun artistSimilarity(artists: List<String>, candArtists: List<String>): Double {
+    /**
+     * 0..1. A tribute/karaoke/cover credit only matches another; otherwise one side's credits must all appear on the other.
+     * With [aliases], two credits that are recorded names of one artist ([ArtistAliases]: 王菲 / Faye Wong) count as equal.
+     */
+    fun artistSimilarity(artists: List<String>, candArtists: List<String>, aliases: Boolean = true): Double {
         val left = splitCredits(artists)
         val right = splitCredits(candArtists)
         if (left.isEmpty() || right.isEmpty()) return 0.0
@@ -286,9 +289,11 @@ object RecordingMatch {
         val cross = nonLatin(left.joinToString(" ")) || nonLatin(right.joinToString(" "))
         fun variants(name: String) = nameVariants(name) + if (cross) setOf(soundKey(romanize(normalizeText(name)))) else emptySet()
         if (cross && soundKey(romanize(normalizeText(left.joinToString(" ")))).let { k -> k.length >= MIN_SOUND_KEY && k == soundKey(romanize(normalizeText(right.joinToString(" ")))) }) return 1.0
-        fun allCredits(l: List<String>, r: List<String>): Double {
-            val rv = r.flatMap(::variants)
-            return l.minOf { name -> variants(name).maxOf { a -> rv.maxOf { b -> Similarity.tokenSort(a, b) } } }
+        fun allCredits(l: List<String>, r: List<String>): Double = l.minOf { name ->
+            r.maxOf { other ->
+                if (aliases && ArtistAliases.same(name, other)) 1.0
+                else variants(name).maxOf { a -> variants(other).maxOf { b -> Similarity.tokenSort(a, b) } }
+            }
         }
         return max(allCredits(left, right), allCredits(right, left))
     }
@@ -364,16 +369,17 @@ object RecordingMatch {
         }
         // Compared without version words: the gate above made them agree, and a long shared "instrumental" would
         // otherwise carry two different titles over the threshold ("SHE (inst)" vs "Deutgosipeo (inst.)").
+        // The reading is stripped again: カラオケ only becomes "karaoke" once romanised.
         val bare = stripVersionWords(title).let(::normalizeText)
         val candBare = stripVersionWords(candTitle).let(::normalizeText)
-        val a = setOf(bare, romanize(bare))
-        val b = setOf(candBare, romanize(candBare))
+        val ra = normalizeText(stripVersionWords(romanize(bare)))
+        val rb = normalizeText(stripVersionWords(romanize(candBare)))
+        val a = setOf(bare, ra)
+        val b = setOf(candBare, rb)
         fun best(sim: (String, String) -> Double) = a.maxOf { x -> b.maxOf { y -> sim(x, y) } }
         // Across scripts, also compare unspaced readings (Thai/kana write no spaces) and sound keys, both long enough
         // that a short key cannot collide by chance; that tier only ever counts as strict.
         val crossSim = if (!nonLatin(title) && !nonLatin(candTitle)) 0.0 else {
-            val ra = romanize(bare)
-            val rb = romanize(candBare)
             val ka = soundKey(ra)
             val kb = soundKey(rb)
             maxOf(
