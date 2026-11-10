@@ -72,8 +72,10 @@ inline fun <reified T> DevicePreferences.getSerializedOrNullFlow(
 fun <T> DevicePreferences.getSerializedOrNull(key: String, serializer: KSerializer<T>): T? =
   runCatching {
     getStringOrNull(key)?.let {
-      if (serializer == String.serializer()) {
-        it as T?
+      if (serializer.descriptor.serialName.removeSuffix("?") == "kotlin.String") { // String and String?
+        // putSerializedString JSON-encodes, so a written String comes back as `"IN"`, quotes and all. Unquote that;
+        // a value stored raw (putString) has no surrounding quotes and is returned as is.
+        (if (it.length >= 2 && it.first() == '"' && it.last() == '"') GlobalJson.decodeFromString(String.serializer(), it) else it) as T?
       } else {
         GlobalJson.decodeFromString(serializer, it)
       }
