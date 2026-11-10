@@ -4687,6 +4687,20 @@ final object in.shabinder.soundbound.matcher/ArtistAliases { // in.shabinder.sou
     final fun same(kotlin/String, kotlin/String): kotlin/Boolean // in.shabinder.soundbound.matcher/ArtistAliases.same|same(kotlin.String;kotlin.String){}[0]
 }
 
+final object in.shabinder.soundbound.matcher/LyricsText { // in.shabinder.soundbound.matcher/LyricsText|null[0]
+    final val LRC_TIME_TAG // in.shabinder.soundbound.matcher/LyricsText.LRC_TIME_TAG|{}LRC_TIME_TAG[0]
+        final fun <get-LRC_TIME_TAG>(): kotlin.text/Regex // in.shabinder.soundbound.matcher/LyricsText.LRC_TIME_TAG.<get-LRC_TIME_TAG>|<get-LRC_TIME_TAG>(){}[0]
+    final val LRC_WORD_TAG // in.shabinder.soundbound.matcher/LyricsText.LRC_WORD_TAG|{}LRC_WORD_TAG[0]
+        final fun <get-LRC_WORD_TAG>(): kotlin.text/Regex // in.shabinder.soundbound.matcher/LyricsText.LRC_WORD_TAG.<get-LRC_WORD_TAG>|<get-LRC_WORD_TAG>(){}[0]
+    final val VERSION_TAGS // in.shabinder.soundbound.matcher/LyricsText.VERSION_TAGS|{}VERSION_TAGS[0]
+        final fun <get-VERSION_TAGS>(): kotlin.collections/List<kotlin/String> // in.shabinder.soundbound.matcher/LyricsText.VERSION_TAGS.<get-VERSION_TAGS>|<get-VERSION_TAGS>(){}[0]
+
+    final fun lastLrcMillis(kotlin/String): kotlin/Long? // in.shabinder.soundbound.matcher/LyricsText.lastLrcMillis|lastLrcMillis(kotlin.String){}[0]
+    final fun lrcMillis(kotlin.text/MatchResult): kotlin/Long // in.shabinder.soundbound.matcher/LyricsText.lrcMillis|lrcMillis(kotlin.text.MatchResult){}[0]
+    final fun versionConflict(kotlin/String, kotlin/String): kotlin/Boolean // in.shabinder.soundbound.matcher/LyricsText.versionConflict|versionConflict(kotlin.String;kotlin.String){}[0]
+    final fun versionTags(kotlin/String): kotlin.collections/Set<kotlin/String> // in.shabinder.soundbound.matcher/LyricsText.versionTags|versionTags(kotlin.String){}[0]
+}
+
 final object in.shabinder.soundbound.matcher/RecordingMatch { // in.shabinder.soundbound.matcher/RecordingMatch|null[0]
     final const val ARTIST_THRESHOLD // in.shabinder.soundbound.matcher/RecordingMatch.ARTIST_THRESHOLD|{}ARTIST_THRESHOLD[0]
         final fun <get-ARTIST_THRESHOLD>(): kotlin/Double // in.shabinder.soundbound.matcher/RecordingMatch.ARTIST_THRESHOLD.<get-ARTIST_THRESHOLD>|<get-ARTIST_THRESHOLD>(){}[0]
