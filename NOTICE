@@ -97,3 +97,11 @@ PERFORMANCE OF THE DATA FILES OR SOFTWARE.
 Except as contained in this notice, the name of a copyright holder shall not be used in advertising or otherwise to
 promote the sale, use or other dealings in these Data Files or Software without prior written authorization of the
 copyright holder.
+
+--------------------------------------------------------------------------------
+
+MusicBrainz artist data (https://musicbrainz.org/doc/MusicBrainz_Database), JSON dump 20261107-001001, artist names,
+sort names and aliases; ranked by ListenBrainz artist listen counts (https://listenbrainz.org,
+/1/popularity/artist). Generated into src/commonMain/kotlin/in.shabinder.soundbound/matcher/ArtistAliasData.kt.
+Both datasets are released under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/) by the MetaBrainz
+Foundation; no attribution is required, it is given as a courtesy.
