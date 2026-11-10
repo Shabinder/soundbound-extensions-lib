@@ -104,7 +104,7 @@ class MatchingRegressionTest {
         val strong = RecordingMatch.score("Faded", listOf("Alan Walker"), 213, "Faded", listOf("Alan Walker"), 213)
         assertEquals(MatchReason.STRICT_TITLE_AND_DURATION, strong.reason)
         assertEquals(MatchConfidence.STRONG, strong.confidence)
-        val wide = RecordingMatch.score("Faded", listOf("Alan Walker"), 213, "Faded", listOf("Alan Walker"), 223, youtube = true)
+        val wide = RecordingMatch.score("Faded", listOf("Alan Walker"), 213, "Faded", listOf("Alan Walker"), 223, looseDuration = true)
         assertEquals(MatchReason.STRICT_TITLE, wide.reason)
         assertEquals(MatchConfidence.LOOSE, wide.confidence)
         val loose = RecordingMatch.score("Tri", listOf("Popeye Bangladesh"), 241, "Popeye (Bangladesh) - Tri (ত্রি) Official Music Video", listOf("Popeye Bangladesh"), 241)

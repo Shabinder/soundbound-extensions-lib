@@ -7,6 +7,7 @@ import `in`.shabinder.soundbound.providers.Provider
 import `in`.shabinder.soundbound.providers.QueryableProvider
 import `in`.shabinder.soundbound.providers.auth.AuthHandler
 import `in`.shabinder.soundbound.providers.library.LibraryCollections
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -138,15 +139,27 @@ data class SyncDefaults(
 @Immutable
 @Serializable
 data class IdentitySpec(
-  /** Rank as an Odesli input, lower is better. Null = weak input: swap it for a store URL first. */
-  val odesliInputRank: Int? = null,
+  /**
+   * Rank as an input to the cross-platform link service, lower is better. Null = weak input: swap it for a store URL
+   * first. The wire key keeps its 0.40 name so old bundles and hosts still agree.
+   */
+  @SerialName("odesliInputRank")
+  val linkServiceInputRank: Int? = null,
   /** Searched in parallel by the ISRC waterfall / store search. */
   val catalogStore: Boolean = false,
   /** Duration tolerance when matching this source's tracks, seconds. */
   val durationSlackSec: Int = 3,
   /** Pure rewrite that makes equal recordings equal keys without a Zipline call. */
   val canonicalLink: LinkRule? = null,
-)
+) {
+  /** Source compatibility for extensions written against 0.41 (`IdentitySpec(odesliInputRank = 1, ...)`). */
+  @Deprecated("Renamed: the field names a role, not a service.", ReplaceWith("IdentitySpec(linkServiceInputRank = odesliInputRank, catalogStore = catalogStore)"))
+  constructor(catalogStore: Boolean = false, odesliInputRank: Int?, durationSlackSec: Int = 3, canonicalLink: LinkRule? = null) :
+    this(odesliInputRank, catalogStore, durationSlackSec, canonicalLink)
+
+  @Deprecated("Renamed: the field names a role, not a service.", ReplaceWith("linkServiceInputRank"))
+  val odesliInputRank: Int? get() = linkServiceInputRank
+}
 
 /** `Regex(pattern).replace(link, replacement)`; `$1` refers to a group. */
 @Immutable

@@ -80,11 +80,18 @@ data class RecognitionMatch(
   val score: Double? = null,
 ) {
   companion object {
-    const val LINK_APPLE_MUSIC = "appleMusic"
-    const val LINK_SPOTIFY = "spotify"
+    /** The recognizer's own page for the match. Every other [links] key is the extension's own choice. */
     const val LINK_SERVICE = "service"
-    const val ID_SHAZAM = "shazamKey"
-    const val ID_APPLE_MUSIC = "appleMusicId"
+    /** MusicBrainz recording id: the host's portable recording identifier (like an ISRC), not a source. */
     const val ID_MUSICBRAINZ = "musicBrainzId"
+
+    @Deprecated("Link and id keys other than LINK_SERVICE / ID_MUSICBRAINZ belong to the extension; declare your own.")
+    const val LINK_APPLE_MUSIC = "appleMusic"
+    @Deprecated("Link and id keys other than LINK_SERVICE / ID_MUSICBRAINZ belong to the extension; declare your own.")
+    const val LINK_SPOTIFY = "spotify"
+    @Deprecated("Link and id keys other than LINK_SERVICE / ID_MUSICBRAINZ belong to the extension; declare your own.")
+    const val ID_SHAZAM = "shazamKey"
+    @Deprecated("Link and id keys other than LINK_SERVICE / ID_MUSICBRAINZ belong to the extension; declare your own.")
+    const val ID_APPLE_MUSIC = "appleMusicId"
   }
 }

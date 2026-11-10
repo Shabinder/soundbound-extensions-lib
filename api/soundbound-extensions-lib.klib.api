@@ -412,6 +412,8 @@ abstract interface in.shabinder.soundbound.matcher/MatchProps { // in.shabinder.
         abstract fun <get-isrc>(): kotlin/String? // in.shabinder.soundbound.matcher/MatchProps.isrc.<get-isrc>|<get-isrc>(){}[0]
     abstract val title // in.shabinder.soundbound.matcher/MatchProps.title|{}title[0]
         abstract fun <get-title>(): kotlin/String // in.shabinder.soundbound.matcher/MatchProps.title.<get-title>|<get-title>(){}[0]
+    open val looseDuration // in.shabinder.soundbound.matcher/MatchProps.looseDuration|{}looseDuration[0]
+        open fun <get-looseDuration>(): kotlin/Boolean // in.shabinder.soundbound.matcher/MatchProps.looseDuration.<get-looseDuration>|<get-looseDuration>(){}[0]
     open val trackUrl // in.shabinder.soundbound.matcher/MatchProps.trackUrl|{}trackUrl[0]
         open fun <get-trackUrl>(): kotlin/String? // in.shabinder.soundbound.matcher/MatchProps.trackUrl.<get-trackUrl>|<get-trackUrl>(){}[0]
 }
@@ -1433,6 +1435,8 @@ final class <#A: kotlin/Any?> in.shabinder.soundbound.matcher/WrapperWithMatcher
         final fun <get-durationSec>(): kotlin/Long // in.shabinder.soundbound.matcher/WrapperWithMatcherProps.durationSec.<get-durationSec>|<get-durationSec>(){}[0]
     final val isrc // in.shabinder.soundbound.matcher/WrapperWithMatcherProps.isrc|{}isrc[0]
         final fun <get-isrc>(): kotlin/String? // in.shabinder.soundbound.matcher/WrapperWithMatcherProps.isrc.<get-isrc>|<get-isrc>(){}[0]
+    final val looseDuration // in.shabinder.soundbound.matcher/WrapperWithMatcherProps.looseDuration|{}looseDuration[0]
+        final fun <get-looseDuration>(): kotlin/Boolean // in.shabinder.soundbound.matcher/WrapperWithMatcherProps.looseDuration.<get-looseDuration>|<get-looseDuration>(){}[0]
     final val matchProps // in.shabinder.soundbound.matcher/WrapperWithMatcherProps.matchProps|{}matchProps[0]
         final fun <get-matchProps>(): in.shabinder.soundbound.matcher/MatchProps // in.shabinder.soundbound.matcher/WrapperWithMatcherProps.matchProps.<get-matchProps>|<get-matchProps>(){}[0]
     final val model // in.shabinder.soundbound.matcher/WrapperWithMatcherProps.model|{}model[0]
@@ -2640,6 +2644,7 @@ final class in.shabinder.soundbound.providers.scrobble/ScrobbleTrack { // in.sha
 }
 
 final class in.shabinder.soundbound.providers.source/IdentitySpec { // in.shabinder.soundbound.providers.source/IdentitySpec|null[0]
+    constructor <init>(kotlin/Boolean = ..., kotlin/Int?, kotlin/Int = ..., in.shabinder.soundbound.providers.source/LinkRule? = ...) // in.shabinder.soundbound.providers.source/IdentitySpec.<init>|<init>(kotlin.Boolean;kotlin.Int?;kotlin.Int;in.shabinder.soundbound.providers.source.LinkRule?){}[0]
     constructor <init>(kotlin/Int? = ..., kotlin/Boolean = ..., kotlin/Int = ..., in.shabinder.soundbound.providers.source/LinkRule? = ...) // in.shabinder.soundbound.providers.source/IdentitySpec.<init>|<init>(kotlin.Int?;kotlin.Boolean;kotlin.Int;in.shabinder.soundbound.providers.source.LinkRule?){}[0]
 
     final val canonicalLink // in.shabinder.soundbound.providers.source/IdentitySpec.canonicalLink|{}canonicalLink[0]
@@ -2648,6 +2653,8 @@ final class in.shabinder.soundbound.providers.source/IdentitySpec { // in.shabin
         final fun <get-catalogStore>(): kotlin/Boolean // in.shabinder.soundbound.providers.source/IdentitySpec.catalogStore.<get-catalogStore>|<get-catalogStore>(){}[0]
     final val durationSlackSec // in.shabinder.soundbound.providers.source/IdentitySpec.durationSlackSec|{}durationSlackSec[0]
         final fun <get-durationSlackSec>(): kotlin/Int // in.shabinder.soundbound.providers.source/IdentitySpec.durationSlackSec.<get-durationSlackSec>|<get-durationSlackSec>(){}[0]
+    final val linkServiceInputRank // in.shabinder.soundbound.providers.source/IdentitySpec.linkServiceInputRank|{}linkServiceInputRank[0]
+        final fun <get-linkServiceInputRank>(): kotlin/Int? // in.shabinder.soundbound.providers.source/IdentitySpec.linkServiceInputRank.<get-linkServiceInputRank>|<get-linkServiceInputRank>(){}[0]
     final val odesliInputRank // in.shabinder.soundbound.providers.source/IdentitySpec.odesliInputRank|{}odesliInputRank[0]
         final fun <get-odesliInputRank>(): kotlin/Int? // in.shabinder.soundbound.providers.source/IdentitySpec.odesliInputRank.<get-odesliInputRank>|<get-odesliInputRank>(){}[0]
 
@@ -4687,6 +4694,8 @@ final object in.shabinder.soundbound.matcher/RecordingMatch { // in.shabinder.so
         final fun <get-ID_TOLERANCE_SEC>(): kotlin/Long // in.shabinder.soundbound.matcher/RecordingMatch.ID_TOLERANCE_SEC.<get-ID_TOLERANCE_SEC>|<get-ID_TOLERANCE_SEC>(){}[0]
     final const val LOOSE_NAME_WINDOW_SEC // in.shabinder.soundbound.matcher/RecordingMatch.LOOSE_NAME_WINDOW_SEC|{}LOOSE_NAME_WINDOW_SEC[0]
         final fun <get-LOOSE_NAME_WINDOW_SEC>(): kotlin/Double // in.shabinder.soundbound.matcher/RecordingMatch.LOOSE_NAME_WINDOW_SEC.<get-LOOSE_NAME_WINDOW_SEC>|<get-LOOSE_NAME_WINDOW_SEC>(){}[0]
+    final const val LOOSE_TOLERANCE_SEC // in.shabinder.soundbound.matcher/RecordingMatch.LOOSE_TOLERANCE_SEC|{}LOOSE_TOLERANCE_SEC[0]
+        final fun <get-LOOSE_TOLERANCE_SEC>(): kotlin/Long // in.shabinder.soundbound.matcher/RecordingMatch.LOOSE_TOLERANCE_SEC.<get-LOOSE_TOLERANCE_SEC>|<get-LOOSE_TOLERANCE_SEC>(){}[0]
     final const val MIN_SOUND_KEY // in.shabinder.soundbound.matcher/RecordingMatch.MIN_SOUND_KEY|{}MIN_SOUND_KEY[0]
         final fun <get-MIN_SOUND_KEY>(): kotlin/Int // in.shabinder.soundbound.matcher/RecordingMatch.MIN_SOUND_KEY.<get-MIN_SOUND_KEY>|<get-MIN_SOUND_KEY>(){}[0]
     final const val STORE_TOLERANCE_SEC // in.shabinder.soundbound.matcher/RecordingMatch.STORE_TOLERANCE_SEC|{}STORE_TOLERANCE_SEC[0]
@@ -4700,6 +4709,7 @@ final object in.shabinder.soundbound.matcher/RecordingMatch { // in.shabinder.so
     final fun cleanTitle(kotlin/String?): kotlin/String // in.shabinder.soundbound.matcher/RecordingMatch.cleanTitle|cleanTitle(kotlin.String?){}[0]
     final fun durationBand(kotlin/Long): kotlin/Double // in.shabinder.soundbound.matcher/RecordingMatch.durationBand|durationBand(kotlin.Long){}[0]
     final fun featuredArtists(kotlin/String?): kotlin.collections/List<kotlin/String> // in.shabinder.soundbound.matcher/RecordingMatch.featuredArtists|featuredArtists(kotlin.String?){}[0]
+    final fun hasLooseDuration(kotlin/String?): kotlin/Boolean // in.shabinder.soundbound.matcher/RecordingMatch.hasLooseDuration|hasLooseDuration(kotlin.String?){}[0]
     final fun idConflict(kotlin/String, kotlin.collections/List<kotlin/String>, kotlin/Long, kotlin/String, kotlin.collections/List<kotlin/String>, kotlin/Long, kotlin/Boolean = ...): in.shabinder.soundbound.matcher/MatchReason? // in.shabinder.soundbound.matcher/RecordingMatch.idConflict|idConflict(kotlin.String;kotlin.collections.List<kotlin.String>;kotlin.Long;kotlin.String;kotlin.collections.List<kotlin.String>;kotlin.Long;kotlin.Boolean){}[0]
     final fun isYoutube(kotlin/String?): kotlin/Boolean // in.shabinder.soundbound.matcher/RecordingMatch.isYoutube|isYoutube(kotlin.String?){}[0]
     final fun looseName(kotlin/String?): kotlin/String // in.shabinder.soundbound.matcher/RecordingMatch.looseName|looseName(kotlin.String?){}[0]

@@ -112,11 +112,13 @@ public abstract interface class in/shabinder/soundbound/matcher/MatchProps {
 	public abstract fun getArtists ()Ljava/util/List;
 	public abstract fun getDurationSec ()J
 	public abstract fun getIsrc ()Ljava/lang/String;
+	public fun getLooseDuration ()Z
 	public abstract fun getTitle ()Ljava/lang/String;
 	public fun getTrackUrl ()Ljava/lang/String;
 }
 
 public final class in/shabinder/soundbound/matcher/MatchProps$DefaultImpls {
+	public static fun getLooseDuration (Lin/shabinder/soundbound/matcher/MatchProps;)Z
 	public static fun getTrackUrl (Lin/shabinder/soundbound/matcher/MatchProps;)Ljava/lang/String;
 }
 
@@ -176,6 +178,7 @@ public final class in/shabinder/soundbound/matcher/RecordingMatch {
 	public static final field ID_TOLERANCE_SEC J
 	public static final field INSTANCE Lin/shabinder/soundbound/matcher/RecordingMatch;
 	public static final field LOOSE_NAME_WINDOW_SEC D
+	public static final field LOOSE_TOLERANCE_SEC J
 	public static final field MIN_SOUND_KEY I
 	public static final field STORE_TOLERANCE_SEC J
 	public static final field STRICT_NAME D
@@ -185,6 +188,7 @@ public final class in/shabinder/soundbound/matcher/RecordingMatch {
 	public final fun cleanTitle (Ljava/lang/String;)Ljava/lang/String;
 	public final fun durationBand (J)D
 	public final fun featuredArtists (Ljava/lang/String;)Ljava/util/List;
+	public final fun hasLooseDuration (Ljava/lang/String;)Z
 	public final fun idConflict (Ljava/lang/String;Ljava/util/List;JLjava/lang/String;Ljava/util/List;JZ)Lin/shabinder/soundbound/matcher/MatchReason;
 	public static synthetic fun idConflict$default (Lin/shabinder/soundbound/matcher/RecordingMatch;Ljava/lang/String;Ljava/util/List;JLjava/lang/String;Ljava/util/List;JZILjava/lang/Object;)Lin/shabinder/soundbound/matcher/MatchReason;
 	public final fun isYoutube (Ljava/lang/String;)Z
@@ -234,6 +238,7 @@ public final class in/shabinder/soundbound/matcher/WrapperWithMatcherProps : in/
 	public fun getArtists ()Ljava/util/List;
 	public fun getDurationSec ()J
 	public fun getIsrc ()Ljava/lang/String;
+	public fun getLooseDuration ()Z
 	public final fun getMatchProps ()Lin/shabinder/soundbound/matcher/MatchProps;
 	public final fun getModel ()Ljava/lang/Object;
 	public fun getTitle ()Ljava/lang/String;
@@ -3518,6 +3523,8 @@ public final class in/shabinder/soundbound/providers/source/IdentitySpec {
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/Integer;ZILin/shabinder/soundbound/providers/source/LinkRule;)V
 	public synthetic fun <init> (Ljava/lang/Integer;ZILin/shabinder/soundbound/providers/source/LinkRule;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ZLjava/lang/Integer;ILin/shabinder/soundbound/providers/source/LinkRule;)V
+	public synthetic fun <init> (ZLjava/lang/Integer;ILin/shabinder/soundbound/providers/source/LinkRule;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/Integer;
 	public final fun component2 ()Z
 	public final fun component3 ()I
@@ -3528,6 +3535,7 @@ public final class in/shabinder/soundbound/providers/source/IdentitySpec {
 	public final fun getCanonicalLink ()Lin/shabinder/soundbound/providers/source/LinkRule;
 	public final fun getCatalogStore ()Z
 	public final fun getDurationSlackSec ()I
+	public final fun getLinkServiceInputRank ()Ljava/lang/Integer;
 	public final fun getOdesliInputRank ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
