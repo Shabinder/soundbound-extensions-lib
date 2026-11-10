@@ -97,6 +97,17 @@ public final class in/shabinder/soundbound/matcher/ArtistAliases {
 	public final fun same (Ljava/lang/String;Ljava/lang/String;)Z
 }
 
+public final class in/shabinder/soundbound/matcher/LyricsText {
+	public static final field INSTANCE Lin/shabinder/soundbound/matcher/LyricsText;
+	public final fun getLRC_TIME_TAG ()Lkotlin/text/Regex;
+	public final fun getLRC_WORD_TAG ()Lkotlin/text/Regex;
+	public final fun getVERSION_TAGS ()Ljava/util/List;
+	public final fun lastLrcMillis (Ljava/lang/String;)Ljava/lang/Long;
+	public final fun lrcMillis (Lkotlin/text/MatchResult;)J
+	public final fun versionConflict (Ljava/lang/String;Ljava/lang/String;)Z
+	public final fun versionTags (Ljava/lang/String;)Ljava/util/Set;
+}
+
 public final class in/shabinder/soundbound/matcher/MatchConfidence : java/lang/Enum {
 	public static final field EXACT Lin/shabinder/soundbound/matcher/MatchConfidence;
 	public static final field LOOSE Lin/shabinder/soundbound/matcher/MatchConfidence;
