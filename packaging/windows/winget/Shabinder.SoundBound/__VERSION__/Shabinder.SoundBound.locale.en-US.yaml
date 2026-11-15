@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.6.0.schema.json
+# Placeholders (__VERSION__, __URL__, __SHA256__) are filled in at release time.
+PackageIdentifier: Shabinder.SoundBound
+PackageVersion: __VERSION__
+PackageLocale: en-US
+Publisher: Shabinder Singh
+PublisherUrl: https://soundbound.app
+PublisherSupportUrl: https://github.com/Shabinder/soundbound-extensions-lib/issues
+PackageName: SoundBound
+PackageUrl: https://soundbound.app
+License: Proprietary
+LicenseUrl: https://soundbound.app/license/
+ShortDescription: Music player and downloader with extension-based providers.
+Description: |-
+  SoundBound plays and downloads music from many sources through installable extensions,
+  with synced lyrics, a local library and cross-device sync.
+Moniker: soundbound
+Tags:
+- music
+- music-player
+- downloader
+- lyrics
+- audio
+ReleaseNotesUrl: https://github.com/Shabinder/soundbound-extensions-lib/releases/tag/__VERSION__
+ManifestType: defaultLocale
+ManifestVersion: 1.6.0

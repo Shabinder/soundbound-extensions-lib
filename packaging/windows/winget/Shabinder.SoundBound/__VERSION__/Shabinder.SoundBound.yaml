@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.version.1.6.0.schema.json
+# Placeholders (__VERSION__, __URL__, __SHA256__) are filled in at release time.
+PackageIdentifier: Shabinder.SoundBound
+PackageVersion: __VERSION__
+DefaultLocale: en-US
+ManifestType: version
+ManifestVersion: 1.6.0
