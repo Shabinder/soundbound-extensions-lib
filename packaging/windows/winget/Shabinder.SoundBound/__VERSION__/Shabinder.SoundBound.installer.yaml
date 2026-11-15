@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.6.0.schema.json
+# Placeholders (__VERSION__, __URL__, __SHA256__) are filled in at release time.
+# Scope user = the installer's default per-user mode (no UAC; in-app updater keeps working).
+# Chocolatey uses the opt-in /ALLUSERS mode instead (see packaging/windows/chocolatey).
+PackageIdentifier: Shabinder.SoundBound
+PackageVersion: __VERSION__
+InstallerType: nullsoft
+Scope: user
+InstallModes:
+- silent
+- silentWithProgress
+UpgradeBehavior: install
+InstallerSwitches:
+  Silent: /S
+  SilentWithProgress: /S
+Installers:
+- Architecture: x64
+  InstallerUrl: __URL__
+  InstallerSha256: __SHA256__
+ManifestType: installer
+ManifestVersion: 1.6.0

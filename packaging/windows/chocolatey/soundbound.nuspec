@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Template: __VERSION__ (and the URL/checksum in tools/) are filled in at release time. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>soundbound</id>
+    <version>__VERSION__</version>
+    <title>SoundBound</title>
+    <authors>Shabinder Singh</authors>
+    <owners>Shabinder</owners>
+    <copyright>Copyright (c) 2026 Shabinder Singh</copyright>
+    <projectUrl>https://soundbound.app</projectUrl>
+    <packageSourceUrl>https://github.com/Shabinder/soundbound-extensions-lib/tree/main/packaging/windows/chocolatey</packageSourceUrl>
+    <licenseUrl>https://soundbound.app/license/</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <iconUrl>https://soundbound.app/icon.png</iconUrl>
+    <bugTrackerUrl>https://github.com/Shabinder/soundbound-extensions-lib/issues</bugTrackerUrl>
+    <releaseNotes>https://github.com/Shabinder/soundbound-extensions-lib/releases/tag/__VERSION__</releaseNotes>
+    <tags>soundbound music music-player downloader lyrics audio streaming</tags>
+    <summary>Music player and downloader with extension-based providers.</summary>
+    <description><![CDATA[SoundBound plays and downloads music from many sources through installable extensions,
+with synced lyrics, a local library and cross-device sync.
+
+## Package notes
+
+This package installs SoundBound for **all users** (into Program Files) using the official installer's
+`/ALLUSERS` mode, so it works when Chocolatey runs elevated as another account or as SYSTEM.
+Updates come through `choco upgrade soundbound`; the in-app updater cannot write to Program Files.
+]]></description>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
