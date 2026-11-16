@@ -18,6 +18,8 @@ import `in`.shabinder.soundbound.zipline.UnavailableWebSocket
 import `in`.shabinder.soundbound.zipline.WebSocketClient
 import `in`.shabinder.soundbound.zipline.NetworkSockets
 import `in`.shabinder.soundbound.zipline.UnavailableNetworkSockets
+import `in`.shabinder.soundbound.zipline.PlaybackHost
+import `in`.shabinder.soundbound.zipline.UnavailablePlaybackHost
 
 @Immutable
 interface Dependencies {
@@ -51,4 +53,7 @@ interface Dependencies {
   /** Raw TCP, gated per extension by the user ([in.shabinder.soundbound.providers.source.HostPermission.NETWORK_SOCKETS]). */
   val networkSockets: NetworkSockets
     get() = UnavailableNetworkSockets
+  /** Since host API 41: what playback supports (source kinds, ciphers, containers, refresh). */
+  val playbackHost: PlaybackHost
+    get() = UnavailablePlaybackHost
 }
