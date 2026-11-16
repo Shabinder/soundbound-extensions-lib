@@ -4,19 +4,17 @@ import androidx.compose.runtime.Immutable
 import kotlinx.serialization.Serializable
 
 /**
- * Declares how the app-side downloader must decrypt a stream after fetching its bytes.
- * Extensions never see the bytes, so they only attach this spec to a [Request]; the
- * DownloadManager runs the matching cipher.
+ * The lib 0.40 way to ask the host to decrypt: a cipher id plus params. Still accepted; since 0.41 each id is a preset
+ * that the host compiles to a [ProcessingSpec] (see [Request.processing], the open form). An unknown [algorithm] fails
+ * playback and download explicitly; the host never plays or saves ciphertext.
  *
- * Open by design: [algorithm] is a free string token and [params] a string map, so a new
- * provider that reuses a known cipher (or the same cipher with different chunking/IV) needs
- * NO change to this library — only data. A genuinely new cipher still needs an app-side
- * handler (native crypto cannot run in the extension sandbox), but the contract is stable.
- * An unknown [algorithm] must fail the download explicitly, never ship ciphertext as-is.
+ * | [algorithm] | same as |
+ * |---|---|
+ * | [AES_128_CTR] | `ProcessingSpec.aesCtr(key, ivHex)` |
+ * | [AES_128_CBC] | `ProcessingSpec.aesCbc(key, ivHex, pkcs7 = padding == "pkcs7")` |
+ * | [BLOWFISH_CBC_STRIPE] / [BLOWFISH_CBC] | `ProcessingSpec.blowfishStripe(key, ivHex, chunkSizeBytes, encryptEveryNthChunk)` |
  *
- * Worked example — Deezer: every 3rd 2048-byte chunk is Blowfish/CBC/NoPadding encrypted:
- * `DecryptionSpec("blowfish-cbc", key = <hex>, params = { ivHex: "0001020304050607",
- * chunkSizeBytes: "2048", encryptEveryNthChunk: "3" })`.
+ * [PARAM_SKIP_PLAIN_BYTES] adds a `ProcessOp.Skip`. [CLEARKEY_CENC] is reserved.
  */
 @Immutable
 @Serializable
@@ -28,10 +26,19 @@ data class DecryptionSpec(
     fun param(key: String): String? = params[key]
 
     companion object {
+        /** Lib 0.40 id of [BLOWFISH_CBC_STRIPE]; still accepted. */
         const val BLOWFISH_CBC = "blowfish-cbc"
+        const val BLOWFISH_CBC_STRIPE = "blowfish-cbc-stripe"
+        const val AES_128_CTR = "aes-128-ctr"
+        const val AES_128_CBC = "aes-128-cbc"
+
+        /** Reserved for fragmented-MP4 Common Encryption with a known key. Not implemented by any host yet. */
+        const val CLEARKEY_CENC = "clearkey-cenc"
 
         const val PARAM_IV_HEX = "ivHex"
         const val PARAM_CHUNK_SIZE_BYTES = "chunkSizeBytes"
         const val PARAM_ENCRYPT_EVERY_NTH_CHUNK = "encryptEveryNthChunk"
+        const val PARAM_PADDING = "padding"
+        const val PARAM_SKIP_PLAIN_BYTES = "skipPlainBytes"
     }
 }

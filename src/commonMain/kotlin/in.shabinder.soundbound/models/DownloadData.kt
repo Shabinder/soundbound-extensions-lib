@@ -25,6 +25,10 @@ class Request(
     // never cross the extension boundary — the extension only resolves the URL list.
     val segments: List<String>? = null,
     val initSegment: String? = null,
+    // Since lib 0.41: native op pipeline (ciphers, framing, inflate, extension transform). Wins over [decryption].
+    // Hosts before HostApi 41 drop it and use the raw bytes: an extension setting it MUST declare extMinHostApi >= 41,
+    // and for a preset pipeline also set [decryption] so older hosts still decrypt (see ProcessingSpec).
+    val processing: ProcessingSpec? = null,
 ) {
     val httpMethod: HttpClient.Method
         get() = HttpClient.Method.valueOf(method)
@@ -47,6 +51,7 @@ class Request(
             decryption: DecryptionSpec? = null,
             segments: List<String>? = null,
             initSegment: String? = null,
+            processing: ProcessingSpec? = null,
         ) = Request(
             url,
             method = method,
@@ -57,11 +62,12 @@ class Request(
             decryption = decryption,
             segments = segments,
             initSegment = initSegment,
+            processing = processing,
         )
     }
 
     override fun toString(): String {
-        return "DownloadRequest(url='$url', headers=$headers, method='$method', body=$body, downloadChunkSize=$downloadChunkSize, decryption=${decryption?.algorithm}, segments=${segments?.size})"
+        return "DownloadRequest(url='$url', headers=$headers, method='$method', body=$body, downloadChunkSize=$downloadChunkSize, decryption=${decryption?.algorithm}, processing=${processing?.ops?.size}, segments=${segments?.size})"
     }
 
     fun copy(
@@ -74,6 +80,7 @@ class Request(
         decryption: DecryptionSpec? = this.decryption,
         segments: List<String>? = this.segments,
         initSegment: String? = this.initSegment,
+        processing: ProcessingSpec? = this.processing,
     ): Request {
         return Request(
             url = url,
@@ -85,6 +92,7 @@ class Request(
             decryption = decryption,
             segments = segments,
             initSegment = initSegment,
+            processing = processing,
         )
     }
 
@@ -100,6 +108,7 @@ class Request(
         if (decryption != other.decryption) return false
         if (segments != other.segments) return false
         if (initSegment != other.initSegment) return false
+        if (processing != other.processing) return false
         return true
     }
 
@@ -113,6 +122,7 @@ class Request(
         result = 31 * result + (decryption?.hashCode() ?: 0)
         result = 31 * result + (segments?.hashCode() ?: 0)
         result = 31 * result + (initSegment?.hashCode() ?: 0)
+        result = 31 * result + (processing?.hashCode() ?: 0)
         return result
     }
 }
