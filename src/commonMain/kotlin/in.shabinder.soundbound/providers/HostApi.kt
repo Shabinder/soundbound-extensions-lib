@@ -8,7 +8,9 @@ package `in`.shabinder.soundbound.providers
  *
  * Levels: 40 = lib 0.40 (first level; source-neutral names, LyricsText, granular HostPermission). 41 = lib 0.41
  * (open playback: `PlaybackSourceDescriptor.Manifest`, `DirectHttp` expiry/container, `ExtensionPlaybackSource.refresh`,
- * host stream ciphers, `PlaybackHost.playbackCapabilities`). Hosts before 40
+ * host stream ciphers, `PlaybackHost.playbackCapabilities`, `DownloadRequest.processing` / `ProcessingSpec`,
+ * `PlaybackCapabilities.processing`, `ExtensionPlaybackSource.transform`). Older hosts ignore `processing` and use the
+ * raw bytes, so an extension that sets it MUST declare `min_host_api` >= 41 (see `ProcessingSpec`). Hosts before 40
  * do not read `min_host_api` and treat every listing as compatible.
  */
 object HostApi {

@@ -33,7 +33,9 @@ interface ExtensionPlaybackSource : ZiplineService {
     /**
      * Since [HostApi.LEVEL] 41. Called for each chunk of a `ProcessOp.ExtensionTransform(chunkSize, id)` in the request's
      * processing pipeline: return the processed bytes for chunk [chunkIndex] (any length; the host concatenates). The host
-     * calls it off the main thread, in chunk order per read, with a timeout and a few chunks of read-ahead.
+     * calls it off the main thread, in chunk order per read, with a timeout and a few chunks of read-ahead. It runs in
+     * playback and progressive (`DirectHttp`) downloads; a DASH download with a transform fails cleanly. Hosts before 41
+     * never call it.
      */
     suspend fun transform(id: String, chunkIndex: Long, bytes: ByteArray): ByteArray =
         throw UnsupportedOperationException("transform '$id' not implemented")

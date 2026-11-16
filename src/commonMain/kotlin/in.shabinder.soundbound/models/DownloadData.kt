@@ -26,6 +26,8 @@ class Request(
     val segments: List<String>? = null,
     val initSegment: String? = null,
     // Since lib 0.41: native op pipeline (ciphers, framing, inflate, extension transform). Wins over [decryption].
+    // Hosts before HostApi 41 drop it and use the raw bytes: an extension setting it MUST declare extMinHostApi >= 41,
+    // and for a preset pipeline also set [decryption] so older hosts still decrypt (see ProcessingSpec).
     val processing: ProcessingSpec? = null,
 ) {
     val httpMethod: HttpClient.Method

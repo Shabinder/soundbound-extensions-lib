@@ -97,6 +97,81 @@ final enum class in.shabinder.soundbound.models/AudioQuality : kotlin/Enum<in.sh
     }
 }
 
+final enum class in.shabinder.soundbound.models/CipherAlg : kotlin/Enum<in.shabinder.soundbound.models/CipherAlg> { // in.shabinder.soundbound.models/CipherAlg|null[0]
+    enum entry AES // in.shabinder.soundbound.models/CipherAlg.AES|null[0]
+    enum entry BLOWFISH // in.shabinder.soundbound.models/CipherAlg.BLOWFISH|null[0]
+    enum entry CHACHA20 // in.shabinder.soundbound.models/CipherAlg.CHACHA20|null[0]
+    enum entry DES // in.shabinder.soundbound.models/CipherAlg.DES|null[0]
+    enum entry DES3 // in.shabinder.soundbound.models/CipherAlg.DES3|null[0]
+    enum entry RC4 // in.shabinder.soundbound.models/CipherAlg.RC4|null[0]
+    enum entry XOR // in.shabinder.soundbound.models/CipherAlg.XOR|null[0]
+
+    final val entries // in.shabinder.soundbound.models/CipherAlg.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<in.shabinder.soundbound.models/CipherAlg> // in.shabinder.soundbound.models/CipherAlg.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): in.shabinder.soundbound.models/CipherAlg // in.shabinder.soundbound.models/CipherAlg.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<in.shabinder.soundbound.models/CipherAlg> // in.shabinder.soundbound.models/CipherAlg.values|values#static(){}[0]
+
+    final object Companion : kotlinx.serialization.internal/SerializerFactory { // in.shabinder.soundbound.models/CipherAlg.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/CipherAlg> // in.shabinder.soundbound.models/CipherAlg.Companion.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // in.shabinder.soundbound.models/CipherAlg.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+    }
+}
+
+final enum class in.shabinder.soundbound.models/CipherMode : kotlin/Enum<in.shabinder.soundbound.models/CipherMode> { // in.shabinder.soundbound.models/CipherMode|null[0]
+    enum entry CBC // in.shabinder.soundbound.models/CipherMode.CBC|null[0]
+    enum entry CFB // in.shabinder.soundbound.models/CipherMode.CFB|null[0]
+    enum entry CTR // in.shabinder.soundbound.models/CipherMode.CTR|null[0]
+    enum entry ECB // in.shabinder.soundbound.models/CipherMode.ECB|null[0]
+    enum entry GCM_DECRYPT // in.shabinder.soundbound.models/CipherMode.GCM_DECRYPT|null[0]
+    enum entry OFB // in.shabinder.soundbound.models/CipherMode.OFB|null[0]
+    enum entry STREAM // in.shabinder.soundbound.models/CipherMode.STREAM|null[0]
+
+    final val entries // in.shabinder.soundbound.models/CipherMode.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<in.shabinder.soundbound.models/CipherMode> // in.shabinder.soundbound.models/CipherMode.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): in.shabinder.soundbound.models/CipherMode // in.shabinder.soundbound.models/CipherMode.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<in.shabinder.soundbound.models/CipherMode> // in.shabinder.soundbound.models/CipherMode.values|values#static(){}[0]
+
+    final object Companion : kotlinx.serialization.internal/SerializerFactory { // in.shabinder.soundbound.models/CipherMode.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/CipherMode> // in.shabinder.soundbound.models/CipherMode.Companion.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // in.shabinder.soundbound.models/CipherMode.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+    }
+}
+
+final enum class in.shabinder.soundbound.models/Endian : kotlin/Enum<in.shabinder.soundbound.models/Endian> { // in.shabinder.soundbound.models/Endian|null[0]
+    enum entry BIG // in.shabinder.soundbound.models/Endian.BIG|null[0]
+    enum entry LITTLE // in.shabinder.soundbound.models/Endian.LITTLE|null[0]
+
+    final val entries // in.shabinder.soundbound.models/Endian.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<in.shabinder.soundbound.models/Endian> // in.shabinder.soundbound.models/Endian.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): in.shabinder.soundbound.models/Endian // in.shabinder.soundbound.models/Endian.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<in.shabinder.soundbound.models/Endian> // in.shabinder.soundbound.models/Endian.values|values#static(){}[0]
+
+    final object Companion : kotlinx.serialization.internal/SerializerFactory { // in.shabinder.soundbound.models/Endian.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/Endian> // in.shabinder.soundbound.models/Endian.Companion.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // in.shabinder.soundbound.models/Endian.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+    }
+}
+
+final enum class in.shabinder.soundbound.models/InflateFormat : kotlin/Enum<in.shabinder.soundbound.models/InflateFormat> { // in.shabinder.soundbound.models/InflateFormat|null[0]
+    enum entry GZIP // in.shabinder.soundbound.models/InflateFormat.GZIP|null[0]
+    enum entry RAW // in.shabinder.soundbound.models/InflateFormat.RAW|null[0]
+    enum entry ZLIB // in.shabinder.soundbound.models/InflateFormat.ZLIB|null[0]
+
+    final val entries // in.shabinder.soundbound.models/InflateFormat.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<in.shabinder.soundbound.models/InflateFormat> // in.shabinder.soundbound.models/InflateFormat.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): in.shabinder.soundbound.models/InflateFormat // in.shabinder.soundbound.models/InflateFormat.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<in.shabinder.soundbound.models/InflateFormat> // in.shabinder.soundbound.models/InflateFormat.values|values#static(){}[0]
+
+    final object Companion : kotlinx.serialization.internal/SerializerFactory { // in.shabinder.soundbound.models/InflateFormat.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/InflateFormat> // in.shabinder.soundbound.models/InflateFormat.Companion.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // in.shabinder.soundbound.models/InflateFormat.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+    }
+}
+
 final enum class in.shabinder.soundbound.models/MusicPlatform : kotlin/Enum<in.shabinder.soundbound.models/MusicPlatform> { // in.shabinder.soundbound.models/MusicPlatform|null[0]
     enum entry AMAZON_MUSIC // in.shabinder.soundbound.models/MusicPlatform.AMAZON_MUSIC|null[0]
     enum entry ANGHAMI // in.shabinder.soundbound.models/MusicPlatform.ANGHAMI|null[0]
@@ -141,6 +216,22 @@ final enum class in.shabinder.soundbound.models/MusicPlatform : kotlin/Enum<in.s
         final fun fromUrl(kotlin/String): in.shabinder.soundbound.models/MusicPlatform // in.shabinder.soundbound.models/MusicPlatform.Companion.fromUrl|fromUrl(kotlin.String){}[0]
         final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/MusicPlatform> // in.shabinder.soundbound.models/MusicPlatform.Companion.serializer|serializer(){}[0]
         final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // in.shabinder.soundbound.models/MusicPlatform.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+    }
+}
+
+final enum class in.shabinder.soundbound.models/Padding : kotlin/Enum<in.shabinder.soundbound.models/Padding> { // in.shabinder.soundbound.models/Padding|null[0]
+    enum entry NONE // in.shabinder.soundbound.models/Padding.NONE|null[0]
+    enum entry PKCS7 // in.shabinder.soundbound.models/Padding.PKCS7|null[0]
+
+    final val entries // in.shabinder.soundbound.models/Padding.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<in.shabinder.soundbound.models/Padding> // in.shabinder.soundbound.models/Padding.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): in.shabinder.soundbound.models/Padding // in.shabinder.soundbound.models/Padding.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<in.shabinder.soundbound.models/Padding> // in.shabinder.soundbound.models/Padding.values|values#static(){}[0]
+
+    final object Companion : kotlinx.serialization.internal/SerializerFactory { // in.shabinder.soundbound.models/Padding.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/Padding> // in.shabinder.soundbound.models/Padding.Companion.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // in.shabinder.soundbound.models/Padding.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
     }
 }
 
@@ -367,6 +458,38 @@ final enum class in.shabinder.soundbound.providers.stats/StatsRange : kotlin/Enu
     final object Companion : kotlinx.serialization.internal/SerializerFactory { // in.shabinder.soundbound.providers.stats/StatsRange.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.providers.stats/StatsRange> // in.shabinder.soundbound.providers.stats/StatsRange.Companion.serializer|serializer(){}[0]
         final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // in.shabinder.soundbound.providers.stats/StatsRange.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+    }
+}
+
+final enum class in.shabinder.soundbound.providers/HeaderPolicy : kotlin/Enum<in.shabinder.soundbound.providers/HeaderPolicy> { // in.shabinder.soundbound.providers/HeaderPolicy|null[0]
+    enum entry ALL_REQUESTS // in.shabinder.soundbound.providers/HeaderPolicy.ALL_REQUESTS|null[0]
+    enum entry SAME_HOST // in.shabinder.soundbound.providers/HeaderPolicy.SAME_HOST|null[0]
+
+    final val entries // in.shabinder.soundbound.providers/HeaderPolicy.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<in.shabinder.soundbound.providers/HeaderPolicy> // in.shabinder.soundbound.providers/HeaderPolicy.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): in.shabinder.soundbound.providers/HeaderPolicy // in.shabinder.soundbound.providers/HeaderPolicy.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<in.shabinder.soundbound.providers/HeaderPolicy> // in.shabinder.soundbound.providers/HeaderPolicy.values|values#static(){}[0]
+
+    final object Companion : kotlinx.serialization.internal/SerializerFactory { // in.shabinder.soundbound.providers/HeaderPolicy.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.providers/HeaderPolicy> // in.shabinder.soundbound.providers/HeaderPolicy.Companion.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // in.shabinder.soundbound.providers/HeaderPolicy.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+    }
+}
+
+final enum class in.shabinder.soundbound.providers/ManifestKind : kotlin/Enum<in.shabinder.soundbound.providers/ManifestKind> { // in.shabinder.soundbound.providers/ManifestKind|null[0]
+    enum entry DASH // in.shabinder.soundbound.providers/ManifestKind.DASH|null[0]
+    enum entry HLS // in.shabinder.soundbound.providers/ManifestKind.HLS|null[0]
+
+    final val entries // in.shabinder.soundbound.providers/ManifestKind.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<in.shabinder.soundbound.providers/ManifestKind> // in.shabinder.soundbound.providers/ManifestKind.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): in.shabinder.soundbound.providers/ManifestKind // in.shabinder.soundbound.providers/ManifestKind.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<in.shabinder.soundbound.providers/ManifestKind> // in.shabinder.soundbound.providers/ManifestKind.values|values#static(){}[0]
+
+    final object Companion : kotlinx.serialization.internal/SerializerFactory { // in.shabinder.soundbound.providers/ManifestKind.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.providers/ManifestKind> // in.shabinder.soundbound.providers/ManifestKind.Companion.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // in.shabinder.soundbound.providers/ManifestKind.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
     }
 }
 
@@ -819,6 +942,8 @@ abstract interface in.shabinder.soundbound.providers/Dependencies { // in.shabin
         open fun <get-localIpc>(): in.shabinder.soundbound.zipline/LocalIpc // in.shabinder.soundbound.providers/Dependencies.localIpc.<get-localIpc>|<get-localIpc>(){}[0]
     open val networkSockets // in.shabinder.soundbound.providers/Dependencies.networkSockets|{}networkSockets[0]
         open fun <get-networkSockets>(): in.shabinder.soundbound.zipline/NetworkSockets // in.shabinder.soundbound.providers/Dependencies.networkSockets.<get-networkSockets>|<get-networkSockets>(){}[0]
+    open val playbackHost // in.shabinder.soundbound.providers/Dependencies.playbackHost|{}playbackHost[0]
+        open fun <get-playbackHost>(): in.shabinder.soundbound.zipline/PlaybackHost // in.shabinder.soundbound.providers/Dependencies.playbackHost.<get-playbackHost>|<get-playbackHost>(){}[0]
     open val runtimeAssets // in.shabinder.soundbound.providers/Dependencies.runtimeAssets|{}runtimeAssets[0]
         open fun <get-runtimeAssets>(): in.shabinder.soundbound.zipline/RuntimeAssets // in.shabinder.soundbound.providers/Dependencies.runtimeAssets.<get-runtimeAssets>|<get-runtimeAssets>(){}[0]
     open val webSocket // in.shabinder.soundbound.providers/Dependencies.webSocket|{}webSocket[0]
@@ -838,6 +963,8 @@ abstract interface in.shabinder.soundbound.providers/ExtensionPlaybackSource : a
     abstract suspend fun descriptor(): in.shabinder.soundbound.providers/PlaybackSourceDescriptor // in.shabinder.soundbound.providers/ExtensionPlaybackSource.descriptor|descriptor(){}[0]
     abstract suspend fun read(kotlin/Long, kotlin/Int): kotlin/ByteArray // in.shabinder.soundbound.providers/ExtensionPlaybackSource.read|read(kotlin.Long;kotlin.Int){}[0]
     abstract suspend fun seek(kotlin/Long) // in.shabinder.soundbound.providers/ExtensionPlaybackSource.seek|seek(kotlin.Long){}[0]
+    open suspend fun refresh(): in.shabinder.soundbound.providers/PlaybackSourceDescriptor? // in.shabinder.soundbound.providers/ExtensionPlaybackSource.refresh|refresh(){}[0]
+    open suspend fun transform(kotlin/String, kotlin/Long, kotlin/ByteArray): kotlin/ByteArray // in.shabinder.soundbound.providers/ExtensionPlaybackSource.transform|transform(kotlin.String;kotlin.Long;kotlin.ByteArray){}[0]
 
     final object Companion // in.shabinder.soundbound.providers/ExtensionPlaybackSource.Companion|null[0]
 }
@@ -1285,6 +1412,12 @@ abstract interface in.shabinder.soundbound.zipline/NetworkSockets : app.cash.zip
     final object Companion // in.shabinder.soundbound.zipline/NetworkSockets.Companion|null[0]
 }
 
+abstract interface in.shabinder.soundbound.zipline/PlaybackHost : app.cash.zipline/ZiplineService { // in.shabinder.soundbound.zipline/PlaybackHost|null[0]
+    abstract suspend fun playbackCapabilities(): in.shabinder.soundbound.zipline/PlaybackCapabilities // in.shabinder.soundbound.zipline/PlaybackHost.playbackCapabilities|playbackCapabilities(){}[0]
+
+    final object Companion // in.shabinder.soundbound.zipline/PlaybackHost.Companion|null[0]
+}
+
 abstract interface in.shabinder.soundbound.zipline/RuntimeAssets : app.cash.zipline/ZiplineService { // in.shabinder.soundbound.zipline/RuntimeAssets|null[0]
     abstract suspend fun catalog(): kotlin.collections/List<in.shabinder.soundbound.zipline/RuntimeAssetDescriptor> // in.shabinder.soundbound.zipline/RuntimeAssets.catalog|catalog(){}[0]
     abstract suspend fun read(kotlin/String, kotlin/String): kotlin/ByteArray? // in.shabinder.soundbound.zipline/RuntimeAssets.read|read(kotlin.String;kotlin.String){}[0]
@@ -1332,15 +1465,388 @@ abstract interface in.shabinder.soundbound.zipline/WebSocketClient : app.cash.zi
     final object Companion // in.shabinder.soundbound.zipline/WebSocketClient.Companion|null[0]
 }
 
+sealed interface in.shabinder.soundbound.models/IvSpec { // in.shabinder.soundbound.models/IvSpec|null[0]
+    final class ChainedPreviousBlock : in.shabinder.soundbound.models/IvSpec { // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock|null[0]
+        constructor <init>(kotlin/String) // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.<init>|<init>(kotlin.String){}[0]
+
+        final val firstHex // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.firstHex|{}firstHex[0]
+            final fun <get-firstHex>(): kotlin/String // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.firstHex.<get-firstHex>|<get-firstHex>(){}[0]
+
+        final fun component1(): kotlin/String // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock> { // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock) // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.IvSpec.ChainedPreviousBlock){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock> // in.shabinder.soundbound.models/IvSpec.ChainedPreviousBlock.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final class CounterFromChunk : in.shabinder.soundbound.models/IvSpec { // in.shabinder.soundbound.models/IvSpec.CounterFromChunk|null[0]
+        constructor <init>(kotlin/String, in.shabinder.soundbound.models/Endian = ...) // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.<init>|<init>(kotlin.String;in.shabinder.soundbound.models.Endian){}[0]
+
+        final val baseHex // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.baseHex|{}baseHex[0]
+            final fun <get-baseHex>(): kotlin/String // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.baseHex.<get-baseHex>|<get-baseHex>(){}[0]
+        final val endian // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.endian|{}endian[0]
+            final fun <get-endian>(): in.shabinder.soundbound.models/Endian // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.endian.<get-endian>|<get-endian>(){}[0]
+
+        final fun component1(): kotlin/String // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.component1|component1(){}[0]
+        final fun component2(): in.shabinder.soundbound.models/Endian // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., in.shabinder.soundbound.models/Endian = ...): in.shabinder.soundbound.models/IvSpec.CounterFromChunk // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.copy|copy(kotlin.String;in.shabinder.soundbound.models.Endian){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/IvSpec.CounterFromChunk> { // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/IvSpec.CounterFromChunk // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/IvSpec.CounterFromChunk) // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.IvSpec.CounterFromChunk){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.Companion|null[0]
+            final val $childSerializers // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.Companion.$childSerializers|{}$childSerializers[0]
+
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/IvSpec.CounterFromChunk> // in.shabinder.soundbound.models/IvSpec.CounterFromChunk.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final class Fixed : in.shabinder.soundbound.models/IvSpec { // in.shabinder.soundbound.models/IvSpec.Fixed|null[0]
+        constructor <init>(kotlin/String) // in.shabinder.soundbound.models/IvSpec.Fixed.<init>|<init>(kotlin.String){}[0]
+
+        final val hex // in.shabinder.soundbound.models/IvSpec.Fixed.hex|{}hex[0]
+            final fun <get-hex>(): kotlin/String // in.shabinder.soundbound.models/IvSpec.Fixed.hex.<get-hex>|<get-hex>(){}[0]
+
+        final fun component1(): kotlin/String // in.shabinder.soundbound.models/IvSpec.Fixed.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): in.shabinder.soundbound.models/IvSpec.Fixed // in.shabinder.soundbound.models/IvSpec.Fixed.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/IvSpec.Fixed.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/IvSpec.Fixed.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/IvSpec.Fixed.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/IvSpec.Fixed> { // in.shabinder.soundbound.models/IvSpec.Fixed.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.models/IvSpec.Fixed.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/IvSpec.Fixed.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/IvSpec.Fixed.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/IvSpec.Fixed // in.shabinder.soundbound.models/IvSpec.Fixed.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/IvSpec.Fixed) // in.shabinder.soundbound.models/IvSpec.Fixed.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.IvSpec.Fixed){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.models/IvSpec.Fixed.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/IvSpec.Fixed> // in.shabinder.soundbound.models/IvSpec.Fixed.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final class PerChunk : in.shabinder.soundbound.models/IvSpec { // in.shabinder.soundbound.models/IvSpec.PerChunk|null[0]
+        constructor <init>(kotlin/String) // in.shabinder.soundbound.models/IvSpec.PerChunk.<init>|<init>(kotlin.String){}[0]
+
+        final val hex // in.shabinder.soundbound.models/IvSpec.PerChunk.hex|{}hex[0]
+            final fun <get-hex>(): kotlin/String // in.shabinder.soundbound.models/IvSpec.PerChunk.hex.<get-hex>|<get-hex>(){}[0]
+
+        final fun component1(): kotlin/String // in.shabinder.soundbound.models/IvSpec.PerChunk.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): in.shabinder.soundbound.models/IvSpec.PerChunk // in.shabinder.soundbound.models/IvSpec.PerChunk.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/IvSpec.PerChunk.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/IvSpec.PerChunk.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/IvSpec.PerChunk.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/IvSpec.PerChunk> { // in.shabinder.soundbound.models/IvSpec.PerChunk.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.models/IvSpec.PerChunk.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/IvSpec.PerChunk.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/IvSpec.PerChunk.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/IvSpec.PerChunk // in.shabinder.soundbound.models/IvSpec.PerChunk.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/IvSpec.PerChunk) // in.shabinder.soundbound.models/IvSpec.PerChunk.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.IvSpec.PerChunk){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.models/IvSpec.PerChunk.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/IvSpec.PerChunk> // in.shabinder.soundbound.models/IvSpec.PerChunk.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final object Companion : kotlinx.serialization.internal/SerializerFactory { // in.shabinder.soundbound.models/IvSpec.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/IvSpec> // in.shabinder.soundbound.models/IvSpec.Companion.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // in.shabinder.soundbound.models/IvSpec.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+    }
+
+    final object None : in.shabinder.soundbound.models/IvSpec, kotlinx.serialization.internal/SerializerFactory { // in.shabinder.soundbound.models/IvSpec.None|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/IvSpec.None.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/IvSpec.None.hashCode|hashCode(){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/IvSpec.None> // in.shabinder.soundbound.models/IvSpec.None.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // in.shabinder.soundbound.models/IvSpec.None.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/IvSpec.None.toString|toString(){}[0]
+    }
+}
+
+sealed interface in.shabinder.soundbound.models/ProcessOp { // in.shabinder.soundbound.models/ProcessOp|null[0]
+    final class Chunked : in.shabinder.soundbound.models/ProcessOp { // in.shabinder.soundbound.models/ProcessOp.Chunked|null[0]
+        constructor <init>(kotlin/Int) // in.shabinder.soundbound.models/ProcessOp.Chunked.<init>|<init>(kotlin.Int){}[0]
+
+        final val size // in.shabinder.soundbound.models/ProcessOp.Chunked.size|{}size[0]
+            final fun <get-size>(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Chunked.size.<get-size>|<get-size>(){}[0]
+
+        final fun component1(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Chunked.component1|component1(){}[0]
+        final fun copy(kotlin/Int = ...): in.shabinder.soundbound.models/ProcessOp.Chunked // in.shabinder.soundbound.models/ProcessOp.Chunked.copy|copy(kotlin.Int){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/ProcessOp.Chunked.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Chunked.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/ProcessOp.Chunked.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/ProcessOp.Chunked> { // in.shabinder.soundbound.models/ProcessOp.Chunked.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.models/ProcessOp.Chunked.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/ProcessOp.Chunked.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/ProcessOp.Chunked.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/ProcessOp.Chunked // in.shabinder.soundbound.models/ProcessOp.Chunked.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/ProcessOp.Chunked) // in.shabinder.soundbound.models/ProcessOp.Chunked.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.ProcessOp.Chunked){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.models/ProcessOp.Chunked.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/ProcessOp.Chunked> // in.shabinder.soundbound.models/ProcessOp.Chunked.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final class Cipher : in.shabinder.soundbound.models/ProcessOp { // in.shabinder.soundbound.models/ProcessOp.Cipher|null[0]
+        constructor <init>(in.shabinder.soundbound.models/CipherAlg, in.shabinder.soundbound.models/CipherMode, kotlin/String, in.shabinder.soundbound.models/IvSpec = ..., in.shabinder.soundbound.models/Padding = ...) // in.shabinder.soundbound.models/ProcessOp.Cipher.<init>|<init>(in.shabinder.soundbound.models.CipherAlg;in.shabinder.soundbound.models.CipherMode;kotlin.String;in.shabinder.soundbound.models.IvSpec;in.shabinder.soundbound.models.Padding){}[0]
+
+        final val alg // in.shabinder.soundbound.models/ProcessOp.Cipher.alg|{}alg[0]
+            final fun <get-alg>(): in.shabinder.soundbound.models/CipherAlg // in.shabinder.soundbound.models/ProcessOp.Cipher.alg.<get-alg>|<get-alg>(){}[0]
+        final val iv // in.shabinder.soundbound.models/ProcessOp.Cipher.iv|{}iv[0]
+            final fun <get-iv>(): in.shabinder.soundbound.models/IvSpec // in.shabinder.soundbound.models/ProcessOp.Cipher.iv.<get-iv>|<get-iv>(){}[0]
+        final val keyHex // in.shabinder.soundbound.models/ProcessOp.Cipher.keyHex|{}keyHex[0]
+            final fun <get-keyHex>(): kotlin/String // in.shabinder.soundbound.models/ProcessOp.Cipher.keyHex.<get-keyHex>|<get-keyHex>(){}[0]
+        final val mode // in.shabinder.soundbound.models/ProcessOp.Cipher.mode|{}mode[0]
+            final fun <get-mode>(): in.shabinder.soundbound.models/CipherMode // in.shabinder.soundbound.models/ProcessOp.Cipher.mode.<get-mode>|<get-mode>(){}[0]
+        final val padding // in.shabinder.soundbound.models/ProcessOp.Cipher.padding|{}padding[0]
+            final fun <get-padding>(): in.shabinder.soundbound.models/Padding // in.shabinder.soundbound.models/ProcessOp.Cipher.padding.<get-padding>|<get-padding>(){}[0]
+
+        final fun component1(): in.shabinder.soundbound.models/CipherAlg // in.shabinder.soundbound.models/ProcessOp.Cipher.component1|component1(){}[0]
+        final fun component2(): in.shabinder.soundbound.models/CipherMode // in.shabinder.soundbound.models/ProcessOp.Cipher.component2|component2(){}[0]
+        final fun component3(): kotlin/String // in.shabinder.soundbound.models/ProcessOp.Cipher.component3|component3(){}[0]
+        final fun component4(): in.shabinder.soundbound.models/IvSpec // in.shabinder.soundbound.models/ProcessOp.Cipher.component4|component4(){}[0]
+        final fun component5(): in.shabinder.soundbound.models/Padding // in.shabinder.soundbound.models/ProcessOp.Cipher.component5|component5(){}[0]
+        final fun copy(in.shabinder.soundbound.models/CipherAlg = ..., in.shabinder.soundbound.models/CipherMode = ..., kotlin/String = ..., in.shabinder.soundbound.models/IvSpec = ..., in.shabinder.soundbound.models/Padding = ...): in.shabinder.soundbound.models/ProcessOp.Cipher // in.shabinder.soundbound.models/ProcessOp.Cipher.copy|copy(in.shabinder.soundbound.models.CipherAlg;in.shabinder.soundbound.models.CipherMode;kotlin.String;in.shabinder.soundbound.models.IvSpec;in.shabinder.soundbound.models.Padding){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/ProcessOp.Cipher.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Cipher.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/ProcessOp.Cipher.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/ProcessOp.Cipher> { // in.shabinder.soundbound.models/ProcessOp.Cipher.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.models/ProcessOp.Cipher.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/ProcessOp.Cipher.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/ProcessOp.Cipher.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/ProcessOp.Cipher // in.shabinder.soundbound.models/ProcessOp.Cipher.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/ProcessOp.Cipher) // in.shabinder.soundbound.models/ProcessOp.Cipher.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.ProcessOp.Cipher){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.models/ProcessOp.Cipher.Companion|null[0]
+            final val $childSerializers // in.shabinder.soundbound.models/ProcessOp.Cipher.Companion.$childSerializers|{}$childSerializers[0]
+
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/ProcessOp.Cipher> // in.shabinder.soundbound.models/ProcessOp.Cipher.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final class ExtensionTransform : in.shabinder.soundbound.models/ProcessOp { // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform|null[0]
+        constructor <init>(kotlin/Int, kotlin/String) // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.<init>|<init>(kotlin.Int;kotlin.String){}[0]
+
+        final val chunkSize // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.chunkSize|{}chunkSize[0]
+            final fun <get-chunkSize>(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.chunkSize.<get-chunkSize>|<get-chunkSize>(){}[0]
+        final val id // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.id|{}id[0]
+            final fun <get-id>(): kotlin/String // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.id.<get-id>|<get-id>(){}[0]
+
+        final fun component1(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.component1|component1(){}[0]
+        final fun component2(): kotlin/String // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.component2|component2(){}[0]
+        final fun copy(kotlin/Int = ..., kotlin/String = ...): in.shabinder.soundbound.models/ProcessOp.ExtensionTransform // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.copy|copy(kotlin.Int;kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/ProcessOp.ExtensionTransform> { // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/ProcessOp.ExtensionTransform // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/ProcessOp.ExtensionTransform) // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.ProcessOp.ExtensionTransform){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/ProcessOp.ExtensionTransform> // in.shabinder.soundbound.models/ProcessOp.ExtensionTransform.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final class Inflate : in.shabinder.soundbound.models/ProcessOp { // in.shabinder.soundbound.models/ProcessOp.Inflate|null[0]
+        constructor <init>(in.shabinder.soundbound.models/InflateFormat) // in.shabinder.soundbound.models/ProcessOp.Inflate.<init>|<init>(in.shabinder.soundbound.models.InflateFormat){}[0]
+
+        final val format // in.shabinder.soundbound.models/ProcessOp.Inflate.format|{}format[0]
+            final fun <get-format>(): in.shabinder.soundbound.models/InflateFormat // in.shabinder.soundbound.models/ProcessOp.Inflate.format.<get-format>|<get-format>(){}[0]
+
+        final fun component1(): in.shabinder.soundbound.models/InflateFormat // in.shabinder.soundbound.models/ProcessOp.Inflate.component1|component1(){}[0]
+        final fun copy(in.shabinder.soundbound.models/InflateFormat = ...): in.shabinder.soundbound.models/ProcessOp.Inflate // in.shabinder.soundbound.models/ProcessOp.Inflate.copy|copy(in.shabinder.soundbound.models.InflateFormat){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/ProcessOp.Inflate.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Inflate.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/ProcessOp.Inflate.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/ProcessOp.Inflate> { // in.shabinder.soundbound.models/ProcessOp.Inflate.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.models/ProcessOp.Inflate.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/ProcessOp.Inflate.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/ProcessOp.Inflate.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/ProcessOp.Inflate // in.shabinder.soundbound.models/ProcessOp.Inflate.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/ProcessOp.Inflate) // in.shabinder.soundbound.models/ProcessOp.Inflate.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.ProcessOp.Inflate){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.models/ProcessOp.Inflate.Companion|null[0]
+            final val $childSerializers // in.shabinder.soundbound.models/ProcessOp.Inflate.Companion.$childSerializers|{}$childSerializers[0]
+
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/ProcessOp.Inflate> // in.shabinder.soundbound.models/ProcessOp.Inflate.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final class Range : in.shabinder.soundbound.models/ProcessOp { // in.shabinder.soundbound.models/ProcessOp.Range|null[0]
+        constructor <init>(kotlin/Long, kotlin/Long? = ...) // in.shabinder.soundbound.models/ProcessOp.Range.<init>|<init>(kotlin.Long;kotlin.Long?){}[0]
+
+        final val from // in.shabinder.soundbound.models/ProcessOp.Range.from|{}from[0]
+            final fun <get-from>(): kotlin/Long // in.shabinder.soundbound.models/ProcessOp.Range.from.<get-from>|<get-from>(){}[0]
+        final val to // in.shabinder.soundbound.models/ProcessOp.Range.to|{}to[0]
+            final fun <get-to>(): kotlin/Long? // in.shabinder.soundbound.models/ProcessOp.Range.to.<get-to>|<get-to>(){}[0]
+
+        final fun component1(): kotlin/Long // in.shabinder.soundbound.models/ProcessOp.Range.component1|component1(){}[0]
+        final fun component2(): kotlin/Long? // in.shabinder.soundbound.models/ProcessOp.Range.component2|component2(){}[0]
+        final fun copy(kotlin/Long = ..., kotlin/Long? = ...): in.shabinder.soundbound.models/ProcessOp.Range // in.shabinder.soundbound.models/ProcessOp.Range.copy|copy(kotlin.Long;kotlin.Long?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/ProcessOp.Range.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Range.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/ProcessOp.Range.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/ProcessOp.Range> { // in.shabinder.soundbound.models/ProcessOp.Range.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.models/ProcessOp.Range.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/ProcessOp.Range.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/ProcessOp.Range.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/ProcessOp.Range // in.shabinder.soundbound.models/ProcessOp.Range.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/ProcessOp.Range) // in.shabinder.soundbound.models/ProcessOp.Range.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.ProcessOp.Range){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.models/ProcessOp.Range.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/ProcessOp.Range> // in.shabinder.soundbound.models/ProcessOp.Range.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final class Skip : in.shabinder.soundbound.models/ProcessOp { // in.shabinder.soundbound.models/ProcessOp.Skip|null[0]
+        constructor <init>(kotlin/Long) // in.shabinder.soundbound.models/ProcessOp.Skip.<init>|<init>(kotlin.Long){}[0]
+
+        final val prefix // in.shabinder.soundbound.models/ProcessOp.Skip.prefix|{}prefix[0]
+            final fun <get-prefix>(): kotlin/Long // in.shabinder.soundbound.models/ProcessOp.Skip.prefix.<get-prefix>|<get-prefix>(){}[0]
+
+        final fun component1(): kotlin/Long // in.shabinder.soundbound.models/ProcessOp.Skip.component1|component1(){}[0]
+        final fun copy(kotlin/Long = ...): in.shabinder.soundbound.models/ProcessOp.Skip // in.shabinder.soundbound.models/ProcessOp.Skip.copy|copy(kotlin.Long){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/ProcessOp.Skip.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Skip.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/ProcessOp.Skip.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/ProcessOp.Skip> { // in.shabinder.soundbound.models/ProcessOp.Skip.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.models/ProcessOp.Skip.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/ProcessOp.Skip.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/ProcessOp.Skip.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/ProcessOp.Skip // in.shabinder.soundbound.models/ProcessOp.Skip.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/ProcessOp.Skip) // in.shabinder.soundbound.models/ProcessOp.Skip.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.ProcessOp.Skip){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.models/ProcessOp.Skip.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/ProcessOp.Skip> // in.shabinder.soundbound.models/ProcessOp.Skip.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final class Stripe : in.shabinder.soundbound.models/ProcessOp { // in.shabinder.soundbound.models/ProcessOp.Stripe|null[0]
+        constructor <init>(kotlin/Int, kotlin/Int, kotlin/Int = ...) // in.shabinder.soundbound.models/ProcessOp.Stripe.<init>|<init>(kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+
+        final val chunkSize // in.shabinder.soundbound.models/ProcessOp.Stripe.chunkSize|{}chunkSize[0]
+            final fun <get-chunkSize>(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Stripe.chunkSize.<get-chunkSize>|<get-chunkSize>(){}[0]
+        final val every // in.shabinder.soundbound.models/ProcessOp.Stripe.every|{}every[0]
+            final fun <get-every>(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Stripe.every.<get-every>|<get-every>(){}[0]
+        final val phase // in.shabinder.soundbound.models/ProcessOp.Stripe.phase|{}phase[0]
+            final fun <get-phase>(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Stripe.phase.<get-phase>|<get-phase>(){}[0]
+
+        final fun component1(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Stripe.component1|component1(){}[0]
+        final fun component2(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Stripe.component2|component2(){}[0]
+        final fun component3(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Stripe.component3|component3(){}[0]
+        final fun copy(kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ...): in.shabinder.soundbound.models/ProcessOp.Stripe // in.shabinder.soundbound.models/ProcessOp.Stripe.copy|copy(kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/ProcessOp.Stripe.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Stripe.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/ProcessOp.Stripe.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/ProcessOp.Stripe> { // in.shabinder.soundbound.models/ProcessOp.Stripe.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.models/ProcessOp.Stripe.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/ProcessOp.Stripe.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/ProcessOp.Stripe.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/ProcessOp.Stripe // in.shabinder.soundbound.models/ProcessOp.Stripe.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/ProcessOp.Stripe) // in.shabinder.soundbound.models/ProcessOp.Stripe.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.ProcessOp.Stripe){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.models/ProcessOp.Stripe.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/ProcessOp.Stripe> // in.shabinder.soundbound.models/ProcessOp.Stripe.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final class Trim : in.shabinder.soundbound.models/ProcessOp { // in.shabinder.soundbound.models/ProcessOp.Trim|null[0]
+        constructor <init>(kotlin/Long) // in.shabinder.soundbound.models/ProcessOp.Trim.<init>|<init>(kotlin.Long){}[0]
+
+        final val tail // in.shabinder.soundbound.models/ProcessOp.Trim.tail|{}tail[0]
+            final fun <get-tail>(): kotlin/Long // in.shabinder.soundbound.models/ProcessOp.Trim.tail.<get-tail>|<get-tail>(){}[0]
+
+        final fun component1(): kotlin/Long // in.shabinder.soundbound.models/ProcessOp.Trim.component1|component1(){}[0]
+        final fun copy(kotlin/Long = ...): in.shabinder.soundbound.models/ProcessOp.Trim // in.shabinder.soundbound.models/ProcessOp.Trim.copy|copy(kotlin.Long){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/ProcessOp.Trim.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/ProcessOp.Trim.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.models/ProcessOp.Trim.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/ProcessOp.Trim> { // in.shabinder.soundbound.models/ProcessOp.Trim.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.models/ProcessOp.Trim.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/ProcessOp.Trim.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/ProcessOp.Trim.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/ProcessOp.Trim // in.shabinder.soundbound.models/ProcessOp.Trim.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/ProcessOp.Trim) // in.shabinder.soundbound.models/ProcessOp.Trim.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.ProcessOp.Trim){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.models/ProcessOp.Trim.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/ProcessOp.Trim> // in.shabinder.soundbound.models/ProcessOp.Trim.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final object Companion : kotlinx.serialization.internal/SerializerFactory { // in.shabinder.soundbound.models/ProcessOp.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/ProcessOp> // in.shabinder.soundbound.models/ProcessOp.Companion.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // in.shabinder.soundbound.models/ProcessOp.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+    }
+}
+
 sealed interface in.shabinder.soundbound.providers/PlaybackSourceDescriptor { // in.shabinder.soundbound.providers/PlaybackSourceDescriptor|null[0]
     final class DirectHttp : in.shabinder.soundbound.providers/PlaybackSourceDescriptor { // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp|null[0]
-        constructor <init>(in.shabinder.soundbound.models/Request) // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.<init>|<init>(in.shabinder.soundbound.models.Request){}[0]
+        constructor <init>(in.shabinder.soundbound.models/Request, kotlin/Long? = ..., kotlin/String? = ...) // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.<init>|<init>(in.shabinder.soundbound.models.Request;kotlin.Long?;kotlin.String?){}[0]
 
+        final val container // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.container|{}container[0]
+            final fun <get-container>(): kotlin/String? // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.container.<get-container>|<get-container>(){}[0]
+        final val expiresAtEpochMs // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.expiresAtEpochMs|{}expiresAtEpochMs[0]
+            final fun <get-expiresAtEpochMs>(): kotlin/Long? // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.expiresAtEpochMs.<get-expiresAtEpochMs>|<get-expiresAtEpochMs>(){}[0]
         final val request // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.request|{}request[0]
             final fun <get-request>(): in.shabinder.soundbound.models/Request // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.request.<get-request>|<get-request>(){}[0]
 
         final fun component1(): in.shabinder.soundbound.models/Request // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.component1|component1(){}[0]
-        final fun copy(in.shabinder.soundbound.models/Request = ...): in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.copy|copy(in.shabinder.soundbound.models.Request){}[0]
+        final fun component2(): kotlin/Long? // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.component2|component2(){}[0]
+        final fun component3(): kotlin/String? // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.component3|component3(){}[0]
+        final fun copy(in.shabinder.soundbound.models/Request = ..., kotlin/Long? = ..., kotlin/String? = ...): in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.copy|copy(in.shabinder.soundbound.models.Request;kotlin.Long?;kotlin.String?){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.toString|toString(){}[0]
@@ -1356,6 +1862,43 @@ sealed interface in.shabinder.soundbound.providers/PlaybackSourceDescriptor { //
 
         final object Companion { // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.Companion|null[0]
             final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp> // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.DirectHttp.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final class Manifest : in.shabinder.soundbound.providers/PlaybackSourceDescriptor { // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest|null[0]
+        constructor <init>(in.shabinder.soundbound.models/Request, in.shabinder.soundbound.providers/ManifestKind, in.shabinder.soundbound.providers/HeaderPolicy = ..., kotlin/Long? = ...) // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.<init>|<init>(in.shabinder.soundbound.models.Request;in.shabinder.soundbound.providers.ManifestKind;in.shabinder.soundbound.providers.HeaderPolicy;kotlin.Long?){}[0]
+
+        final val expiresAtEpochMs // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.expiresAtEpochMs|{}expiresAtEpochMs[0]
+            final fun <get-expiresAtEpochMs>(): kotlin/Long? // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.expiresAtEpochMs.<get-expiresAtEpochMs>|<get-expiresAtEpochMs>(){}[0]
+        final val headerPolicy // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.headerPolicy|{}headerPolicy[0]
+            final fun <get-headerPolicy>(): in.shabinder.soundbound.providers/HeaderPolicy // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.headerPolicy.<get-headerPolicy>|<get-headerPolicy>(){}[0]
+        final val kind // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.kind|{}kind[0]
+            final fun <get-kind>(): in.shabinder.soundbound.providers/ManifestKind // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.kind.<get-kind>|<get-kind>(){}[0]
+        final val request // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.request|{}request[0]
+            final fun <get-request>(): in.shabinder.soundbound.models/Request // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.request.<get-request>|<get-request>(){}[0]
+
+        final fun component1(): in.shabinder.soundbound.models/Request // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.component1|component1(){}[0]
+        final fun component2(): in.shabinder.soundbound.providers/ManifestKind // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.component2|component2(){}[0]
+        final fun component3(): in.shabinder.soundbound.providers/HeaderPolicy // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.component3|component3(){}[0]
+        final fun component4(): kotlin/Long? // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.component4|component4(){}[0]
+        final fun copy(in.shabinder.soundbound.models/Request = ..., in.shabinder.soundbound.providers/ManifestKind = ..., in.shabinder.soundbound.providers/HeaderPolicy = ..., kotlin/Long? = ...): in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.copy|copy(in.shabinder.soundbound.models.Request;in.shabinder.soundbound.providers.ManifestKind;in.shabinder.soundbound.providers.HeaderPolicy;kotlin.Long?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest> { // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.$serializer|null[0]
+            final val descriptor // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest) // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.providers.PlaybackSourceDescriptor.Manifest){}[0]
+        }
+
+        final object Companion { // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.Companion|null[0]
+            final val $childSerializers // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.Companion.$childSerializers|{}$childSerializers[0]
+
+            final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest> // in.shabinder.soundbound.providers/PlaybackSourceDescriptor.Manifest.Companion.serializer|serializer(){}[0]
         }
     }
 
@@ -1766,14 +2309,26 @@ final class in.shabinder.soundbound.models/DecryptionSpec { // in.shabinder.soun
     }
 
     final object Companion { // in.shabinder.soundbound.models/DecryptionSpec.Companion|null[0]
+        final const val AES_128_CBC // in.shabinder.soundbound.models/DecryptionSpec.Companion.AES_128_CBC|{}AES_128_CBC[0]
+            final fun <get-AES_128_CBC>(): kotlin/String // in.shabinder.soundbound.models/DecryptionSpec.Companion.AES_128_CBC.<get-AES_128_CBC>|<get-AES_128_CBC>(){}[0]
+        final const val AES_128_CTR // in.shabinder.soundbound.models/DecryptionSpec.Companion.AES_128_CTR|{}AES_128_CTR[0]
+            final fun <get-AES_128_CTR>(): kotlin/String // in.shabinder.soundbound.models/DecryptionSpec.Companion.AES_128_CTR.<get-AES_128_CTR>|<get-AES_128_CTR>(){}[0]
         final const val BLOWFISH_CBC // in.shabinder.soundbound.models/DecryptionSpec.Companion.BLOWFISH_CBC|{}BLOWFISH_CBC[0]
             final fun <get-BLOWFISH_CBC>(): kotlin/String // in.shabinder.soundbound.models/DecryptionSpec.Companion.BLOWFISH_CBC.<get-BLOWFISH_CBC>|<get-BLOWFISH_CBC>(){}[0]
+        final const val BLOWFISH_CBC_STRIPE // in.shabinder.soundbound.models/DecryptionSpec.Companion.BLOWFISH_CBC_STRIPE|{}BLOWFISH_CBC_STRIPE[0]
+            final fun <get-BLOWFISH_CBC_STRIPE>(): kotlin/String // in.shabinder.soundbound.models/DecryptionSpec.Companion.BLOWFISH_CBC_STRIPE.<get-BLOWFISH_CBC_STRIPE>|<get-BLOWFISH_CBC_STRIPE>(){}[0]
+        final const val CLEARKEY_CENC // in.shabinder.soundbound.models/DecryptionSpec.Companion.CLEARKEY_CENC|{}CLEARKEY_CENC[0]
+            final fun <get-CLEARKEY_CENC>(): kotlin/String // in.shabinder.soundbound.models/DecryptionSpec.Companion.CLEARKEY_CENC.<get-CLEARKEY_CENC>|<get-CLEARKEY_CENC>(){}[0]
         final const val PARAM_CHUNK_SIZE_BYTES // in.shabinder.soundbound.models/DecryptionSpec.Companion.PARAM_CHUNK_SIZE_BYTES|{}PARAM_CHUNK_SIZE_BYTES[0]
             final fun <get-PARAM_CHUNK_SIZE_BYTES>(): kotlin/String // in.shabinder.soundbound.models/DecryptionSpec.Companion.PARAM_CHUNK_SIZE_BYTES.<get-PARAM_CHUNK_SIZE_BYTES>|<get-PARAM_CHUNK_SIZE_BYTES>(){}[0]
         final const val PARAM_ENCRYPT_EVERY_NTH_CHUNK // in.shabinder.soundbound.models/DecryptionSpec.Companion.PARAM_ENCRYPT_EVERY_NTH_CHUNK|{}PARAM_ENCRYPT_EVERY_NTH_CHUNK[0]
             final fun <get-PARAM_ENCRYPT_EVERY_NTH_CHUNK>(): kotlin/String // in.shabinder.soundbound.models/DecryptionSpec.Companion.PARAM_ENCRYPT_EVERY_NTH_CHUNK.<get-PARAM_ENCRYPT_EVERY_NTH_CHUNK>|<get-PARAM_ENCRYPT_EVERY_NTH_CHUNK>(){}[0]
         final const val PARAM_IV_HEX // in.shabinder.soundbound.models/DecryptionSpec.Companion.PARAM_IV_HEX|{}PARAM_IV_HEX[0]
             final fun <get-PARAM_IV_HEX>(): kotlin/String // in.shabinder.soundbound.models/DecryptionSpec.Companion.PARAM_IV_HEX.<get-PARAM_IV_HEX>|<get-PARAM_IV_HEX>(){}[0]
+        final const val PARAM_PADDING // in.shabinder.soundbound.models/DecryptionSpec.Companion.PARAM_PADDING|{}PARAM_PADDING[0]
+            final fun <get-PARAM_PADDING>(): kotlin/String // in.shabinder.soundbound.models/DecryptionSpec.Companion.PARAM_PADDING.<get-PARAM_PADDING>|<get-PARAM_PADDING>(){}[0]
+        final const val PARAM_SKIP_PLAIN_BYTES // in.shabinder.soundbound.models/DecryptionSpec.Companion.PARAM_SKIP_PLAIN_BYTES|{}PARAM_SKIP_PLAIN_BYTES[0]
+            final fun <get-PARAM_SKIP_PLAIN_BYTES>(): kotlin/String // in.shabinder.soundbound.models/DecryptionSpec.Companion.PARAM_SKIP_PLAIN_BYTES.<get-PARAM_SKIP_PLAIN_BYTES>|<get-PARAM_SKIP_PLAIN_BYTES>(){}[0]
 
         final val $childSerializers // in.shabinder.soundbound.models/DecryptionSpec.Companion.$childSerializers|{}$childSerializers[0]
 
@@ -1853,6 +2408,115 @@ final class in.shabinder.soundbound.models/PlatformLink { // in.shabinder.soundb
     }
 }
 
+final class in.shabinder.soundbound.models/ProcessingCapabilities { // in.shabinder.soundbound.models/ProcessingCapabilities|null[0]
+    constructor <init>(kotlin.collections/Set<kotlin/String> = ..., kotlin.collections/Set<in.shabinder.soundbound.models/CipherAlg> = ..., kotlin.collections/Set<in.shabinder.soundbound.models/CipherMode> = ..., kotlin.collections/Set<kotlin/String> = ..., kotlin.collections/Set<in.shabinder.soundbound.models/InflateFormat> = ..., in.shabinder.soundbound.models/ProcessingLimits = ..., kotlin/Boolean = ...) // in.shabinder.soundbound.models/ProcessingCapabilities.<init>|<init>(kotlin.collections.Set<kotlin.String>;kotlin.collections.Set<in.shabinder.soundbound.models.CipherAlg>;kotlin.collections.Set<in.shabinder.soundbound.models.CipherMode>;kotlin.collections.Set<kotlin.String>;kotlin.collections.Set<in.shabinder.soundbound.models.InflateFormat>;in.shabinder.soundbound.models.ProcessingLimits;kotlin.Boolean){}[0]
+
+    final val algs // in.shabinder.soundbound.models/ProcessingCapabilities.algs|{}algs[0]
+        final fun <get-algs>(): kotlin.collections/Set<in.shabinder.soundbound.models/CipherAlg> // in.shabinder.soundbound.models/ProcessingCapabilities.algs.<get-algs>|<get-algs>(){}[0]
+    final val extensionTransformSlow // in.shabinder.soundbound.models/ProcessingCapabilities.extensionTransformSlow|{}extensionTransformSlow[0]
+        final fun <get-extensionTransformSlow>(): kotlin/Boolean // in.shabinder.soundbound.models/ProcessingCapabilities.extensionTransformSlow.<get-extensionTransformSlow>|<get-extensionTransformSlow>(){}[0]
+    final val inflate // in.shabinder.soundbound.models/ProcessingCapabilities.inflate|{}inflate[0]
+        final fun <get-inflate>(): kotlin.collections/Set<in.shabinder.soundbound.models/InflateFormat> // in.shabinder.soundbound.models/ProcessingCapabilities.inflate.<get-inflate>|<get-inflate>(){}[0]
+    final val ivSpecs // in.shabinder.soundbound.models/ProcessingCapabilities.ivSpecs|{}ivSpecs[0]
+        final fun <get-ivSpecs>(): kotlin.collections/Set<kotlin/String> // in.shabinder.soundbound.models/ProcessingCapabilities.ivSpecs.<get-ivSpecs>|<get-ivSpecs>(){}[0]
+    final val limits // in.shabinder.soundbound.models/ProcessingCapabilities.limits|{}limits[0]
+        final fun <get-limits>(): in.shabinder.soundbound.models/ProcessingLimits // in.shabinder.soundbound.models/ProcessingCapabilities.limits.<get-limits>|<get-limits>(){}[0]
+    final val modes // in.shabinder.soundbound.models/ProcessingCapabilities.modes|{}modes[0]
+        final fun <get-modes>(): kotlin.collections/Set<in.shabinder.soundbound.models/CipherMode> // in.shabinder.soundbound.models/ProcessingCapabilities.modes.<get-modes>|<get-modes>(){}[0]
+    final val ops // in.shabinder.soundbound.models/ProcessingCapabilities.ops|{}ops[0]
+        final fun <get-ops>(): kotlin.collections/Set<kotlin/String> // in.shabinder.soundbound.models/ProcessingCapabilities.ops.<get-ops>|<get-ops>(){}[0]
+
+    final fun component1(): kotlin.collections/Set<kotlin/String> // in.shabinder.soundbound.models/ProcessingCapabilities.component1|component1(){}[0]
+    final fun component2(): kotlin.collections/Set<in.shabinder.soundbound.models/CipherAlg> // in.shabinder.soundbound.models/ProcessingCapabilities.component2|component2(){}[0]
+    final fun component3(): kotlin.collections/Set<in.shabinder.soundbound.models/CipherMode> // in.shabinder.soundbound.models/ProcessingCapabilities.component3|component3(){}[0]
+    final fun component4(): kotlin.collections/Set<kotlin/String> // in.shabinder.soundbound.models/ProcessingCapabilities.component4|component4(){}[0]
+    final fun component5(): kotlin.collections/Set<in.shabinder.soundbound.models/InflateFormat> // in.shabinder.soundbound.models/ProcessingCapabilities.component5|component5(){}[0]
+    final fun component6(): in.shabinder.soundbound.models/ProcessingLimits // in.shabinder.soundbound.models/ProcessingCapabilities.component6|component6(){}[0]
+    final fun component7(): kotlin/Boolean // in.shabinder.soundbound.models/ProcessingCapabilities.component7|component7(){}[0]
+    final fun copy(kotlin.collections/Set<kotlin/String> = ..., kotlin.collections/Set<in.shabinder.soundbound.models/CipherAlg> = ..., kotlin.collections/Set<in.shabinder.soundbound.models/CipherMode> = ..., kotlin.collections/Set<kotlin/String> = ..., kotlin.collections/Set<in.shabinder.soundbound.models/InflateFormat> = ..., in.shabinder.soundbound.models/ProcessingLimits = ..., kotlin/Boolean = ...): in.shabinder.soundbound.models/ProcessingCapabilities // in.shabinder.soundbound.models/ProcessingCapabilities.copy|copy(kotlin.collections.Set<kotlin.String>;kotlin.collections.Set<in.shabinder.soundbound.models.CipherAlg>;kotlin.collections.Set<in.shabinder.soundbound.models.CipherMode>;kotlin.collections.Set<kotlin.String>;kotlin.collections.Set<in.shabinder.soundbound.models.InflateFormat>;in.shabinder.soundbound.models.ProcessingLimits;kotlin.Boolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/ProcessingCapabilities.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/ProcessingCapabilities.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // in.shabinder.soundbound.models/ProcessingCapabilities.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/ProcessingCapabilities> { // in.shabinder.soundbound.models/ProcessingCapabilities.$serializer|null[0]
+        final val descriptor // in.shabinder.soundbound.models/ProcessingCapabilities.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/ProcessingCapabilities.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/ProcessingCapabilities.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/ProcessingCapabilities // in.shabinder.soundbound.models/ProcessingCapabilities.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/ProcessingCapabilities) // in.shabinder.soundbound.models/ProcessingCapabilities.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.ProcessingCapabilities){}[0]
+    }
+
+    final object Companion { // in.shabinder.soundbound.models/ProcessingCapabilities.Companion|null[0]
+        final val $childSerializers // in.shabinder.soundbound.models/ProcessingCapabilities.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/ProcessingCapabilities> // in.shabinder.soundbound.models/ProcessingCapabilities.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class in.shabinder.soundbound.models/ProcessingLimits { // in.shabinder.soundbound.models/ProcessingLimits|null[0]
+    constructor <init>(kotlin/Int = ..., kotlin/Int = ..., kotlin/Long = ...) // in.shabinder.soundbound.models/ProcessingLimits.<init>|<init>(kotlin.Int;kotlin.Int;kotlin.Long){}[0]
+
+    final val maxChunkBytes // in.shabinder.soundbound.models/ProcessingLimits.maxChunkBytes|{}maxChunkBytes[0]
+        final fun <get-maxChunkBytes>(): kotlin/Int // in.shabinder.soundbound.models/ProcessingLimits.maxChunkBytes.<get-maxChunkBytes>|<get-maxChunkBytes>(){}[0]
+    final val maxOps // in.shabinder.soundbound.models/ProcessingLimits.maxOps|{}maxOps[0]
+        final fun <get-maxOps>(): kotlin/Int // in.shabinder.soundbound.models/ProcessingLimits.maxOps.<get-maxOps>|<get-maxOps>(){}[0]
+    final val memoryBudgetBytes // in.shabinder.soundbound.models/ProcessingLimits.memoryBudgetBytes|{}memoryBudgetBytes[0]
+        final fun <get-memoryBudgetBytes>(): kotlin/Long // in.shabinder.soundbound.models/ProcessingLimits.memoryBudgetBytes.<get-memoryBudgetBytes>|<get-memoryBudgetBytes>(){}[0]
+
+    final fun component1(): kotlin/Int // in.shabinder.soundbound.models/ProcessingLimits.component1|component1(){}[0]
+    final fun component2(): kotlin/Int // in.shabinder.soundbound.models/ProcessingLimits.component2|component2(){}[0]
+    final fun component3(): kotlin/Long // in.shabinder.soundbound.models/ProcessingLimits.component3|component3(){}[0]
+    final fun copy(kotlin/Int = ..., kotlin/Int = ..., kotlin/Long = ...): in.shabinder.soundbound.models/ProcessingLimits // in.shabinder.soundbound.models/ProcessingLimits.copy|copy(kotlin.Int;kotlin.Int;kotlin.Long){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/ProcessingLimits.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/ProcessingLimits.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // in.shabinder.soundbound.models/ProcessingLimits.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/ProcessingLimits> { // in.shabinder.soundbound.models/ProcessingLimits.$serializer|null[0]
+        final val descriptor // in.shabinder.soundbound.models/ProcessingLimits.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/ProcessingLimits.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/ProcessingLimits.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/ProcessingLimits // in.shabinder.soundbound.models/ProcessingLimits.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/ProcessingLimits) // in.shabinder.soundbound.models/ProcessingLimits.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.ProcessingLimits){}[0]
+    }
+
+    final object Companion { // in.shabinder.soundbound.models/ProcessingLimits.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/ProcessingLimits> // in.shabinder.soundbound.models/ProcessingLimits.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class in.shabinder.soundbound.models/ProcessingSpec { // in.shabinder.soundbound.models/ProcessingSpec|null[0]
+    constructor <init>(kotlin.collections/List<in.shabinder.soundbound.models/ProcessOp>) // in.shabinder.soundbound.models/ProcessingSpec.<init>|<init>(kotlin.collections.List<in.shabinder.soundbound.models.ProcessOp>){}[0]
+
+    final val ops // in.shabinder.soundbound.models/ProcessingSpec.ops|{}ops[0]
+        final fun <get-ops>(): kotlin.collections/List<in.shabinder.soundbound.models/ProcessOp> // in.shabinder.soundbound.models/ProcessingSpec.ops.<get-ops>|<get-ops>(){}[0]
+
+    final fun component1(): kotlin.collections/List<in.shabinder.soundbound.models/ProcessOp> // in.shabinder.soundbound.models/ProcessingSpec.component1|component1(){}[0]
+    final fun copy(kotlin.collections/List<in.shabinder.soundbound.models/ProcessOp> = ...): in.shabinder.soundbound.models/ProcessingSpec // in.shabinder.soundbound.models/ProcessingSpec.copy|copy(kotlin.collections.List<in.shabinder.soundbound.models.ProcessOp>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/ProcessingSpec.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/ProcessingSpec.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // in.shabinder.soundbound.models/ProcessingSpec.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.models/ProcessingSpec> { // in.shabinder.soundbound.models/ProcessingSpec.$serializer|null[0]
+        final val descriptor // in.shabinder.soundbound.models/ProcessingSpec.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.models/ProcessingSpec.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.models/ProcessingSpec.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.models/ProcessingSpec // in.shabinder.soundbound.models/ProcessingSpec.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.models/ProcessingSpec) // in.shabinder.soundbound.models/ProcessingSpec.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.models.ProcessingSpec){}[0]
+    }
+
+    final object Companion { // in.shabinder.soundbound.models/ProcessingSpec.Companion|null[0]
+        final val $childSerializers // in.shabinder.soundbound.models/ProcessingSpec.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun aesCbc(kotlin/String, kotlin/String = ..., kotlin/Boolean = ...): in.shabinder.soundbound.models/ProcessingSpec // in.shabinder.soundbound.models/ProcessingSpec.Companion.aesCbc|aesCbc(kotlin.String;kotlin.String;kotlin.Boolean){}[0]
+        final fun aesCtr(kotlin/String, kotlin/String = ...): in.shabinder.soundbound.models/ProcessingSpec // in.shabinder.soundbound.models/ProcessingSpec.Companion.aesCtr|aesCtr(kotlin.String;kotlin.String){}[0]
+        final fun blowfishStripe(kotlin/String, kotlin/String = ..., kotlin/Int = ..., kotlin/Int = ...): in.shabinder.soundbound.models/ProcessingSpec // in.shabinder.soundbound.models/ProcessingSpec.Companion.blowfishStripe|blowfishStripe(kotlin.String;kotlin.String;kotlin.Int;kotlin.Int){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/ProcessingSpec> // in.shabinder.soundbound.models/ProcessingSpec.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class in.shabinder.soundbound.models/QualityOption { // in.shabinder.soundbound.models/QualityOption|null[0]
     constructor <init>(in.shabinder.soundbound.models/AudioQuality, kotlin/String, kotlin/String? = ..., kotlin/Int? = ..., kotlin/Int? = ...) // in.shabinder.soundbound.models/QualityOption.<init>|<init>(in.shabinder.soundbound.models.AudioQuality;kotlin.String;kotlin.String?;kotlin.Int?;kotlin.Int?){}[0]
 
@@ -1896,7 +2560,7 @@ final class in.shabinder.soundbound.models/QualityOption { // in.shabinder.sound
 }
 
 final class in.shabinder.soundbound.models/Request { // in.shabinder.soundbound.models/Request|null[0]
-    constructor <init>(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., in.shabinder.soundbound.zipline/HttpClient.BodyType = ..., kotlin/Long? = ..., in.shabinder.soundbound.models/DecryptionSpec? = ..., kotlin.collections/List<kotlin/String>? = ..., kotlin/String? = ...) // in.shabinder.soundbound.models/Request.<init>|<init>(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;in.shabinder.soundbound.zipline.HttpClient.BodyType;kotlin.Long?;in.shabinder.soundbound.models.DecryptionSpec?;kotlin.collections.List<kotlin.String>?;kotlin.String?){}[0]
+    constructor <init>(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., in.shabinder.soundbound.zipline/HttpClient.BodyType = ..., kotlin/Long? = ..., in.shabinder.soundbound.models/DecryptionSpec? = ..., kotlin.collections/List<kotlin/String>? = ..., kotlin/String? = ..., in.shabinder.soundbound.models/ProcessingSpec? = ...) // in.shabinder.soundbound.models/Request.<init>|<init>(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;in.shabinder.soundbound.zipline.HttpClient.BodyType;kotlin.Long?;in.shabinder.soundbound.models.DecryptionSpec?;kotlin.collections.List<kotlin.String>?;kotlin.String?;in.shabinder.soundbound.models.ProcessingSpec?){}[0]
 
     final val body // in.shabinder.soundbound.models/Request.body|{}body[0]
         final fun <get-body>(): in.shabinder.soundbound.zipline/HttpClient.BodyType // in.shabinder.soundbound.models/Request.body.<get-body>|<get-body>(){}[0]
@@ -1918,12 +2582,14 @@ final class in.shabinder.soundbound.models/Request { // in.shabinder.soundbound.
         final fun <get-method>(): kotlin/String // in.shabinder.soundbound.models/Request.method.<get-method>|<get-method>(){}[0]
     final val params // in.shabinder.soundbound.models/Request.params|{}params[0]
         final fun <get-params>(): kotlin.collections/Map<kotlin/String, kotlin/String> // in.shabinder.soundbound.models/Request.params.<get-params>|<get-params>(){}[0]
+    final val processing // in.shabinder.soundbound.models/Request.processing|{}processing[0]
+        final fun <get-processing>(): in.shabinder.soundbound.models/ProcessingSpec? // in.shabinder.soundbound.models/Request.processing.<get-processing>|<get-processing>(){}[0]
     final val segments // in.shabinder.soundbound.models/Request.segments|{}segments[0]
         final fun <get-segments>(): kotlin.collections/List<kotlin/String>? // in.shabinder.soundbound.models/Request.segments.<get-segments>|<get-segments>(){}[0]
     final val url // in.shabinder.soundbound.models/Request.url|{}url[0]
         final fun <get-url>(): kotlin/String // in.shabinder.soundbound.models/Request.url.<get-url>|<get-url>(){}[0]
 
-    final fun copy(kotlin/String = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., in.shabinder.soundbound.zipline/HttpClient.BodyType = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/Long? = ..., in.shabinder.soundbound.models/DecryptionSpec? = ..., kotlin.collections/List<kotlin/String>? = ..., kotlin/String? = ...): in.shabinder.soundbound.models/Request // in.shabinder.soundbound.models/Request.copy|copy(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;in.shabinder.soundbound.zipline.HttpClient.BodyType;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.Long?;in.shabinder.soundbound.models.DecryptionSpec?;kotlin.collections.List<kotlin.String>?;kotlin.String?){}[0]
+    final fun copy(kotlin/String = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., in.shabinder.soundbound.zipline/HttpClient.BodyType = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/Long? = ..., in.shabinder.soundbound.models/DecryptionSpec? = ..., kotlin.collections/List<kotlin/String>? = ..., kotlin/String? = ..., in.shabinder.soundbound.models/ProcessingSpec? = ...): in.shabinder.soundbound.models/Request // in.shabinder.soundbound.models/Request.copy|copy(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;in.shabinder.soundbound.zipline.HttpClient.BodyType;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.Long?;in.shabinder.soundbound.models.DecryptionSpec?;kotlin.collections.List<kotlin.String>?;kotlin.String?;in.shabinder.soundbound.models.ProcessingSpec?){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.models/Request.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // in.shabinder.soundbound.models/Request.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // in.shabinder.soundbound.models/Request.toString|toString(){}[0]
@@ -1943,7 +2609,7 @@ final class in.shabinder.soundbound.models/Request { // in.shabinder.soundbound.
 
         final val $childSerializers // in.shabinder.soundbound.models/Request.Companion.$childSerializers|{}$childSerializers[0]
 
-        final fun from(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., in.shabinder.soundbound.zipline/HttpClient.BodyType = ..., kotlin/Long? = ..., in.shabinder.soundbound.models/DecryptionSpec? = ..., kotlin.collections/List<kotlin/String>? = ..., kotlin/String? = ...): in.shabinder.soundbound.models/Request // in.shabinder.soundbound.models/Request.Companion.from|from(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;in.shabinder.soundbound.zipline.HttpClient.BodyType;kotlin.Long?;in.shabinder.soundbound.models.DecryptionSpec?;kotlin.collections.List<kotlin.String>?;kotlin.String?){}[0]
+        final fun from(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String = ..., in.shabinder.soundbound.zipline/HttpClient.BodyType = ..., kotlin/Long? = ..., in.shabinder.soundbound.models/DecryptionSpec? = ..., kotlin.collections/List<kotlin/String>? = ..., kotlin/String? = ..., in.shabinder.soundbound.models/ProcessingSpec? = ...): in.shabinder.soundbound.models/Request // in.shabinder.soundbound.models/Request.Companion.from|from(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String;in.shabinder.soundbound.zipline.HttpClient.BodyType;kotlin.Long?;in.shabinder.soundbound.models.DecryptionSpec?;kotlin.collections.List<kotlin.String>?;kotlin.String?;in.shabinder.soundbound.models.ProcessingSpec?){}[0]
         final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.models/Request> // in.shabinder.soundbound.models/Request.Companion.serializer|serializer(){}[0]
     }
 }
@@ -3530,6 +4196,63 @@ final class in.shabinder.soundbound.zipline/NavigateRequest { // in.shabinder.so
     }
 }
 
+final class in.shabinder.soundbound.zipline/PlaybackCapabilities { // in.shabinder.soundbound.zipline/PlaybackCapabilities|null[0]
+    constructor <init>(kotlin.collections/Set<kotlin/String> = ..., kotlin.collections/Set<kotlin/String> = ..., in.shabinder.soundbound.models/ProcessingCapabilities = ..., kotlin.collections/Set<kotlin/String> = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Int = ...) // in.shabinder.soundbound.zipline/PlaybackCapabilities.<init>|<init>(kotlin.collections.Set<kotlin.String>;kotlin.collections.Set<kotlin.String>;in.shabinder.soundbound.models.ProcessingCapabilities;kotlin.collections.Set<kotlin.String>;kotlin.Boolean;kotlin.Boolean;kotlin.Int){}[0]
+
+    final val ciphers // in.shabinder.soundbound.zipline/PlaybackCapabilities.ciphers|{}ciphers[0]
+        final fun <get-ciphers>(): kotlin.collections/Set<kotlin/String> // in.shabinder.soundbound.zipline/PlaybackCapabilities.ciphers.<get-ciphers>|<get-ciphers>(){}[0]
+    final val containers // in.shabinder.soundbound.zipline/PlaybackCapabilities.containers|{}containers[0]
+        final fun <get-containers>(): kotlin.collections/Set<kotlin/String> // in.shabinder.soundbound.zipline/PlaybackCapabilities.containers.<get-containers>|<get-containers>(){}[0]
+    final val headers // in.shabinder.soundbound.zipline/PlaybackCapabilities.headers|{}headers[0]
+        final fun <get-headers>(): kotlin/Boolean // in.shabinder.soundbound.zipline/PlaybackCapabilities.headers.<get-headers>|<get-headers>(){}[0]
+    final val maxLiveSources // in.shabinder.soundbound.zipline/PlaybackCapabilities.maxLiveSources|{}maxLiveSources[0]
+        final fun <get-maxLiveSources>(): kotlin/Int // in.shabinder.soundbound.zipline/PlaybackCapabilities.maxLiveSources.<get-maxLiveSources>|<get-maxLiveSources>(){}[0]
+    final val processing // in.shabinder.soundbound.zipline/PlaybackCapabilities.processing|{}processing[0]
+        final fun <get-processing>(): in.shabinder.soundbound.models/ProcessingCapabilities // in.shabinder.soundbound.zipline/PlaybackCapabilities.processing.<get-processing>|<get-processing>(){}[0]
+    final val refresh // in.shabinder.soundbound.zipline/PlaybackCapabilities.refresh|{}refresh[0]
+        final fun <get-refresh>(): kotlin/Boolean // in.shabinder.soundbound.zipline/PlaybackCapabilities.refresh.<get-refresh>|<get-refresh>(){}[0]
+    final val sourceKinds // in.shabinder.soundbound.zipline/PlaybackCapabilities.sourceKinds|{}sourceKinds[0]
+        final fun <get-sourceKinds>(): kotlin.collections/Set<kotlin/String> // in.shabinder.soundbound.zipline/PlaybackCapabilities.sourceKinds.<get-sourceKinds>|<get-sourceKinds>(){}[0]
+
+    final fun component1(): kotlin.collections/Set<kotlin/String> // in.shabinder.soundbound.zipline/PlaybackCapabilities.component1|component1(){}[0]
+    final fun component2(): kotlin.collections/Set<kotlin/String> // in.shabinder.soundbound.zipline/PlaybackCapabilities.component2|component2(){}[0]
+    final fun component3(): in.shabinder.soundbound.models/ProcessingCapabilities // in.shabinder.soundbound.zipline/PlaybackCapabilities.component3|component3(){}[0]
+    final fun component4(): kotlin.collections/Set<kotlin/String> // in.shabinder.soundbound.zipline/PlaybackCapabilities.component4|component4(){}[0]
+    final fun component5(): kotlin/Boolean // in.shabinder.soundbound.zipline/PlaybackCapabilities.component5|component5(){}[0]
+    final fun component6(): kotlin/Boolean // in.shabinder.soundbound.zipline/PlaybackCapabilities.component6|component6(){}[0]
+    final fun component7(): kotlin/Int // in.shabinder.soundbound.zipline/PlaybackCapabilities.component7|component7(){}[0]
+    final fun copy(kotlin.collections/Set<kotlin/String> = ..., kotlin.collections/Set<kotlin/String> = ..., in.shabinder.soundbound.models/ProcessingCapabilities = ..., kotlin.collections/Set<kotlin/String> = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Int = ...): in.shabinder.soundbound.zipline/PlaybackCapabilities // in.shabinder.soundbound.zipline/PlaybackCapabilities.copy|copy(kotlin.collections.Set<kotlin.String>;kotlin.collections.Set<kotlin.String>;in.shabinder.soundbound.models.ProcessingCapabilities;kotlin.collections.Set<kotlin.String>;kotlin.Boolean;kotlin.Boolean;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // in.shabinder.soundbound.zipline/PlaybackCapabilities.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // in.shabinder.soundbound.zipline/PlaybackCapabilities.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // in.shabinder.soundbound.zipline/PlaybackCapabilities.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<in.shabinder.soundbound.zipline/PlaybackCapabilities> { // in.shabinder.soundbound.zipline/PlaybackCapabilities.$serializer|null[0]
+        final val descriptor // in.shabinder.soundbound.zipline/PlaybackCapabilities.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // in.shabinder.soundbound.zipline/PlaybackCapabilities.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // in.shabinder.soundbound.zipline/PlaybackCapabilities.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): in.shabinder.soundbound.zipline/PlaybackCapabilities // in.shabinder.soundbound.zipline/PlaybackCapabilities.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, in.shabinder.soundbound.zipline/PlaybackCapabilities) // in.shabinder.soundbound.zipline/PlaybackCapabilities.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;in.shabinder.soundbound.zipline.PlaybackCapabilities){}[0]
+    }
+
+    final object Companion { // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion|null[0]
+        final const val KIND_DASH // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion.KIND_DASH|{}KIND_DASH[0]
+            final fun <get-KIND_DASH>(): kotlin/String // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion.KIND_DASH.<get-KIND_DASH>|<get-KIND_DASH>(){}[0]
+        final const val KIND_DIRECT_HTTP // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion.KIND_DIRECT_HTTP|{}KIND_DIRECT_HTTP[0]
+            final fun <get-KIND_DIRECT_HTTP>(): kotlin/String // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion.KIND_DIRECT_HTTP.<get-KIND_DIRECT_HTTP>|<get-KIND_DIRECT_HTTP>(){}[0]
+        final const val KIND_HLS // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion.KIND_HLS|{}KIND_HLS[0]
+            final fun <get-KIND_HLS>(): kotlin/String // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion.KIND_HLS.<get-KIND_HLS>|<get-KIND_HLS>(){}[0]
+        final const val KIND_SEGMENTS // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion.KIND_SEGMENTS|{}KIND_SEGMENTS[0]
+            final fun <get-KIND_SEGMENTS>(): kotlin/String // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion.KIND_SEGMENTS.<get-KIND_SEGMENTS>|<get-KIND_SEGMENTS>(){}[0]
+        final const val KIND_STREAM // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion.KIND_STREAM|{}KIND_STREAM[0]
+            final fun <get-KIND_STREAM>(): kotlin/String // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion.KIND_STREAM.<get-KIND_STREAM>|<get-KIND_STREAM>(){}[0]
+
+        final val $childSerializers // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<in.shabinder.soundbound.zipline/PlaybackCapabilities> // in.shabinder.soundbound.zipline/PlaybackCapabilities.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class in.shabinder.soundbound.zipline/RuntimeAssetDescriptor { // in.shabinder.soundbound.zipline/RuntimeAssetDescriptor|null[0]
     constructor <init>(kotlin/String, kotlin/String, kotlin/String, kotlin/String, kotlin/Long, kotlin/Long, kotlin/String) // in.shabinder.soundbound.zipline/RuntimeAssetDescriptor.<init>|<init>(kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.Long;kotlin.Long;kotlin.String){}[0]
 
@@ -4833,6 +5556,10 @@ final object in.shabinder.soundbound.zipline/UnavailableNetworkSockets : in.shab
     final suspend fun localPort(kotlin/String): kotlin/Int // in.shabinder.soundbound.zipline/UnavailableNetworkSockets.localPort|localPort(kotlin.String){}[0]
     final suspend fun read(kotlin/String, kotlin/Int, kotlin/Long): kotlin/String? // in.shabinder.soundbound.zipline/UnavailableNetworkSockets.read|read(kotlin.String;kotlin.Int;kotlin.Long){}[0]
     final suspend fun write(kotlin/String, kotlin/String): kotlin/Nothing // in.shabinder.soundbound.zipline/UnavailableNetworkSockets.write|write(kotlin.String;kotlin.String){}[0]
+}
+
+final object in.shabinder.soundbound.zipline/UnavailablePlaybackHost : in.shabinder.soundbound.zipline/PlaybackHost { // in.shabinder.soundbound.zipline/UnavailablePlaybackHost|null[0]
+    final suspend fun playbackCapabilities(): in.shabinder.soundbound.zipline/PlaybackCapabilities // in.shabinder.soundbound.zipline/UnavailablePlaybackHost.playbackCapabilities|playbackCapabilities(){}[0]
 }
 
 final object in.shabinder.soundbound.zipline/UnavailableRuntimeAssets : in.shabinder.soundbound.zipline/RuntimeAssets { // in.shabinder.soundbound.zipline/UnavailableRuntimeAssets|null[0]

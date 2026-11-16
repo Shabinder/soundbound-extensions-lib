@@ -17,6 +17,11 @@ import kotlinx.serialization.Serializable
  * Feature-detect with `PlaybackHost.playbackCapabilities().processing`. The host rejects a pipeline it cannot run
  * (unknown op, algorithm, mode, over [ProcessingLimits]) with a clean playback/download failure; it never plays or saves
  * unprocessed bytes.
+ *
+ * **Host level.** Hosts before `HostApi.LEVEL` 41 do not know this field and silently drop it, then play or save the raw
+ * bytes. An extension that sets `DownloadRequest.processing` MUST declare `extMinHostApi` >= 41 (`min_host_api` in its
+ * listing). When the pipeline is one of the presets ([aesCtr], [aesCbc], [blowfishStripe]), also set the 0.40
+ * `DownloadRequest.decryption` id so older hosts still decrypt; `processing` wins on hosts that know it.
  */
 @Immutable
 @Serializable
@@ -46,11 +51,14 @@ data class ProcessingSpec(val ops: List<ProcessOp>) {
 
 @Serializable
 sealed interface ProcessOp {
-  /** Frame the stream into [size]-byte chunks for the next cipher (a short last chunk passes through untouched). */
+  /**
+   * Frame the stream into [size]-byte chunks for the next cipher, each its own message. A short last chunk is processed
+   * too (ECB/CBC: its whole blocks; a sub-block tail passes through). Only [Stripe] leaves a short last chunk alone.
+   */
   @Serializable
   data class Chunked(val size: Int) : ProcessOp
 
-  /** Like [Chunked], but only chunks with `index % every == phase` are processed; the rest pass through. */
+  /** Like [Chunked], but only chunks with `index % every == phase` are processed; the rest, and a short last chunk, pass through. */
   @Serializable
   data class Stripe(val chunkSize: Int, val every: Int, val phase: Int = 0) : ProcessOp
 
@@ -58,7 +66,7 @@ sealed interface ProcessOp {
   @Serializable
   data class Skip(val prefix: Long) : ProcessOp
 
-  /** Drop [tail] bytes from the end of the output. */
+  /** Drop [tail] bytes from the end of the output; at most `ProcessingLimits.memoryBudgetBytes` (held in memory when streaming). */
   @Serializable
   data class Trim(val tail: Long) : ProcessOp
 
@@ -114,7 +122,10 @@ sealed interface IvSpec {
   @Serializable
   data object None : IvSpec
 
-  /** One IV / initial counter for the whole message. */
+  /**
+   * One IV / initial counter for the whole message. After [ProcessOp.Chunked] / [ProcessOp.Stripe] every chunk is a
+   * message, so it restarts at each chunk (same as [PerChunk]); use [CounterFromChunk] or [ChainedPreviousBlock] to vary it.
+   */
   @Serializable
   data class Fixed(val hex: String) : IvSpec
 
@@ -140,8 +151,11 @@ data class ProcessingCapabilities(
   val ivSpecs: Set<String> = emptySet(),
   val inflate: Set<InflateFormat> = emptySet(),
   val limits: ProcessingLimits = ProcessingLimits(),
-  /** [ProcessOp.ExtensionTransform] is supported, and costs a guest round trip per chunk. */
-  val extensionTransformSlow: Boolean = true,
+  /**
+   * Cost hint: true when [ProcessOp.ExtensionTransform] is supported and costs a guest round trip per chunk. Detect
+   * support with `"ExtensionTransform" in ops`; false on hosts that do not report processing.
+   */
+  val extensionTransformSlow: Boolean = false,
 )
 
 @Serializable

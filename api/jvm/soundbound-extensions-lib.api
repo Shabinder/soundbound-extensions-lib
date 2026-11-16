@@ -506,12 +506,54 @@ public final class in/shabinder/soundbound/models/ChartListingModel$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class in/shabinder/soundbound/models/CipherAlg : java/lang/Enum {
+	public static final field AES Lin/shabinder/soundbound/models/CipherAlg;
+	public static final field BLOWFISH Lin/shabinder/soundbound/models/CipherAlg;
+	public static final field CHACHA20 Lin/shabinder/soundbound/models/CipherAlg;
+	public static final field Companion Lin/shabinder/soundbound/models/CipherAlg$Companion;
+	public static final field DES Lin/shabinder/soundbound/models/CipherAlg;
+	public static final field DES3 Lin/shabinder/soundbound/models/CipherAlg;
+	public static final field RC4 Lin/shabinder/soundbound/models/CipherAlg;
+	public static final field XOR Lin/shabinder/soundbound/models/CipherAlg;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lin/shabinder/soundbound/models/CipherAlg;
+	public static fun values ()[Lin/shabinder/soundbound/models/CipherAlg;
+}
+
+public final class in/shabinder/soundbound/models/CipherAlg$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/CipherMode : java/lang/Enum {
+	public static final field CBC Lin/shabinder/soundbound/models/CipherMode;
+	public static final field CFB Lin/shabinder/soundbound/models/CipherMode;
+	public static final field CTR Lin/shabinder/soundbound/models/CipherMode;
+	public static final field Companion Lin/shabinder/soundbound/models/CipherMode$Companion;
+	public static final field ECB Lin/shabinder/soundbound/models/CipherMode;
+	public static final field GCM_DECRYPT Lin/shabinder/soundbound/models/CipherMode;
+	public static final field OFB Lin/shabinder/soundbound/models/CipherMode;
+	public static final field STREAM Lin/shabinder/soundbound/models/CipherMode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lin/shabinder/soundbound/models/CipherMode;
+	public static fun values ()[Lin/shabinder/soundbound/models/CipherMode;
+}
+
+public final class in/shabinder/soundbound/models/CipherMode$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class in/shabinder/soundbound/models/DecryptionSpec {
+	public static final field AES_128_CBC Ljava/lang/String;
+	public static final field AES_128_CTR Ljava/lang/String;
 	public static final field BLOWFISH_CBC Ljava/lang/String;
+	public static final field BLOWFISH_CBC_STRIPE Ljava/lang/String;
+	public static final field CLEARKEY_CENC Ljava/lang/String;
 	public static final field Companion Lin/shabinder/soundbound/models/DecryptionSpec$Companion;
 	public static final field PARAM_CHUNK_SIZE_BYTES Ljava/lang/String;
 	public static final field PARAM_ENCRYPT_EVERY_NTH_CHUNK Ljava/lang/String;
 	public static final field PARAM_IV_HEX Ljava/lang/String;
+	public static final field PARAM_PADDING Ljava/lang/String;
+	public static final field PARAM_SKIP_PLAIN_BYTES Ljava/lang/String;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -755,6 +797,160 @@ public final class in/shabinder/soundbound/models/DownloadStatus$Queued : in/sha
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class in/shabinder/soundbound/models/Endian : java/lang/Enum {
+	public static final field BIG Lin/shabinder/soundbound/models/Endian;
+	public static final field Companion Lin/shabinder/soundbound/models/Endian$Companion;
+	public static final field LITTLE Lin/shabinder/soundbound/models/Endian;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lin/shabinder/soundbound/models/Endian;
+	public static fun values ()[Lin/shabinder/soundbound/models/Endian;
+}
+
+public final class in/shabinder/soundbound/models/Endian$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/InflateFormat : java/lang/Enum {
+	public static final field Companion Lin/shabinder/soundbound/models/InflateFormat$Companion;
+	public static final field GZIP Lin/shabinder/soundbound/models/InflateFormat;
+	public static final field RAW Lin/shabinder/soundbound/models/InflateFormat;
+	public static final field ZLIB Lin/shabinder/soundbound/models/InflateFormat;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lin/shabinder/soundbound/models/InflateFormat;
+	public static fun values ()[Lin/shabinder/soundbound/models/InflateFormat;
+}
+
+public final class in/shabinder/soundbound/models/InflateFormat$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class in/shabinder/soundbound/models/IvSpec {
+	public static final field Companion Lin/shabinder/soundbound/models/IvSpec$Companion;
+}
+
+public final class in/shabinder/soundbound/models/IvSpec$ChainedPreviousBlock : in/shabinder/soundbound/models/IvSpec {
+	public static final field Companion Lin/shabinder/soundbound/models/IvSpec$ChainedPreviousBlock$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lin/shabinder/soundbound/models/IvSpec$ChainedPreviousBlock;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/IvSpec$ChainedPreviousBlock;Ljava/lang/String;ILjava/lang/Object;)Lin/shabinder/soundbound/models/IvSpec$ChainedPreviousBlock;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFirstHex ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/IvSpec$ChainedPreviousBlock$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/IvSpec$ChainedPreviousBlock$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/IvSpec$ChainedPreviousBlock;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/IvSpec$ChainedPreviousBlock;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/IvSpec$ChainedPreviousBlock$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/IvSpec$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/IvSpec$CounterFromChunk : in/shabinder/soundbound/models/IvSpec {
+	public static final field Companion Lin/shabinder/soundbound/models/IvSpec$CounterFromChunk$Companion;
+	public fun <init> (Ljava/lang/String;Lin/shabinder/soundbound/models/Endian;)V
+	public synthetic fun <init> (Ljava/lang/String;Lin/shabinder/soundbound/models/Endian;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lin/shabinder/soundbound/models/Endian;
+	public final fun copy (Ljava/lang/String;Lin/shabinder/soundbound/models/Endian;)Lin/shabinder/soundbound/models/IvSpec$CounterFromChunk;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/IvSpec$CounterFromChunk;Ljava/lang/String;Lin/shabinder/soundbound/models/Endian;ILjava/lang/Object;)Lin/shabinder/soundbound/models/IvSpec$CounterFromChunk;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBaseHex ()Ljava/lang/String;
+	public final fun getEndian ()Lin/shabinder/soundbound/models/Endian;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/IvSpec$CounterFromChunk$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/IvSpec$CounterFromChunk$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/IvSpec$CounterFromChunk;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/IvSpec$CounterFromChunk;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/IvSpec$CounterFromChunk$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/IvSpec$Fixed : in/shabinder/soundbound/models/IvSpec {
+	public static final field Companion Lin/shabinder/soundbound/models/IvSpec$Fixed$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lin/shabinder/soundbound/models/IvSpec$Fixed;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/IvSpec$Fixed;Ljava/lang/String;ILjava/lang/Object;)Lin/shabinder/soundbound/models/IvSpec$Fixed;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getHex ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/IvSpec$Fixed$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/IvSpec$Fixed$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/IvSpec$Fixed;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/IvSpec$Fixed;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/IvSpec$Fixed$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/IvSpec$None : in/shabinder/soundbound/models/IvSpec {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/IvSpec$None;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class in/shabinder/soundbound/models/IvSpec$PerChunk : in/shabinder/soundbound/models/IvSpec {
+	public static final field Companion Lin/shabinder/soundbound/models/IvSpec$PerChunk$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lin/shabinder/soundbound/models/IvSpec$PerChunk;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/IvSpec$PerChunk;Ljava/lang/String;ILjava/lang/Object;)Lin/shabinder/soundbound/models/IvSpec$PerChunk;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getHex ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/IvSpec$PerChunk$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/IvSpec$PerChunk$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/IvSpec$PerChunk;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/IvSpec$PerChunk;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/IvSpec$PerChunk$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public abstract class in/shabinder/soundbound/models/MetadataResult {
 	public static final field Companion Lin/shabinder/soundbound/models/MetadataResult$Companion;
 	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -863,6 +1059,19 @@ public final class in/shabinder/soundbound/models/MusicPlatform : java/lang/Enum
 public final class in/shabinder/soundbound/models/MusicPlatform$Companion {
 	public final fun fromName (Ljava/lang/String;)Lin/shabinder/soundbound/models/MusicPlatform;
 	public final fun fromUrl (Ljava/lang/String;)Lin/shabinder/soundbound/models/MusicPlatform;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/Padding : java/lang/Enum {
+	public static final field Companion Lin/shabinder/soundbound/models/Padding$Companion;
+	public static final field NONE Lin/shabinder/soundbound/models/Padding;
+	public static final field PKCS7 Lin/shabinder/soundbound/models/Padding;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lin/shabinder/soundbound/models/Padding;
+	public static fun values ()[Lin/shabinder/soundbound/models/Padding;
+}
+
+public final class in/shabinder/soundbound/models/Padding$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -989,6 +1198,356 @@ public final class in/shabinder/soundbound/models/PlaylistOwnership : java/lang/
 }
 
 public final class in/shabinder/soundbound/models/PlaylistOwnership$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class in/shabinder/soundbound/models/ProcessOp {
+	public static final field Companion Lin/shabinder/soundbound/models/ProcessOp$Companion;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Chunked : in/shabinder/soundbound/models/ProcessOp {
+	public static final field Companion Lin/shabinder/soundbound/models/ProcessOp$Chunked$Companion;
+	public fun <init> (I)V
+	public final fun component1 ()I
+	public final fun copy (I)Lin/shabinder/soundbound/models/ProcessOp$Chunked;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/ProcessOp$Chunked;IILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessOp$Chunked;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSize ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/ProcessOp$Chunked$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/ProcessOp$Chunked$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/ProcessOp$Chunked;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/ProcessOp$Chunked;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Chunked$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Cipher : in/shabinder/soundbound/models/ProcessOp {
+	public static final field Companion Lin/shabinder/soundbound/models/ProcessOp$Cipher$Companion;
+	public fun <init> (Lin/shabinder/soundbound/models/CipherAlg;Lin/shabinder/soundbound/models/CipherMode;Ljava/lang/String;Lin/shabinder/soundbound/models/IvSpec;Lin/shabinder/soundbound/models/Padding;)V
+	public synthetic fun <init> (Lin/shabinder/soundbound/models/CipherAlg;Lin/shabinder/soundbound/models/CipherMode;Ljava/lang/String;Lin/shabinder/soundbound/models/IvSpec;Lin/shabinder/soundbound/models/Padding;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lin/shabinder/soundbound/models/CipherAlg;
+	public final fun component2 ()Lin/shabinder/soundbound/models/CipherMode;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Lin/shabinder/soundbound/models/IvSpec;
+	public final fun component5 ()Lin/shabinder/soundbound/models/Padding;
+	public final fun copy (Lin/shabinder/soundbound/models/CipherAlg;Lin/shabinder/soundbound/models/CipherMode;Ljava/lang/String;Lin/shabinder/soundbound/models/IvSpec;Lin/shabinder/soundbound/models/Padding;)Lin/shabinder/soundbound/models/ProcessOp$Cipher;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/ProcessOp$Cipher;Lin/shabinder/soundbound/models/CipherAlg;Lin/shabinder/soundbound/models/CipherMode;Ljava/lang/String;Lin/shabinder/soundbound/models/IvSpec;Lin/shabinder/soundbound/models/Padding;ILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessOp$Cipher;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAlg ()Lin/shabinder/soundbound/models/CipherAlg;
+	public final fun getIv ()Lin/shabinder/soundbound/models/IvSpec;
+	public final fun getKeyHex ()Ljava/lang/String;
+	public final fun getMode ()Lin/shabinder/soundbound/models/CipherMode;
+	public final fun getPadding ()Lin/shabinder/soundbound/models/Padding;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/ProcessOp$Cipher$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/ProcessOp$Cipher$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/ProcessOp$Cipher;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/ProcessOp$Cipher;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Cipher$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$ExtensionTransform : in/shabinder/soundbound/models/ProcessOp {
+	public static final field Companion Lin/shabinder/soundbound/models/ProcessOp$ExtensionTransform$Companion;
+	public fun <init> (ILjava/lang/String;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (ILjava/lang/String;)Lin/shabinder/soundbound/models/ProcessOp$ExtensionTransform;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/ProcessOp$ExtensionTransform;ILjava/lang/String;ILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessOp$ExtensionTransform;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChunkSize ()I
+	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/ProcessOp$ExtensionTransform$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/ProcessOp$ExtensionTransform$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/ProcessOp$ExtensionTransform;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/ProcessOp$ExtensionTransform;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$ExtensionTransform$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Inflate : in/shabinder/soundbound/models/ProcessOp {
+	public static final field Companion Lin/shabinder/soundbound/models/ProcessOp$Inflate$Companion;
+	public fun <init> (Lin/shabinder/soundbound/models/InflateFormat;)V
+	public final fun component1 ()Lin/shabinder/soundbound/models/InflateFormat;
+	public final fun copy (Lin/shabinder/soundbound/models/InflateFormat;)Lin/shabinder/soundbound/models/ProcessOp$Inflate;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/ProcessOp$Inflate;Lin/shabinder/soundbound/models/InflateFormat;ILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessOp$Inflate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFormat ()Lin/shabinder/soundbound/models/InflateFormat;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/ProcessOp$Inflate$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/ProcessOp$Inflate$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/ProcessOp$Inflate;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/ProcessOp$Inflate;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Inflate$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Range : in/shabinder/soundbound/models/ProcessOp {
+	public static final field Companion Lin/shabinder/soundbound/models/ProcessOp$Range$Companion;
+	public fun <init> (JLjava/lang/Long;)V
+	public synthetic fun <init> (JLjava/lang/Long;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun copy (JLjava/lang/Long;)Lin/shabinder/soundbound/models/ProcessOp$Range;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/ProcessOp$Range;JLjava/lang/Long;ILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessOp$Range;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFrom ()J
+	public final fun getTo ()Ljava/lang/Long;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/ProcessOp$Range$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/ProcessOp$Range$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/ProcessOp$Range;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/ProcessOp$Range;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Range$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Skip : in/shabinder/soundbound/models/ProcessOp {
+	public static final field Companion Lin/shabinder/soundbound/models/ProcessOp$Skip$Companion;
+	public fun <init> (J)V
+	public final fun component1 ()J
+	public final fun copy (J)Lin/shabinder/soundbound/models/ProcessOp$Skip;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/ProcessOp$Skip;JILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessOp$Skip;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPrefix ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/ProcessOp$Skip$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/ProcessOp$Skip$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/ProcessOp$Skip;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/ProcessOp$Skip;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Skip$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Stripe : in/shabinder/soundbound/models/ProcessOp {
+	public static final field Companion Lin/shabinder/soundbound/models/ProcessOp$Stripe$Companion;
+	public fun <init> (III)V
+	public synthetic fun <init> (IIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun copy (III)Lin/shabinder/soundbound/models/ProcessOp$Stripe;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/ProcessOp$Stripe;IIIILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessOp$Stripe;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChunkSize ()I
+	public final fun getEvery ()I
+	public final fun getPhase ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/ProcessOp$Stripe$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/ProcessOp$Stripe$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/ProcessOp$Stripe;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/ProcessOp$Stripe;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Stripe$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Trim : in/shabinder/soundbound/models/ProcessOp {
+	public static final field Companion Lin/shabinder/soundbound/models/ProcessOp$Trim$Companion;
+	public fun <init> (J)V
+	public final fun component1 ()J
+	public final fun copy (J)Lin/shabinder/soundbound/models/ProcessOp$Trim;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/ProcessOp$Trim;JILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessOp$Trim;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTail ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/ProcessOp$Trim$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/ProcessOp$Trim$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/ProcessOp$Trim;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/ProcessOp$Trim;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessOp$Trim$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessingCapabilities {
+	public static final field Companion Lin/shabinder/soundbound/models/ProcessingCapabilities$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Lin/shabinder/soundbound/models/ProcessingLimits;Z)V
+	public synthetic fun <init> (Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Lin/shabinder/soundbound/models/ProcessingLimits;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/Set;
+	public final fun component2 ()Ljava/util/Set;
+	public final fun component3 ()Ljava/util/Set;
+	public final fun component4 ()Ljava/util/Set;
+	public final fun component5 ()Ljava/util/Set;
+	public final fun component6 ()Lin/shabinder/soundbound/models/ProcessingLimits;
+	public final fun component7 ()Z
+	public final fun copy (Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Lin/shabinder/soundbound/models/ProcessingLimits;Z)Lin/shabinder/soundbound/models/ProcessingCapabilities;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/ProcessingCapabilities;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Ljava/util/Set;Lin/shabinder/soundbound/models/ProcessingLimits;ZILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessingCapabilities;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAlgs ()Ljava/util/Set;
+	public final fun getExtensionTransformSlow ()Z
+	public final fun getInflate ()Ljava/util/Set;
+	public final fun getIvSpecs ()Ljava/util/Set;
+	public final fun getLimits ()Lin/shabinder/soundbound/models/ProcessingLimits;
+	public final fun getModes ()Ljava/util/Set;
+	public final fun getOps ()Ljava/util/Set;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/ProcessingCapabilities$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/ProcessingCapabilities$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/ProcessingCapabilities;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/ProcessingCapabilities;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessingCapabilities$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessingLimits {
+	public static final field Companion Lin/shabinder/soundbound/models/ProcessingLimits$Companion;
+	public fun <init> ()V
+	public fun <init> (IIJ)V
+	public synthetic fun <init> (IIJILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()J
+	public final fun copy (IIJ)Lin/shabinder/soundbound/models/ProcessingLimits;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/ProcessingLimits;IIJILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessingLimits;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMaxChunkBytes ()I
+	public final fun getMaxOps ()I
+	public final fun getMemoryBudgetBytes ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/ProcessingLimits$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/ProcessingLimits$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/ProcessingLimits;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/ProcessingLimits;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessingLimits$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessingSpec {
+	public static final field Companion Lin/shabinder/soundbound/models/ProcessingSpec$Companion;
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lin/shabinder/soundbound/models/ProcessingSpec;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/ProcessingSpec;Ljava/util/List;ILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessingSpec;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOps ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/models/ProcessingSpec$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/models/ProcessingSpec$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/models/ProcessingSpec;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/models/ProcessingSpec;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/models/ProcessingSpec$Companion {
+	public final fun aesCbc (Ljava/lang/String;Ljava/lang/String;Z)Lin/shabinder/soundbound/models/ProcessingSpec;
+	public static synthetic fun aesCbc$default (Lin/shabinder/soundbound/models/ProcessingSpec$Companion;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessingSpec;
+	public final fun aesCtr (Ljava/lang/String;Ljava/lang/String;)Lin/shabinder/soundbound/models/ProcessingSpec;
+	public static synthetic fun aesCtr$default (Lin/shabinder/soundbound/models/ProcessingSpec$Companion;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessingSpec;
+	public final fun blowfishStripe (Ljava/lang/String;Ljava/lang/String;II)Lin/shabinder/soundbound/models/ProcessingSpec;
+	public static synthetic fun blowfishStripe$default (Lin/shabinder/soundbound/models/ProcessingSpec$Companion;Ljava/lang/String;Ljava/lang/String;IIILjava/lang/Object;)Lin/shabinder/soundbound/models/ProcessingSpec;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -1372,10 +1931,10 @@ public final class in/shabinder/soundbound/models/QueryParams$Companion {
 public final class in/shabinder/soundbound/models/Request {
 	public static final field Companion Lin/shabinder/soundbound/models/Request$Companion;
 	public static final field DEFAULT_CHUNK_SIZE J
-	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/String;Lin/shabinder/soundbound/zipline/HttpClient$BodyType;Ljava/lang/Long;Lin/shabinder/soundbound/models/DecryptionSpec;Ljava/util/List;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/String;Lin/shabinder/soundbound/zipline/HttpClient$BodyType;Ljava/lang/Long;Lin/shabinder/soundbound/models/DecryptionSpec;Ljava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun copy (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Lin/shabinder/soundbound/zipline/HttpClient$BodyType;Ljava/util/Map;Ljava/lang/Long;Lin/shabinder/soundbound/models/DecryptionSpec;Ljava/util/List;Ljava/lang/String;)Lin/shabinder/soundbound/models/Request;
-	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/Request;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Lin/shabinder/soundbound/zipline/HttpClient$BodyType;Ljava/util/Map;Ljava/lang/Long;Lin/shabinder/soundbound/models/DecryptionSpec;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lin/shabinder/soundbound/models/Request;
+	public fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/String;Lin/shabinder/soundbound/zipline/HttpClient$BodyType;Ljava/lang/Long;Lin/shabinder/soundbound/models/DecryptionSpec;Ljava/util/List;Ljava/lang/String;Lin/shabinder/soundbound/models/ProcessingSpec;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/String;Lin/shabinder/soundbound/zipline/HttpClient$BodyType;Ljava/lang/Long;Lin/shabinder/soundbound/models/DecryptionSpec;Ljava/util/List;Ljava/lang/String;Lin/shabinder/soundbound/models/ProcessingSpec;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy (Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Lin/shabinder/soundbound/zipline/HttpClient$BodyType;Ljava/util/Map;Ljava/lang/Long;Lin/shabinder/soundbound/models/DecryptionSpec;Ljava/util/List;Ljava/lang/String;Lin/shabinder/soundbound/models/ProcessingSpec;)Lin/shabinder/soundbound/models/Request;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/models/Request;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Lin/shabinder/soundbound/zipline/HttpClient$BodyType;Ljava/util/Map;Ljava/lang/Long;Lin/shabinder/soundbound/models/DecryptionSpec;Ljava/util/List;Ljava/lang/String;Lin/shabinder/soundbound/models/ProcessingSpec;ILjava/lang/Object;)Lin/shabinder/soundbound/models/Request;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBody ()Lin/shabinder/soundbound/zipline/HttpClient$BodyType;
 	public final fun getDecryption ()Lin/shabinder/soundbound/models/DecryptionSpec;
@@ -1385,6 +1944,7 @@ public final class in/shabinder/soundbound/models/Request {
 	public final fun getInitSegment ()Ljava/lang/String;
 	public final fun getMethod ()Ljava/lang/String;
 	public final fun getParams ()Ljava/util/Map;
+	public final fun getProcessing ()Lin/shabinder/soundbound/models/ProcessingSpec;
 	public final fun getSegments ()Ljava/util/List;
 	public final fun getUrl ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -1405,8 +1965,8 @@ public final synthetic class in/shabinder/soundbound/models/Request$$serializer 
 }
 
 public final class in/shabinder/soundbound/models/Request$Companion {
-	public final fun from (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/String;Lin/shabinder/soundbound/zipline/HttpClient$BodyType;Ljava/lang/Long;Lin/shabinder/soundbound/models/DecryptionSpec;Ljava/util/List;Ljava/lang/String;)Lin/shabinder/soundbound/models/Request;
-	public static synthetic fun from$default (Lin/shabinder/soundbound/models/Request$Companion;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/String;Lin/shabinder/soundbound/zipline/HttpClient$BodyType;Ljava/lang/Long;Lin/shabinder/soundbound/models/DecryptionSpec;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lin/shabinder/soundbound/models/Request;
+	public final fun from (Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/String;Lin/shabinder/soundbound/zipline/HttpClient$BodyType;Ljava/lang/Long;Lin/shabinder/soundbound/models/DecryptionSpec;Ljava/util/List;Ljava/lang/String;Lin/shabinder/soundbound/models/ProcessingSpec;)Lin/shabinder/soundbound/models/Request;
+	public static synthetic fun from$default (Lin/shabinder/soundbound/models/Request$Companion;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;Ljava/lang/String;Lin/shabinder/soundbound/zipline/HttpClient$BodyType;Ljava/lang/Long;Lin/shabinder/soundbound/models/DecryptionSpec;Ljava/util/List;Ljava/lang/String;Lin/shabinder/soundbound/models/ProcessingSpec;ILjava/lang/Object;)Lin/shabinder/soundbound/models/Request;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -1759,6 +2319,7 @@ public final class in/shabinder/soundbound/providers/ConfigHandler$DefaultImpls 
 	public static fun getConfigKeys (Lin/shabinder/soundbound/providers/ConfigHandler;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getLocalIpc (Lin/shabinder/soundbound/providers/ConfigHandler;)Lin/shabinder/soundbound/zipline/LocalIpc;
 	public static fun getNetworkSockets (Lin/shabinder/soundbound/providers/ConfigHandler;)Lin/shabinder/soundbound/zipline/NetworkSockets;
+	public static fun getPlaybackHost (Lin/shabinder/soundbound/providers/ConfigHandler;)Lin/shabinder/soundbound/zipline/PlaybackHost;
 	public static fun getPreferenceKey (Lin/shabinder/soundbound/providers/ConfigHandler;Lin/shabinder/soundbound/providers/config/ConfigPropertyKey;)Ljava/lang/String;
 	public static fun getRuntimeAssets (Lin/shabinder/soundbound/providers/ConfigHandler;)Lin/shabinder/soundbound/zipline/RuntimeAssets;
 	public static fun getWebSocket (Lin/shabinder/soundbound/providers/ConfigHandler;)Lin/shabinder/soundbound/zipline/WebSocketClient;
@@ -1778,6 +2339,7 @@ public abstract interface class in/shabinder/soundbound/providers/Dependencies {
 	public abstract fun getLocaleProvider ()Lin/shabinder/soundbound/zipline/LocaleProvider;
 	public abstract fun getLogger ()Lin/shabinder/soundbound/zipline/SoundboundLogger;
 	public fun getNetworkSockets ()Lin/shabinder/soundbound/zipline/NetworkSockets;
+	public fun getPlaybackHost ()Lin/shabinder/soundbound/zipline/PlaybackHost;
 	public fun getRuntimeAssets ()Lin/shabinder/soundbound/zipline/RuntimeAssets;
 	public fun getWebSocket ()Lin/shabinder/soundbound/zipline/WebSocketClient;
 }
@@ -1786,6 +2348,7 @@ public final class in/shabinder/soundbound/providers/Dependencies$DefaultImpls {
 	public static fun getAccountLink (Lin/shabinder/soundbound/providers/Dependencies;)Lin/shabinder/soundbound/zipline/AccountLink;
 	public static fun getLocalIpc (Lin/shabinder/soundbound/providers/Dependencies;)Lin/shabinder/soundbound/zipline/LocalIpc;
 	public static fun getNetworkSockets (Lin/shabinder/soundbound/providers/Dependencies;)Lin/shabinder/soundbound/zipline/NetworkSockets;
+	public static fun getPlaybackHost (Lin/shabinder/soundbound/providers/Dependencies;)Lin/shabinder/soundbound/zipline/PlaybackHost;
 	public static fun getRuntimeAssets (Lin/shabinder/soundbound/providers/Dependencies;)Lin/shabinder/soundbound/zipline/RuntimeAssets;
 	public static fun getWebSocket (Lin/shabinder/soundbound/providers/Dependencies;)Lin/shabinder/soundbound/zipline/WebSocketClient;
 }
@@ -1839,6 +2402,7 @@ public final class in/shabinder/soundbound/providers/DownloadableProvider$Defaul
 	public static fun getMAuthData (Lin/shabinder/soundbound/providers/DownloadableProvider;)Lin/shabinder/soundbound/providers/auth/AuthHandler$AuthMethod$AuthData;
 	public static fun getNeedsReAuthentication (Lin/shabinder/soundbound/providers/DownloadableProvider;)Z
 	public static fun getNetworkSockets (Lin/shabinder/soundbound/providers/DownloadableProvider;)Lin/shabinder/soundbound/zipline/NetworkSockets;
+	public static fun getPlaybackHost (Lin/shabinder/soundbound/providers/DownloadableProvider;)Lin/shabinder/soundbound/zipline/PlaybackHost;
 	public static fun getPrefKey (Lin/shabinder/soundbound/providers/DownloadableProvider;)Ljava/lang/String;
 	public static fun getPreferenceKey (Lin/shabinder/soundbound/providers/DownloadableProvider;Lin/shabinder/soundbound/providers/config/ConfigPropertyKey;)Ljava/lang/String;
 	public static fun getRecognitionInput (Lin/shabinder/soundbound/providers/DownloadableProvider;)Lin/shabinder/soundbound/providers/recognition/RecognitionInput;
@@ -1907,7 +2471,9 @@ public abstract interface class in/shabinder/soundbound/providers/ExtensionPlayb
 	public static final field Companion Lin/shabinder/soundbound/providers/ExtensionPlaybackSource$Companion;
 	public abstract fun descriptor (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun read (JILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun refresh (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun seek (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun transform (Ljava/lang/String;J[BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class in/shabinder/soundbound/providers/ExtensionPlaybackSource$Companion {
@@ -1925,11 +2491,39 @@ public final class in/shabinder/soundbound/providers/ExtensionPlaybackSource$Com
 
 public final class in/shabinder/soundbound/providers/ExtensionPlaybackSource$DefaultImpls {
 	public static fun close (Lin/shabinder/soundbound/providers/ExtensionPlaybackSource;)V
+	public static fun refresh (Lin/shabinder/soundbound/providers/ExtensionPlaybackSource;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun transform (Lin/shabinder/soundbound/providers/ExtensionPlaybackSource;Ljava/lang/String;J[BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class in/shabinder/soundbound/providers/HeaderPolicy : java/lang/Enum {
+	public static final field ALL_REQUESTS Lin/shabinder/soundbound/providers/HeaderPolicy;
+	public static final field Companion Lin/shabinder/soundbound/providers/HeaderPolicy$Companion;
+	public static final field SAME_HOST Lin/shabinder/soundbound/providers/HeaderPolicy;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lin/shabinder/soundbound/providers/HeaderPolicy;
+	public static fun values ()[Lin/shabinder/soundbound/providers/HeaderPolicy;
+}
+
+public final class in/shabinder/soundbound/providers/HeaderPolicy$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class in/shabinder/soundbound/providers/HostApi {
 	public static final field INSTANCE Lin/shabinder/soundbound/providers/HostApi;
 	public static final field LEVEL I
+}
+
+public final class in/shabinder/soundbound/providers/ManifestKind : java/lang/Enum {
+	public static final field Companion Lin/shabinder/soundbound/providers/ManifestKind$Companion;
+	public static final field DASH Lin/shabinder/soundbound/providers/ManifestKind;
+	public static final field HLS Lin/shabinder/soundbound/providers/ManifestKind;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lin/shabinder/soundbound/providers/ManifestKind;
+	public static fun values ()[Lin/shabinder/soundbound/providers/ManifestKind;
+}
+
+public final class in/shabinder/soundbound/providers/ManifestKind$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public abstract interface class in/shabinder/soundbound/providers/MetadataProvider : app/cash/zipline/ZiplineService {
@@ -2041,11 +2635,16 @@ public final class in/shabinder/soundbound/providers/PlaybackSourceDescriptor$Co
 
 public final class in/shabinder/soundbound/providers/PlaybackSourceDescriptor$DirectHttp : in/shabinder/soundbound/providers/PlaybackSourceDescriptor {
 	public static final field Companion Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$DirectHttp$Companion;
-	public fun <init> (Lin/shabinder/soundbound/models/Request;)V
+	public fun <init> (Lin/shabinder/soundbound/models/Request;Ljava/lang/Long;Ljava/lang/String;)V
+	public synthetic fun <init> (Lin/shabinder/soundbound/models/Request;Ljava/lang/Long;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lin/shabinder/soundbound/models/Request;
-	public final fun copy (Lin/shabinder/soundbound/models/Request;)Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$DirectHttp;
-	public static synthetic fun copy$default (Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$DirectHttp;Lin/shabinder/soundbound/models/Request;ILjava/lang/Object;)Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$DirectHttp;
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Lin/shabinder/soundbound/models/Request;Ljava/lang/Long;Ljava/lang/String;)Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$DirectHttp;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$DirectHttp;Lin/shabinder/soundbound/models/Request;Ljava/lang/Long;Ljava/lang/String;ILjava/lang/Object;)Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$DirectHttp;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContainer ()Ljava/lang/String;
+	public final fun getExpiresAtEpochMs ()Ljava/lang/Long;
 	public final fun getRequest ()Lin/shabinder/soundbound/models/Request;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -2063,6 +2662,40 @@ public final synthetic class in/shabinder/soundbound/providers/PlaybackSourceDes
 }
 
 public final class in/shabinder/soundbound/providers/PlaybackSourceDescriptor$DirectHttp$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/providers/PlaybackSourceDescriptor$Manifest : in/shabinder/soundbound/providers/PlaybackSourceDescriptor {
+	public static final field Companion Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$Manifest$Companion;
+	public fun <init> (Lin/shabinder/soundbound/models/Request;Lin/shabinder/soundbound/providers/ManifestKind;Lin/shabinder/soundbound/providers/HeaderPolicy;Ljava/lang/Long;)V
+	public synthetic fun <init> (Lin/shabinder/soundbound/models/Request;Lin/shabinder/soundbound/providers/ManifestKind;Lin/shabinder/soundbound/providers/HeaderPolicy;Ljava/lang/Long;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lin/shabinder/soundbound/models/Request;
+	public final fun component2 ()Lin/shabinder/soundbound/providers/ManifestKind;
+	public final fun component3 ()Lin/shabinder/soundbound/providers/HeaderPolicy;
+	public final fun component4 ()Ljava/lang/Long;
+	public final fun copy (Lin/shabinder/soundbound/models/Request;Lin/shabinder/soundbound/providers/ManifestKind;Lin/shabinder/soundbound/providers/HeaderPolicy;Ljava/lang/Long;)Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$Manifest;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$Manifest;Lin/shabinder/soundbound/models/Request;Lin/shabinder/soundbound/providers/ManifestKind;Lin/shabinder/soundbound/providers/HeaderPolicy;Ljava/lang/Long;ILjava/lang/Object;)Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$Manifest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getExpiresAtEpochMs ()Ljava/lang/Long;
+	public final fun getHeaderPolicy ()Lin/shabinder/soundbound/providers/HeaderPolicy;
+	public final fun getKind ()Lin/shabinder/soundbound/providers/ManifestKind;
+	public final fun getRequest ()Lin/shabinder/soundbound/models/Request;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/providers/PlaybackSourceDescriptor$Manifest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$Manifest$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$Manifest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/providers/PlaybackSourceDescriptor$Manifest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/providers/PlaybackSourceDescriptor$Manifest$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -2157,6 +2790,7 @@ public final class in/shabinder/soundbound/providers/Provider$DefaultImpls {
 	public static fun getMAuthData (Lin/shabinder/soundbound/providers/Provider;)Lin/shabinder/soundbound/providers/auth/AuthHandler$AuthMethod$AuthData;
 	public static fun getNeedsReAuthentication (Lin/shabinder/soundbound/providers/Provider;)Z
 	public static fun getNetworkSockets (Lin/shabinder/soundbound/providers/Provider;)Lin/shabinder/soundbound/zipline/NetworkSockets;
+	public static fun getPlaybackHost (Lin/shabinder/soundbound/providers/Provider;)Lin/shabinder/soundbound/zipline/PlaybackHost;
 	public static fun getPrefKey (Lin/shabinder/soundbound/providers/Provider;)Ljava/lang/String;
 	public static fun getPreferenceKey (Lin/shabinder/soundbound/providers/Provider;Lin/shabinder/soundbound/providers/config/ConfigPropertyKey;)Ljava/lang/String;
 	public static fun getRecognitionInput (Lin/shabinder/soundbound/providers/Provider;)Lin/shabinder/soundbound/providers/recognition/RecognitionInput;
@@ -2280,6 +2914,7 @@ public final class in/shabinder/soundbound/providers/QueryableProvider$DefaultIm
 	public static fun getMAuthData (Lin/shabinder/soundbound/providers/QueryableProvider;)Lin/shabinder/soundbound/providers/auth/AuthHandler$AuthMethod$AuthData;
 	public static fun getNeedsReAuthentication (Lin/shabinder/soundbound/providers/QueryableProvider;)Z
 	public static fun getNetworkSockets (Lin/shabinder/soundbound/providers/QueryableProvider;)Lin/shabinder/soundbound/zipline/NetworkSockets;
+	public static fun getPlaybackHost (Lin/shabinder/soundbound/providers/QueryableProvider;)Lin/shabinder/soundbound/zipline/PlaybackHost;
 	public static fun getPrefKey (Lin/shabinder/soundbound/providers/QueryableProvider;)Ljava/lang/String;
 	public static fun getPreferenceKey (Lin/shabinder/soundbound/providers/QueryableProvider;Lin/shabinder/soundbound/providers/config/ConfigPropertyKey;)Ljava/lang/String;
 	public static fun getRecognitionInput (Lin/shabinder/soundbound/providers/QueryableProvider;)Lin/shabinder/soundbound/providers/recognition/RecognitionInput;
@@ -2585,6 +3220,7 @@ public final class in/shabinder/soundbound/providers/auth/AuthHandler$DefaultImp
 	public static fun getMAuthData (Lin/shabinder/soundbound/providers/auth/AuthHandler;)Lin/shabinder/soundbound/providers/auth/AuthHandler$AuthMethod$AuthData;
 	public static fun getNeedsReAuthentication (Lin/shabinder/soundbound/providers/auth/AuthHandler;)Z
 	public static fun getNetworkSockets (Lin/shabinder/soundbound/providers/auth/AuthHandler;)Lin/shabinder/soundbound/zipline/NetworkSockets;
+	public static fun getPlaybackHost (Lin/shabinder/soundbound/providers/auth/AuthHandler;)Lin/shabinder/soundbound/zipline/PlaybackHost;
 	public static fun getRuntimeAssets (Lin/shabinder/soundbound/providers/auth/AuthHandler;)Lin/shabinder/soundbound/zipline/RuntimeAssets;
 	public static fun getWebSocket (Lin/shabinder/soundbound/providers/auth/AuthHandler;)Lin/shabinder/soundbound/zipline/WebSocketClient;
 	public static fun isAuthAvailable (Lin/shabinder/soundbound/providers/auth/AuthHandler;)Z
@@ -5073,6 +5709,74 @@ public final class in/shabinder/soundbound/zipline/NetworkSockets$DefaultImpls {
 	public static fun close (Lin/shabinder/soundbound/zipline/NetworkSockets;)V
 }
 
+public final class in/shabinder/soundbound/zipline/PlaybackCapabilities {
+	public static final field Companion Lin/shabinder/soundbound/zipline/PlaybackCapabilities$Companion;
+	public static final field KIND_DASH Ljava/lang/String;
+	public static final field KIND_DIRECT_HTTP Ljava/lang/String;
+	public static final field KIND_HLS Ljava/lang/String;
+	public static final field KIND_SEGMENTS Ljava/lang/String;
+	public static final field KIND_STREAM Ljava/lang/String;
+	public fun <init> ()V
+	public fun <init> (Ljava/util/Set;Ljava/util/Set;Lin/shabinder/soundbound/models/ProcessingCapabilities;Ljava/util/Set;ZZI)V
+	public synthetic fun <init> (Ljava/util/Set;Ljava/util/Set;Lin/shabinder/soundbound/models/ProcessingCapabilities;Ljava/util/Set;ZZIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/Set;
+	public final fun component2 ()Ljava/util/Set;
+	public final fun component3 ()Lin/shabinder/soundbound/models/ProcessingCapabilities;
+	public final fun component4 ()Ljava/util/Set;
+	public final fun component5 ()Z
+	public final fun component6 ()Z
+	public final fun component7 ()I
+	public final fun copy (Ljava/util/Set;Ljava/util/Set;Lin/shabinder/soundbound/models/ProcessingCapabilities;Ljava/util/Set;ZZI)Lin/shabinder/soundbound/zipline/PlaybackCapabilities;
+	public static synthetic fun copy$default (Lin/shabinder/soundbound/zipline/PlaybackCapabilities;Ljava/util/Set;Ljava/util/Set;Lin/shabinder/soundbound/models/ProcessingCapabilities;Ljava/util/Set;ZZIILjava/lang/Object;)Lin/shabinder/soundbound/zipline/PlaybackCapabilities;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCiphers ()Ljava/util/Set;
+	public final fun getContainers ()Ljava/util/Set;
+	public final fun getHeaders ()Z
+	public final fun getMaxLiveSources ()I
+	public final fun getProcessing ()Lin/shabinder/soundbound/models/ProcessingCapabilities;
+	public final fun getRefresh ()Z
+	public final fun getSourceKinds ()Ljava/util/Set;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class in/shabinder/soundbound/zipline/PlaybackCapabilities$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lin/shabinder/soundbound/zipline/PlaybackCapabilities$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lin/shabinder/soundbound/zipline/PlaybackCapabilities;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lin/shabinder/soundbound/zipline/PlaybackCapabilities;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class in/shabinder/soundbound/zipline/PlaybackCapabilities$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class in/shabinder/soundbound/zipline/PlaybackHost : app/cash/zipline/ZiplineService {
+	public static final field Companion Lin/shabinder/soundbound/zipline/PlaybackHost$Companion;
+	public abstract fun playbackCapabilities (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class in/shabinder/soundbound/zipline/PlaybackHost$Companion {
+}
+
+public final class in/shabinder/soundbound/zipline/PlaybackHost$Companion$Adapter : app/cash/zipline/internal/bridge/ZiplineServiceAdapter, kotlinx/serialization/KSerializer {
+	public fun <init> (Ljava/util/List;Ljava/lang/String;)V
+	public final fun getSerialName ()Ljava/lang/String;
+	public final fun getSerializers ()Ljava/util/List;
+	public final fun getSimpleName ()Ljava/lang/String;
+	public synthetic fun outboundService (Lapp/cash/zipline/internal/bridge/OutboundCallHandler;)Lapp/cash/zipline/ZiplineService;
+	public fun outboundService (Lapp/cash/zipline/internal/bridge/OutboundCallHandler;)Lin/shabinder/soundbound/zipline/PlaybackHost;
+	public fun ziplineFunctions (Lkotlinx/serialization/modules/SerializersModule;)Ljava/util/List;
+}
+
+public final class in/shabinder/soundbound/zipline/PlaybackHost$DefaultImpls {
+	public static fun close (Lin/shabinder/soundbound/zipline/PlaybackHost;)V
+}
+
 public final class in/shabinder/soundbound/zipline/RuntimeAssetDescriptor {
 	public static final field Companion Lin/shabinder/soundbound/zipline/RuntimeAssetDescriptor$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;JJLjava/lang/String;)V
@@ -5297,6 +6001,12 @@ public final class in/shabinder/soundbound/zipline/UnavailableNetworkSockets : i
 	public fun localPort (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun read (Ljava/lang/String;IJLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun write (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class in/shabinder/soundbound/zipline/UnavailablePlaybackHost : in/shabinder/soundbound/zipline/PlaybackHost {
+	public static final field INSTANCE Lin/shabinder/soundbound/zipline/UnavailablePlaybackHost;
+	public fun close ()V
+	public fun playbackCapabilities (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class in/shabinder/soundbound/zipline/UnavailableRuntimeAssets : in/shabinder/soundbound/zipline/RuntimeAssets {
