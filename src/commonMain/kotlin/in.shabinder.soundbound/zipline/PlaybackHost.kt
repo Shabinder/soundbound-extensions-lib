@@ -1,6 +1,7 @@
 package `in`.shabinder.soundbound.zipline
 
 import app.cash.zipline.ZiplineService
+import `in`.shabinder.soundbound.models.ProcessingCapabilities
 import kotlinx.serialization.Serializable
 
 /**
@@ -19,8 +20,10 @@ interface PlaybackHost : ZiplineService {
 data class PlaybackCapabilities(
   /** Descriptor kinds the host plays: [KIND_DIRECT_HTTP], [KIND_STREAM], [KIND_SEGMENTS], [KIND_HLS], [KIND_DASH]. */
   val sourceKinds: Set<String> = emptySet(),
-  /** `DecryptionSpec.algorithm` ids the host decrypts while playing and downloading. */
+  /** 0.40-style `DecryptionSpec.algorithm` preset ids the host accepts. */
   val ciphers: Set<String> = emptySet(),
+  /** The native op pipeline (`Request.processing`): ops, algorithms, modes, IV specs, limits. */
+  val processing: ProcessingCapabilities = ProcessingCapabilities(),
   /** Container MIME types the platform's player decodes ("audio/mpeg", "audio/mp4", "audio/flac", ...). */
   val containers: Set<String> = emptySet(),
   /** The host calls `ExtensionPlaybackSource.refresh()` on refusal / expiry. */

@@ -4,28 +4,17 @@ import androidx.compose.runtime.Immutable
 import kotlinx.serialization.Serializable
 
 /**
- * Declares how the host must decrypt a stream it fetches. Extensions never see the bytes, so they only attach this
- * spec to a [Request]; the host runs the matching cipher natively, for playback (seekable, while streaming) and for
- * downloads.
+ * The lib 0.40 way to ask the host to decrypt: a cipher id plus params. Still accepted; since 0.41 each id is a preset
+ * that the host compiles to a [ProcessingSpec] (see [Request.processing], the open form). An unknown [algorithm] fails
+ * playback and download explicitly; the host never plays or saves ciphertext.
  *
- * Open by design: [algorithm] is a free string token and [params] a string map, so a provider that reuses a known
- * cipher (or the same cipher with different chunking/IV) needs NO change to this library, only data. Check
- * `PlaybackCapabilities.ciphers` for what the running host supports. An unknown [algorithm] fails playback and
- * download explicitly; the host never plays or saves ciphertext.
+ * | [algorithm] | same as |
+ * |---|---|
+ * | [AES_128_CTR] | `ProcessingSpec.aesCtr(key, ivHex)` |
+ * | [AES_128_CBC] | `ProcessingSpec.aesCbc(key, ivHex, pkcs7 = padding == "pkcs7")` |
+ * | [BLOWFISH_CBC_STRIPE] / [BLOWFISH_CBC] | `ProcessingSpec.blowfishStripe(key, ivHex, chunkSizeBytes, encryptEveryNthChunk)` |
  *
- * | [algorithm] | [key] | [params] |
- * |---|---|---|
- * | [AES_128_CTR] | 16-byte key, hex | [PARAM_IV_HEX] = initial 16-byte counter block (default all zero) |
- * | [AES_128_CBC] | 16-byte key, hex | [PARAM_IV_HEX] (default all zero), [PARAM_PADDING] = `none` (default) or `pkcs7` |
- * | [BLOWFISH_CBC_STRIPE] (alias [BLOWFISH_CBC]) | Blowfish key, hex | [PARAM_IV_HEX] (8 bytes), [PARAM_CHUNK_SIZE_BYTES] (default 2048), [PARAM_ENCRYPT_EVERY_NTH_CHUNK] (default 1) |
- * | [CLEARKEY_CENC] | reserved: no host implements it yet | |
- *
- * Every algorithm also takes [PARAM_SKIP_PLAIN_BYTES]: bytes dropped from the start of the decrypted output (a
- * vendor header in front of the real container).
- *
- * Example, a stripe cipher where every 3rd 2048-byte chunk is Blowfish/CBC/NoPadding encrypted with a fixed IV:
- * `DecryptionSpec("blowfish-cbc-stripe", key = <hex>, params = mapOf("ivHex" to "0001020304050607",
- * "chunkSizeBytes" to "2048", "encryptEveryNthChunk" to "3"))`.
+ * [PARAM_SKIP_PLAIN_BYTES] adds a `ProcessOp.Skip`. [CLEARKEY_CENC] is reserved.
  */
 @Immutable
 @Serializable

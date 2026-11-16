@@ -29,14 +29,23 @@ interface ExtensionPlaybackSource : ZiplineService {
      * fails the read if the renewed URL is refused too. Hosts before 41 never call it.
      */
     suspend fun refresh(): PlaybackSourceDescriptor? = null
+
+    /**
+     * Since [HostApi.LEVEL] 41. Called for each chunk of a `ProcessOp.ExtensionTransform(chunkSize, id)` in the request's
+     * processing pipeline: return the processed bytes for chunk [chunkIndex] (any length; the host concatenates). The host
+     * calls it off the main thread, in chunk order per read, with a timeout and a few chunks of read-ahead.
+     */
+    suspend fun transform(id: String, chunkIndex: Long, bytes: ByteArray): ByteArray =
+        throw UnsupportedOperationException("transform '$id' not implemented")
 }
 
 @Serializable
 sealed interface PlaybackSourceDescriptor {
 
     /**
-     * A progressive file over HTTP(S). The host honours [DownloadRequest.headers] on every platform, decrypts with
-     * [DownloadRequest.decryption] while streaming (seekable), and plays [DownloadRequest.segments] in order.
+     * A progressive file over HTTP(S). The host honours [DownloadRequest.headers] on every platform, runs
+     * [DownloadRequest.processing] (or the 0.40 [DownloadRequest.decryption] preset) while streaming, seekable where the
+     * ops allow, and plays [DownloadRequest.segments] in order.
      *
      * @param expiresAtEpochMs when the URL stops working; the host calls [ExtensionPlaybackSource.refresh] before
      *   that (since 41). Null = unknown, refresh only on refusal.
@@ -64,7 +73,8 @@ sealed interface PlaybackSourceDescriptor {
      * manifest and its children with [headerPolicy], so native players never need the headers themselves.
      *
      * HLS `#EXT-X-KEY:METHOD=AES-128` keys are fetched from their URI as usual. When the extension already holds the
-     * key, set [DownloadRequest.decryption] to `aes-128-cbc` with that key and the host answers key requests with it.
+     * key, set [DownloadRequest.decryption] to `aes-128-cbc` (or [DownloadRequest.processing] to `ProcessingSpec.aesCbc`)
+     * with that key and the host answers key requests with it.
      *
      * DASH: the host plays one audio representation (the highest bandwidth) from a `SegmentTemplate` (with or
      * without `SegmentTimeline`) or a `SegmentList`. Check [PlaybackCapabilities.sourceKinds] first; a host before 41
