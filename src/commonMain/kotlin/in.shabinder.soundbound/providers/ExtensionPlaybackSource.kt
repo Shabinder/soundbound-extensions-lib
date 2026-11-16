@@ -89,7 +89,51 @@ sealed interface PlaybackSourceDescriptor {
         val headerPolicy: HeaderPolicy = HeaderPolicy.SAME_HOST,
         val expiresAtEpochMs: Long? = null,
     ) : PlaybackSourceDescriptor
+
+    /**
+     * Since [HostApi.LEVEL] 42. A DRM-protected HLS playlist or DASH MPD whose content key stays inside the
+     * platform's own content-protection module (Android `MediaDrm`): the extension supplies the manifest and the
+     * license acquisition, and the host plays it through the device DRM. The decrypted key never reaches the host
+     * or the extension — the host only relays the opaque license challenge/response. There is no host-side cipher
+     * and no bytes pass through the loopback bridge.
+     *
+     * Use this only for a source the user is entitled to under their own account on the provider's own service:
+     * [licenseRequest] carries that account's tokens (e.g. an Apple Music `media-user-token` + developer JWT) to
+     * the provider's own [DrmLicense.serverUrl]. The host does not provision or bundle any module; a device without
+     * [scheme] support fails to decode and the extension must fall back (check [PlaybackCapabilities.drmSchemes]).
+     *
+     * @param request the manifest URL (+ headers the host applies per [headerPolicy]) for the protected stream.
+     * @param license how to obtain the content licence from the provider.
+     * @param scheme the content-protection scheme the stream uses; see [DrmScheme].
+     */
+    @Serializable
+    data class DrmManifest(
+        val request: DownloadRequest,
+        val kind: ManifestKind,
+        val license: DrmLicense,
+        val scheme: DrmScheme = DrmScheme.WIDEVINE,
+        val headerPolicy: HeaderPolicy = HeaderPolicy.SAME_HOST,
+        val expiresAtEpochMs: Long? = null,
+    ) : PlaybackSourceDescriptor
 }
+
+/**
+ * How the host obtains a DRM content licence for a [PlaybackSourceDescriptor.DrmManifest]. The host POSTs the
+ * platform-generated, opaque key request to [serverUrl] with [headers] and returns the opaque response to the
+ * platform DRM; it never inspects or stores the key. [requestTransform] names an optional
+ * [ExtensionPlaybackSource.transform] id for providers that wrap the challenge body (the host passes the raw
+ * challenge as the chunk bytes and sends back what the extension returns).
+ */
+@Serializable
+data class DrmLicense(
+    val serverUrl: String,
+    val headers: Map<String, String> = emptyMap(),
+    val requestTransform: String? = null,
+    val responseTransform: String? = null,
+)
+
+@Serializable
+enum class DrmScheme { WIDEVINE, PLAYREADY, CLEARKEY }
 
 @Serializable
 enum class ManifestKind { HLS, DASH }

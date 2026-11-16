@@ -28,6 +28,11 @@ data class PlaybackCapabilities(
   val containers: Set<String> = emptySet(),
   /** The host calls `ExtensionPlaybackSource.refresh()` on refusal / expiry. */
   val refresh: Boolean = false,
+  /**
+   * Since 42. Content-protection schemes the device plays through its own DRM module for a
+   * `PlaybackSourceDescriptor.DrmManifest` (e.g. "widevine"); empty on a host without system DRM or before 42.
+   */
+  val drmSchemes: Set<String> = emptySet(),
   /** Request headers reach the player on this platform (through the host, never the player itself). */
   val headers: Boolean = false,
   /** Extension sources the host keeps open at once (current + next for gapless). */
@@ -40,6 +45,8 @@ data class PlaybackCapabilities(
     const val KIND_SEGMENTS = "segments"
     const val KIND_HLS = "manifest-hls"
     const val KIND_DASH = "manifest-dash"
+    /** A `DrmManifest` played through the device's own DRM module (since 42). */
+    const val KIND_DRM_MANIFEST = "drm-manifest"
   }
 }
 
