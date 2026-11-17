@@ -105,6 +105,11 @@ sealed interface PlaybackSourceDescriptor {
      * @param request the manifest URL (+ headers the host applies per [headerPolicy]) for the protected stream.
      * @param license how to obtain the content licence from the provider.
      * @param scheme the content-protection scheme the stream uses; see [DrmScheme].
+     * @param container when non-null (e.g. "audio/mp4"), [request]'s URL is NOT a manifest but a single bare
+     *   CENC-protected progressive file of this MIME type, whose scheme init data (the Widevine `pssh` box) is already
+     *   inside the file's own `moov`. The host plays it as a progressive source and lets the device DRM read that
+     *   in-stream PSSH — [kind] is ignored. Null = the HLS/DASH manifest at [request] (the original behaviour). This
+     *   covers providers (e.g. Spotify) that serve a fragmented-MP4 with an embedded `pssh` and no HLS/DASH wrapper.
      */
     @Serializable
     data class DrmManifest(
@@ -114,6 +119,7 @@ sealed interface PlaybackSourceDescriptor {
         val scheme: DrmScheme = DrmScheme.WIDEVINE,
         val headerPolicy: HeaderPolicy = HeaderPolicy.SAME_HOST,
         val expiresAtEpochMs: Long? = null,
+        val container: String? = null,
     ) : PlaybackSourceDescriptor
 }
 
